@@ -5,32 +5,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trying to Code</title>
-    <!--link rel="stylesheet" href="style.css"-->
-    <link rel="stylesheet" href="general.css">
-    <script src="./scripts/learn.js" type="module"></script>
-    <script src="./scripts/general.js" type="module"></script>
+    <link rel="stylesheet" href="./css/learn.css">
+    <link rel="stylesheet" href="./css/general.css">
     <script src="./scripts/collapse.js" type="module"></script>
-    <script defer src="scripts/projects.js"></script>
+    <script src="./scripts/index.js" type="module"></script>
+    <script src="./scripts/general.js" type="module"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <canvas class="js-screen" id="learn-screen"></canvas>
-    <a href="index.html" title="learn">icon</a>
-    <button id="dropdown-button"></button>
-    <div class="dropdown">
-        <ul>
-            <a href="index.html" title="learn">home</a>
-            <a href="learn.html" title="learn">learn</a>
-        </ul>
-    </div>
-    <p>Learn to code with these projects:</p>
-    <div>
-        <learn-project>
-            <span slot="title">Hello World</span>
-            <span slot="description">Can you make this simple project say hello world?</span>
-        </learn-project>
-    </div>
     
+    <div class="sidebar">
+        <a href="index.html" title="learn">
+            <img src="components/art/ttc coin icon.png" alt="Coin logo">
+        </a>
+        <button id="dropdown-button">
+            <img src="components/art/yellow - toggle arrow up.png" alt="" id="toggle-button" >
+        </button>
+        <div class="dropdown">
+            <ul>
+                <li><a href="index.html" title="Home">
+                    <img src="components/art/ttc.com icon - house 1.png" alt="House Icon">
+                </a></li>
+                <li><a href="learn.html" title="Learn">learn</a></li>
+            </ul>
+        </div>
+        
+        <p id="coin-counter">100</p>
+        
+    </div>
+    <div class="main-content">
+        <canvas class="js-screen" id="learn-screen"></canvas>
+        <p>Learn to code with these projects:</p>
+        <div>
+            <learn-project>
+                <span slot="title">Hello World</span>
+                <span slot="description">Can you make this simple project say hello world?</span>
+            </learn-project>
+        </div>
+    </div>
     <p>use this div as a preset to copy paste using js</p>
 </body>
 

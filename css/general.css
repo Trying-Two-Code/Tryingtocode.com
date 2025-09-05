@@ -34,16 +34,33 @@ body {
 
 
 .dropdown{
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: white;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    background-color: #282828;
+    display: flex;
+    align-items: center;
+    justify-content: center ;
+    flex-wrap: wrap;
+    flex-direction: column;
     z-index: 100;
-    width: max-content;
+    width: 110px;
+    
 }
 
+.dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centers the list items horizontally */
+    justify-content: center;
+    width: 100%;
+}
+
+.dropdown ul li {
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
 .js-screen{
   position: fixed;
   top: 0;
