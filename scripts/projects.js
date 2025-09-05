@@ -4,20 +4,21 @@
 
 console.log("project");
 
-let htmlGen = 
-`
-<body>
-    <template>
-        <p>general text</p>
-    </template>
-</body>
-`
+let htmlGen = `
+<button id="dropdown-button">
+    <img src="components/art/yellow - toggle arrow up.png" alt="">
+</button>
+`;
 
 export class Display{
     constructor(document, htmlString=htmlGen){
-        console.log("display");
-        document.createElement("<p>general text</p>");
+        console.log('yea display');
+        let template = document.createElement('template');
+        template.innerHTML = htmlString.trim();
+
+        return template.content.firstElementChild;
     }
+
 }
 
 
