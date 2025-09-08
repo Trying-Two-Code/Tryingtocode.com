@@ -1,4 +1,4 @@
-//pyrun.js
+//pyrun.js 
 //make sure <script src="https://cdn.jsdelivr.net/npm/pyodide@0.28.2/pyodide.min.js"></script> is in html
 //this is for running user code, user side
 window.languagePluginUrl = 'https://cdn.jsdelivr.net/pyodide/v0.28.2/full/';

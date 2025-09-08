@@ -35,13 +35,9 @@ body {
 
 .dropdown{
     background-color: #282828;
-    display: flex;
-    align-items: center;
-    justify-content: center ;
-    flex-wrap: wrap;
-    flex-direction: column;
     z-index: 100;
     width: 110px;
+    
     
 }
 
@@ -51,12 +47,13 @@ body {
     margin: 0;
     display: flex;
     flex-direction: column;
-    align-items: center; /* centers the list items horizontally */
+    align-items: center;
     justify-content: center;
     width: 100%;
 }
 
 .dropdown ul li {
+    padding: 20px;
     width: 100%;
     text-align: center;
     cursor: pointer;

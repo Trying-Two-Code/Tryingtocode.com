@@ -1,0 +1,22 @@
+.project{
+    font-size: small;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ebebeb;
+    border: 2px;
+    border-color: black;
+    font-size: 50px;
+    
+}
+.input{
+    width: 80vw;
+    height: 30vh;
+    font-size: 30px;
+    padding: 0%;
+    all: none;
+}
+.run-code{
+    font-size: 50px;
+}
