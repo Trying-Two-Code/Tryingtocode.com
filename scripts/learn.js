@@ -3,8 +3,10 @@ import { Display } from "./projects.js";
 
 let d = new Display(document, document.body);
 
-let run_button = d.content.querySelector('[name="run-button"]');
 let code = d.content.querySelector('[name="user-code"]');
-run_button.addEventListener('click', () => {
-    d.displayUserCode();
-})
+
+d.run_button.addEventListener('click', async () => {
+    let value = code.value;
+    console.log(value);
+    await d.displayUserCode(code.value);
+});

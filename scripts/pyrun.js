@@ -5,10 +5,11 @@ window.languagePluginUrl = 'https://cdn.jsdelivr.net/pyodide/v0.28.2/full/';
 
 console.log("run");
 
-const pyodide = await loadPyodide();
-
-let result = await pyodide.runPythonAsync("1 + 2");
-console.log(result);
+let pyodide = null;
+async function initPyodide(){
+    pyodide = await loadPyodide();
+}
+initPyodide();
 
 export function runUserCode(code){
     console.log("run")

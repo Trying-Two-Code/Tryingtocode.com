@@ -9,9 +9,6 @@
 
 .pixel-button {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     --far: calc(100% - 2em);
 
     clip-path: polygon(
@@ -34,6 +31,13 @@
     transition: padding .5s ease-out;
     padding: clamp(10px, 10vmin, 200px);
     pointer-events: all;
+}
+
+.center .pixel-button{
+    align-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .pixel-button-large{
