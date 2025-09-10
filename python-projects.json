@@ -1,0 +1,9 @@
+{
+    "projects":{
+        "1": {
+            "title": "Hello World",
+            "code": "print('helloworld')",
+            "instruction": "Change helloworld into hello world. Then press the little green run button at the bottom of the screen."
+        }
+    }
+}

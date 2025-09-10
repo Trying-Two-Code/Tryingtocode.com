@@ -14,7 +14,7 @@ let htmlGen = `
 `;
 
 export class Display{
-    constructor(document, parent, htmlString=htmlGen){
+    constructor(document, parent, htmlString=htmlGen, textareaSize = 15){
         console.log('yea display');
         let template = document.createElement('template');
         template.innerHTML = htmlString.trim();
@@ -25,6 +25,7 @@ export class Display{
         parent.appendChild(this.content);
         this.run_button = this.projectEl.querySelector('[name="run-button"]');
         this.output = this.projectEl.querySelector('[name="output"]');
+        this.textarea = this.projectEl.querySelector('[name=user-code]');
 
         console.log(this.content.firstElementChild);
         //return template.content.firstElementChild;
@@ -35,6 +36,9 @@ export class Display{
             console.log(value);
             await this.displayUserCode(value);
         });
+
+        this.textareaSize = textareaSize;
+        this.indentText(textareaSize);
     }
 
     async displayUserCode(code){
@@ -44,6 +48,12 @@ export class Display{
         this.output.textContent = result;
         return result;
         
+    }
+
+    indentText(times=1){
+        for (let index = 0; index < times; index++) {
+            this.textarea.value += "\n";
+        }
     }
 }
 
