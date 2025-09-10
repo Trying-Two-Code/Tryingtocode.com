@@ -43,24 +43,18 @@
 }
 
 #user-code {
+    font-family: 'Courier New', Courier, monospace;
     border: none;
-    overflow: auto;
     outline: none;
-
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-
-    resize: none; /* remove resize handle */
-
-    height: 50vh;
+    resize: none;
+    height: 100%; /* match parent height */
     width: 80vw;
-
+    overflow-y: auto;
+    box-sizing: border-box;
     font-size: large;
     line-height: 30px;
-
     color: white;
-    background-color: transparent;
+    background: transparent;
 
     /* Simulated lined paper background */
     background-image: repeating-linear-gradient(
@@ -74,3 +68,44 @@
     background-attachment: local;
 }
 
+.line-numbers {
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    justify-self: unset;
+    user-select: none;
+    line-height: 30px;
+    min-width: 2em;
+    height: 100%;
+    overflow: hidden; /* hides scrollbar */
+    box-sizing: border-box;
+    background: #222;
+    color: #888;
+
+    background-image: repeating-linear-gradient(
+        to bottom,
+        #333333,
+        #333333 1px,
+        #1a1a1a 1px,
+        #1a1a1a 30px
+    );
+}
+
+#learn-project{
+    display: flex;
+    flex-direction: column;
+}
+
+.run-code {
+    width: fit-content;
+    font-size: large;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.code-editor {
+    display: flex;
+    align-items: flex-start;
+    background: transparent;
+    height: 50vh; /* match textarea height */
+}

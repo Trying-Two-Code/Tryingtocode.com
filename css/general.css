@@ -28,6 +28,12 @@ body {
 * {
     font-family: 'Press Start 2P', monospace;
     font-weight: 200;
+    color: white;
+    text-shadow:
+       -1px -1px 0 #000,  
+        1px -1px 0 #000,
+       -1px  1px 0 #000,
+        1px  1px 0 #000;
 }
 
 
@@ -53,11 +59,21 @@ body {
 }
 
 .dropdown ul li {
-    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     width: 100%;
     text-align: center;
     cursor: pointer;
 }
+
+.dropdown ul li img {
+    width: 70px;
+    height: 70px;
+    image-rendering: pixelated;
+}
+
+
+
 .js-screen{
   position: fixed;
   top: 0;
@@ -113,3 +129,6 @@ body {
 textarea::selection{
     background-color: #282828;
 }
+
+
+
