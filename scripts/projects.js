@@ -4,9 +4,22 @@ import { runUserCode } from "./pyrun.js";
 
 //general use
 
-let htmlGen = `
-    <div id="learn-project" class="project center">
-        <p>Hello World Project:</p>
+let htmlGen = 
+`
+    <div id="learn-project" class="project center minimized">
+        <div class="top-bar">
+            <div class="button">
+            <button>
+                <img id="close-img" src='./components/art/close button 1.png'>
+            </button>
+            </div>
+            <div class="button">
+            <button>
+                <img id="reset-img" src="">
+            </button>
+            </div>
+            <p class="project-title">Hello World Project:</p>
+        </div>
         <div class="input-output">
             <div class="code-editor">
                 <div class="line-numbers"></div>
@@ -18,12 +31,17 @@ let htmlGen = `
     </div>
 `;
 
+
+
 export class Display {
     constructor(document, parent, htmlString = htmlGen, textareaSize = 5, toggled=false) { // default to 5 lines
         this.toggled = toggled;
 
         this.createElements(document, parent, htmlString);
         this.findElements();
+
+        //this.projectJSON = projectJSON;
+        //this.setAttributes();
 
         this.code = this.textarea;
         this.run_button.addEventListener('click', async () => {
@@ -64,6 +82,11 @@ export class Display {
         this.textarea = this.projectEl.querySelector('textarea[name=user-code]');
         this.lineNumbers = this.projectEl.querySelector('.line-numbers');
     }    
+
+    setAttributes(){
+        //this.textarea.value = this.projectJSON["1"].code;
+
+    }
 
     toggleElements(value=false){ // false = stop showing this project
         this.projectEl.classList.add("hide");
