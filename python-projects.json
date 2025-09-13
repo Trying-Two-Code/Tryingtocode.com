@@ -4,6 +4,16 @@
             "title": "Hello World",
             "code": "print('helloworld')",
             "instruction": "Change helloworld into hello world. Then press the little green run button at the bottom of the screen."
+        },
+        "2": {
+            "title": "Variable",
+            "code": "",
+            "instruction": "x = 1. Make it equal 2."
+        },
+        "3": {
+            "title": "",
+            "code": "",
+            "instruction": ""
         }
     }
 }

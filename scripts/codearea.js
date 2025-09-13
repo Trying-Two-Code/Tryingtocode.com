@@ -9,9 +9,9 @@ const AREAHTML = `
 `
 
 export class CodeArea{
-    constructor(parent, codeAreaHTML=AREAHTML, lineNumber=1){
-
+    constructor(document, parent, codeAreaHTML=AREAHTML, lineNumber=1){
         let template = document.createElement('template');
+
         template.innerHTML = codeAreaHTML.trim();
         this.content = template.content;
         this.projectEl = template.content.firstElementChild;
@@ -28,6 +28,13 @@ export class CodeArea{
                 this.selectionStart = this.selectionEnd = start + 1;
             }
         });
+    }
+
+    indentText(times=5, beginValue=""){
+        this.textarea.value = beginValue;
+        for (let index = 0; index < times - 1; index++) {
+            this.textarea.value += "\n";
+        }
     }
 
     returnValues(){

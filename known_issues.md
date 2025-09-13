@@ -24,3 +24,7 @@ Hey developer! Read these to know what you should fix:
 - test.js can't submit bugs
 - 10
 - TTC
+
+- in learn.html, codearea.js - text not white
+- 3
+- Dean (and some TTC)

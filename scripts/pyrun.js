@@ -6,7 +6,6 @@ window.languagePluginUrl = 'https://cdn.jsdelivr.net/pyodide/v0.28.2/full/';
 let pyodide = null;
 async function initPyodide(){
     pyodide = await loadPyodide();
-    pyRun('print("hello world")');
     
     // register it so Python sees it as "input"
     pyodide.globals.set("input", jsInput);

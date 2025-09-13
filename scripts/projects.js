@@ -10,25 +10,18 @@ let htmlGen =
     <div id="learn-project" class="project center minimized">
         <div class="top-bar">
             <div class="button">
-            <button>
+            <button class="project-close-button">
                 <img id="close-img" src='./components/art/close button 1.png'>
             </button>
             </div>
             <div class="button">
-            <button>
-                <img id="reset-img" src="">
+            <button class="project-restart-button">
+                <img id="reset-img" src="./components/art/rewind icon - stroke.png">
             </button>
             </div>
             <p class="project-title">Hello World Project:</p>
         </div>
-        <div class=""></div>
-        <div class="input-output">
-            <div class="code-editor">
-                <div class="line-numbers"></div>
-                <textarea name="user-code" id="user-code" placeholder="code here..."></textarea>
-            </div>
-            <textarea name="output" id="output" class="output">output</textarea>
-        </div>
+        <div class="player-input-parent"></div>
         <button name="run-button" class="run-code">run</button>
     </div>
 `;
@@ -36,36 +29,37 @@ let htmlGen =
 
 
 export class Display {
-    constructor(document, parent, htmlString = htmlGen, textareaSize = 5, toggled=false) { // default to 5 lines
+    constructor(document, parent, projectJSON, htmlString = htmlGen, textareaSize = 5, toggled=false) { // default to 5 lines
         this.toggled = toggled;
 
         this.createElements(document, parent, htmlString);
         this.findElements();
 
-        //this.projectJSON = projectJSON;
-        //this.setAttributes();
+        this.closeButton.addEventListener('click', () => {
+            console.log('close button clicked');
+            this.toggleElements();
+        });
+        this.rewindButton.addEventListener('click', () => {
+            console.log('rewind button clicked');
+            this.codeArea.indentText(5, this.projectJSON.code);
+        });
+
+        this.projectJSON = projectJSON;
 
         this.run_button.addEventListener('click', async () => {
             let value = this.textarea.value;
             await this.displayUserCode(value);
         });
 
-        this.textarea.addEventListener('keydown', function(event) {
-            if (event.keyCode === 9) {
-                event.preventDefault();
-                let start = this.selectionStart;
-                let end = this.selectionEnd;
-                this.value = this.value.substring(0, start) + " " + this.value.substring(end);
-                this.selectionStart = this.selectionEnd = start + 1;
-            }
-        });
+        
 
         this.textareaSize = textareaSize;
-        this.indentText(textareaSize);
+        this.codeArea.indentText(textareaSize);
 
         this.lastLineCount = 1; // Track previous line count
 
         this.setupTextarea();
+        this.setAttributes();
     }
 
     createElements(document, parent, htmlString){
@@ -74,24 +68,37 @@ export class Display {
 
         this.content = template.content;
         this.projectEl = template.content.firstElementChild;
-        this.codeArea = new CodeArea();
         parent.appendChild(this.content);
+
+        this.inputParent = this.projectEl.querySelector('[class="player-input-parent"]');
+
+        this.codeArea = new CodeArea(document, this.inputParent);
     }
 
     findElements(){
         this.run_button = this.projectEl.querySelector('[name="run-button"]');
         this.output = this.projectEl.querySelector('[name="output"]');
-        this.textarea = this.projectEl.querySelector('textarea[name=user-code]');
+        this.textarea = this.codeArea.textarea;
         this.lineNumbers = this.projectEl.querySelector('.line-numbers');
+        this.closeButton = this.projectEl.querySelector('[class="project-close-button"]')
+        this.rewindButton = this.projectEl.querySelector('[class="project-restart-button"]')
     }    
 
     setAttributes(){
-        //this.textarea.value = this.projectJSON["1"].code;
-
+        console.log(this.projectJSON.code);
+        this.textarea.value = this.projectJSON.code;
     }
 
     toggleElements(value=false){ // false = stop showing this project
-        this.projectEl.classList.add("hide");
+        this.toggleClass("hide", this.projectEl);
+    }
+
+    toggleClass(className, element){
+        if(className in element.classList){
+            element.classList.remove(className);
+        } else{
+            element.classList.add(className)
+        }
     }
 
     async displayUserCode(code){
@@ -99,14 +106,7 @@ export class Display {
         this.output.value = result;
         return result;
     }
-
-    indentText(times=5){
-        this.textarea.value = ""; // clear first
-        for (let index = 0; index < times; index++) {
-            this.textarea.value += "\n";
-        }
-    }
-
+    
     setupTextarea(){
         const updateLineNumbers = () => {
             const lines = this.textarea.value.split('\n').length;
