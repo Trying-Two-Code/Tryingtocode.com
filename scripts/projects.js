@@ -60,6 +60,10 @@ export class Display {
 
         this.setupTextarea();
         this.setAttributes();
+
+        this.getInput().then(inp = () => {
+            console.log(inp);
+        });
     }
 
     createElements(document, parent, htmlString){
@@ -80,21 +84,42 @@ export class Display {
         this.output = this.projectEl.querySelector('[name="output"]');
         this.textarea = this.codeArea.textarea;
         this.lineNumbers = this.projectEl.querySelector('.line-numbers');
-        this.closeButton = this.projectEl.querySelector('[class="project-close-button"]')
-        this.rewindButton = this.projectEl.querySelector('[class="project-restart-button"]')
+        this.closeButton = this.projectEl.querySelector('[class="project-close-button"]');
+        this.rewindButton = this.projectEl.querySelector('[class="project-restart-button"]');
+        this.title = this.projectEl.querySelector('[class="project-title"]');
     }    
 
     setAttributes(){
         console.log(this.projectJSON.code);
-        this.textarea.value = this.projectJSON.code;
+        let addAmm = this.projectJSON.code.split("\n").length - 1;
+        this.codeArea.indentText(5 + addAmm, this.projectJSON.code);
+        this.title.innerHTML = this.projectJSON.title;
+        this.output.disabled = true;
+    }
+
+    async getInput(){
+        return new Promise (resolve => {
+            const handler = (e) => {
+            console.log(e.key);
+            if (e.key === "Enter") {
+                e.preventDefault(); // stops newline from appearing
+                this.textarea.removeEventListener("keydown", handler);
+                this.output.disabled = true; 
+                resolve(this.textarea.value);
+            }
+        }
+        this.textarea.addEventListener("keydown", handler);
+        this.output.disabled = false;
+        });
     }
 
     toggleElements(value=false){ // false = stop showing this project
-        this.toggleClass("hide", this.projectEl);
+        this.toggleClass("minimized", this.projectEl);
+        this.toggleClass("notminimized", this.projectEl);
     }
 
     toggleClass(className, element){
-        if(className in element.classList){
+        if(element.classList.contains(className)){
             element.classList.remove(className);
         } else{
             element.classList.add(className)

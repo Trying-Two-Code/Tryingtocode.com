@@ -1,5 +1,5 @@
 {
-    "projects":{
+    "projects": {
         "1": {
             "title": "Hello World",
             "code": "print('helloworld')",
@@ -7,10 +7,105 @@
         },
         "2": {
             "title": "Variable",
-            "code": "",
+            "code": "x = 1\nprint(x)",
             "instruction": "x = 1. Make it equal 2."
         },
         "3": {
+            "title": "Adding",
+            "code": "print(1 + 1)\n\nx = 1\ny = 1\n\nprint(x + y)",
+            "instruction": ""
+        },
+        "4": {
+            "title": "Variable words",
+            "code": "#this is a comment (it shows us stuff but the computer ignores comments)\n\n#this variable is a word:\nx = 'hello'\n#try printing x:\nprint()",
+            "instruction": "make x = bye and then print it"
+        },
+        "5": {
+            "title": "Variable words adding",
+            "code": "#you can add words together\n\nx = 'apple and '\ny = 'orange '\n\nprint(x + y)\n\n#what if you try adding x + x + y + y?",
+            "instruction": ""
+        },
+        "6": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "7": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "8": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "9": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "10": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "11": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "12": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "13": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "14": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "15": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "16": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "17": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "18": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "19": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "20": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "21": {
+            "title": "",
+            "code": "",
+            "instruction": ""
+        },
+        "22": {
             "title": "",
             "code": "",
             "instruction": ""

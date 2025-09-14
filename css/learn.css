@@ -3,11 +3,30 @@
 }
 
 .user_code {
-    transition: width .5s ease-in-out;
+    transition: all .5s ease-in-out;
     width: clamp(100px, 70vw, 400px);
 }
 
-.pixel-button {
+
+#project-parent {
+    display: flex;
+    align-self: start;
+    gap: 16px;
+    padding: 16px;
+    background: #222;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin: 16px;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+.project:hover {
+    transition: all 1s ease-in-out;
+    box-shadow: 0 4px 16px #0006;
+}
+
+/* .pixel-button {
     position: absolute;
     --far: calc(100% - 2em);
 
@@ -31,18 +50,14 @@
     transition: padding .5s ease-out;
     padding: clamp(10px, 10vmin, 200px);
     pointer-events: all;
-}
+} */
 
 
-.pixel-button-large{
+/* .pixel-button-large{
     padding: clamp(10px, 15vmin, 200px);
-}
-
-.project {
-    padding-left: 0%;
-}
-
+} */
 #user-code {
+    transition: all 1s ease-in-out;
     border: none;
     outline: none;
     resize: none;
@@ -66,7 +81,7 @@
 }
 
 .line-numbers {
-    
+    transition: all 1s ease-in-out;
     text-align: center;
     justify-self: unset;
     user-select: none;
@@ -88,12 +103,14 @@
     background-attachment: local;
 }
 
-#learn-project{
+#learn-project {
+    transition: all 1s ease-in-out;
     display: flex;
     flex-direction: column;
 }
 
 .run-code {
+    transition: all 1s ease-in-out;
     width: fit-content;
     font-size: large;
     margin-top: 10px;
@@ -102,15 +119,17 @@
 }
 
 .code-editor {
+    transition: all 1s ease-in-out;
     display: flex;
     align-items: flex-start;
     background: transparent;
     height: 50vh; /* match textarea height */
+
 }
 
 
 .output {
-    background-color: #1a1a1a;
+
     color: #fff;
     user-select: none;
     height: 50vh;
@@ -135,7 +154,7 @@
     resize: none;
     border: none;
 
-    
+    transition: all 1s ease-in-out;
 
     background-attachment: local;
     
@@ -147,6 +166,7 @@
     flex-direction: row;
     justify-content: left;
     align-items: center;
+    transition: all 1s ease-in-out;
 }
 .output:active, .output:focus {
     outline: none;
@@ -166,4 +186,37 @@
 .button button {
     width: 50px;
     height: 50px;
+    
+}
+
+.button img {
+    width: 30px;
+    height: 30px;
+}
+
+
+
+
+.project {
+    transition:
+        max-height 0.6s cubic-bezier(.4,2,.3,1),
+        max-width 0.6s cubic-bezier(.4,2,.3,1),
+        opacity 0.3s ease,
+        box-shadow 0.3s ease;
+    max-height: 600px;
+    max-width: 100%;
+    opacity: 1;
+    box-shadow: 0 4px 16px #0006;
+    overflow: hidden;
+}
+
+.project.minimized {
+    max-height: 200px;
+    max-width: 300px;
+    opacity: 0.7;
+    box-shadow: 0 2px 8px #0004;
+}
+
+.project.minimized:hover {
+    opacity: 1;
 }

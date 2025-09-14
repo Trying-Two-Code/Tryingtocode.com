@@ -28,3 +28,7 @@ Hey developer! Read these to know what you should fix:
 - in learn.html, codearea.js - text not white
 - 3
 - Dean (and some TTC)
+
+- project.js input() has a temporary fix 
+- 3
+- TTC

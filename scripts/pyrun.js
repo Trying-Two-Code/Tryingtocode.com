@@ -21,7 +21,7 @@ async function pyRun(code){
         console.log('run');
 
         let output = '';
-        pyodide.setStdout({batched: (str) => output += str});
+        pyodide.setStdout({batched: (str) => {output += str.endsWith("\n") ? str : str + "\n";}});
 
         await pyodide.runPythonAsync(code);
 
