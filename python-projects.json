@@ -48,12 +48,12 @@
         "10": {
             "title": "First Function",
             "code": "#we can make our own functions!\n#print() and input() are functions\n\ndef my_function():\n print('function!')\n\n#to call this function, say \nmy_function()",
-            "instruction": ""
+            "instruction": "make my_function print something else"
         },
         "11": {
             "title": "Functions 2",
             "code": "#make a function:\n",
-            "instruction": ""
+            "instruction": "Maybe printing something? It's ok if it's simple"
         },
         "12": {
             "title": "Loops",
@@ -68,12 +68,12 @@
         "14": {
             "title": "print(f)",
             "code": "#print(f'') lets you print variables:\n\nx = 0\nprint(f'x is {x}')\n\n#make sure to use {}",
-            "instruction": ""
+            "instruction": "make x = something interesting"
         },
         "15": {
             "title": "Functions 3",
             "code": "def my_print(number):\n print(f'the number is {number}')\n\nfor i in range(2, 11):\n my_print(i)",
-            "instruction": ""
+            "instruction": "make it go from 3 - 99"
         },
         "16": {
             "title": "If this: then that",
@@ -81,28 +81,28 @@
             "instruction": "make this check if x is 'banana'"
         },
         "17": {
-            "title": "",
-            "code": "a",
-            "instruction": ""
+            "title": "Selection",
+            "code": "fruit = input('orange (o) apple (a):')\n\nif fruit == 'o':\n print('orange is good')\nif fruit == 'a':\n print('apple is good')",
+            "instruction": "try inputing either o or a"
         },
         "18": {
-            "title": "",
-            "code": "a",
-            "instruction": ""
+            "title": "If then",
+            "code": "x = 1\nif x == 1:\n print('x is one')\nelse:\n print('x is not one')",
+            "instruction": "make it so x is not 1"
         },
         "19": {
-            "title": "",
-            "code": "a",
-            "instruction": ""
+            "title": "or",
+            "code": "x = 'one'\nif x == 1 or x == 'one':\n print('x is one')\nelse:\n print('x is not one')",
+            "instruction": "make it so x is 1, not 'one'"
         },
         "20": {
-            "title": "",
-            "code": "a",
-            "instruction": ""
+            "title": "and",
+            "code": "x = 1\ny = 1\nif x == 1 and y == 1:\n print('x and y are one')\nelse:\n print('x and y are not one')",
+            "instruction": "make it so x and y are not one"
         },
         "21": {
             "title": "",
-            "code": "a",
+            "code": "",
             "instruction": ""
         },
         "22": {
