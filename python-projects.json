@@ -101,19 +101,19 @@
             "instruction": "make it so x and y are not one"
         },
         "21": {
-            "title": "",
-            "code": "",
+            "title": "using libraries",
+            "code": "import time\n\ntime.sleep(1)\n\nprint('waited one second')",
             "instruction": ""
         },
         "22": {
-            "title": "",
-            "code": "a",
-            "instruction": ""
+            "title": "Arrays",
+            "code": "pets = ['cat', 'dog', 'snake']\n\nfor pet in pets:\n print(pet)",
+            "instruction": "add hamster"
         },
         "23": {
-            "title": "",
-            "code": "a",
-            "instruction": ""
+            "title": "Arrays 2",
+            "code": "pets = ['cat', 'dog', 'snake']\n\nprint(pets[0])",
+            "instruction": "make it print dog"
         }
     }
 }
