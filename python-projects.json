@@ -93,42 +93,50 @@
         "16": {
             "title": "If this: then that",
             "code": "#= sets a value\n#== checks if it is a value\n\nx='banana'\n\nif x == 'apple':\n print('if statement worked!')",
-            "instruction": "make this check if x is 'banana'"
+            "instruction": "make this check if x is 'banana'",
+            "returns": "*\n"
         },
         "17": {
             "title": "Selection",
             "code": "fruit = input('orange (o) apple (a):')\n\nif fruit == 'o':\n print('orange is good')\nif fruit == 'a':\n print('apple is good')",
-            "instruction": "try inputing either o or a"
+            "instruction": "try inputing either o or a",
+            "returns": "apple is good\n"
         },
         "18": {
             "title": "If then",
             "code": "x = 1\nif x == 1:\n print('x is one')\nelse:\n print('x is not one')",
-            "instruction": "make it so x is not 1"
+            "instruction": "make it so x is not 1",
+            "returns": "*\n"
         },
         "19": {
             "title": "or",
             "code": "x = 'one'\nif x == 1 or x == 'one':\n print('x is one')\nelse:\n print('x is not one')",
-            "instruction": "make it so x is 1, not 'one'"
+            "instruction": "make it so x is 1, not 'one'",
+            "returns": "x is not one\n"
         },
         "20": {
             "title": "and",
             "code": "x = 1\ny = 1\nif x == 1 and y == 1:\n print('x and y are one')\nelse:\n print('x and y are not one')",
-            "instruction": "make it so x and y are not one"
+            "instruction": "make it so x and y are not one",
+            "returns": "x and y are not one\n"
         },
         "21": {
             "title": "using libraries",
             "code": "import time\n\ntime.sleep(1)\n\nprint('waited one second')",
-            "instruction": ""
+            "instruction": "make it wait 2 seconds instead",
+            "returns": "*\n"
         },
         "22": {
             "title": "Arrays",
             "code": "pets = ['cat', 'dog', 'snake']\n\nfor pet in pets:\n print(pet)",
-            "instruction": "add hamster"
+            "instruction": "add hamster",
+            "returns": "*\n"
         },
         "23": {
             "title": "Arrays 2",
             "code": "pets = ['cat', 'dog', 'snake']\n\nprint(pets[0])",
-            "instruction": "make it print dog"
+            "instruction": "make it print dog",
+            "returns": "dog\n"
         }
     }
 }

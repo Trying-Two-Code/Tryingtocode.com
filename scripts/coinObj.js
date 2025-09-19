@@ -1,7 +1,7 @@
 
 
 export class CoinObj{
-    constructor(go_to=null, x_pos=0, y_pos=0, x_vel=0, y_vel=0, canvas=null){
+    constructor(go_to=null, x_pos=0, y_pos=0, x_vel=0, y_vel=0, canvas=null, originalCanvasWidth=1, originalCanvasHeight=1){
         this.go_to = go_to;
 
         this.x_pos = x_pos;
@@ -12,8 +12,8 @@ export class CoinObj{
         this.dead = 0;
 
         this.canvas = canvas;
-        this.originalCanvasWidth = 192;
-        this.originalCanvasHeight = 108;
+        this.originalCanvasWidth = originalCanvasWidth;
+        this.originalCanvasHeight = originalCanvasHeight;
     }
 
     tick(speed=1){
@@ -24,11 +24,9 @@ export class CoinObj{
     }
 
     gravitate(go_to, drag=1, min_dist=5){
-        //const gt_rect = go_to.getBoundingClientRect();
-        //const absolute_gt_x = getAbsolutePosition(go_to).x;
-        //const absolute_gt_y = getAbsolutePosition(go_to).y;
-        const absolute_gt_x = 0;
-        const absolute_gt_y = 0;
+        const gt_rect = go_to.getBoundingClientRect();
+        const absolute_gt_x = getAbsolutePosition(go_to).x;
+        const absolute_gt_y = getAbsolutePosition(go_to).y;
 
         let x_dist = absolute_gt_x - this.x_pos;
         let y_dist = absolute_gt_y - this.y_pos;
@@ -39,8 +37,6 @@ export class CoinObj{
         this.y_vel += normalized_vector[1] / drag;
         this.x_vel /= (1 + (drag / 2000));
         this.y_vel /= (1 + (drag / 2000));
-
-        //console.log(distance(this.x_pos, this.y_pos, absolute_gt_x, absolute_gt_y));
 
         if(distance(this.x_pos, this.y_pos, absolute_gt_x, absolute_gt_y) > min_dist && this.dead !== 0){
             this.DestroyGive(1);
