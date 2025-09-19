@@ -1,10 +1,10 @@
 const AREAHTML = `
-<div class="input-output">
+<div class="input-output pixel-font">
     <div class="code-editor">
         <div class="line-numbers"></div>
-        <textarea name="user-code" id="user-code" placeholder="code here..."></textarea>
+        <textarea class="pixel-font" name="user-code" id="user-code" placeholder="code here..."></textarea>
     </div>
-    <textarea name="output" id="output" class="output">output</textarea>
+    <textarea name="output" id="output" class="output pixel-font">output</textarea>
 </div>
 `
 

@@ -11,8 +11,8 @@ console.log(userCoins);
 let canvas = document.getElementById('render-canvas');
 let ctx = canvas.getContext('2d');
 //PROBLEM HERE
-ogCanvasWidth = canvas.width;
-ogCanvasHeight = canvas.hieght;
+const ogCanvasWidth = canvas.width;
+const ogCanvasHeight = canvas.height;
 
 const coinImgSrc = '../components/art/ttc coin icon.png';
 
@@ -20,7 +20,7 @@ let objects = []
 
 let title = document.getElementById("main-title");
 window.addEventListener('getCoin', () => {
-    getCoin(5, null, title);
+    getCoin(5, counter, title);
 })
 //getCoin(1, counter);
     
@@ -43,9 +43,9 @@ function draw(sizeX=30, sizeY=300) {
     window.requestAnimationFrame(draw);
 }
 
-export function getCoin(amm, counter, startElementPos, startString = ''){
+export function getCoin(amm, go_to, startElementPos, startString = ''){
     for (let index = 0; index < amm; index++) {
-        let coinObj = new CoinObj(counter, startElementPos.getBoundingClientRect().left + window.scrollX, startElementPos.getBoundingClientRect().top + window.scrollY, Math.random() * 10, Math.random() * 10, canvas);
+        let coinObj = new CoinObj(go_to, startElementPos.getBoundingClientRect().left + window.scrollX, startElementPos.getBoundingClientRect().top + window.scrollY, Math.random() * 10, Math.random() * 10, canvas, ogCanvasWidth, ogCanvasHeight);
         objects.push(coinObj);
     }
 }

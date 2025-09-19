@@ -25,11 +25,10 @@ export class CoinObj{
 
     gravitate(go_to, drag=1, min_dist=5){
         const gt_rect = go_to.getBoundingClientRect();
-        const absolute_gt_x = getAbsolutePosition(go_to).x;
-        const absolute_gt_y = getAbsolutePosition(go_to).y;
+        const absolute_gt = domToCanvas(this.canvas, getAbsolutePosition(go_to));
 
-        let x_dist = absolute_gt_x - this.x_pos;
-        let y_dist = absolute_gt_y - this.y_pos;
+        let x_dist = absolute_gt[0] - this.x_pos;
+        let y_dist = absolute_gt[1] - this.y_pos;
 
         let normalized_vector = normalizeVector(x_dist, y_dist);
 
@@ -38,9 +37,9 @@ export class CoinObj{
         this.x_vel /= (1 + (drag / 2000));
         this.y_vel /= (1 + (drag / 2000));
 
-        if(distance(this.x_pos, this.y_pos, absolute_gt_x, absolute_gt_y) > min_dist && this.dead !== 0){
+        if(distance(this.x_pos, this.y_pos, absolute_gt[0], absolute_gt[1]) > min_dist && this.dead !== 0){
             this.DestroyGive(1);
-        } else if(this.dead === 0 && distance(this.x_pos, this.y_pos, absolute_gt_x, absolute_gt_y) < min_dist){
+        } else if(this.dead === 0 && distance(this.x_pos, this.y_pos, absolute_gt[0], absolute_gt[1]) < min_dist){
             this.dead = false;
         }
     }
@@ -63,10 +62,9 @@ export class CoinObj{
             image,
             frameOffset, 0,                  // source x, y
             spriteWidth, spriteHeight,       // source width, height
-            this.x_pos, this.y_pos,          // destination x, y
+            this.x_pos * (this.canvas.width / this.originalCanvasWidth), this.y_pos * (this.canvas.width / this.originalCanvasWidth),          // destination x, y
             spriteWidth * sizeMultiplier * (this.canvas.width / this.originalCanvasWidth), spriteHeight * sizeMultiplier * (this.canvas.height / this.originalCanvasHeight)       // destination width, height
         );
-        
     }
 }
 
@@ -88,6 +86,19 @@ function normalizeVector(x, y) {
     return [x / length, y / length];
 }
 
+function domToCanvas(canvas, dom) {
+    const rect = canvas.getBoundingClientRect();
+
+    // Scale factors: DOM pixels -> canvas pixels
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    // Translate into canvas space
+    return {
+        x: (dom[0] - rect.left) * scaleX,
+        y: (dom[1] - rect.top) * scaleY
+    };
+}
 function normalizeNumbers(num1, num2) {
     const min_value = Math.min(num1, num2);
     const max_value = Math.max(num1, num2);

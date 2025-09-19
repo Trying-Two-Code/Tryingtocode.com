@@ -20,7 +20,6 @@ export function runUserCode(code){
 
 async function pyRun(code){
     try{
-        console.log('run');
 
         //I need to await jsInput if an input is required before continuing:
 
@@ -38,7 +37,6 @@ async def main():
 asyncio.run(main())
         `);
 
-        console.log('ran with result: ' + output);
         return output;
 
     }

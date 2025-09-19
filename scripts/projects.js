@@ -7,7 +7,7 @@ import { CodeArea } from "./codearea.js";
 
 let htmlGen = 
 `
-    <div id="learn-project" class="project center minimized">
+    <div id="learn-project" class="project center minimized pixel-font">
         <div class="top-bar">
             <div class="button">
             <button class="project-close-button">
@@ -23,7 +23,7 @@ let htmlGen =
         </div>
         <p class="instructions">instructions<!p>
         <div class="player-input-parent"></div>
-        <button name="run-button" class="run-code">run</button>
+        <button name="run-button" class="run-code" class="output pixel-font">run</button>
     </div>
 `;
 
@@ -60,7 +60,6 @@ export class Display {
             let value = this.textarea.value;
             let userCode = await this.displayUserCode(value);
             if(userCode == this.projectJSON.returns){
-                console.log("WOW");
                 window.dispatchEvent(getCoin);
             }
             else{
