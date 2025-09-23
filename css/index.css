@@ -1,4 +1,4 @@
-#welcome {
+.welcome {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -15,7 +15,7 @@
 
 }
 
-#welcome h1 {
+.welcome h1 {
 	text-shadow:
 		-4px -4px 0 #000,  
 		 4px -4px 0 #000,
@@ -23,7 +23,7 @@
 		 4px  4px 0 #000 ;
 }
 
-#welcome p {
+.welcome p {
 	text-shadow: 
 		-2px -2px 0 #000,  
 		 2px -2px 0 #000,

@@ -138,5 +138,32 @@
             "instruction": "make it print dog",
             "returns": "dog\n"
         }
+    },
+
+    "possibilities": {
+        "1":{
+            "title": "spot the bug 1",
+            "code" : "def add(num1, num2):\n return num1 - num2\n\nprint(add(1, 5))",
+            "instruction": "fix the bug",
+            "returns": "*\n"
+        },
+        "2":{
+            "title": "spot the bug 2",
+            "code" : "def add(num1, num2):\n return num1 + num2\n\nprint(a = add(1, 5))\n\nprint(a)",
+            "instruction": "fix the bug",
+            "returns": "*\n"
+        },
+        "3":{
+            "title": "spot the bug 3",
+            "code" : "def subtract(num1, num2):\n difference = num1 - num2\n return difference\n\nprint(a = subtract(1, 5))\n\nprint",
+            "instruction": "fix the bug",
+            "returns": "*\n"
+        },
+        "4":{
+            "title": "spot the bug 2",
+            "code" : "def add(num1, num2):\n return num1 + num2\n\nprint(a = add(1, 5))\n\nprint",
+            "instruction": "fix the bug",
+            "returns": "*\n"
+        }
     }
 }
