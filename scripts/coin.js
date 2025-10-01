@@ -22,7 +22,6 @@ let title = document.getElementById("main-title");
 window.addEventListener('getCoin', () => {
     getCoin(5, counter, title);
 })
-//getCoin(1, counter);
     
 window.requestAnimationFrame(draw);
 
@@ -38,7 +37,6 @@ function draw(sizeX=30, sizeY=300) {
             objects = objects.filter(e => e !== element);
             changeNumber(1)
         }
-        //console.log("draw (x, y): (" + String(Math.round(element.x_pos)) + ", " + String(Math.round(element.y_pos)) + ") vs counter (x, y): (" + String(Math.round(gt_rect.left + window.scrollX + gt_rect.width / 2)) + ", " + String(Math.round(gt_rect.top + window.scrollY + gt_rect.height / 2)) + ")");
     });
     window.requestAnimationFrame(draw);
 }

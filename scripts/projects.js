@@ -30,7 +30,7 @@ let htmlGen =
 let getCoin = new CustomEvent("getCoin");
 
 export class Display {
-    constructor(document, parent, projectJSON, htmlString = htmlGen, textareaSize = 1, toggled=false) { // default to 5 lines
+    constructor(document, parent, projectJSON, htmlString = htmlGen, textareaSize = 1 /*default to 1 line*/, toggled=false) { 
         this.toggled = toggled;
 
         this.createElements(document, parent, htmlString);
@@ -43,10 +43,11 @@ export class Display {
             console.log('close button clicked');
             this.toggleElements();
         });
+
         this.projectEl.addEventListener('click', async () => {
             if (this.projectEl.classList.contains('minimized')) {
-            console.log('main clicked');
-            this.toggleElements();
+                console.log('main clicked');
+                this.toggleElements();
             }
         })
 
@@ -141,7 +142,7 @@ export class Display {
         if(element.classList.contains(className)){
             element.classList.remove(className);
         } else{
-            element.classList.add(className)
+            element.classList.add(className);
         }
     }
 

@@ -1,4 +1,6 @@
-const AREAHTML = `
+//output and input area for user code
+const AREAHTML = 
+`
 <div class="input-output pixel-font">
     <div class="code-editor">
         <div class="line-numbers"></div>
@@ -8,6 +10,7 @@ const AREAHTML = `
 </div>
 `
 
+//
 export class CodeArea{
     constructor(document, parent, codeAreaHTML=AREAHTML, lineNumber=1){
         let template = document.createElement('template');
