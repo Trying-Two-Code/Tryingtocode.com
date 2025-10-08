@@ -131,11 +131,31 @@ export class Display {
     }
 
     toggleElements(value=false){ // false = stop showing this project
-        console.log(this.min);
-        this.toggleClass("minimized", this.projectEl);
-        this.toggleClass("notminimized", this.projectEl);
         window.currentDisplay = this;
-        this.projectEl.dispatchEvent(new Event('toggleElements'));
+        console.log(this.min);
+        if (this.projectEl.classList.contains("minimized")) {
+            this.projectEl.classList.remove("minimized");
+            this.projectEl.classList.add("notminimized");
+            console.log('false')
+            this.projectEl.dispatchEvent(
+                new CustomEvent('toggleElements', {
+                    detail: { shouldShow: true }
+                }
+            )
+            );
+        } else {
+            this.projectEl.classList.remove("notminimized");
+            this.projectEl.classList.add("minimized");
+            console.log('true')
+            this.projectEl.dispatchEvent(
+                new CustomEvent('toggleElements', {
+                    detail: { shouldShow: false }
+                }
+            )
+            );
+        }
+        
+        
     }
 
     toggleClass(className, element){

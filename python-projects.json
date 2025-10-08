@@ -137,6 +137,12 @@
             "code": "pets = ['cat', 'dog', 'snake']\n\nprint(pets[0])",
             "instruction": "make it print dog",
             "returns": "dog\n"
+        },
+        "24": {
+            "title": "Arrays 2",
+            "code": "pets = ['cat', 'dog', 'snake']\n\nprint(pets[0])",
+            "instruction": "make it print dog",
+            "returns": "dog\n"
         }
     },
 

@@ -33,7 +33,6 @@ export class CodeArea{
         });
     }
 
-
     indentText(times=5, beginValue=""){
         this.textarea.value = beginValue;
         for (let index = 0; index < times - 1; index++) {
