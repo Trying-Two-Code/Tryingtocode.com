@@ -27,21 +27,20 @@ let toggleAboveProjects = (index, add) => {
 }
 
 let saveProject = (this_proj) => {
-    let current = localStorage.getItem("projects") || ""
+    let current = localStorage.getItem("projects") || this_proj
     let project_list = current.split(";");
     let x = 0;
     let new_val = "";
     project_list.forEach(value => {
         let value_list = value.split(":");
-        let proj_list = this_proj.split(":")
+        let this_proj_list = value.split(":")
         x++;
-        if (value_list[0] == proj_list[0]){
-            value_list[0] = proj_list[0];
-            value_list[1] = proj_list[1];
-        } 
-        new_val += value_list.join(":") + ";"
+        if (value_list[0] == this_proj_list[0]){
+            value_list[1] = this_proj_list[1];
+        }
+        new_val += value_list.join(":") + ";";
     });
-    localStorage.setItem("projects", new_val)
+    localStorage.setItem("projects", new_val);
 };
 
 let getProject = (title) => {
