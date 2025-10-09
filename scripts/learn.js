@@ -26,18 +26,45 @@ let toggleAboveProjects = (index, add) => {
     })
 }
 
-let saveProject = (this_proj, title="") => {
+let saveProject = (this_proj) => {
     let current = localStorage.getItem("projects") || ""
-    project_list = current.split(";")
-    value_list = project_list.split(":")
-    value_list.forEach(value => {
-        if (value == title){
-            
-        }
+    let project_list = current.split(";");
+    let x = 0;
+    let new_val = "";
+    project_list.forEach(value => {
+        let value_list = value.split(":");
+        let proj_list = this_proj.split(":")
+        x++;
+        if (value_list[0] == proj_list[0]){
+            value_list[0] = proj_list[0];
+            value_list[1] = proj_list[1];
+        } 
+        new_val += value_list.join(":") + ";"
     });
-    let new_string = current + this_proj
-    localStorage.setItem("learnProjects", new_string)
+    localStorage.setItem("learnProjects", new_val)
 };
+
+let getProject = (title) => {
+    let current = localStorage.getItem("projects") || ""
+    if(current == ""){
+        return null
+    } 
+    else{
+        let project_list = current.split(";");
+        project_list.forEach(value, () => {
+            let value_list = value.split(":");
+            if(value_list[0] == title){
+                return value;
+            }
+        });
+    }
+    return null
+};
+
+saveProject("helloworld:print('hello')");
+saveProject("helloworld2:print('hello2')");
+let proj = getProject("helloworld");
+console.log(proj);
 
 const loadProjectJSON = async (index) => {
     const response = await fetch('../python-projects.json');
