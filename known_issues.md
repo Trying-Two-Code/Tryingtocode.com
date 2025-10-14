@@ -23,3 +23,7 @@ Hey developer! Read these to know what you should fix:
 - in project.js lines are not updated properly, meaning that sometimes the player will see 7 lines but can only click 3
 - 5
 - ttc
+
+- in learn.css - projects, the mission: "..." is covered when you open a project
+- 6
+- dean

@@ -21,16 +21,20 @@ let htmlGen =
             </div>
             <p class="project-title" id="project-title">Hello World Project:</p>
         </div>
-        <p class="instructions">instructions<!p>
+        <p class="instructions">instructions</p>
         <div class="player-input-parent"></div>
         <button name="run-button" class="run-code" class="output pixel-font">run</button>
     </div>
 `;
 
-let correctCode = new CustomEvent("correctCode");
+let correctCode = new CustomEvent("correctCode", {
+    detail: {
+        value: 5
+    }
+});
 
 export class Display {
-    constructor(document, parent, projectJSON, htmlString = htmlGen, textareaSize = 1 /*default to 1 line*/, toggled=false, _code=null) { 
+    constructor(document, parent, projectJSON, htmlString = htmlGen, textareaSize = 1 /*default to 1 line*/, toggled=false, code=null) { 
         this.toggled = toggled;
 
         this.createElements(document, parent, htmlString);
@@ -40,44 +44,45 @@ export class Display {
 
         this.closeButton.addEventListener('click', (e) => {
             e.stopPropagation();
-            console.log('close button clicked');
-            this.toggleElements();
+            this.toggleElements(false);
         });
 
         this.projectEl.addEventListener('click', async () => {
             if (this.projectEl.classList.contains('minimized')) {
-                console.log('main clicked');
-                this.toggleElements();
+                this.toggleElements(true);
             }
         })
 
         this.rewindButton.addEventListener('click', () => {
-            console.log('rewind button clicked');
-            this.codeArea.indentText(1, this.projectJSON.code);
+            this.codeArea.createText(this.projectJSON.code);
         });
 
         this.projectJSON = projectJSON;
         this.run_button.addEventListener('click', async () => {
             let value = this.textarea.value;
-            let userCode = await this.displayUserCode(value);
-            if(userCode == this.projectJSON.returns){
+            let codeReturn = await this.displayUserCode(value);
+            if(codeReturn == this.projectJSON.returns){
+                correctCode = new CustomEvent("correctCode", {
+                    detail: {
+                        value: (this.reward !== undefined) ? this.reward : 5
+                    }
+                });
                 window.dispatchEvent(correctCode);
+                this.reward = 0;
             }
             else{
-                console.log("user code was " + userCode + " || But the code should've been " + this.projectJSON.returns);
+                console.log("user code was " + codeReturn + " || But the code should've been " + this.projectJSON.returns);
             }
         });
 
         this.textareaSize = textareaSize;
-        this.codeArea.indentText(textareaSize);
+        this.codeArea.createText("\n");
 
         this.lastLineCount = 1;
 
         this.setAttributes();
 
-        if(_code != null){
-            this.codeArea.indentText(5 + addAmm, _code);
-        }
+        this.reward = 5;
     }
 
     createElements(document, parent, htmlString){
@@ -97,17 +102,16 @@ export class Display {
         this.run_button = this.projectEl.querySelector('[name="run-button"]');
         this.output = this.projectEl.querySelector('[name="output"]');
         this.textarea = this.codeArea.textarea;
-        this.lineNumbers = this.projectEl.querySelector('.line-numbers');
-        this.closeButton = this.projectEl.querySelector('[class="project-close-button"]');
-        this.rewindButton = this.projectEl.querySelector('[class="project-restart-button"]');
-        this.title = this.projectEl.querySelector('[class="project-title"]');
-        this.instructions = this.projectEl.querySelector("[class='instructions']");
+        this.lineNumbers = this.projectEl.querySelector(".line-numbers");
+        this.closeButton = this.projectEl.querySelector(".project-close-button");
+        this.rewindButton = this.projectEl.querySelector(".project-restart-button");
+        this.title = this.projectEl.querySelector(".project-title");
+        this.instructions = this.projectEl.querySelector(".instructions");
     }    
 
     setAttributes(){
-        //console.log(this.projectJSON.code);
         let addAmm = this.projectJSON.code.split("\n").length - 1;
-        this.codeArea.indentText(5 + addAmm, this.projectJSON.code);
+        this.codeArea.createText(this.projectJSON.code);
         let title = this.projectJSON.title;
         this.title.innerHTML = title;
         this.instructions.innerHTML = 'mission: ' + this.projectJSON.instruction;
@@ -119,24 +123,23 @@ export class Display {
         this.output.disabled = false;
         return new Promise (resolve => {
             const handler = (e) => {
-            console.log(e.key);
-            if (e.key === "Enter") {
-                e.preventDefault();
-                this.output.removeEventListener("keydown", handler);
-                this.output.disabled = true; 
-                resolve(this.output.value.slice(this.old.length));
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    this.output.removeEventListener("keydown", handler);
+                    this.output.disabled = true; 
+                    resolve(this.output.value.slice(this.old.length));
+                }
+                if(e.key === "Backspace"){
+                    e.preventDefault();
+                }
             }
-            if(e.key === "Backspace"){
-                e.preventDefault();
-            }
-        }
             this.output.addEventListener("keydown", handler);
         });
     }
 
     toggleElements(value=false){ // false = stop showing this project
         window.currentDisplay = this;
-        if (this.projectEl.classList.contains("minimized")) {
+        if (value) {
             this.editClass("minimized", false);
             this.editClass("notminimized", true);
         } else {

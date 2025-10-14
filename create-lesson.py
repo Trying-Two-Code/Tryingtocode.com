@@ -48,3 +48,7 @@ new_lesson = {
 
 #delete lesson at index 1
 #delete_lesson('python-projects.json', 1)
+
+#python_file_name = f"./components/projects/{new_lesson['title']}.py"
+#with open(python_file_name, "w") as new_python_file:
+#    new_python_file.write(new_lesson["code"])

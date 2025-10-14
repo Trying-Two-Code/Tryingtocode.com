@@ -15,7 +15,7 @@ export class CodeArea{
 
         template.innerHTML = codeAreaHTML.trim();
         this.content = template.content;
-        this.projectEl = template.content.firstElementChild;
+        this.projectEl = this.content.firstElementChild;
         parent.appendChild(this.content);
 
         this.textarea = this.projectEl.querySelector('textarea[name=user-code]');
@@ -29,11 +29,13 @@ export class CodeArea{
                 this.selectionStart = this.selectionEnd = start + 1;
             }
         });
+
+        this.lineNumber = lineNumber
     }
 
-    indentText(times=5, beginValue=""){
-        this.textarea.value = beginValue;
-        for (let index = 0; index < times - 1; index++) {
+    createText(value){
+        this.textarea.value = value;
+        for (let index = 0; index < this.lineNumber - 1; index++) {
             this.textarea.value += "\n";
         }
         return this.textarea.value.split("\n").length;

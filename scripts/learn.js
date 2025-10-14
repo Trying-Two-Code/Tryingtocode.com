@@ -4,11 +4,7 @@ import "./coin.js";
 
 if (localStorage.getItem("projects") == '') {localStorage.setItem("projects", "{}")}
 
-
-
 let loadProjects = Array.from({length: 21}, (_, i) => i + 1);
-let finishedProjects = localStorage.getItem("finished") || "";
-localStorage.setItem("finished", finishedProjects);
 
 let toggleAboveProjects = (index, add) => {
     projects.slice(0, index - 1).forEach(element => {
@@ -35,11 +31,11 @@ let getProject = (title) => {
     return projects[title] || null;
 };
 
-window.addEventListener('correctCode', () => {
+window.addEventListener('correctCode', (details) => {
     let title = window.currentDisplay.title.innerHTML;
     let code = window.currentDisplay.textarea.value;
     saveProject(title + ":" + code);
-    console.log(getProject(title));
+    console.log(details.detail.value)
 })
 
 const loadProjectJSON = async (index) => {
@@ -62,13 +58,15 @@ function loadProject(this_project){
         })
         display.setupTextarea();
         let title = document.getElementById("main-content")
-        console.log(JSON.title)
         let code = getProject(JSON.title);
         if(code){
-            display.codeArea.indentText(5 + display.addAmm, code);
+            display.reward = 0;
+            display.codeArea.createText(code);
         } else if(mainProj){
+            display.reward = 5;
             mainProj = false;
-            display.toggleElements()
+            display.toggleElements(true);
+            console.log("main is " + display.title.innerHTML)
         }
     });
 }

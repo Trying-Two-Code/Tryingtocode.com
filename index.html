@@ -10,6 +10,7 @@
     <script src="./scripts/collapse.js" type="module"></script>
     <script src="./scripts/index.js" type="module"></script>
     <script src="./scripts/general.js" type="module"></script>
+    <script src="./firebase.js" type="module" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -45,20 +46,14 @@
             <h1>Welcome to Trying to Code!</h1>
             <p>Stop being taught</p>
             <p></p>
-            <button>sign in / up</button>
+            <button id="toggle-signinup">sign in / up</button>
             <button><a href="learn.html" title="Learn">go here</a></button>
         </div>
     </div> 
-    <div id="sign-in" class="pixel-font center">
-        <form action="">
-            <h1>sign in</h1>
-            <div class="input-box">
-                <input type="text" placeholder="Username (required)" required>
-            </div>
-            <div class="input-box">
-                <input type="text" placeholder="Password">
-            </div>
-        </form>
+
+    <div class="center" id="sign-in-holder" name="sign in">
+
     </div>
+    
 </body>
 </html>
