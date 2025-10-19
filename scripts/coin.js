@@ -11,7 +11,7 @@ let canvas = document.getElementById('render-canvas');
 let ctx;
 
 const coinImgSrc = '../components/art/ttc coin icon.png';
-let objects;
+let objects = [];
 
 let title;
 if(canvas){
