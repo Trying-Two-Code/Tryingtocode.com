@@ -1,12 +1,17 @@
 
-def main():
- [' x', '  ', ' =', '  ', " '", ' h', ' e', ' l', ' l', ' o', " '", ' \n', ' \n', ' #', ' t', ' r', ' y', '  ', ' p', ' r', ' i', ' n', ' t', ' i', ' n', ' g', '  ', ' x', ' :', ' \n', ' p', ' r', ' i', ' n', ' t', ' (', ' )']
+def main(run=False):
+ code = [" pets = ['cat', 'dog', 'snake']", ' ', ' print(pets[0])']
+ if(run):
+  exec_this = ""
+  for line in code:
+   exec_this += line
+  exec(exec_this)
  pass
 
 def correct(code, output):
- awnsers = ['bye
-']
- include = ['']
+ awnsers = ['''dog
+''']
+ include = ['''''']
  found = {word: False for word in include}
  for line in code.splitlines():
   stripped = line.split('#')[0]

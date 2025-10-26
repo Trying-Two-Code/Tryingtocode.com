@@ -79,7 +79,7 @@
             "returns": "hello world\nhello world\n"
         },
         "14": {
-            "title": "print(f)",
+            "title": "Print(f)",
             "code": "#print(f'') lets you print variables:\n\nx = 0\nprint(f'x is {x}')\n\n#make sure to use {}",
             "instruction": "make x = something interesting",
             "returns": "*\n"
@@ -109,19 +109,19 @@
             "returns": "*\n"
         },
         "19": {
-            "title": "or",
+            "title": "Or",
             "code": "x = 'one'\nif x == 1 or x == 'one':\n print('x is one')\nelse:\n print('x is not one')",
             "instruction": "make it so x is 1, not 'one'",
             "returns": "x is not one\n"
         },
         "20": {
-            "title": "and",
+            "title": "And",
             "code": "x = 1\ny = 1\nif x == 1 and y == 1:\n print('x and y are one')\nelse:\n print('x and y are not one')",
             "instruction": "make it so x and y are not one",
             "returns": "x and y are not one\n"
         },
         "21": {
-            "title": "using libraries",
+            "title": "Using libraries",
             "code": "import time\n\ntime.sleep(1)\n\nprint('waited one second')",
             "instruction": "make it wait 2 seconds instead",
             "returns": "*\n",

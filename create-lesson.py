@@ -1,4 +1,5 @@
 import json
+import os
 
 def insert_lesson(filename, index, new_lesson):
     # Load lessons from file
@@ -40,6 +41,7 @@ def delete_lesson(filename, index):
 
 # new lesson to be made \/
 new_lesson = {
+    "section": "python - unit 1",
     "title": "New Concept",
     "code": "print('new lesson')",
     "instruction": "Try this new step!",
@@ -48,15 +50,20 @@ new_lesson = {
 }
 
 def code_string(lesson=new_lesson):
-    indent_lessons = [f" {les}" for les in lesson['code']]
+    indent_lessons = [f" {les}" for les in lesson['code'].splitlines()]
     code_string = f"""
-def main():
- {indent_lessons}
+def main(run=False):
+ code = {indent_lessons}
+ if(run):
+  exec_this = ""
+  for line in code:
+   exec_this += line
+  exec(exec_this)
  pass
 
 def correct(code, output):
- awnsers = ['{lesson["returns"]}']
- include = ['{lesson['includes']}']
+ awnsers = ['''{lesson["returns"]}''']
+ include = ['''{lesson['includes']}''']
  found = {{word: False for word in include}}
  for line in code.splitlines():
   stripped = line.split('#')[0]
@@ -77,7 +84,10 @@ def correct(code, output):
 #delete_lesson('python-projects.json', 1)
 
 def write_file(write_lesson=new_lesson):
-    python_file_name = f"./components/projects/{write_lesson['title']}.py"
+    python_folder = f"./components/projects/{write_lesson['section']}"
+    python_file_name = f"{python_folder}/{write_lesson['title']}.py"
+    if(not os.path.exists(python_folder)):
+        os.mkdir(python_folder)
     with open(python_file_name, "w") as new_python_file:
         new_python_file.write(code_string(write_lesson))
 
@@ -86,9 +96,10 @@ def convert_lesson(index, file_name="python-projects.json"):
         lessons = json.load(file)
     lesson = lessons["projects"][index]
     new_lesson = {
-        "title": lesson.get("title"),
-        "code": lesson.get("code"),
-        "instruction": lesson.get("instruction"),
+        "section": lesson.get("section", "python - unit 1"),
+        "title": lesson.get("title", ""),
+        "code": lesson.get("code", ""),
+        "instruction": lesson.get("instruction", ""),
         "returns": lesson.get("returns", ""),
         "includes": lesson.get("includes", "")
     }
@@ -97,5 +108,5 @@ def convert_lesson(index, file_name="python-projects.json"):
 with open("python-projects.json", "r") as file:
     for key, lesson in json.load(file)["projects"].items():
         new_lesson = convert_lesson(key)
-        print(new_lesson)
+        print(new_lesson['section'])
         write_file(new_lesson)

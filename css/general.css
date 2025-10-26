@@ -188,3 +188,11 @@ canvas{
     position: absolute;
     right: 50%;
 }
+
+.image-button{
+    color: #0000;
+    background-color: #0000;
+    border-radius: 0px;
+    border-color: #0000;
+    cursor: pointer;
+}

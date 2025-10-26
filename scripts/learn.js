@@ -1,10 +1,21 @@
 //for use in learn.html
 import { Display } from "./projects.js";
 import "./coin.js";
+import { setUserDatapoint } from "../firebase.js";
 
 if (localStorage.getItem("projects") == '') {localStorage.setItem("projects", "{}")}
 
 let loadProjects = Array.from({length: 21}, (_, i) => i + 1);
+
+const SECTIONS = ["python - unit 1", "python - unit 2"];
+
+if (localStorage.getItem("section") == "") {localStorage.setItem("section"), SECTIONS[0]};
+
+
+window.addEventListener("user_made", () => {
+    localStorage.setItem("projects", window.user)
+    const user = window.user
+});
 
 let toggleAboveProjects = (index, add) => {
     projects.slice(0, index - 1).forEach(element => {
@@ -24,6 +35,9 @@ let saveProject = (this_proj) => {
     let projects = JSON.parse(localStorage.getItem("projects") || "{}");
     projects[title] = content;
     localStorage.setItem("projects", JSON.stringify(projects));
+    if(user){
+        setUserDatapoint(projects=projects)
+    }
 };
 
 let getProject = (title) => {
@@ -43,6 +57,8 @@ const loadProjectJSON = async (index) => {
     const json = await response.json();
     return json["projects"][index];
 };
+
+
 
 let parent = document.getElementById('project-parent');
 let projects = [];
@@ -66,7 +82,7 @@ function loadProject(this_project){
             display.reward = 5;
             mainProj = false;
             display.toggleElements(true);
-            console.log("main is " + display.title.innerHTML)
+            console.log("main is " + display.title.innerHTML);
         }
     });
 }

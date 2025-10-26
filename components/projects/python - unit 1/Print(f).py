@@ -1,12 +1,17 @@
 
-def main():
- [' p', ' r', ' i', ' n', ' t', ' (', " '", ' h', ' e', ' l', ' l', ' o', ' w', ' o', ' r', ' l', ' d', " '", ' )']
+def main(run=False):
+ code = [" #print(f'') lets you print variables:", ' ', ' x = 0', " print(f'x is {x}')", ' ', ' #make sure to use {}']
+ if(run):
+  exec_this = ""
+  for line in code:
+   exec_this += line
+  exec(exec_this)
  pass
 
 def correct(code, output):
- awnsers = ['hello world
-']
- include = ['']
+ awnsers = ['''*
+''']
+ include = ['''''']
  found = {word: False for word in include}
  for line in code.splitlines():
   stripped = line.split('#')[0]

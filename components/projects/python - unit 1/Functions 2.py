@@ -1,12 +1,17 @@
 
-def main():
- [' #', ' m', ' a', ' k', ' e', '  ', ' a', '  ', ' f', ' u', ' n', ' c', ' t', ' i', ' o', ' n', ' :', ' \n']
+def main(run=False):
+ code = [' #make a function:']
+ if(run):
+  exec_this = ""
+  for line in code:
+   exec_this += line
+  exec(exec_this)
  pass
 
 def correct(code, output):
- awnsers = ['*
-']
- include = ['']
+ awnsers = ['''*
+''']
+ include = ['''''']
  found = {word: False for word in include}
  for line in code.splitlines():
   stripped = line.split('#')[0]

@@ -1,12 +1,16 @@
 
-def main():
- [' x', '  ', ' =', '  ', ' 1', ' \n', ' y', '  ', ' =', '  ', ' 1', ' \n', ' \n', ' p', ' r', ' i', ' n', ' t', ' (', ' x', '  ', ' +', '  ', ' y', ' )']
+def main(run=False):
+ code = [' #try typing whatever you want >', ' ', " i = input('type here: ')", ' print(i)']
+ if(run):
+  exec_this = ""
+  for line in code:
+   exec_this += line
+  exec(exec_this)
  pass
 
 def correct(code, output):
- awnsers = ['10
-']
- include = ['']
+ awnsers = ['''*''']
+ include = ['''''']
  found = {word: False for word in include}
  for line in code.splitlines():
   stripped = line.split('#')[0]

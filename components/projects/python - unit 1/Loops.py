@@ -1,6 +1,11 @@
 
-def main():
- [' f', ' o', ' r', '  ', ' i', '  ', ' i', ' n', '  ', ' r', ' a', ' n', ' g', ' e', ' (', ' 1', ' 0', ' )', ' :', ' \n', '  ', ' p', ' r', ' i', ' n', ' t', ' (', ' i', ' )', ' \n', ' \n', ' #', ' m', ' a', ' k', ' e', '  ', ' t', ' h', ' e', '  ', ' l', ' o', ' o', ' p', '  ', ' g', ' o', '  ', ' t', ' o', '  ', ' 1', ' 0', ' 0']
+def main(run=False):
+ code = [' for i in range(10):', '  print(i)', ' ', ' #make the loop go to 100']
+ if(run):
+  exec_this = ""
+  for line in code:
+   exec_this += line
+  exec(exec_this)
  pass
 
 def correct(code, output):
@@ -105,7 +110,7 @@ def correct(code, output):
 98
 99
 ''']
- include = ['']
+ include = ['''''']
  found = {word: False for word in include}
  for line in code.splitlines():
   stripped = line.split('#')[0]

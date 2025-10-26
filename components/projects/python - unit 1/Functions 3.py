@@ -1,10 +1,15 @@
 
-def main():
- [' d', ' e', ' f', '  ', ' m', ' y', ' _', ' p', ' r', ' i', ' n', ' t', ' (', ' n', ' u', ' m', ' b', ' e', ' r', ' )', ' :', ' \n', '  ', ' p', ' r', ' i', ' n', ' t', ' (', ' f', " '", ' t', ' h', ' e', '  ', ' n', ' u', ' m', ' b', ' e', ' r', '  ', ' i', ' s', '  ', ' {', ' n', ' u', ' m', ' b', ' e', ' r', ' }', " '", ' )', ' \n', ' \n', ' f', ' o', ' r', '  ', ' i', '  ', ' i', ' n', '  ', ' r', ' a', ' n', ' g', ' e', ' (', ' 2', ' ,', '  ', ' 1', ' 1', ' )', ' :', ' \n', '  ', ' m', ' y', ' _', ' p', ' r', ' i', ' n', ' t', ' (', ' i', ' )']
+def main(run=False):
+ code = [' def my_print(number):', "  print(f'the number is {number}')", ' ', ' for i in range(2, 11):', '  my_print(i)']
+ if(run):
+  exec_this = ""
+  for line in code:
+   exec_this += line
+  exec(exec_this)
  pass
 
 def correct(code, output):
- awnsers = ['the number is 3
+ awnsers = ['''the number is 3
 the number is 4
 the number is 5
 the number is 6
@@ -101,8 +106,8 @@ the number is 96
 the number is 97
 the number is 98
 the number is 99
-']
- include = ['']
+''']
+ include = ['''''']
  found = {word: False for word in include}
  for line in code.splitlines():
   stripped = line.split('#')[0]

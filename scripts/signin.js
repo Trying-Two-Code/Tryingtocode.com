@@ -4,13 +4,16 @@ const htmlGen =
     <form action="">
         <h1 class="si-title">sign in</h1>
         <div class="input-box si-input-container">
-            <input id="username" type="text" placeholder="Username (required)" required>
+            <input id="username" type="text" placeholder="Username (required)" class="si-input" required>
         </div>
         <div class="input-box si-output-container">
-            <input id="password" type="text" placeholder="Password">
+            <input id="password" type="text" placeholder="Password" class="si-output">
         </div>
     </form>
-    <button id="submit-button" class="si-submit">submit</button>
+    <div class="si-button-flexbox">
+        <button id="exit-button" class="si-exit">Exit</button>
+        <button id="submit-button" class="si-submit">submit</button>
+    </div>
 </div>
 `
 
@@ -26,6 +29,7 @@ export class SignIn{
 
         this.findElements();
 
+        this.toggleButton(this.exit);
         this.toggle();
     }
 
@@ -33,16 +37,17 @@ export class SignIn{
         this.user = this.projectEl.querySelector("#username");
         this.password = this.projectEl.querySelector("#password");
         this.submit = this.projectEl.querySelector("#submit-button");
+        this.exit = this.projectEl.querySelector("#exit-button");
     }
 
     toggleButton(button){
         button.addEventListener("click", () => {
-            this.toggle();
+            this.toggle(this.projectEl);
         });
     }
 
-    toggle(){
+    toggle(element=this.projectEl){
         console.log("toggle");
-        this.projectEl.classList.toggle("gone");
+        element.classList.toggle("gone");
     }
 }
