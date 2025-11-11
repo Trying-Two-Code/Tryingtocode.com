@@ -3,8 +3,12 @@ import { Display } from "./projects.js";
 import "./coin.js";
 import { setUserDatapoint } from "../firebase.js";
 
-let loadProjects = Array.from({length: 21}, (_, i) => i + 1); //just get the first 21 lessons
+let beginnerPythonProjects = Array.from({length: 4}, (_, i) => [i + 1, "beginner"]);
+let mainPythonProjects = Array.from({length: 21}, (_, i) => [i + 1, "projects"]); //just get the first 21 lessons
+let loadProjects = beginnerPythonProjects + mainPythonProjects;
+console.log(loadProjects);
 const sections = ["python - unit 1", "python - unit 2"]; //temporary way of defining sections
+const DEFAULTREWARD = 5;
 
 let parent = document.getElementById('project-parent');
 let projects = [];
@@ -63,14 +67,14 @@ window.addEventListener('correctCode', (details) => {
     console.log(details.detail.value);
 });
 
-const loadProjectJSON = async (index) => {
+const loadProjectJSON = async (index, section="projects") => {
     const response = await fetch('../python-projects.json');
     const json = await response.json();
-    return json["projects"][index];
+    return json[section][index];
 };
 
-let loadProject = (this_project, defaultReward=5) => {
-    loadProjectJSON(this_project).then(JSON => {
+let loadProject = (this_project, defaultReward=DEFAULTREWARD, section="projects") => {
+    loadProjectJSON(this_project, section).then(JSON => {
         const display = new Display(document, parent, JSON);
         projects.push(display);
         display.projectEl.addEventListener('toggleElements', (shouldShow) => {
@@ -82,6 +86,7 @@ let loadProject = (this_project, defaultReward=5) => {
         if(code){
             display.reward = 0;
             display.codeArea.createText(code);
+            display.completedIcon.classList.remove("hide");
         } else if(mainProj){
             display.reward = defaultReward;
             mainProj = false;
@@ -91,6 +96,6 @@ let loadProject = (this_project, defaultReward=5) => {
     });
 }
 
-loadProjects.forEach(index => {
-    loadProject(index);
-});
+for (let item of loadProjects){
+    loadProject(item[0], DEFAULTREWARD, item[1]);
+}

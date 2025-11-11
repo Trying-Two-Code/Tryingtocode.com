@@ -3,14 +3,15 @@
         "1": {
             "title": "Hello World",
             "code": "print('helloworld')",
-            "instruction": "Make it show hello world",
+            "instruction": "Make it show 'hello world' (with the space too)",
             "returns": "hello world\n"
         },
         "2": {
             "title": "Variable",
             "code": "x = 1\nprint(x)",
             "instruction": "x = 1. Make it equal 2.",
-            "returns": "2\n"
+            "returns": "2\n",
+            "includes": "print(x)"
         },
         "3": {
             "title": "Adding",
@@ -22,122 +23,142 @@
             "title": "Comments",
             "code": "#this is a comment\n\n#comments don't actually do anything\n#they are just for developers\n\n",
             "instruction": "try running this to see what happens",
-            "returns": ""
+            "returns": "",
+            "includes": "#"
         },
         "5": {
             "title": "Variable words",
             "code": "x = 'hello'\n\n#try printing x:\nprint()",
             "instruction": "make x = bye and then print it",
-            "returns": "bye\n"
+            "returns": "bye\n",
+            "includes": "print(x)"
         },
         "6": {
             "title": "Variable words adding",
             "code": "#you can add words together\n\nx = 'apple and '\ny = 'orange '\n\nprint(x + y)",
             "instruction": "what if you try adding x + x + y + y?",
-            "returns": "apple and apple and orange orange \n"
+            "returns": "*",
+            "includes": "print(x + x + y + y)"
         },
         "7": {
             "title": "Taking inputs",
             "code": "#try typing whatever you want >\n\ni = input('type here: ')\nprint(i)",
             "instruction": "input() takes the input of whatever you type in the output box",
-            "returns": "*"
+            "returns": "*",
+            "includes": "input("
         },
         "8": {
             "title": "Adding inputs",
             "code": "i = input('i: ')\nprint('')\nj = input('j: ')\n\nprint(i + j)",
             "instruction": "you can add inputs together:",
-            "returns": "*"
+            "returns": "*",
+            "includes": "input(&&&print("
+            
         },
         "9": {
             "title": "DIY",
             "code": "#try getting player input, and do something with it:\n\ni = input)\n\nprint)",
             "instruction": "",
-            "returns": "*"
+            "returns": "*",
+            "includes": "input(&&&print("
         },
         "10": {
             "title": "First Function",
             "code": "#we can make our own functions!\n#print() and input() are functions\n\ndef my_function():\n print('function!')\n\n#to call this function, say \nmy_function()",
             "instruction": "make my_function print something else",
-            "returns": "*\n"
+            "returns": "*",
+            "includes": "input(&&&print("
         },
         "11": {
             "title": "Functions 2",
             "code": "#make a function:\n",
             "instruction": "It's ok if it's really simple",
-            "returns": "*\n"
+            "returns": "*",
+            "includes": "def&&&:"
         },
         "12": {
             "title": "Loops",
             "code": "for i in range(10):\n print(i)\n\n#make the loop go to 100",
             "instruction": "",
-            "returns": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39\n40\n41\n42\n43\n44\n45\n46\n47\n48\n49\n50\n51\n52\n53\n54\n55\n56\n57\n58\n59\n60\n61\n62\n63\n64\n65\n66\n67\n68\n69\n70\n71\n72\n73\n74\n75\n76\n77\n78\n79\n80\n81\n82\n83\n84\n85\n86\n87\n88\n89\n90\n91\n92\n93\n94\n95\n96\n97\n98\n99\n"
+            "returns": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39\n40\n41\n42\n43\n44\n45\n46\n47\n48\n49\n50\n51\n52\n53\n54\n55\n56\n57\n58\n59\n60\n61\n62\n63\n64\n65\n66\n67\n68\n69\n70\n71\n72\n73\n74\n75\n76\n77\n78\n79\n80\n81\n82\n83\n84\n85\n86\n87\n88\n89\n90\n91\n92\n93\n94\n95\n96\n97\n98\n99\n",
+            "includes": "for"
         },
         "13": {
             "title": "Parameters",
             "code": "def my_function(parameter):\n print(parameter)\n\nmy_function('hello world')",
             "instruction": "make the function print twice",
-            "returns": "hello world\nhello world\n"
+            "returns": "hello world\nhello world\n",
+            "includes": "def"
         },
         "14": {
             "title": "Print(f)",
             "code": "#print(f'') lets you print variables:\n\nx = 0\nprint(f'x is {x}')\n\n#make sure to use {}",
             "instruction": "make x = something interesting",
-            "returns": "*\n"
+            "returns": "*",
+            "includes": "x"
         },
         "15": {
             "title": "Functions 3",
             "code": "def my_print(number):\n print(f'the number is {number}')\n\nfor i in range(2, 11):\n my_print(i)",
             "instruction": "make it go from 3 - 99",
-            "returns": "the number is 3\nthe number is 4\nthe number is 5\nthe number is 6\nthe number is 7\nthe number is 8\nthe number is 9\nthe number is 10\nthe number is 11\nthe number is 12\nthe number is 13\nthe number is 14\nthe number is 15\nthe number is 16\nthe number is 17\nthe number is 18\nthe number is 19\nthe number is 20\nthe number is 21\nthe number is 22\nthe number is 23\nthe number is 24\nthe number is 25\nthe number is 26\nthe number is 27\nthe number is 28\nthe number is 29\nthe number is 30\nthe number is 31\nthe number is 32\nthe number is 33\nthe number is 34\nthe number is 35\nthe number is 36\nthe number is 37\nthe number is 38\nthe number is 39\nthe number is 40\nthe number is 41\nthe number is 42\nthe number is 43\nthe number is 44\nthe number is 45\nthe number is 46\nthe number is 47\nthe number is 48\nthe number is 49\nthe number is 50\nthe number is 51\nthe number is 52\nthe number is 53\nthe number is 54\nthe number is 55\nthe number is 56\nthe number is 57\nthe number is 58\nthe number is 59\nthe number is 60\nthe number is 61\nthe number is 62\nthe number is 63\nthe number is 64\nthe number is 65\nthe number is 66\nthe number is 67\nthe number is 68\nthe number is 69\nthe number is 70\nthe number is 71\nthe number is 72\nthe number is 73\nthe number is 74\nthe number is 75\nthe number is 76\nthe number is 77\nthe number is 78\nthe number is 79\nthe number is 80\nthe number is 81\nthe number is 82\nthe number is 83\nthe number is 84\nthe number is 85\nthe number is 86\nthe number is 87\nthe number is 88\nthe number is 89\nthe number is 90\nthe number is 91\nthe number is 92\nthe number is 93\nthe number is 94\nthe number is 95\nthe number is 96\nthe number is 97\nthe number is 98\nthe number is 99\n"
+            "returns": "the number is 3\nthe number is 4\nthe number is 5\nthe number is 6\nthe number is 7\nthe number is 8\nthe number is 9\nthe number is 10\nthe number is 11\nthe number is 12\nthe number is 13\nthe number is 14\nthe number is 15\nthe number is 16\nthe number is 17\nthe number is 18\nthe number is 19\nthe number is 20\nthe number is 21\nthe number is 22\nthe number is 23\nthe number is 24\nthe number is 25\nthe number is 26\nthe number is 27\nthe number is 28\nthe number is 29\nthe number is 30\nthe number is 31\nthe number is 32\nthe number is 33\nthe number is 34\nthe number is 35\nthe number is 36\nthe number is 37\nthe number is 38\nthe number is 39\nthe number is 40\nthe number is 41\nthe number is 42\nthe number is 43\nthe number is 44\nthe number is 45\nthe number is 46\nthe number is 47\nthe number is 48\nthe number is 49\nthe number is 50\nthe number is 51\nthe number is 52\nthe number is 53\nthe number is 54\nthe number is 55\nthe number is 56\nthe number is 57\nthe number is 58\nthe number is 59\nthe number is 60\nthe number is 61\nthe number is 62\nthe number is 63\nthe number is 64\nthe number is 65\nthe number is 66\nthe number is 67\nthe number is 68\nthe number is 69\nthe number is 70\nthe number is 71\nthe number is 72\nthe number is 73\nthe number is 74\nthe number is 75\nthe number is 76\nthe number is 77\nthe number is 78\nthe number is 79\nthe number is 80\nthe number is 81\nthe number is 82\nthe number is 83\nthe number is 84\nthe number is 85\nthe number is 86\nthe number is 87\nthe number is 88\nthe number is 89\nthe number is 90\nthe number is 91\nthe number is 92\nthe number is 93\nthe number is 94\nthe number is 95\nthe number is 96\nthe number is 97\nthe number is 98\nthe number is 99\n",
+            "includes": "def"
         },
         "16": {
             "title": "If then",
             "code": "#= sets a value\n#== checks if it is a value\n\nx='banana'\n\nif x == 'apple':\n print('if statement worked!')",
             "instruction": "make this check if x is 'banana'",
-            "returns": "*\n"
+            "returns": "*",
+            "includes": "x == 'banana'"
         },
         "17": {
             "title": "Selection",
             "code": "fruit = input('orange (o) apple (a):')\n\nif fruit == 'o':\n print('orange is good')\nif fruit == 'a':\n print('apple is good')",
             "instruction": "try inputing either o or a",
-            "returns": "apple is good\n"
+            "returns": "apple is good\n",
+            "includes": "fruit = input('orange (o) apple (a):')&&&if fruit == 'o':&&&print('orange is good')&&&if fruit == 'a':&&&print('apple is good')"
         },
         "18": {
             "title": "If then 2",
             "code": "x = 1\nif x == 1:\n print('x is one')\nelse:\n print('x is not one')",
             "instruction": "make it so x is not 1",
-            "returns": "*\n"
+            "returns": "x is not one",
+            "includes": "x&&&="
         },
         "19": {
             "title": "Or",
             "code": "x = 'one'\nif x == 1 or x == 'one':\n print('x is one')\nelse:\n print('x is not one')",
             "instruction": "make it so x is 1, not 'one'",
-            "returns": "x is not one\n"
+            "returns": "x is not one\n",
+            "includes": "x = 1"
         },
         "20": {
             "title": "And",
             "code": "x = 1\ny = 1\nif x == 1 and y == 1:\n print('x and y are one')\nelse:\n print('x and y are not one')",
             "instruction": "make it so x and y are not one",
-            "returns": "x and y are not one\n"
+            "returns": "x and y are not one\n",
+            "includes": "if"
         },
         "21": {
             "title": "Using libraries",
             "code": "import time\n\ntime.sleep(1)\n\nprint('waited one second')",
             "instruction": "make it wait 2 seconds instead",
-            "returns": "*\n",
+            "returns": "*",
             "includes": "time.sleep(2)"
         },
         "22": {
             "title": "Arrays",
             "code": "pets = ['cat', 'dog', 'snake']\n\nfor pet in pets:\n print(pet)",
             "instruction": "add hamster",
-            "returns": "*\n"
+            "returns": "*",
+            "includes": "pets = ['cat', 'dog', 'snake', 'hamster']"
         },
         "23": {
             "title": "Arrays 2",
             "code": "pets = ['cat', 'dog', 'snake']\n\nprint(pets[0])",
             "instruction": "make it print dog",
-            "returns": "dog\n"
+            "returns": "dog\n",
+            "includes": "print(pets[1])"
         },
         "24": {
             "title": "Arrays 2",
@@ -158,31 +179,65 @@
             "title": "spot the bug 1",
             "code" : "def add(num1, num2):\n return num1 - num2\n\nprint(add(1, 5))",
             "instruction": "fix the bug",
-            "returns": "*\n"
+            "returns": "*"
         },
         "2":{
             "title": "spot the bug 2",
             "code" : "def add(num1, num2):\n return num1 + num2\n\nprint(a = add(1, 5))\n\nprint(a)",
             "instruction": "fix the bug",
-            "returns": "*\n"
+            "returns": "*"
         },
         "3":{
             "title": "spot the bug 3",
             "code" : "def subtract(num1, num2):\n difference = num1 - num2\n return difference\n\nprint(a = subtract(1, 5))\n\nprint",
             "instruction": "fix the bug",
-            "returns": "*\n"
+            "returns": "*"
         },
         "4":{
             "title": "spot the bug 4",
             "code" : "def add(num1, num2):\n return num1 + num2\n\nprint(a = add(1, 5))\n\nprint",
             "instruction": "fix the bug",
-            "returns": "*\n"
+            "returns": "*"
         },
         "5":{
             "title": "spot the bug 5",
             "code" : "def add(num1, num2):\n return num1 - (-num2)\n\na = add('1', '5')\n\nprint(a)",
             "instruction": "fix the bug",
-            "returns": "*\n"
+            "returns": "*"
+        }
+    },
+
+    "beginners": {
+        "1":{
+            "title":"Run",
+            "code":"print('you did it!')",
+            "instruction":"press the green arrow at the bottom",
+            "returns":"you did it!\n"
+        },
+        "2":{
+            "title":"Edit",
+            "code":"print('hello ')",
+            "instruction":"change it to be: print('hello world')",
+            "returns": "hello world\n"
+        },
+        "3":{
+            "title":"Run 2",
+            "code":"# use # to make a comment",
+            "instruction":"press the green arrow to run",
+            "returns": ""
+        },
+        "4":{
+            "title":"Output Box",
+            "code":"print('when you run this, the text goes to the output box')",
+            "instruction":"run it",
+            "returns": "when you run this, the text goes to the output box\n"
+        },
+        "5":{
+            "title":"Input 0",
+            "code":"input()",
+            "instruction":"don't change the code, instead, run it (press the green arrow) and try typing in the output box",
+            "returns":"*",
+            "includes":"input()"
         }
     }
 }

@@ -19,6 +19,7 @@ let htmlGen =
                 <img id="reset-img" src="./components/art/rewind icon - stroke.png">
             </button>
             </div>
+            <img src="./components/art/ttc coin icon.png" class="hide completed-icon" id="completed-icon"></img>
             <p class="project-title" id="project-title">Hello World Project:</p>
         </div>
         <p class="instructions">instructions</p>
@@ -33,28 +34,48 @@ var correctCode = new CustomEvent("correctCode", {
     }
 });
 
+function checkInclusion(code, JSON, splitJSON="&&&"){
+    //if 2 things should be true, use JSONAnd
+    splitJSON = splitJSON;
+    //loop through things that need to be included
+    for (let JSONline of JSON.includes.split(splitJSON)){
+        let correct = false;
+        code.split("\n").forEach(line => {
+            if(line.includes(JSONline)){
+                correct = true;
+            }
+            if(line.includes("#") && !JSONline.includes("#")){
+                //player has commented something... hmmmm
+                console.error("think of something to check if this is a problem!");
+            }
+        });
+        //keep going unless one of the neccisary lines is never included
+        if(!correct){
+            console.log("something was wrong...")
+            return false;
+        }
+    }
+    //if it hasn't returned false already, then it must be true
+    return true;
+}
+
 async function isCorrectCode(code, output, JSON, blankOutput="*"){
     let correct = false;
 
-    //if we care about the output (blankOutput if we don't), we run this:
-    if(JSON.returns.includes(blankOutput) || output == JSON.returns){
+    //if we don't care about the output, or if the output is correct, then it's good 👍
+    let careAboutOutput = !JSON.returns.includes(blankOutput);
+    let correctOutput = (output == JSON.returns);
+    if(!careAboutOutput || correctOutput){
         correct = true;
     }
 
+    //in this case we know that the code is incorrect
+    if(careAboutOutput && !correctOutput) {return false;}
+
     //if we care about code content, run this:
-    if(JSON.includes !== "" && JSON.includes !== null){
-        code.split("\n").forEach(line => {
-            JSONAnd = "&&&";
-            correct = false;
-            JSON.includes.split(JSONAnd).forEach(){
-                if(line.includes(JSON.includes)){
-                    correct = true;
-                }
-            }
-            if(!correct){
-                return false;
-            }
-        });
+    if(JSON.includes != null){
+        correct = checkInclusion(code, JSON, "&&&");
+        console.log("It was correct: ", checkInclusion(code, JSON, "&&&"));
     }
     
     console.log("it was correct? ", correct)
@@ -123,6 +144,7 @@ export class Display {
         this.rewindButton = query(".project-restart-button");
         this.title = query(".project-title");
         this.instructions = query(".instructions");
+        this.completedIcon = query(".completed-icon")
     }    
 
     setAttributes(){
@@ -227,6 +249,7 @@ function rewardPlayer(display){
             
         window.dispatchEvent(correctCode);
         display.reward = 0;
+        display.completedIcon.classList.remove("hide");
     }
 }
 

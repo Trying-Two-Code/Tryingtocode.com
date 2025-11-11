@@ -105,8 +105,8 @@ def convert_lesson(index, file_name="python-projects.json"):
     }
     return new_lesson
 
-with open("python-projects.json", "r") as file:
-    for key, lesson in json.load(file)["projects"].items():
-        new_lesson = convert_lesson(key)
-        print(new_lesson['section'])
-        write_file(new_lesson)
+#with open("python-projects.json", "r") as file:
+#    for key, lesson in json.load(file)["projects"].items():
+#        new_lesson = convert_lesson(key)
+#        print(new_lesson['section'])
+#        write_file(new_lesson)
