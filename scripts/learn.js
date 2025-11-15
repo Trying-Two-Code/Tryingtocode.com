@@ -5,7 +5,7 @@ import { setUserDatapoint } from "../firebase.js";
 
 let beginnerPythonProjects = Array.from({length: 5}, (_, i) => [i + 1, "beginner"]);
 let mainPythonProjects = Array.from({length: 25}, (_, i) => [i + 1, "projects"]); //just get the first 21 lessons
-let loadProjects = beginnerPythonProjects.concat(mainPythonProjects);
+let loadProjects = Array.from({length: 4}, (_, i) => [i + 1, "beginner-2"]);
 const sections = ["python - unit 1", "python - unit 2"]; //temporary way of defining sections
 const DEFAULTREWARD = 5;
 
@@ -19,7 +19,7 @@ window.resetStats = () => {
 }
 
 function localStore(name, value, defaultValue=""){
-    let currentValue = localStorage.getItem(name)
+    let currentValue = localStorage.getItem(name);
 
     if (currentValue === '' || currentValue === null){
         localStorage.setItem(name, value || defaultValue)

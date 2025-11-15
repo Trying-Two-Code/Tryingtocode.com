@@ -35,7 +35,7 @@ var correctCode = new CustomEvent("correctCode", {
     }
 });
 
-function checkInclusion(code, JSON, splitJSON="&&&"){
+/*function checkInclusion(code, JSON, splitJSON="&&&"){
     //if 2 things should be true, use JSONAnd
     splitJSON = splitJSON;
     //loop through things that need to be included
@@ -90,7 +90,7 @@ async function isCorrectCode(code, output, JSON, blankOutput="*"){
     console.log("code tree: ", codeTree, hasPrintCall(codeTree));
     /*for(key of codeTree.keys()){
         console.log(key);
-    }*/
+    }*//*
 
     //if we care about code content, run this:
     if(JSON.includes != null){
@@ -98,8 +98,80 @@ async function isCorrectCode(code, output, JSON, blankOutput="*"){
         console.log("It was correct: ", checkInclusion(code, JSON, "&&&"));
     }
     
-    console.log("it was correct? ", correct)
+    console.log("it was correct? ", correct);
     return correct;
+}
+ 
+"output-includes": "",
+"output-discludes": "*",
+"code-includes": "*",
+"code-discludes": "*",
+"failure-shows": "*"
+
+*/
+const BLANK = '*';
+
+let errorCode = output => {
+    console.log('error check not finished');
+    if(output == 'error'){
+        return true;
+    }
+    return false;
+}
+
+let checkInclusion = (parts, whole, oppositeParts='*') => {
+    if(whole === BLANK){
+        return null;
+    }
+
+    if(whole === '**') { /* any */ 
+        if (checkInclusion(oppositeParts, '')){
+            console.log('this is true if the opposite has anything at all');
+        }
+        return true;
+    }
+
+    const partsSplit = '\n'
+
+    for (let index = 0; index < whole.split("&&&").length; index++) {
+        const element = whole.split("&&&")[index];
+        console.log(element);
+        let pass = false;
+        parts.split(partsSplit).forEach(part => {
+            if(element.includes(part)){
+                pass = true;
+                part = 'pass';
+            }
+        });
+        if(pass == false){
+            return false;
+        }
+    }
+
+    console.log(parts);
+    return true;
+}
+
+let isCorrectCode = async (code, json, output) => {
+    if (errorCode(output)){
+        return false;
+    }
+
+    console.log('output is: ', output, 'output something is'.includes('output  is'));
+
+    let tree = await getTree(code);
+
+    let O = [json['output-includes'], json['output-discludes']];
+    let C = [json['code-includes'], json['code-discludes']];
+
+    let OI = checkInclusion(output, O[0], O[1]) || true;
+    let OD = !checkInclusion(output, O[1], O[0]) || true;
+    let CI = checkInclusion(code, C[0], C[1]) || true;
+    let CD = !checkInclusion(code, C[1], C[0]) || true;
+    
+    console.log(OI, ' OI ', OD, ' OD ', CI, ' CI ', CD, 'CD');
+
+    return true;
 }
 
 export class Display {
@@ -164,7 +236,7 @@ export class Display {
         this.rewindButton = query(".project-restart-button");
         this.title = query(".project-title");
         this.instructions = query(".instructions");
-        this.completedIcon = query(".completed-icon")
+        this.completedIcon = query(".completed-icon");
     }    
 
     setAttributes(){
@@ -283,8 +355,10 @@ function rewardPlayer(display){
 function setupRunButton(display){
     display.run_button.addEventListener('click', async () => {
         let value = display.textarea.value;
-        let codeReturn = await display.displayUserCode(value);
-        correctCode = isCorrectCode(value, codeReturn, display.projectJSON).then((output) => {
+        let output = await display.displayUserCode(value);
+        let json = display.projectJSON;
+        console.log(json);
+        correctCode = isCorrectCode(value, json, output).then((output) => {
             if(output){
                 rewardPlayer(display);
             }
