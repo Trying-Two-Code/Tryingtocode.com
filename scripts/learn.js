@@ -32,8 +32,8 @@ localStore("projects", '');
 localStore("section", sections[0]);
 
 window.addEventListener("user_made", () => {
-    const user = window.user
-    localStore("projects", user.projects || "{}")
+    const user = window.user;
+    localStore("projects", user.projects || "{}");
 });
 
 let toggleAboveProjects = (index, add) => {

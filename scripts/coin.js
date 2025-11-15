@@ -10,13 +10,14 @@ changeNumber(0);
 
 let canvas = document.getElementById('render-canvas');
 
+
 const coinImgSrc = '../components/art/ttc coin icon.png';
 let objects = [];
 
 let draw = (sizeX=30, sizeY=300) => {
     ctx.clearRect(0, 0, sizeX, sizeY);
     objects.forEach(element => {
-        element.spriteImage.RenderImage(ctx, coinImgSrc);
+        element.RenderImage(coinImgSrc);
         element.tick(.1);
         element.gravitate(counter);
         let gt_rect = counter.getBoundingClientRect();
