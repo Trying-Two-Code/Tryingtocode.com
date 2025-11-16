@@ -133,23 +133,31 @@ let checkInclusion = (parts, whole, oppositeParts='*') => {
 
     const partsSplit = '\n'
 
+    let pass;
+
     for (let index = 0; index < whole.split("&&&").length; index++) {
         const element = whole.split("&&&")[index];
-        console.log(element);
-        let pass = false;
+        pass = false;
+        console.log("element: ", element, "parts: ", parts);
         parts.split(partsSplit).forEach(part => {
-            if(element.includes(part)){
+            console.log("element: ", element, "part: ", part, " loop");
+            if((part).includes(element) && part != ""){
+                console.log("element is: ", element, " part is the same as element: ", part, true);
                 pass = true;
                 part = 'pass';
             }
         });
         if(pass == false){
-            return false;
+            console.log("return false");
+            pass = false;
+            break;
         }
+        pass = true;
     }
 
     console.log(parts);
-    return true;
+    console.log("pass through: ", pass);
+    return pass;
 }
 
 let isCorrectCode = async (code, json, output) => {

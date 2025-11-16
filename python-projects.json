@@ -49,6 +49,16 @@
             "code-includes": "print('hello world')&&&print('hello world')",
             "code-discludes": "*",
             "failure-shows": "(hint: ')"
+        },
+        "5": {
+            "title": "Print 1",
+            "code": "\n\n",
+            "instruction": "print hello world",
+            "output-includes": "hello world",
+            "output-discludes": "*",
+            "code-includes": "*",
+            "code-discludes": "*",
+            "failure-shows": "(check the last lesson)"
         }
     }
 }
