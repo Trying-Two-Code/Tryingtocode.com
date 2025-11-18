@@ -4,24 +4,20 @@ let pyodide = await loadPyodide();
 pyodide.globals.set("input", getInput);
 
 export async function runUserCode(code){
-    console.log('code is ', code);
-    let tree = await getTree(code);
-    console.log(tree);
-    let isAsync = checkAsync(tree);
-    //printTree(tree);
-    if (isAsync === true){
+    let tree = await printTree(code);
+    var isAsync = checkAsync(tree);
+    console.log("isAsync, ", isAsync);
+    if(isAsync){
         code = makeAsync(code);
-        let tree = await getTree(code);
-        printTree(tree);
     }
-    console.log('new code is ', code);
-    return await pyRun(code);
+    return pyRun(code);
 } 
 
 let printTree = async (code) => {
     let tree = await getTree(code);
     checkAsync(tree);
     console.log(tree);
+    return tree;
 }
 
 async function simplePyRun(code){
@@ -47,7 +43,15 @@ let checkBody = (body, functionName) => {
             });
         }
     });
-    return elements;
+    if(elements.length > 0){return elements;}
+}
+
+function isUndefinedArray(list) {
+  return (
+    Array.isArray(list)  &&
+    list.length == 1     &&
+    list[0] == undefined
+  )
 }
 
 let checkElementFor = (element, functionName="print") => {
@@ -64,16 +68,18 @@ let checkElementFor = (element, functionName="print") => {
     }
 
     const functions = element?.func;
-    console.log("functions ",functions);
+    console.log("functions: ", functions);
+    console.log("elements: ", elements);
 
-    return elements;
+    console.log(isUndefinedArray(elements));
+    if(!isUndefinedArray(elements)){console.log("RETURNED!"); return elements;}
 }
 
 let checkAsync = (tree) => {
     console.log("tree is ", tree);
     const asyncElems = checkElementFor(tree, "input");
     console.log("async elems", asyncElems);
-    return asyncElems.length > 0 && asyncElems[0] != [];
+    return !isUndefinedArray(asyncElems) && asyncElems != undefined;
 }
 
 let makeAsync = (code) => {
@@ -85,9 +91,9 @@ let makeAsync = (code) => {
     });
     const wrapper = `
 import asyncio
-async def SUPERMAIN():
+async def _SUPERMAIN():
 ${indentedCode}\tpass
-asyncio.run(SUPERMAIN())
+asyncio.run(_SUPERMAIN())
 `   ;
 
     return wrapper;
@@ -103,6 +109,8 @@ async function pyRun(code){
         pyodide.setStdout({batched: (str) => {output += str.endsWith("\n") ? str : str + "\n";}});
 
         await pyodide.runPythonAsync(code);
+
+        console.log("output is, in pyrun, ", output);
 
         return output;
 

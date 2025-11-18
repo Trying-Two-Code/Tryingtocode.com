@@ -119,10 +119,13 @@ let errorCode = output => {
     return false;
 }
 
+let normalizeText = (text) => { /* make text similar to allow flexible player input */
+    return text.toLowerCase().replaceAll(" ", "").replaceAll("'", `"`);
+}
+
 let checkInclusion = (parts, whole, oppositeParts='*') => {
-    if(whole === BLANK){
-        return null;
-    }
+    if((whole !== BLANK || whole !== "") && parts == undefined) {return false;}
+    if(whole === BLANK){ return null; }
 
     if(whole === '**') { /* any */ 
         if (parts == ""){
@@ -139,8 +142,9 @@ let checkInclusion = (parts, whole, oppositeParts='*') => {
     for (let index = 0; index < whole.split("&&&").length; index++) {
         const element = whole.split("&&&")[index];
         pass = false;
+        console.log(parts, whole);
         parts.split(partsSplit).forEach(part => {
-            if((part.toLowerCase()).includes(element.toLowerCase()) && part != ""){
+            if((normalizeText(part).includes(normalizeText(element))) && part != ""){
                 pass = true;
                 part = 'pass';
             }
@@ -314,6 +318,7 @@ export class Display {
     async displayUserCode(code){
         this.output.value = "";
         let result = await runUserCode(code);
+        console.log("the rusult in project turned into: ", result);
         this.output.value = result;
         return result;
     }
@@ -363,10 +368,11 @@ function setupRunButton(display){
     display.run_button.addEventListener('click', async () => {
         let value = display.textarea.value;
         let output = await display.displayUserCode(value);
+        console.log('output in project 2: ', output);
         let json = display.projectJSON;
         console.log(json);
-        correctCode = isCorrectCode(value, json, output).then((correct) => {
-            if(correct){
+        correctCode = isCorrectCode(value, json, output).then((passed) => {
+            if(passed){
                 rewardPlayer(display);
             }
             else{
