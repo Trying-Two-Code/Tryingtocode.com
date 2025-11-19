@@ -37,10 +37,12 @@ let checkBody = (body, functionName) => {
             elements.push(element);
         }
         if(element?.body != undefined){
-            let bodyElements = checkBody(element.body)
-            bodyElements.forEach(subElement => {
+            let bodyElements = checkBody(element.body);
+            if(bodyElements != undefined){
+                bodyElements.forEach(subElement => {
                 elements.push(subElement);
             });
+            }
         }
     });
     if(elements.length > 0){return elements;}
@@ -160,7 +162,8 @@ async function pyRun(code){
     return false;
 }
 
-function getInput(promptText = ""){
+async function getInput(promptText = ""){
+
     if(window.currentDisplay.output) {
         window.currentDisplay.output.value += promptText;
         window.currentDisplay.output.value += "\n";
@@ -169,7 +172,8 @@ function getInput(promptText = ""){
     console.log(window.currentDisplay);
     console.log("gonna get input");
 
-    return window.currentDisplay.getInput();
+    let inp = await window.currentDisplay.getInput();
+    return inp;
 }
 
 export async function getTree(code){

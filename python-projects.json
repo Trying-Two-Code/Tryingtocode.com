@@ -4,7 +4,7 @@
             "title": "",
             "code": "",
             "instruction": "",
-            "output-includes": "",
+            "output-includes": "*",
             "output-discludes": "*",
             "code-includes": "*",
             "code-discludes": "*",
@@ -23,7 +23,7 @@
         "2": {
             "title": "Edit 1",
             "code": "print('you  it!')",
-            "instruction": "make the code: print('you did it!')",
+            "instruction": "Make the code: print('you did it!')",
             "output-includes": "you did it!",
             "output-discludes": "*",
             "code-includes": "print('you did it!')",
@@ -43,7 +43,7 @@
         "4": {
             "title": "Edit 2",
             "code": "print('hello world')\nprint('hello world)",
-            "instruction": "fix the second print (the first one is good)",
+            "instruction": "Fix the second print (the first one is good)",
             "output-includes": "hello world&&&hello world",
             "output-discludes": "*",
             "code-includes": "print('hello world')&&&print('hello world')",
@@ -71,10 +71,100 @@
             "failure-shows": "*"
         },
         "7": {
+            "title": "Print 2",
+            "code": "x = 1\nprint(x)\n\n\ny = 2\nprint()",
+            "instruction": "print y",
+            "output-includes": "2",
+            "output-discludes": "*",
+            "code-includes": "print(y)&&y=",
+            "code-discludes": "*",
+            "failure-shows": "*"
+        },
+        "8": {
+            "title": "If then",
+            "code": "if(1 == 1):\n print('1 is equal to 1')",
+            "instruction": "Make the if statement: if(1 == 2)",
+            "output-includes": "*",
+            "output-discludes": "1 is equal to 1",
+            "code-includes": "1 == &&& if",
+            "code-discludes": "1 == 1",
+            "failure-shows": "*"
+        },
+        "9": {
+            "title": "If then 2",
+            "code": "x=1\n\nif(x == 2):\nprint('you did it!')",
+            "instruction": "Make it print 'you did it!'",
+            "output-includes": "you did it!",
+            "output-discludes": "*",
+            "code-includes": "*",
+            "code-discludes": "*",
+            "failure-shows": "*"
+        },
+        "10": {
+            "title": "Variable 2",
+            "code": "x = 'hello'",
+            "instruction": "Make x equal 'bye'",
+            "output-includes": "*",
+            "output-discludes": "*",
+            "code-includes": "x = 'bye'",
+            "code-discludes": "*",
+            "failure-shows": "*"
+        },
+        "11": {
+            "title": "Variable 3",
+            "code": "x = 1\n\ny = 1\n\nprint(x + y)",
+            "instruction": "Make it equal 10",
+            "output-includes": "10",
+            "output-discludes": "*",
+            "code-includes": "x =&&&y =",
+            "code-discludes": "*",
+            "failure-shows": "*"
+        },
+        "12": {
+            "title": "If then 3",
+            "code": "x = 'hello'\n\ny = 'goodbye'\n\nif(x == y):\n print('do not print this!')",
+            "instruction": "Make x and y different",
+            "output-includes": "if(x==y):&&&print('do not print this!')",
+            "output-discludes": "do not print this!",
+            "code-includes": "*",
+            "code-discludes": "*",
+            "failure-shows": "*"
+        },
+        "13": {
+            "title": "Spot the bug 1",
+            "code": "prin('you did it!')",
+            "instruction": "Without altering it too much, fix this code",
+            "output-includes": "you did it!",
+            "output-discludes": "*",
+            "code-includes": "print('you did it')",
+            "code-discludes": "*",
+            "failure-shows": "*"
+        },
+        "14": {
+            "title": "Variable 4",
+            "code": "x = ' an apple '\ny = ' and '\n\nprint(x + y)",
+            "instruction": "make it print x + x + y + y",
+            "output-includes": "*",
+            "output-discludes": "*",
+            "code-includes": "x + x + y + y",
+            "code-discludes": "*",
+            "failure-shows": "*"
+        },
+        "15": {
+            "title": "If then else",
+            "code": "x = 1\n\nif(x == 1):\n print('x is 1')\nelse:\n print('x is not 1')",
+            "instruction": "Make it print x is not 1",
+            "output-includes": "x is not 1",
+            "output-discludes": "*",
+            "code-includes": "*",
+            "code-discludes": "*",
+            "failure-shows": "*"
+        },
+        "16": {
             "title": "",
             "code": "",
             "instruction": "",
-            "output-includes": "",
+            "output-includes": "*",
             "output-discludes": "*",
             "code-includes": "*",
             "code-discludes": "*",

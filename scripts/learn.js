@@ -5,7 +5,7 @@ import { setUserDatapoint } from "../firebase.js";
 
 let beginnerPythonProjects = Array.from({length: 5}, (_, i) => [i + 1, "beginner"]);
 let mainPythonProjects = Array.from({length: 25}, (_, i) => [i + 1, "projects"]); //just get the first 21 lessons
-let loadProjects = Array.from({length: 6}, (_, i) => [i + 1, "beginner-2"]);
+let loadProjects = Array.from({length: 16}, (_, i) => [i + 1, "beginner-2"]);
 const sections = ["python - unit 1", "python - unit 2"]; //temporary way of defining sections
 const DEFAULTREWARD = 5;
 
