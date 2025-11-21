@@ -231,6 +231,17 @@
             "failure-shows": "*"
         },
         "23": {
+            "section": "beginner-2",
+            "title": "Loop 1",
+            "code": "for i in range(5):\n print('you ran the loop ' + i + ' times')\n\n",
+            "instruction": "Run it 6 times",
+            "output-includes": "you ran the loop 6 times&&&you ran the loop",
+            "output-discludes": "*",
+            "code-includes": "*",
+            "code-discludes": "*",
+            "failure-shows": "*"
+        },
+        "24": {
             "title": "Functions 1",
             "code": "def function_name():\n print('you ran the function')\n\nfunction_name()",
             "instruction": "Don't run the function",
@@ -240,7 +251,7 @@
             "code-discludes": "*",
             "failure-shows": "*"
         },
-        "24": {
+        "25": {
             "title": "Functions 2",
             "code": "def function_name():\n print('you ran the function')\n\nfor i in range(10):\n function_name()",
             "instruction": "Run the function 20 times",
@@ -250,7 +261,7 @@
             "code-discludes": "*",
             "failure-shows": "*"
         },
-        "25": {
+        "26": {
             "title": "Functions 3",
             "code": "def function_name():\n print('you ran the function')\n\nnew_name()",
             "instruction": "Change function_name to be new_name",
@@ -260,9 +271,9 @@
             "code-discludes": "*",
             "failure-shows": "*"
         },
-        "26": {
-            "title": "",
-            "code": "#Functions need def. Then a name. Then ():\n\n#def hello():\n #pass",
+        "27": {
+            "title": "Functions 4",
+            "code": "#Functions need def. Then a name. Then ():\n\n#def hello():\n ",
             "instruction": "Make and run a function that prints hello",
             "output-includes": "*",
             "output-discludes": "*",
@@ -270,28 +281,18 @@
             "code-discludes": "*",
             "failure-shows": "*"
         },
-        "27": {
-            "title": "",
-            "code": "",
-            "instruction": "",
-            "output-includes": "*",
-            "output-discludes": "*",
-            "code-includes": "*",
-            "code-discludes": "*",
-            "failure-shows": "*"
-        },
         "28": {
-            "title": "",
-            "code": "",
-            "instruction": "",
-            "output-includes": "*",
+            "title": "Functions 5",
+            "code": "#Functions can take in variables\n\ndef add(number1, number2):\n sum = number1 + number2\n print(sum)\n\nadd(3, 4)",
+            "instruction": "Make the code print 10",
+            "output-includes": "10",
             "output-discludes": "*",
             "code-includes": "*",
             "code-discludes": "*",
             "failure-shows": "*"
         },
         "29": {
-            "title": "",
+            "title": "Loops",
             "code": "",
             "instruction": "",
             "output-includes": "*",
@@ -320,7 +321,17 @@
             "code-discludes": "*",
             "failure-shows": "*"
         },
-        "3x": {
+        "32": {
+            "title": "",
+            "code": "",
+            "instruction": "",
+            "output-includes": "*",
+            "output-discludes": "*",
+            "code-includes": "*",
+            "code-discludes": "*",
+            "failure-shows": "*"
+        },
+        "33": {
             "title": "",
             "code": "",
             "instruction": "",

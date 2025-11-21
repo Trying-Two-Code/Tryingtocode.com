@@ -7,7 +7,7 @@ def insert_lesson(filename, index, new_lesson):
         lessons = json.load(f)
 
     # Convert dict to list ordered by key number
-    ordered = [lessons["projects"][k] for k in sorted(lessons["projects"], key=lambda x: int(x))]
+    ordered = [lessons["beginner-2"][k] for k in sorted(lessons["beginner-2"], key=lambda x: int(x))]
 
     # Insert the new lesson
     ordered.insert(index - 1, new_lesson)
@@ -17,7 +17,7 @@ def insert_lesson(filename, index, new_lesson):
 
     # Save back to file
     with open(filename, "w") as f:
-        lessons["projects"] = renumbered
+        lessons["beginner-2"] = renumbered
         json.dump(lessons, f, indent=4)
 
 def delete_lesson(filename, index):
@@ -26,7 +26,7 @@ def delete_lesson(filename, index):
         lessons = json.load(f)
 
     # Convert dict to list ordered by key number
-    ordered = [lessons["projects"][k] for k in sorted(lessons["projects"], key=lambda x: int(x))]
+    ordered = [lessons["beginner-2"][k] for k in sorted(lessons["beginner-2"], key=lambda x: int(x))]
 
     ordered.pop(index - 1)
 
@@ -41,15 +41,18 @@ def delete_lesson(filename, index):
 
 # new lesson to be made \/
 new_lesson = {
-    "section": "python unit 1",
-    "title": "Two Inputs",
-    "code": "input('this is input one: ') input('this is input two: ')",
-    "instruction": "run and enter (press enter in the output box) both inputs",
-    "returns": "*",
-    "includes": "input("
+    "section": "beginner-2",
+    "title": "Loop 1",
+    "code": "for i in range(5):\n print('you ran the loop ' + i + ' times')\n\n",
+    "instruction": "Run it 6 times",
+    "output-includes": "you ran the loop 6 times&&&you ran the loop",
+    "output-discludes": "*",
+    "code-includes": "*",
+    "code-discludes": "*",
+    "failure-shows": "*"
 }
 
-insert_lesson('python-projects.json', 10, new_lesson)
+insert_lesson('python-projects.json', 23, new_lesson)
 
 def code_string(lesson=new_lesson):
     indent_lessons = [f" {les}" for les in lesson['code'].splitlines()]
@@ -97,7 +100,7 @@ def write_file(write_lesson=new_lesson):
 def convert_lesson(index, file_name="python-projects.json"):
     with(open(file_name, "r") as file):
         lessons = json.load(file)
-    lesson = lessons["projects"][index]
+    lesson = lessons["beginner-2"][index]
     new_lesson = {
         "section": lesson.get("section", "python - unit 1"),
         "title": lesson.get("title", ""),
