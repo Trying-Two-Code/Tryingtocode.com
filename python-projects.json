@@ -340,6 +340,56 @@
             "code-includes": "*",
             "code-discludes": "*",
             "failure-shows": "*"
+        },
+        "35": {
+            "title": "Class 1",
+            "code": "class dog:\n pass\n\nPete = dog()",
+            "instruction": "Change Petes name",
+            "output-includes": "*",
+            "output-discludes": "*",
+            "code-includes": "dog()&&&class",
+            "code-discludes": "Pete",
+            "failure-shows": "*"
+        },
+        "36": {
+            "title": "",
+            "code": "",
+            "instruction": "",
+            "output-includes": "*",
+            "output-discludes": "*",
+            "code-includes": "*",
+            "code-discludes": "*",
+            "failure-shows": "*"
+        },
+        "37": {
+            "title": "",
+            "code": "",
+            "instruction": "",
+            "output-includes": "*",
+            "output-discludes": "*",
+            "code-includes": "*",
+            "code-discludes": "*",
+            "failure-shows": "*"
+        },
+        "38": {
+            "title": "",
+            "code": "",
+            "instruction": "",
+            "output-includes": "*",
+            "output-discludes": "*",
+            "code-includes": "*",
+            "code-discludes": "*",
+            "failure-shows": "*"
+        },
+        "39": {
+            "title": "",
+            "code": "",
+            "instruction": "",
+            "output-includes": "*",
+            "output-discludes": "*",
+            "code-includes": "*",
+            "code-discludes": "*",
+            "failure-shows": "*"
         }
     }
 }
