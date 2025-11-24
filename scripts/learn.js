@@ -3,7 +3,7 @@ import { Display } from "./projects.js";
 import "./coin.js";
 import { setUserDatapoint } from "../firebase.js";
 
-let loadProjects = Array.from({length: 40}, (_, i) => [i + 1, "beginner-2"]);
+let loadProjects = Array.from({length: 50}, (_, i) => [i + 1, "beginner-2"]);
 const sections = ["python - unit 1", "python - unit 2"]; //temporary way of defining sections
 const DEFAULTREWARD = 5;
 
