@@ -95,7 +95,7 @@ export class Display {
     findElements(){
         const query = (_name_) => {return this.projectEl.querySelector(_name_);}
 
-        this.run_button = query('[name="run-button"]');
+        this.runButton = query('[name="run-button"]');
         this.output = query('[name="output"]');
         this.textarea = this.codeArea.textarea;
         this.lineNumbers = query(".line-numbers");
@@ -141,6 +141,8 @@ export class Display {
 
         this.editClass("mini", !value);
         this.editClass("notmini", value);
+        this.runButton.disabled = !value;
+        this.rewindButton.disabled = !value;
         
         this.projectEl.dispatchEvent(
             new CustomEvent('toggleElements', {
@@ -221,7 +223,7 @@ function rewardPlayer(display){
 }
 
 function setupRunButton(display){
-    display.run_button.addEventListener('click', async () => {
+    display.runButton.addEventListener('click', async () => {
         let value = display.textarea.value;
         let output = await display.displayUserCode(value);
         console.log('output in project 2: ', output);

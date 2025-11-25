@@ -90,10 +90,7 @@
     resize: none;
     border: none;
 
-
     background-attachment: local;
-    
-
 }
 
 .input-output {
@@ -128,10 +125,12 @@
     height: 30px;
 }
 
-.instructions{
+.instructions
+{
     position: relative;
     left: 0%;
     text-align: center;
+    width: 100%;
 }
 
 #project-parent {
@@ -147,6 +146,7 @@
     justify-content: left;
     
     grid-auto-rows: min-content;
+    position: relative;
 }
 
 .project {
@@ -185,11 +185,10 @@
     box-shadow: 0 2px 8px #0004;
     flex: 0 0 100%;
 }
+
 @media (min-width: 900px) {
     .project.mini {flex: 0 0 31%;}
 }
-
-
 
 .project.mini p:not(#project-title), .project.mini textarea,  .project.mini .run-code, .project.mini .button{
     opacity: 0;
@@ -208,7 +207,6 @@
 .project.mini:hover {
     opacity: 1;
 }
-
 
 .run-button {
     border: #00000000;
