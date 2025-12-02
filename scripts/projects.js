@@ -59,7 +59,7 @@ export class Display {
         });
 
         this.nextButton.addEventListener('click', () => {
-
+            this.openProject(1);
         });
 
         this.rewindButton.addEventListener('click', () => {
@@ -78,6 +78,10 @@ export class Display {
         this.setAttributes();
 
         this.reward = 5;
+    }
+
+    openProject(relativeIndex=0){
+        if(relativeIndex == 0) {/* do not change index */ return; }
     }
 
     createElements(document, parent, htmlString){
@@ -201,14 +205,6 @@ export class Display {
 
 function rewardPlayer(display){
     console.log("reward, ", display.reward);
-    /*console.error("get rid of below")
-    correctCode = new CustomEvent("correctCode", {
-            detail: {
-                value: 5
-            }
-        });
-    window.dispatchEvent(correctCode);*/
-    console.error("get rid of above");
     if(display.reward !== 0 && display.reward !== null){
         console.log("reward 2");
         correctCode = new CustomEvent("correctCode", {
@@ -231,6 +227,7 @@ function setupRunButton(display){
         else{
             console.log('PAY ATTENTION!', display.canRun, display);
             let value = display.textarea.value;
+            console.log("mark 1");
             let output = await display.displayUserCode(value);
             console.log('output in project 2: ', output);
             let json = display.projectJSON;

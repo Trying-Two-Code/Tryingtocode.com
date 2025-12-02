@@ -4,13 +4,13 @@ import "./coin.js";
 import { setUserDatapoint } from "../firebase.js";
 
 let loadProjects = Array.from({length: 50}, (_, i) => [i + 1, "beginner-2"]);
-const sections = ["python - unit 1", "python - unit 2"]; //temporary way of defining sections
 const DEFAULTREWARD = 5;
 
 let parent = document.getElementById('project-parent');
 let projects = [];
 let mainProj = true;
 
+//for debug purposes, a function to reset player stats
 window.resetStats = () => {
     localStorage.setItem("projects", "{}");
     localStorage.removeItem("coin");
@@ -19,19 +19,28 @@ window.resetStats = () => {
 function localStore(name, value, defaultValue=""){
     let currentValue = localStorage.getItem(name);
 
-    if (currentValue === '' || currentValue === null){
-        localStorage.setItem(name, value || defaultValue)
+    let isNaught = value => {
+        return value === '' || value === null || value === defaultValue || value === '{}';
+    }
+
+    if (isNaught(currentValue)){
+        if(isNaught(value)){
+            localStorage.setItem(name, defaultValue);
+        } else{
+            localStorage.setItem(name, value);
+        }
     }
 
     return localStorage.getItem(name);
 }
 
 localStore("projects", '');
-localStore("section", sections[0]);
+//localStore("section", sections[0]);
 
 window.addEventListener("user_made", () => {
     const user = window.user;
     localStore("projects", user.projects || "{}");
+    setUserDatapoint();
 });
 
 let toggleAboveProjects = (index, add) => {
@@ -67,6 +76,11 @@ window.addEventListener('correctCode', (details) => {
     let code = window.currentDisplay.textarea.value;
     saveProject(title + ":" + code);
     console.log(details.detail.value);
+});
+
+window.addEventListener('changeOpen', (details) => {
+    let currentProject = window.currentDisplay;
+    //let nextProject = 
 });
 
 const loadProjectJSON = async (index, section="projects") => {

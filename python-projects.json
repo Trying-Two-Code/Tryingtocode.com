@@ -32,8 +32,8 @@
         },
         "3": {
             "title": "Run 2",
-            "code": "#this won't show anything",
-            "instruction": "Run the code (the green button)",
+            "code": "this shouldn't show anything",
+            "instruction": "Add a # to the beginning of line 1",
             "output-includes": "*",
             "output-discludes": "**",
             "code-includes": "#",
@@ -182,7 +182,7 @@
         },
         "18": {
             "title": "Lists",
-            "code": "animals = ['dog', 'cat']\n\n#lists start at 0\n\nprint(animals[1])",
+            "code": "animals = ['dog', 'cat']\n\n#hint: lists start at [0]\n\nprint(animals[1])",
             "instruction": "Make the code print dog",
             "output-includes": "dog",
             "output-discludes": "*",
@@ -202,7 +202,7 @@
         },
         "20": {
             "title": "Dictionary 1",
-            "code": "animals = {'dog': 'barks', 'bird': 'chirps'}\n\nprint(animals['dog'])",
+            "code": "animals = {'dog': 'barks', 'bird': 'chirps'}\n\n#hint: use '' in the []\n\nprint(animals['dog'])",
             "instruction": "Make the code print: chirps",
             "output-includes": "chirps",
             "output-discludes": "*",
@@ -212,8 +212,8 @@
         },
         "21": {
             "title": "If then 4",
-            "code": "animals = ['dog', 'bird']\n\nif(animals[1] == 'dog'):\n print('you did it!')",
-            "instruction": "Make the if statement work",
+            "code": "animals = ['dog', 'bird']\n\n#hint: what is animals[1]?\n\nif(animals[1] == 'dog'):\n print('you did it!')",
+            "instruction": "Make each side of the == the same",
             "output-includes": "you did it!",
             "output-discludes": "*",
             "code-includes": "animals=[&&&==",
@@ -222,12 +222,12 @@
         },
         "22": {
             "title": "Lists 3",
-            "code": "#[]",
-            "instruction": "Make a list",
+            "code": "#[",
+            "instruction": "Make a list (no #)",
             "output-includes": "*",
             "output-discludes": "*",
             "code-includes": "]",
-            "code-discludes": "*",
+            "code-discludes": "#",
             "failure-shows": "*"
         },
         "23": {
@@ -276,8 +276,8 @@
             "code": "#Functions need def. Then a name. Then ():\n\n#def hello():\n ",
             "instruction": "Make and run a function that prints hello",
             "output-includes": "*",
-            "output-discludes": "*",
-            "code-includes": "*",
+            "output-discludes": "hello",
+            "code-includes": "def",
             "code-discludes": "*",
             "failure-shows": "*"
         },
@@ -304,7 +304,7 @@
         "30": {
             "title": "Loops 3",
             "code": "i = 0\n\nwhile i < 10:\n i = i + 1\n print(i)",
-            "instruction": "Don't let the code print 5",
+            "instruction": "Don't print 5",
             "output-includes": "*",
             "output-discludes": "5",
             "code-includes": "*",
@@ -313,12 +313,12 @@
         },
         "31": {
             "title": "Append 1",
-            "code": "list = []\n\nfor i in range(10):\n list.append(i)\n\nprint(list)",
+            "code": "list = []\n\nfor i in range(10):\n list.append(i)\n\n#edit the print statement below\n\nprint(list)",
             "instruction": "Make the code only print the first item of the list",
             "output-includes": "0",
             "output-discludes": "1",
             "code-includes": "[0]",
-            "code-discludes": "*",
+            "code-discludes": "print('[0]')",
             "failure-shows": "*"
         },
         "32": {
@@ -347,7 +347,7 @@
             "instruction": "Run the code",
             "output-includes": "*",
             "output-discludes": "*",
-            "code-includes": "*",
+            "code-includes": "class dog:&&&pass&&&Pete = dog()",
             "code-discludes": "*",
             "failure-shows": "*"
         },
@@ -365,7 +365,7 @@
             "title": "Class 2",
             "code": "class dog:\n print('dog made')\n\n#Pete is an instance\nPete = dog()",
             "instruction": "Change Petes name",
-            "output-includes": "*",
+            "output-includes": "dog made",
             "output-discludes": "*",
             "code-includes": "dog()&&&class",
             "code-discludes": "Pete",
@@ -373,8 +373,8 @@
         },
         "37": {
             "title": "Class 3",
-            "code": "class dog:\n def __init__(self):\n  print('dog made')\n",
-            "instruction": "Change the code to include an instance of a dog",
+            "code": "class dog:\n def __init__(self):\n  print('dog made')\n\nPete = ",
+            "instruction": "Change the code to make a dog",
             "output-includes": "dog made",
             "output-discludes": "*",
             "code-includes": "=dog()",
@@ -383,7 +383,7 @@
         },
         "38": {
             "title": "Class 4",
-            "code": "class dog:\n def __init__(self, name):\n  self.name = name\n\nPete = dog('Pete')\nname = Pete.name\nprint(name)",
+            "code": "class dog:\n def __init__(self, name):\n  self.name = name\n\nPete = dog('Pete')\nname = Pete.name\nprint()",
             "instruction": "Print Petes name",
             "output-includes": "Pete",
             "output-discludes": "*",

@@ -4,9 +4,14 @@ let pyodide = await loadPyodide();
 pyodide.globals.set("input", getInput);
 
 export async function runUserCode(code){
-    let tree = await printTree(code);
-    var isAsync = checkAsync(tree);
-    console.log("isAsync, ", isAsync);
+    try{
+        let tree = await printTree(code);
+        var isAsync = checkAsync(tree);
+        console.log("isAsync, ", isAsync);
+    } catch{
+        var isAsync = false;
+    }
+    
     if(isAsync){
         code = makeAsync(code);
     }
@@ -36,7 +41,7 @@ let checkBody = (body, functionName) => {
             elements.push(element);
         }
         if(element?.body != undefined){
-            let bodyElements = checkBody(element.body);
+            let bodyElements = checkBody(element.body, functionName);
             if(bodyElements != undefined){
                 bodyElements.forEach(subElement => {
                 elements.push(subElement);
@@ -77,13 +82,13 @@ let makeAsync = (code) => {
     let indentedCode = '';
     code.split("\n").forEach(line => {
         if(line != null){
-            indentedCode += `\t${line}\n`;
+            indentedCode += ` ${line}\n`;
         }
     });
     const wrapper = `
 import asyncio
 async def _SUPERMAIN():
-${indentedCode}\tpass
+${indentedCode} pass
 asyncio.run(_SUPERMAIN())
 `   ;
 

@@ -84,17 +84,13 @@ export async function initUserData(user){
     }
 }
 
+//Somehow, we need to merge the data of what we have online, and on site.
 export async function setUserDatapoint(email=null, displayName=null, coins=null, projects=null){
     if (!window.user) return console.warn("No user yet");
     
-    const userRef = doc(db, "users", window.user.uid)
+    const userRef = doc(db, "users", window.user.uid);
     const updatedSnap = await getDoc(userRef);
     const data = updatedSnap.data() || {};
-
-    //console.log("data: ", data.email, data.displayName, data.coins, data.projects);
-    //console.log("function: ", email, displayName, coins, projects);
-    //console.log("data projects: ", projects);
-    //console.log("data projects: ", Object.keys(JSON.parse(projects)).length);
 
     let saveProjectList = {}
     if(data.length > Object.keys(JSON.parse(projects)).length) {

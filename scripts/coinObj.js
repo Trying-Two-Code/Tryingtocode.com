@@ -21,17 +21,19 @@ export class CoinObj{
     }
 
     tick(speed=1){
-        this.gravitate(this.go_to, 10);
+        const min_dist = 10;
+        this.gravitate(this.go_to, min_dist);
+        this.DetectGive(min_dist);
 
         this.x_pos += this.x_vel * speed;
         this.y_pos += this.y_vel * speed;
     }
 
     gravitate(go_to, drag=1, min_dist=50){
-        const absolute_gt = domToCanvas(this.canvas, getAbsolutePosition(go_to));
+        this.absolute_gt = domToCanvas(this.canvas, getAbsolutePosition(go_to)); //position
 
-        let x_dist = absolute_gt.x - this.x_pos;
-        let y_dist = absolute_gt.y - this.y_pos;
+        let x_dist = this.absolute_gt.x - this.x_pos;
+        let y_dist = this.absolute_gt.y - this.y_pos;
 
         let normalized_vector = normalizeVector(x_dist, y_dist);
 
@@ -39,10 +41,12 @@ export class CoinObj{
         this.y_vel += normalized_vector[1] / drag;
         this.x_vel /= (1 + (drag / 2000));
         this.y_vel /= (1 + (drag / 2000));
+    }
 
-        if(distance(this.x_pos, this.y_pos, absolute_gt.x, absolute_gt.y) > min_dist && this.dead !== 0){
+    DetectGive(min_dist){ //check if the coin is close enough to give the user
+        if(distance(this.x_pos, this.y_pos, this.absolute_gt.x, this.absolute_gt.y) > min_dist && this.dead !== 0){
             this.DestroyGive(1);
-        } else if(this.dead === 0 && distance(this.x_pos, this.y_pos, absolute_gt.x, absolute_gt.y) < min_dist){
+        } else if(this.dead === 0 && distance(this.x_pos, this.y_pos, this.absolute_gt.x, this.absolute_gt.y) < min_dist){
             this.dead = false;
         }
     }

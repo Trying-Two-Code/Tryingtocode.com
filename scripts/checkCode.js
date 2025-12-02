@@ -29,7 +29,7 @@ export let checkInclusion = (parts, whole, oppositeParts='*') => {
         return false;
     }
 
-    const partsSplit = '\n'
+    const partsSplit = '\n';
 
     let pass;
 
@@ -65,12 +65,13 @@ export let checkInclusion = (parts, whole, oppositeParts='*') => {
 }
 
 export let isCorrectCode = async (code, json, output) => {
+    console.log("the error could be here. Here are a ton of paramaters to be looking at:", code, json, output);
     let tree = await getTree(code);
 
     let O = [json['output-includes'], json['output-discludes']];
     let C = [json['code-includes'], json['code-discludes']];
 
-    console.log(code);
+    console.log(code, tree);
 
     let OI = checkInclusion(output, O[0], O[1]);
     let OD = !checkInclusion(output, O[1], O[0]);
