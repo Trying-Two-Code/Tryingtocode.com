@@ -11,12 +11,12 @@ let htmlGen =
     <div id="learn-project" class="project mini pixel-font">
         <div class="top-bar">
             <div class="button">
-            <button class="project-close-button">
+            <button class="project-close-button" title="close project">
                 <img id="close-img" src='./components/art/close button 1.png'>
             </button>
             </div>
             <div class="button">
-            <button class="project-restart-button">
+            <button class="project-restart-button" title="reset code to defualt">
                 <img id="reset-img" src="./components/art/rewind icon - stroke.png">
             </button>
             </div>
@@ -25,8 +25,10 @@ let htmlGen =
         </div>
         <p class="instructions">instructions</p>
         <div class="codeAreaParent"></div>
-        <button name="run-button" class="run-code run-button"><img src="./components/art/play button 1 - big.png"></img></button>
-        <button name="next-button" class="next-project" id="next-button"><img src="./components/art/arrow - 1.png"></button>
+        <div class="project-buttom-buttons">
+            <button title="run code" name="run-button" class="run-code run-button"><img src="./components/art/play button 1 - big.png"></img></button>
+            <button title="go to next project" alt="next project" name="next-button" class="next-project" id="next-button"><img src="./components/art/arrow - 1.png"></button>
+        </div>
     </div>
 `;
 

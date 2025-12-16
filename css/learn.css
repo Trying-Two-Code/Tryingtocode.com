@@ -6,6 +6,7 @@
     resize: none;
     height: 100%;
     width: 50vw;
+    min-width: 5px;
     font-size: large;
     line-height: 30px;
 
@@ -78,8 +79,6 @@
         #1a1a1a 30px        /* match the line height exactly */
         
     );
-    overflow-y: auto;
-    box-sizing: border-box;
     font-size: large;
     line-height: 30px;
     resize: none;
@@ -229,12 +228,12 @@
 }
 
 .next-project {
-    border-radius: 0%;
-    width: 50%;
     font-size: large;
     margin-top: 10px;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 1px;
     background-color: #00000000;
     border-color: #00000000;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
