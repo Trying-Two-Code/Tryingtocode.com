@@ -46,7 +46,7 @@ export class Display {
 
         this.createElements(document, parent, htmlString); 
         this.findElements(); 
- 
+
         this.min = true; 
 
         this.closeButton.addEventListener('click', (e) => { 
