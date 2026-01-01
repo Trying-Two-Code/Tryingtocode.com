@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Trying to Code</title>
+
     <link rel="icon" href="../components/art/ttc coin icon.png">
     <link rel="stylesheet" href="./css/general.css">
     <link rel="stylesheet" href="./css/index.css">
+
     <script src="./scripts/collapse.js" type="module"></script>
     <script src="./scripts/index.js" type="module"></script>
     <script src="./scripts/general.js" type="module"></script>
     <script src="./firebase.js" type="module" defer></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -18,8 +22,8 @@
         <a href="index.html" title="Home"  class="logo" id="home-icon">
             <img src="components/art/ttc coin icon.png" alt="Coin logo">
         </a>
-        <button id="dropdown-button" class="dropdown--button">
-            <img class="dropdown--button--img" src="components/art/yellow - toggle arrow up.png" alt="" id="toggle-button" >
+        <button id="dropdown-button" class="toggle-dropdown">
+            <img class="toggle-dropdown--img" src="components/art/yellow - toggle arrow up.png" alt="" id="toggle-button" >
         </button>
         <div class="dropdown">
             <ul class="dropdown--list">
@@ -43,11 +47,19 @@
 
     <div class="main-content main-font">
         <div id="welcome" class="welcome">
-            <h1>Welcome to Trying to Code!</h1>
-            <p>Stop being taught</p>
-            <button id="toggle-signinup" class="image-button"><img src="./components/art/profile - 4.png" alt="" class="big-icon"></button>
-            <div class="sign-in" id="sign-in-holder" name="sign in" alt="Person with green plus symbol, used to sign up to the website" title="Sign in"></div>
-            <button id="go-learn" class="image-button"><a href="learn.html" title="Learn" ><img src="./components/art/clean icon - 5.png" alt="" class="big-icon"></a></button>
+            <h1 class="welcome--title">Welcome to Trying to Code!</h1>
+            <p class="welcome--subtitle">Stop being taught</p>
+            <div class="si-section">
+                <button id="toggle-signinup" class="image-button">
+                    <img src="./components/art/profile - 4.png" alt="" class="big-icon">
+                </button>
+                <div class="sign-in" id="sign-in-holder" name="sign in" alt="Person with green plus symbol, used to sign up to the website" title="Sign in"></div>
+            </div>
+            <button id="go-learn" class="image-button">
+                <a href="learn.html" title="Learn" >
+                    <img src="./components/art/clean icon - 5.png" alt="" class="big-icon">
+                </a>
+            </button>
         </div>
     </div> 
 

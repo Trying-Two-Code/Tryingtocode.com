@@ -2,16 +2,15 @@
 A gamified learning site.
 
 # Ownership
-This site is the property of Trying to Code. 
-Nobody is allowed to use or distribute the source 
-code or files in any way unless explicitly allowed by 
-Trying to Code.
+This site (and all assets) is the property of Trying to Code. 
+Copyright (c) Trying to Code. All rights reserved.
+Creative Commons Attribution-NonCommercial-NoDerivs (CC BY-NC-ND)
 
-# NDA
-By viewing these files,you agree to keep private 
-all information found in these files that 
-could not otherwise be found by the official 
-channel or on tryingtocode.com.
+# Please don't disclose
+By viewing these files, you are viewing private 
+information found in these files that 
+could not otherwise be found publically.
+Please do not disclose any information here.
 
 # Goals
 Keep code clean and orginized. Monetization
@@ -47,3 +46,7 @@ Dean - CSS lead.
 # Contact
 If you don't have a way already, send email here:
 contact@tryingtocode.com
+
+# Trying to code
+Whenever Trying to Code (or TTC) is referenced, that is
+the entity who owns the domain name tryingtocode.com.

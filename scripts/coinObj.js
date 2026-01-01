@@ -1,3 +1,15 @@
+/**
+ * CoinObj class
+ * This hosts coin object logic
+ * including gravitation towards an object
+ * detection of being to close to gravitation object
+ * 
+ * 
+ * Image class
+ * showing image on screen 
+ * (scaling for dif screen sizes)
+ */
+
 let ogDemensions = [window.screen.availWidth, window.screen.availHeight];
 
 export class CoinObj{
@@ -65,6 +77,7 @@ class SpriteImage{
         this.ctx = ctx;
         this.image = image;
         this.sprite = sprite;
+        console.error("move this sprite image class somewhere better please.");
     }
 
     RenderImage(sprite, position_x=0, position_y=0, frames=1, index=0){
@@ -91,7 +104,7 @@ class SpriteImage{
     }
 }
 
-function getAbsolutePosition(el) {
+let getAbsolutePosition = (el) => {
     const rect = el.getBoundingClientRect();
     return {
         x: rect.left + window.scrollX,
@@ -103,13 +116,13 @@ function distance(x1, y1, x2, y2) {
     return Math.hypot(x2 - x1, y2 - y1);
 }
 
-function normalizeVector(x, y) {
+let normalizeVector = (x, y) => {
     const length = Math.hypot(x, y); // same as sqrt(x^2 + y^2)
     if (length === 0) return [0, 0];
     return [x / length, y / length];
 }
 
-function domToCanvas(canvas, dom) {
+let domToCanvas = (canvas, dom) => {
     const rect = canvas.getBoundingClientRect();
 
     // Scale factors: DOM pixels -> canvas pixels

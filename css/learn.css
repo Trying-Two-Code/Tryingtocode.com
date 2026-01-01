@@ -1,188 +1,65 @@
-.codearea {
-    border: none;
-    outline: none;
-    resize: none;
-    height: 100%;
-    width: var(--code-width);
-    min-width: 5px;
-    font-size: large;
-    line-height: 30px;
+/*------------------------------------*\
+    #CONTENTS
+\*------------------------------------*/
+/**
 
-    background-image: repeating-linear-gradient(
-        to bottom,
-        #333333,            /* line color */
-        #333333 1px,        /* line thickness */
-        #1a1a1a 1px,        /* start of background color */
-        #1a1a1a 30px        /* match the line height exactly */
-    );
+*SETTINGS
+**root . . . . . . . Globally available variables
 
-    background-attachment: local;
-}
+*TOOLS
+**gone . . . . . . . When project below has been selected
+**
+**mini . . . . . . . When project is not selected
 
-.line-numbers {
-    text-align: center;
-    justify-self: unset;
-    user-select: none;
-    line-height: 30px;
-    min-width: var(--label-width);
-    height: var(--code-height);
-    overflow: hidden; /* hides scrollbar */
-    box-sizing: border-box;
-    padding-bottom: 5px;
-    
-    background-image: repeating-linear-gradient(
-        to bottom,
-        #333333,
-        #333333 1px,
-        #1a1a1a 1px,
-        #1a1a1a 30px
-    );
-    background-attachment: local;
-}
+*PROJECT-BOX
+**code editor  . . . Holds codearea and line-numebers
+**input-output . . . Parent of full codearea
+**project  . . . . . Holds full project
+**project-parent . . All projects
 
-.lines{
-    
-    background-image: repeating-linear-gradient(
-        to bottom,
-        #333333,
-        #333333 1px,
-        #1a1a1a 1px, 
-        #1a1a1a 30px       
-    );
-    background-attachment: local;
-}
+*TEXT-BOXES
+**codearea . . . . . Where user types code
+**line-numbers . . . Side left shows line 1 2 3 etc
+**output . . . . . . codearea output
 
-.output {
-    color: #fff;
-    user-select: none;
-    height: var(--code-height);
-    width: 30vw;
-    padding-left: 10px;
-    overflow-y: auto;
-    box-sizing: border-box;
-    white-space: pre-wrap; /* Preserve whitespace and wrap as needed */
-    word-wrap: break-word; /* Break long words to fit within the container */
-    font-size: large;
-    line-height: 30px;
-    
-    resize: none;
-    border: none;
-}
+*PROJECT-INNER
+**top-bar  . . . . . Holds close and redo button
+**instructions . . . Text at top of project
+**
+**run-code . . . . . Button runs code
+**next-project . . . Navigates to next project
+**button . . . . . . Contains run and next
+**project-button . . Run and next
 
-#learn-project {
-    display: flex;
-    flex-direction: column;
-}
 
+*NO-ACTIVE 
+**output . . . . . . (to be determined)
+
+**/
+
+/*------------------------------------*\
+    #SETTINGS
+\*------------------------------------*/
 :root{
     --label-width: 2em;
     --code-height: 20vw;
     --code-width: 50vw;
 }
 
-.code-editor {
-    display: flex;
-    align-items: flex-start;
-    background: transparent;
-    height: var(--code-height); /* match textarea height */
-}
-
-
-
-@media screen and (max-width: 50em) {
-    .input-output {
-        flex-direction: column !important;
-    }
-    .output {
-        width: calc(var(--code-width) + var(--label-width)) !important;
-    }
-}
-
-.input-output {
-    align-content: center;
-}
-
-.top-bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-}
-
-
-
-.output:active, .output:focus {
-    outline: none;
-    border: none;
-}
-
-
-.button {
-    padding-right: 20px;
-}
-
-.button button {
-    width: 50px;
-    height: 50px;
-    
-}
-
-.button img {
-    width: 30px;
-    height: 30px;
-}
-
-.instructions
-{
-    position: relative;
-    left: 0%;
-    text-align: center;
-    width: 100%;
-}
-
-#project-parent {
-    display: flex;
-    flex-direction: row;
-    align-self: start;
-    gap: 16px;
-    padding: 16px;
-    background: #222;
-    box-sizing: border-box;
-    margin: 16px;
-    flex-wrap: wrap;
-    justify-content: left;
-    
-    grid-auto-rows: min-content;
-    position: relative;
-}
-
-.project {
-    position: inherit;
-    transition:
-        max-height 0.5s cubic-bezier(.4,1,.3,1),
-        flex-basis 0.4s cubic-bezier(.4,1,.3,1),
-        width 0.6s cubic-bezier(.4,1,.3,1),
-        opacity 0.3s ease,
-        box-shadow 0.3s ease;
-    -webkit-transition: cubic-bezier(0.39, 0.575, 0.565, 1) all ease-in-out;
-    max-height: 700px;
-    opacity: 1;
-    box-shadow: 0 4px 16px #0006;
-    overflow: hidden;
-    display: block;
-    flex: 1 1 100%;
-}
-
+/*------------------------------------*\
+    #TOOLS
+\*------------------------------------*/
 .gone {
     max-height: 0px !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: 0 !important;
-    opacity: 1 !important;
-    pointer-events: none;
-    overflow: hidden !important;
     flex: 0 0 0 !important;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    pointer-events: none;
+    overflow: hidden;
 }
 
+/*project mini*/
 
 .project.mini {
     align-self: center;
@@ -192,7 +69,7 @@
     flex: 0 0 100%;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 50em) {
     .project.mini {flex: 0 0 31%;}
 }
 
@@ -214,29 +91,141 @@
     opacity: 1;
 }
 
-.run-button {
-    border: #00000000;
-    border-radius: 0%;
-    background: none;
+/*------------------------------------*\
+    #PROJECT-BOX
+\*------------------------------------*/
+.code-editor {
+    display: flex;
+    align-items: flex-start;
+    background: transparent;
+    height: var(--code-height); /* match textarea height */
 }
 
-.run-button:active {
-    border: #000000;
-    border-radius: 10%;
-    background:fixed;
-    transform: translateY(10px);
+.input-output {
+    align-content: center;
 }
 
-.run-button:hover:not(:active) {
-    transform: translateY(-1px);
+.project {
+    position: inherit;
+    transition:
+        max-height 0.5s cubic-bezier(.4,1,.3,1),
+        flex-basis 0.4s cubic-bezier(.4,1,.3,1),
+        width 0.6s cubic-bezier(.4,1,.3,1),
+        opacity 0.3s ease,
+        box-shadow 0.3s ease;
+    -webkit-transition: cubic-bezier(0.39, 0.575, 0.565, 1) all ease-in-out;
+    max-height: 700px;
+    opacity: 1;
+    box-shadow: 0 4px 16px #0006;
+    overflow: hidden;
+    display: block;
+    flex: 1 1 100%;
 }
 
+#project-parent {
+    display: flex;
+    flex-direction: row;
+    align-self: start;
+    gap: 16px;
+    padding: 16px;
+    background: #222;
+    box-sizing: border-box;
+    margin: 16px;
+    flex-wrap: wrap;
+    justify-content: left;
+    
+    grid-auto-rows: min-content;
+    position: relative;
+}
+
+/*------------------------------------*\
+    #TEXT-BOXES
+\*------------------------------------*/
+.codearea, .line-numbers, .output {
+    background-image: repeating-linear-gradient(
+        to bottom,
+        #333333,
+        #333333 1px,
+        #1a1a1a 1px, 
+        #1a1a1a 30px       
+    );
+    background-attachment: local;
+}
+
+.codearea {
+    border: none;
+    outline: none;
+    resize: none;
+    height: var(--code-height);
+    width: var(--code-width);
+    min-width: 5px;
+    font-size: large;
+    line-height: 30px;
+}
+
+.line-numbers {
+    text-align: center;
+    justify-self: unset;
+    user-select: none;
+    line-height: 30px;
+    height: var(--code-height);
+    min-width: var(--label-width);
+    overflow: hidden; /* hides scrollbar */
+    box-sizing: border-box;
+    padding-bottom: 5px;
+}
+
+.output {
+    user-select: none;
+    height: var(--code-height);
+    width: max(30vw, 5em);
+    padding-left: 10px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    white-space: pre-wrap; /* Preserve whitespace and wrap as needed */
+    word-wrap: break-word; /* Break long words to fit within the container */
+    font-size: large;
+    line-height: 30px;
+    
+    resize: none;
+    border: none;
+}
+
+@media screen and (max-width: 50em) { /*when the screen is small, put output under instead of to the right*/
+    .input-output {
+        flex-direction: column !important;
+    }
+    .output {
+        width: calc(var(--code-width) + var(--label-width)) !important;
+    }
+}
+
+/*------------------------------------*\
+    #PROJECT-INNER
+\*------------------------------------*/
+.top-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+.instructions{
+    position: relative;
+    left: 0%;
+    text-align: center;
+    width: 100%;
+}
+
+/*buttons*/
 .run-code {
     width: fit-content;
     font-size: large;
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 10px;
+    border: #00000000;
+    border-radius: 0%;
+    background: none;
 }
 
 .next-project {
@@ -248,4 +237,32 @@
     border-color: #00000000;
     overflow-y: auto;
     box-sizing: border-box;
+}
+
+.button {
+    padding-right: 20px;
+}
+
+.project-button {
+    width: 50px; 
+    height: 50px;
+}
+
+.run-code:active {
+    border: #000000;
+    border-radius: 10%;
+    background:fixed;
+    transform: translateY(10px);
+}
+
+.run-code:hover:not(:active) {
+    transform: translateY(-1px);
+}
+
+/*------------------------------------*\
+    #NO-ACTIVE
+\*------------------------------------*/
+.output:active, .output:focus {
+    outline: none;
+    border: none;
 }

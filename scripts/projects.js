@@ -11,14 +11,14 @@ let htmlGen =
     <div id="learn-project" class="project mini main-font">
         <div class="top-bar">
             <div class="button">
-            <button class="project-close-button" title="close project">
-                <img id="close-img" src='./components/art/close button 1.png'>
-            </button>
+                <button class="project-close-button project-button" title="close project">
+                    <img style="width: 30px; height: 30px;" id="close-img" src='./components/art/close button 1.png'>
+                </button>
             </div>
             <div class="button">
-            <button class="project-restart-button" title="reset code to defualt">
-                <img id="reset-img" src="./components/art/rewind icon - stroke.png">
-            </button>
+                <button class="project-restart-button project-button" title="reset code to defualt">
+                    <img style="width: 30px; height: 30px;" id="reset-img" src="./components/art/rewind icon - stroke.png">
+                </button>
             </div>
             <img src="./components/art/ttc coin icon.png" class="hide completed-icon" id="completed-icon"></img>
             <p class="project-title" id="project-title">Hello World Project:</p>
@@ -26,7 +26,7 @@ let htmlGen =
         <p class="instructions">instructions</p>
         <div class="codeAreaParent"></div>
         <div class="project-buttom-buttons">
-            <button title="run code" name="run-button" class="run-code run-button"><img src="./components/art/play button 1 - big.png"></img></button>
+            <button title="run code" name="run-button" class="run-code"><img src="./components/art/play button 1 - big.png"></img></button>
             <button title="go to next project" alt="next project" name="next-button" class="next-project" id="next-button"><img src="./components/art/arrow - 1.png"></button>
         </div>
     </div>
@@ -81,6 +81,12 @@ export class Display {
 
         this.reward = 5;
         this.index = index;
+
+        this.countTimeOpen()
+    }
+
+    countTimeOpen(){
+        console.error("make this track user time");
     }
 
     openProject(relativeIndex=0){
@@ -167,6 +173,7 @@ export class Display {
         element.editClass("gone", false);
         element.editClass("notmini", false);
         element.editClass("mini", true);
+        element.editClass("gone-anim-over", false);
     }
 
     //make totally invisible
@@ -174,7 +181,6 @@ export class Display {
         element.editClass("gone", true);
         element.editClass("notmini", false);
         element.editClass("mini", true);
-
     }
 
     editClass(className, set){

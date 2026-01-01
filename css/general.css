@@ -1,14 +1,35 @@
 /*------------------------------------*\
     #CONTENTS
 \*------------------------------------*/
-/*
+/**
+
 *SETTINGS
-**Root . . . . . . . Globally available variables
+**root . . . . . . . Globally available variables
 
 *GENERIC
-**Body . . . . . . . Sets Page Attributes
-**Sidebar  . . . . . (Or topbar if on mobile)
-**Main-Content . . . Everything but Sidebar 
+**body . . . . . . . Sets Page Attributes
+**sidebar  . . . . . (Or topbar if on mobile)
+**main-content . . . Everything but Sidebar 
+**canvas . . . . . . That thing that shows animations
+
+*TOOLS
+**main-font  . . . . Default pixel font
+**pixel-alt  . . . . Users can use this non pixel art font
+**js-screen  . . . . Hidden screen for showing js stuff
+**hide . . . . . . . Hide element tool used for sign in box
+
+*DROPDOWN
+**dropdown . . . . . Dropdown in the sidebar
+**list . . . . . . . Div object holding each list item
+**element  . . . . . Object holding images for each option
+**image  . . . . . . Image for each element
+**media  . . . . . . Change to topbar when mobile
+**toggle-dropdown  . Toggles dropdown menu
+**image  . . . . . . Image for toggle
+
+*DEFAULTS
+**selection  . . . . Change highlight color to yellow
+**scrollbar  . . . . Change side scrollbar
 
 **/
 
@@ -21,15 +42,21 @@
     --palette-serika-3: #bfb716;
     --palette-serika-4: #718F94;
     --palette-serika-5: #282828;
+
     --z-base: 0;
     --z-sidebar: 5;
     --z-dropdown: 10;
     --z-overlay: 20;
+
     --space-xs: 0.25rem;
     --space-sm: 0.5rem;
     --space-md: 1rem;
     --space-lg: 2rem;
+
     --sidebar-width: 10rem;
+
+    --pixel-font: 'Press Start 2P';
+    --secondary-font: 'monospace'
 }
 
 /*------------------------------------*\
@@ -62,11 +89,53 @@ body {
 	z-index: var(--z-base);
 }
 
+canvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 99.2vw;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100 !important;
+    image-rendering: crisp-edges;
+}
+
+.logo img {
+    width: max(6rem, 5vw);
+    image-rendering: pixelated;
+    margin-bottom: 20px;
+}
+
+.image-button{ /*sign-inup + learn  (in index.html)*/
+    color: #0000;
+    background-color: #0000;
+    border-radius: 0px;
+    border-color: #0000;
+    cursor: pointer;
+    width: 150px;
+}
+
+@media screen and (max-width: 714px) {
+    .sidebar {
+        width: 100%;
+        height: 8rem;
+        position: fixed;
+        flex-direction: row;
+        padding-top: 0px;
+        padding-left: 20px;
+    }   
+
+    .main-content {
+        margin-left: 0;
+        margin-top: 8rem; /* Same as the height of the sidebar */
+    }
+}
+
 /*------------------------------------*\
     #TOOLS
 \*------------------------------------*/
 .main-font {
-    font-family: 'Press Start 2P', monospace;
+    font-family: var(--pixel-font), var(--secondary-font);
     font-weight: 200;
     color: white;
     text-shadow:
@@ -100,28 +169,12 @@ body {
 
 .hide{
     display: none;
+    padding: 0%;
 }
 
 /*------------------------------------*\
     #DROPDOWN
 \*------------------------------------*/
-.dropdown--button{
-    cursor: pointer;
-    z-index: var(--z-sidebar);
-    position: relative;
-    background: none;
-    border: none; 
-}
-
-.dropdown--button--img {
-    width: max(5rem, 4vw);
-    image-rendering: pixelated;
-}
-
-.dropdown--button:hover{
-    filter: brightness(125%);
-}
-
 .dropdown{
     background-color: #28282850;
     z-index: var(--z-dropdown);
@@ -145,9 +198,49 @@ body {
     cursor: pointer;
 }
 
-.dropdown--image {
+.dropdown--image { /*house logo + learn logo + etc*/
     width: 5rem;
     height: 5rem;
+    image-rendering: pixelated;
+}
+
+@media screen and (max-width: 714px) { /*when screen below width, change to vertical layout*/
+    .dropdown--list {
+        flex-direction: row;
+        width: auto;
+    }
+
+    .dropdown--element {
+        padding-left: 10px;
+        padding-right: 10px;
+        width: auto;
+    }
+
+    .dropdown--image {
+        width: 80px;
+    }
+
+    .dropdown {
+        width: auto;
+    }
+}
+
+/*element(s) that toggle the dropdown*/
+
+.toggle-dropdown{
+    cursor: pointer;
+    z-index: var(--z-sidebar);
+    position: relative;
+    background: none;
+    border: none; 
+}
+
+.toggle-dropdown:hover{
+    filter: brightness(125%);
+}
+
+.toggle-dropdown--img {
+    width: max(5rem, 4vw);
     image-rendering: pixelated;
 }
 
@@ -168,69 +261,4 @@ body {
 
 ::-webkit-scrollbar-thumb {
     background: rgb(171, 161, 161);
-}
-
-
-
-.logo img {
-    width: max(6rem, 5vw);
-    image-rendering: pixelated;
-    margin-bottom: 20px;
-}
-
-@media screen and (max-width: 714px) {
-    .sidebar {
-        width: 100%;
-        height: 8rem;
-        position: fixed;
-        flex-direction: row;
-        padding-top: 0px;
-        padding-left: 20px;
-    }   
-
-    .main-content {
-        margin-left: 0;
-        margin-top: 8rem; /* Same as the height of the sidebar */
-    }
-
-    .dropdown ul {
-        flex-direction: row;
-        width: auto;
-    }
-
-    .dropdown ul li {
-        padding-left: 10px;
-        padding-right: 10px;
-        width: auto;
-    }
-
-    .dropdown ul li img {
-        width: 80px;
-    }
-
-    .dropdown {
-        width: auto;
-    }
-}
-
-
-
-canvas{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 99.2vw;
-    height: 100%;
-    pointer-events: none;
-    z-index: 100 !important;
-    image-rendering: crisp-edges;
-}
-
-.image-button{
-    color: #0000;
-    background-color: #0000;
-    border-radius: 0px;
-    border-color: #0000;
-    cursor: pointer;
-    width: 150px;
 }

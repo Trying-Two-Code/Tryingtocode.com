@@ -1,3 +1,6 @@
+Request features here:
+https://docs.google.com/forms/d/e/1FAIpQLSd1BB1V3JilTZPJEPQw0S8nTMsf9Vjfb_i_PX2aoeiEIOMEZg/viewform?usp=publish-editor
+
 Hey developer! Read these to know what you should fix:
 
 [key:
@@ -28,8 +31,12 @@ Hey developer! Read these to know what you should fix:
 - 6
 - dean
 
-- general.css not organized
+- css not organized
 - 4
+- TTC
+
+- js files need to be optimised and cleaned
+- 1
 - TTC
 
 - save system needs to be reworked
@@ -39,3 +46,12 @@ Hey developer! Read these to know what you should fix:
 - sign in looks bad
 - 3
 - TTC
+
+- Create creation page, in order to allow users to make their own learning projects. Support saving, publishing, and internal use
+- 9
+- TTC
+
+- Work on tools.js
+- 5
+- TTC
+

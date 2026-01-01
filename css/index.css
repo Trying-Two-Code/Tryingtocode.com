@@ -1,3 +1,67 @@
+/*------------------------------------*\
+    #CONTENTS
+\*------------------------------------*/
+/**
+
+*GENERAL
+**webkit-scrollbar . scroll
+**big-icon . . . . . icon images
+
+*TOOLS
+**gone . . . . . . . instantly gone no matter what
+
+*WELCOME
+**welcome  . . . . . main large text
+**title  . . . . . . main title text
+**subtitle . . . . . secondary text
+
+*SIGN-IN
+**si-section . . . . contains toggle and container
+**sign-in  . . . . . only the container
+**title  . . . . . . (sign in)
+**flexbox  . . . . . 
+**submit . . . . . . send to firebase button
+**input  . . . . . . textbox for username
+**output . . . . . . textbox for password
+
+**/
+
+/*------------------------------------*\
+    #GENERAL
+\*------------------------------------*/
+::-webkit-scrollbar {
+  display: none;
+}
+
+.big-icon{
+	position: relative;
+	background-color: #0000;
+	width: 100%;
+	image-rendering: pixelated;
+}
+
+/*------------------------------------*\
+    #TOOLS
+\*------------------------------------*/
+.gone{
+	display: none !important;
+	padding: 0% !important;
+}
+.slow-hide{
+	transition: all 1s;
+	padding: 0% !important;
+	size: 0% !important;
+	border-radius: 0px !important;
+	width: 0px !important;
+	height: 0px !important;
+}
+.slow-hide > *{
+	display: none !important;
+}
+
+/*------------------------------------*\
+    #WELCOME
+\*------------------------------------*/
 .welcome {
 	display: flex;
 	align-items: center;
@@ -15,7 +79,7 @@
 
 }
 
-.welcome h1 {
+.welcome--title {
 	text-shadow:
 		-4px -4px 0 #000,  
 		 4px -4px 0 #000,
@@ -23,7 +87,7 @@
 		 4px  4px 0 #000 ;
 }
 
-.welcome p {
+.welcome--subtitle {
 	text-shadow: 
 		-2px -2px 0 #000,  
 		 2px -2px 0 #000,
@@ -37,46 +101,39 @@
     }
 }
 
-.gone{
-	display: none !important;
+/*------------------------------------*\
+    #SIGN IN
+\*------------------------------------*/
+.si-section {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+
 }
 
-.si-container{
-	position: relative;
-	top: 0;
-  	left: 0;
+.sign-in{
+	position: relative; 
+	padding-inline: 1em;
+	padding-top: 0.5em;
+	padding-bottom: 0.7em;
 	transition: width .3s ease-in-out, height .3s ease-in-out;
-	width: 100%;
-	height: 100%n;
 	border: rgba(0, 0, 0, 0.281);
 	border-radius: 100px;
-	border-style: dashed;
+	border-style: solid;
 	background-color: #000a;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	width: 40vw;
+	height: 30vh;
 }
 
 .si-title{
 	position: relative;
 	left: 0%;
+	font-size: 2em;
 	text-align: center;
-}
-
-.si-input,
-.si-output,
-.si-submit {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	text-align: center;
-	margin: 0.5rem 0; /* uniform spacing */
-}
-
-.si-submit{
-	width: 100px;
 }
 
 .si-button-flexbox{
@@ -86,13 +143,21 @@
 	gap: 10px;
 }
 
-.big-icon{
-	position: relative;
-	background-color: #0000;
-	width: 100%;
-	image-rendering: pixelated;
+.si-submit{
+	width: 100px;
+	line-height: 0.9em;
 }
 
-::-webkit-scrollbar {
-  display: none;
+.si-submit,
+.si-input,
+.si-output {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 1.5em;
+	text-align: center;
+	margin: 0.5rem 0.5rem; /* uniform spacing */
+	font-size: 0.8em;
+	line-height: 0.9em;
 }

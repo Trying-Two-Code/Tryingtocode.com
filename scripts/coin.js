@@ -1,15 +1,17 @@
 import { CoinObj } from "./coinObj.js";
 import { setUserDatapoint } from "../firebase.js";
 
+/**
+ * This script is meant to tell the canvas to draw coins
+ * and to handle when to create coins
+ */
+
 let userCoins = localStorage.getItem("coin") || "0";
 localStorage.setItem("coin", userCoins);
 
 let counter = document.getElementById("coin-counter");
 
-changeNumber(0);
-
 let canvas = document.getElementById('render-canvas');
-
 
 const coinImgSrc = '../components/art/ttc coin icon.png';
 let objects = [];
@@ -39,7 +41,9 @@ if(canvas){
     window.requestAnimationFrame(draw);
 }
 
-export function getCoin(amm, go_to, startElementPos, startString = ''){
+
+
+export let getCoin = (amm, go_to, startElementPos, startString = '') => {
     for (let index = 0; index < amm; index++) {
         let clientRect = startElementPos.getBoundingClientRect();
         let coinObj = new CoinObj(
@@ -56,7 +60,7 @@ export function getCoin(amm, go_to, startElementPos, startString = ''){
     }
 }
 
-export function changeNumber(amm, startString=''){
+export let changeNumber = (amm, startString='') => {
     let currentCoins = String(parseInt(localStorage.getItem("coin")) + amm);
     localStorage.setItem("coin", currentCoins);
     if (counter != null){
@@ -67,3 +71,5 @@ export function changeNumber(amm, startString=''){
         console.error("do something here? I don't remember what.");
     }
 }
+
+changeNumber(0);
