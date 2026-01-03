@@ -1,7 +1,7 @@
 //for use as a rect for editable projects
 
 import { runUserCode } from "./pyrun.js";
-import { CodeArea } from "./codearea.js";
+import { CodeArea } from "./code-area.js";
 import { isCorrectCode } from  "./checkCode.js";
 
 //general use
@@ -40,7 +40,8 @@ var correctCode = new CustomEvent("correctCode", {
 
 
 export class Display {
-    constructor(document, parent, projectJSON, index=0, htmlString = htmlGen, textareaSize = 1 /*default to 1 line*/, toggled=false, code=null) { 
+    constructor(document, parent, projectJSON, index=0, htmlString = htmlGen, 
+        textareaSize = 1, toggled=false, code=null) { 
         this.canRun = false; //can't run when I am first made 
         this.toggled = toggled; 
 

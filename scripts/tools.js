@@ -1,9 +1,11 @@
 //used for things such as sign in toggle button, and sidebar toggle
 export class Toggle{
-    constructor(toggleButton, effectedElement, toggleClass, transitionedElement=null, animatedElement=null){
-        this.toggleElement = toggleElement;
+    constructor(toggleButton, effectedElement, primaryClass, secondaryClass=null, transitionedElement=null, animatedElement=null){
+        console.log("made");
+        
         this.effectedElement = effectedElement;
         this.primaryClass = primaryClass;
+        this.secondaryClass = secondaryClass;
         this.goneClass = "gone";
 
         this.transitionedElement = transitionedElement;
@@ -14,36 +16,24 @@ export class Toggle{
     }
 
     initializeLogic(){
-        this.toggleEventFilled = () => {this.toggle();}
+        this.toggleEventFilled = () => {this.toggleEvent();}
         this.triggerGoneFilled = () => {this.goneEvent();}
 
         this.addEvent(this.toggleEventFilled);
         this.addEvent(this.triggerGoneFilled);
 
-        this.toggle();
+        this.toggleEvent();
     }
 
     addEvent(event, button=this.toggleButton){
         button.addEventListener("click", event);
     }
 
-    toggle(button=this.toggleButton, toggleClass=this.toggleClass){
-        this.toggle(this.parent)
+    toggleEvent(primaryClass=this.primaryClass, secondaryClass=this.secondaryClass){
+        let secondaryValue = this.effectedElement.classList.contains(primaryClass);
 
-        let off = this.parent.classList.contains("slow-hide")
-
-        if(hiding){
-
-            const toggleEventListener = () => { 
-                this.parent.classList.toggle("gone"); 
-                console.log("should be gone");
-                this.parent.removeEventListener('transitionend', toggleEventListener);
-            }
-
-            this.parent.addEventListener('transitionend', toggleEventListener); 
-        }else{
-            this.parent.classList.toggle("gone"); 
-        }
+        this.effectedElement.classList.toggle(primaryClass);
+        this.effectedElement.classList.toggle(secondaryClass, secondaryValue);
     }
 
     goneEvent(){
@@ -84,7 +74,6 @@ export class Collapsable{
         this.parent = parent;
         this.elements = elements;
         this.images = images;
-        console.log(this.parent);
         this.hide();
     }
     hide(){

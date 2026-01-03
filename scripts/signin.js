@@ -31,10 +31,6 @@ export class SignIn{
         parent.appendChild(this.content);
 
         this.findElements();
-
-        this.parent.classList.toggle("gone");
-        this.toggleButton(this.exit);
-        this.toggle();
     }
 
     findElements(){
@@ -44,7 +40,7 @@ export class SignIn{
         this.exit = this.projectEl.querySelector("#exit-button");
     }
 
-    toggleButton(button){
+    /*toggleButton(button){
         button.addEventListener("click", () => {
             this.toggle(this.parent)
 
@@ -73,5 +69,5 @@ export class SignIn{
         return new Promise((resolve, reject) => {
             (element.style.height == 0);
         }) 
-    }
+    }*/
 }

@@ -1,5 +1,4 @@
 //signin.js:
-//import { Toggle } from "./tools";
 
 const htmlGen =  
 `
@@ -44,18 +43,4 @@ export class SignIn{
         this.submit = this.projectEl.querySelector("#submit-button");
         this.exit = this.projectEl.querySelector("#exit-button");
     }
-
-    /*toggleButton(button){
-        button.addEventListener("click", () => {
-            this.toggle(this.projectEl);
-        });
-    }
-
-    toggle(element=this.projectEl){
-        console.log("toggle");
-        element.classList.toggle("slow-hide");
-        return new Promise((resolve, reject) => {
-            (element.style.height == 0);
-        }) 
-    }*/
 }
