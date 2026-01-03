@@ -16,5 +16,15 @@
         "*.local"
       ]
     }
+  ],
+  "rewrites": [
+      {
+        "source": "/learn",
+        "destination": "/learn.html"
+      },
+      {
+        "source": "/store",
+        "destination": "/store.html"
+      }
   ]
 }
