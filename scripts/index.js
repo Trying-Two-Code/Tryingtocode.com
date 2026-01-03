@@ -10,7 +10,7 @@ let signInParent = document.getElementById("sign-in-holder");
 let toggleSigninup = document.getElementById("toggle-signinup");
 let signIn = new SignIn(document, signInParent);
 let toggle = new Toggle(toggleSigninup, signInParent, "slow-hide", "sign-in");
-toggle.addEvent(toggle.toggleEvent, signIn.exit);
+toggle.addEvent(toggle.toggleEventFilled, signIn.exit);
 
 /*signIn.toggleButton(toggleSigninup);*/
 signIn.submit.addEventListener("click", (e) => {

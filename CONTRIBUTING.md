@@ -21,19 +21,12 @@ Don't use special characters or emoji for anything unless strictly neccisary.
 
 All commits should keep technical debt low.
 
-If it is not very important:
-- (fixing 1 or 2 broken conventions)
-- (typos)
-- (etc.)
-Then wait until you've fixed other things before commiting.
-
 Titles should be clear as to what you've added. 
-!Only make minor tweaks if you understand the codebase and conventions!
-If many unimportant fixes have been made, in the description of the commit say:
+If many minor fixes have been made, in the description of the commit say:
 "
 Minor Tweaks: 
--file_name line (line)
--file_name2 line (line2)
+-file_name
+-file_name2
 "
 
 ## HTML
