@@ -1,4 +1,4 @@
-
+console.log("readddy for settings rider sir");
 
 const DEFAULT_SETTINGS = {
     "font": "main-font",
@@ -18,8 +18,11 @@ export let changeSetting = (setting, value) => {
     })
 }
 
+var isPixel = true;
 export let updateSettings = (document) => {
-    document.elements.forEach(element => {
-        element.style = "";
+    isPixel = !isPixel;
+    document.querySelectorAll('*').forEach(element => {
+        element.classList.toggle("main-font", isPixel);
+        element.classList.toggle("pixel-alt", !isPixel);
     });
 }
