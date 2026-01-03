@@ -5,9 +5,6 @@
  * detection of being to close to gravitation object
  * 
  * 
- * Image class
- * showing image on screen 
- * (scaling for dif screen sizes)
  */
 
 let ogDemensions = [window.screen.availWidth, window.screen.availHeight];
@@ -72,39 +69,8 @@ export class CoinObj{
     }
 }
 
-class SpriteImage{
-    constructor(ctx, image, sprite){
-        this.ctx = ctx;
-        this.image = image;
-        this.sprite = sprite;
-        console.error("move this sprite image class somewhere better please.");
-    }
 
-    RenderImage(sprite, position_x=0, position_y=0, frames=1, index=0){
-        this.ctx.imageSmoothingEnabled = false;
-
-        this.image.src = sprite;
-
-        let spriteWidth = this.image.width / frames;
-        let spriteHeight = this.image.height;
-        let frameOffset = spriteWidth * index;
-
-        let destination = [position_x, position_y];
-        let size = 10;
-        let scaledWidth = (ogDemensions[0] / window.innerWidth) * size; 
-        let scaledHeight = (ogDemensions[1] / window.innerHeight) * size;
-
-        this.ctx.drawImage(
-            this.image,
-            frameOffset, 0,                         // source x, y
-            spriteWidth, spriteHeight,              // source width, height
-            destination[0], destination[1],         // destination x, y
-            scaledWidth, scaledHeight               // destination width, height
-        );
-    }
-}
-
-let getAbsolutePosition = (el) => {
+function getAbsolutePosition(el) {
     const rect = el.getBoundingClientRect();
     return {
         x: rect.left + window.scrollX,
@@ -116,13 +82,13 @@ function distance(x1, y1, x2, y2) {
     return Math.hypot(x2 - x1, y2 - y1);
 }
 
-let normalizeVector = (x, y) => {
+function normalizeVector(x, y) {
     const length = Math.hypot(x, y); // same as sqrt(x^2 + y^2)
     if (length === 0) return [0, 0];
     return [x / length, y / length];
 }
 
-let domToCanvas = (canvas, dom) => {
+function domToCanvas(canvas, dom) {
     const rect = canvas.getBoundingClientRect();
 
     // Scale factors: DOM pixels -> canvas pixels

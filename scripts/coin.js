@@ -1,4 +1,4 @@
-import { CoinObj } from "./coinObj.js";
+import { CoinObj } from "./coin-obj.js";
 import { setUserDatapoint } from "../firebase.js";
 
 /**
