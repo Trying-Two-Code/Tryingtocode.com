@@ -1,5 +1,5 @@
 //for use in ALL HTML FILES
-import { Collapsable } from "./tools.js";
+//import { SimpleToggle } from "./tools.js";
 import { Toggle } from "./tools.js";
 
 
@@ -16,6 +16,15 @@ let art = ['components/art/yellow - toggle arrow down.png',
            'components/art/yellow - toggle arrow up.png'];
 
 let dropdown = new Toggle(dropdownButton, dropdownElements, "hide");
+
+let parentImage = dropdownButton.querySelector('img')
+
+let parentFunction = () => {
+    let frame = dropdown.isOff(dropdownElements[0]) ? 1 : 0;
+    parentImage.src = art[frame];
+}
+
+dropdown.addEvent(parentFunction);
 
 dropdown.parent.addEventListener('click', () =>{
     dropdown.toggle();

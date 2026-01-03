@@ -54,7 +54,7 @@ export class Toggle{
     }
 
     goneToggleEvent(effectedElement=null){
-        let isOff = effectedElement.classList.contains(this.toggleClass);
+        let isOff = this.isOff(effectedElement);
         
         if(isOff){
             let addTempListener = (typeend, effectedElement=null) => {
@@ -74,6 +74,10 @@ export class Toggle{
             });
         }
     }
+
+    isOff(effectedElement){
+        return effectedElement.classList.contains(this.toggleClass);
+    }
 }
 
 let ensureArray = (variable) => {
@@ -87,7 +91,7 @@ let ensureArray = (variable) => {
 }
 
 //An element that is collapsable from a toggle button, and toggles elements
-export class Collapsable{
+export class SimpleToggle{
     constructor(parent, elements, images=[]){
         this.hidden = true;
         this.parent = parent;
