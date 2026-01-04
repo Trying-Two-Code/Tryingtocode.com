@@ -117,3 +117,37 @@ export class SimpleToggle{
         this.hidden ? this.show() : this.hide()
     }
 }
+
+//renders images properly, scaling to the canvas
+export class SpriteImage{
+    constructor(ctx, image, sprite){
+        this.ctx = ctx;
+        this.image = image;
+        this.sprite = sprite;
+
+        this.ogDemensions = [window.screen.availWidth, window.screen.availHeight];
+    }
+
+    RenderImage(sprite, position_x=0, position_y=0, frames=1, index=0){
+        this.ctx.imageSmoothingEnabled = false;
+
+        this.image.src = this.sprite;
+
+        let spriteWidth = this.image.width / frames;
+        let spriteHeight = this.image.height;
+        let frameOffset = spriteWidth * index;
+
+        let destination = [position_x, position_y];
+        let size = 10;
+        let scaledWidth = (this.ogDemensions[0] / window.innerWidth) * size; 
+        let scaledHeight = (this.ogDemensions[1] / window.innerHeight) * size;
+
+        this.ctx.drawImage(
+            this.image,
+            frameOffset, 0,                         // source x, y
+            spriteWidth, spriteHeight,              // source width, height
+            destination[0], destination[1],         // destination x, y
+            scaledWidth, scaledHeight               // destination width, height
+        );
+    }
+}

@@ -7,7 +7,9 @@
  * 
  */
 
-let ogDemensions = [window.screen.availWidth, window.screen.availHeight];
+import { SpriteImage } from "./tools.js";
+
+console.log("work");
 
 export class CoinObj{
     constructor(go_to=null, x_pos=0, y_pos=0, x_vel=0, y_vel=0, canvas=null, ctx=null, sprite=null){
@@ -68,7 +70,6 @@ export class CoinObj{
         this.spriteImage.RenderImage(sprite, this.x_pos, this.y_pos, frames, index);
     }
 }
-
 
 function getAbsolutePosition(el) {
     const rect = el.getBoundingClientRect();
