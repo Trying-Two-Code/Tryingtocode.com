@@ -43,20 +43,21 @@ console.log("loaded project.js");
 
 export class Display {
     constructor(document, parent, projectJSON, index=0, htmlString = htmlGen, 
-        textareaSize = 1, toggled=false, code=null) { 
-        console.log("created display");
+        textareaSize = 1, startToggled=false, code=null) { 
         this.canRun = false; //can't run when I am first made 
-        this.toggled = toggled; 
-
+        this.toggled = startToggled; 
+        this.projectJSON = projectJSON;
+        this.textareaSize = textareaSize;
+        this.index = index;
+        
         this.createElements(document, parent, htmlString); 
+        this.initializeDisplay();
+    }
+
+    initializeDisplay(){
         this.findElements(); 
 
-        this.min = true; 
-
-        this.closeButton.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            this.toggleElements(false); 
-        });
+        
 
         this.projectEl.addEventListener('click', async () => {
             if (this.projectEl.classList.contains('mini')) {
@@ -64,19 +65,8 @@ export class Display {
             }
         });
 
-        this.nextButton.addEventListener('click', () => {
-            this.openProject(1);
-        });
+        this.initButtons();
 
-        this.rewindButton.addEventListener('click', () => {
-            this.codeArea.createText(this.projectJSON.code);
-        });
-
-        this.projectJSON = projectJSON;
-        
-        setupRunButton(this);
-
-        this.textareaSize = textareaSize;
         this.codeArea.createText("\n");
 
         this.lastLineCount = 1;
@@ -84,13 +74,24 @@ export class Display {
         this.setAttributes();
 
         this.reward = 5;
-        this.index = index;
 
-        this.countTimeOpen()
+        this.countTimeOpen();
+    }
+
+    initButtons(){
+        let closeButtonEvent = (e) => {e.stopPropagation(); this.toggleElements(false);}
+        let nextButtonEvent = () => {this.openProject(1);}
+        let rewindButtonEvent = () => {this.codeArea.createText(this.projectJSON.code);}
+
+        this.closeButton.addEventListener('click', closeButtonEvent);
+        this.nextButton.addEventListener('click', nextButtonEvent);
+        this.rewindButton.addEventListener('click', rewindButtonEvent);
+        
+        setupRunButton(this);
     }
 
     countTimeOpen(){
-        console.error("make this track user time");
+        console.warn("make this track user time");
     }
 
     openProject(relativeIndex=0){ //open the next project: relativeIndex=1
