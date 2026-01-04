@@ -6,10 +6,6 @@ import { Toggle } from "./tools.js";
 import "./settings.js";
 import { updateSettings } from "./settings.js";
 
-let updateSettingsButton = document.getElementById("change-setting");
-let filledSettings = () => {updateSettings(document);}
-updateSettingsButton.addEventListener("click", filledSettings);
-filledSettings();
 
 console.log("work 0");
 

@@ -26,3 +26,7 @@ export let updateSettings = (document) => {
         element.classList.toggle("pixel-alt", !isPixel);
     });
 }
+
+let updateSettingsButton = document.getElementById("change-setting");
+let filledSettings = () => {updateSettings(document);}
+updateSettingsButton.addEventListener("click", filledSettings);

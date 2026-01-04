@@ -2,6 +2,7 @@
 import { Display } from "./projects.js";
 import "./coin.js";
 import { setUserDatapoint } from "../firebase.js";
+import { updateSettings } from "./settings.js";
 
 console.log("learn is at least going");
 

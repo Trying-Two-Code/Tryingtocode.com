@@ -3,6 +3,7 @@
 import { runUserCode } from "./pyrun.js";
 import { CodeArea } from "./code-area.js";
 import { isCorrectCode } from  "./check-code.js";
+import { Toggle } from "./tools.js";
 
 //general use
 
@@ -92,7 +93,7 @@ export class Display {
         console.error("make this track user time");
     }
 
-    openProject(relativeIndex=0){
+    openProject(relativeIndex=0){ //open the next project: relativeIndex=1
         if(relativeIndex == 0) {/* do not change index */ return; }
         
         var changeOpenProject = new CustomEvent("changeOpen", {detail: {relativeIndex: relativeIndex, index: this.index}});
