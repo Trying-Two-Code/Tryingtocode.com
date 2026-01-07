@@ -42,13 +42,13 @@ var correctCode = new CustomEvent("correctCode", {
 console.log("loaded project.js");
 
 export class Display {
-    constructor(document, parent, projectJSON, index=0, htmlString = htmlGen, 
+    constructor(document, parent, projectJSON, projectIndex=0, htmlString = htmlGen, 
         textareaSize = 1, startToggled=false, code=null) { 
         this.canRun = false; //can't run when I am first made 
         this.toggled = startToggled; 
         this.projectJSON = projectJSON;
         this.textareaSize = textareaSize;
-        this.index = index;
+        this.projectIndex = projectIndex;
         
         this.createElements(document, parent, htmlString); 
         this.initializeDisplay();
@@ -95,7 +95,7 @@ export class Display {
     openProject(relativeIndex=0){ //open the next project: relativeIndex=1
         if(relativeIndex == 0) {/* do not change index */ return; }
         
-        var changeOpenProject = new CustomEvent("changeOpen", {detail: {relativeIndex: relativeIndex, index: this.index}});
+        var changeOpenProject = new CustomEvent("changeOpen", {detail: {relativeIndex: relativeIndex, index: this.projectIndex}});
         window.dispatchEvent(changeOpenProject);
     }
 

@@ -179,7 +179,6 @@ onAuthStateChanged(auth, async (user) => {
         console.log("User signed out");
         anonSign();
     }
-
 });
 
 function anonSign(){

@@ -118,10 +118,6 @@ let saveProject = (this_proj) => {
     }
 };
 
-let getProject = (title) => {
-    const projects = JSON.parse(localStorage.getItem("projects") || "{}");
-    return projects[title] || null;
-};
 
 window.addEventListener('correctCode', (details) => {
     let title = window.currentDisplay.title.innerHTML;
@@ -149,13 +145,13 @@ window.addEventListener('changeOpen', (details) => { //details requires relative
     openProjectAtIndex(newIndex);
 });
 
-const loadProjectJSON = async (index, section="projects") => {
+const loadJSON = async (section="projects") => {
     const response = await fetch('../python-projects.json');
     const json = await response.json();
-    return json[section][index];
+    return json[section];
 };
 
-let loadProject = async (this_project, defaultReward=DEFAULT_REWARD, section="projects", projectIndex=0) => {
+/*let loadProject = async (this_project, defaultReward=DEFAULT_REWARD, section="projects", projectIndex=0) => {
     console.log("load");
     return loadProjectJSON(this_project, section).then(JSON => {
         const projectParent = document.getElementById('project-parent');
@@ -177,31 +173,63 @@ let loadProject = async (this_project, defaultReward=DEFAULT_REWARD, section="pr
             mainProj = false;
             display.toggleElements(true);
             console.log("main is " + display.title.innerHTML);
-        }*/
+        }/
+        return display;
     });
+}
+*/
+
+let getProject = (title) => {
+    const projects = JSON.parse(localStorage.getItem("projects") || "{}");
+    return projects[title] || null;
+};
+
+const PROJECT_PARENT = document.getElementById('project-parent');
+
+let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON) => {
+    let display = new Display(document, PROJECT_PARENT, JSON, projectIndex);
+
+    display.projectEl.addEventListener('toggleElements', (shouldShow) => {
+        toggleAboveProjects(projectIndex, shouldShow.detail);
+    });
+
+    display.setupTextarea();
+    let code = getProject(JSON.title);
+
+    //if(code)
+
+    return display;
 }
 
 let getMainProject = (projects) => {
     console.log(projects);
     for (const element in projects) {
         console.log(element);
-        if(!("code" in element)){
+        if(!(element.code)){
             return element;
         }
     }
     return null;
 }
 
-let loadProjectsFunction = async (projectsList) => {
+let loadProjectsFunction = async (projectsList, section="projects") => {
+    const JSON = await loadJSON(section);
     let projectIndex = 0;
     let projectList = [];
+
     for (let item of projectsList){
         projectIndex++;
-        loadProject(item[0], DEFAULT_REWARD, item[1], projectIndex).then(new_project => {
-            projectList.push(new_project);
-            //console.log(getMainProject(projectList));
-        });
+        console.log(JSON);
+        new_project = loadProject(item[0], DEFAULT_REWARD, item[1], projectIndex, JSON["1"]);
+        let proj_display = new_project;
+        console.log(proj_display);
+        projectList.push(new_project);
     }
+    
+    console.log("getting main...");
+    const main_ = projectList[ getMainProject(projectList) ];
+    console.log("main is ", main_, main_.index);
+    main_.toggleElements(true);
 }
 
 loadProjectsFunction(loadIndices);
