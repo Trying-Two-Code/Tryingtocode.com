@@ -15,17 +15,54 @@ const firebaseConfig = {
   measurementId: "G-7TREL4ZC4F"
 };
 
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth(app);
+let initFirebase = () => {
+    //VALUES
+
+    const app = () => {return initializeApp(firebaseConfig)};
+    const analytics = () => {return getAnalytics(app)};
+    const auth = () => {return getAuth(app)};
+
+    var appValue = null;
+    var analyticsValue = null;
+    var authValue = null;
+
+    const GET_VALUE = () => {
+        let values = [appValue, analyticsValue, authValue];
+        if(null in values) {
+            functions = [app, analytics, auth];
+            
+            for (let index = 0; index < values.length; index++) {
+                const element = values[index];
+                if(element == null){
+                    element = functions[index];
+                }
+            }
+        }
+        return values;
+    }
+
+    //Auth Value
+
+    let setupAuthChanged = () => {
+        GET_VALUE();
+        onAuthStateChanged(authValue, authStateChangedFunction);
+    }
+
+    setupAuthChanged();
+
+    var db = null;
+}
+
+initFirebase();
 
 function anon(auth){
+    GET_VALUE();
     signInAnonymously(auth).then((userCredential) => {
         const user = userCredential.user;
     }).catch((error) => console.error(error));
 }
 
-export async function createEmail(email, password){
+export let createEmail =  async(email, password) => {
     return createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
         const user = userCredential.user;
         alert("creating account...");
@@ -38,7 +75,7 @@ export async function createEmail(email, password){
     });
 }
 
-async function signIn(email, password){
+let signIn = async (email, password) => {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         return userCredential.user; // return the actual user
@@ -48,7 +85,7 @@ async function signIn(email, password){
     }
 }
 
-export async function signInUp(email, password){
+export let signInUp = async (email, password) => {
     try{
         const user = await signIn(email, password);
         return user;
@@ -65,9 +102,14 @@ export async function signInUp(email, password){
     }
 }
 
-const db = getFirestore(app);
+
+
 
 export async function initUserData(user){
+    if(db = null){
+        db = getFirestore(appValue);
+    }
+
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
 
@@ -85,10 +127,12 @@ export async function initUserData(user){
 }
 
 let deleteStuff = async (user) => {
+    if(db = null){
+        db = getFirestore(appValue);
+    }
     const userRef = doc(db, "users", user.uid);
     await setDoc(userRef, {});
 }
-
 
 let defualtValues = {
     email: null,
@@ -96,9 +140,14 @@ let defualtValues = {
     coins: 0,
     projects: {}
 };
+
 //Somehow, we need to merge the data of what we have online, and on site.
 export let setUserDatapoint = async (email=null, displayName=null, coins=null, projects=null) => {
     if (!window.user) return console.warn("No user yet");
+
+    if(db = null){
+        db = getFirestore(appValue);
+    }
     
     const userRef = doc(db, "users", window.user.uid);
     const updatedSnap = await getDoc(userRef);
@@ -167,7 +216,7 @@ let mergeObjects = (object1, object2) => {
     return merged;
 }
 
-onAuthStateChanged(auth, async (user) => {
+let authStateChangedFunction = async (user) => {
     if (user) {
         console.log("User signed in:", user.uid);
         await deleteStuff(user);
@@ -179,7 +228,8 @@ onAuthStateChanged(auth, async (user) => {
         console.log("User signed out");
         anonSign();
     }
-});
+}
+
 
 function anonSign(){
     signInAnonymously(auth).then((id) => {

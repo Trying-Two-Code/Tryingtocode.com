@@ -128,13 +128,14 @@ export class Display {
     }    
 
     setAttributes(){
-        let addAmm = this.projectJSON.code.split("\n").length - 1;
+        //let addAmm = this.projectJSON.code.split("\n").length - 1;
         this.codeArea.createText(this.projectJSON.code);
         this.codeArea.editPresses(() => this.updateLineNumbers());
         let title = this.projectJSON.title;
         this.title.innerHTML = title;
         this.instructions.innerHTML = 'mission: ' + this.projectJSON.instruction;
         this.output.disabled = true;
+        console.log("my json: ", this.projectJSON, this.projectIndex);
     }
 
     async getInput(){

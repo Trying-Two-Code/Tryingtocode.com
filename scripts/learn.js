@@ -179,11 +179,6 @@ const loadJSON = async (section="projects") => {
 }
 */
 
-let getProject = (title) => {
-    const projects = JSON.parse(localStorage.getItem("projects") || "{}");
-    return projects[title] || null;
-};
-
 const PROJECT_PARENT = document.getElementById('project-parent');
 
 let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON) => {
@@ -194,9 +189,8 @@ let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON) 
     });
 
     display.setupTextarea();
-    let code = getProject(JSON.title);
 
-    //if(code)
+    //if(code) logic needs to be implemented
 
     return display;
 }
@@ -219,8 +213,8 @@ let loadProjectsFunction = async (projectsList, section="projects") => {
 
     for (let item of projectsList){
         projectIndex++;
-        console.log(JSON);
-        new_project = loadProject(item[0], DEFAULT_REWARD, item[1], projectIndex, JSON["1"]);
+        console.log("JSON is this:", JSON[projectIndex]);
+        let new_project = loadProject(item[0], DEFAULT_REWARD, projectIndex, JSON[projectIndex]);
         let proj_display = new_project;
         console.log(proj_display);
         projectList.push(new_project);
