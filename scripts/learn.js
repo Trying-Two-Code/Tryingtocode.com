@@ -8,6 +8,8 @@ console.log("learn is at least going");
 let loadIndices = Array.from({length: 50}, (_, i) => [i + 1, "beginner-2"]);
 const DEFAULT_REWARD = 5;
 
+const PROJECT_PARENT = document.getElementById('project-parent');
+
 var projects = [];
 
 //for debug purposes, a function to reset player stats
@@ -118,6 +120,10 @@ let saveProject = (this_proj) => {
     }
 };
 
+let getProjects = (title) => {
+    let rawProjects = localStore.getItem("projects");
+}
+
 
 window.addEventListener('correctCode', (details) => {
     let title = window.currentDisplay.title.innerHTML;
@@ -134,6 +140,7 @@ let openProjectAtIndex = index => {
     }
 }
 
+
 //this allows the next project button to work
 window.addEventListener('changeOpen', (details) => { //details requires relativeIndex (0 for no change), currentIndex (index of currently open project)
     let relativeIndex = details.detail.relativeIndex;
@@ -144,6 +151,7 @@ window.addEventListener('changeOpen', (details) => { //details requires relative
 
     openProjectAtIndex(newIndex);
 });
+
 
 const loadJSON = async (section="projects") => {
     const response = await fetch('../python-projects.json');
@@ -179,7 +187,16 @@ const loadJSON = async (section="projects") => {
 }
 */
 
-const PROJECT_PARENT = document.getElementById('project-parent');
+let checkCompletion = (title) => {
+    console.log("CHECK COMPLETION", window.user);
+    if(window.user != null) {
+        console.log(window.user.projects);
+    } else if(json !== null){
+        if(json.code){
+
+        }
+    }
+}
 
 let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON) => {
     let display = new Display(document, PROJECT_PARENT, JSON, projectIndex);
@@ -191,6 +208,18 @@ let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON) 
     display.setupTextarea();
 
     //if(code) logic needs to be implemented
+    
+    let code = checkCompletion(JSON.title);
+    if(code){
+        display.reward = 0;
+        display.codeArea.createText(code);
+        display.completedIcon.classList.remove("hide");
+    } /*else if(mainProj){
+        display.reward = DEFAULT_REWARD;
+        mainProj = false;
+        display.toggleElements(true);
+        console.log("main is " + display.title.innerHTML);
+    }*/
 
     return display;
 }
@@ -205,6 +234,7 @@ let getMainProject = (projects) => {
     }
     return null;
 }
+
 
 let loadProjectsFunction = async (projectsList, section="projects") => {
     const JSON = await loadJSON(section);
@@ -224,6 +254,8 @@ let loadProjectsFunction = async (projectsList, section="projects") => {
     const main_ = projectList[ getMainProject(projectList) ];
     console.log("main is ", main_, main_.index);
     main_.toggleElements(true);
+    console.log("waited");
 }
 
 loadProjectsFunction(loadIndices);
+

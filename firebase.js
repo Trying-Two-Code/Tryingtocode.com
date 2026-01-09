@@ -15,48 +15,36 @@ const firebaseConfig = {
   measurementId: "G-7TREL4ZC4F"
 };
 
-let initFirebase = () => {
-    //VALUES
+//VALUES
 
-    const app = () => {return initializeApp(firebaseConfig)};
-    const analytics = () => {return getAnalytics(app)};
-    const auth = () => {return getAuth(app)};
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
 
-    var appValue = null;
-    var analyticsValue = null;
-    var authValue = null;
+//Auth Value
 
-    const GET_VALUE = () => {
-        let values = [appValue, analyticsValue, authValue];
-        if(null in values) {
-            functions = [app, analytics, auth];
-            
-            for (let index = 0; index < values.length; index++) {
-                const element = values[index];
-                if(element == null){
-                    element = functions[index];
-                }
-            }
-        }
-        return values;
+let authStateChangedFunction = async (user) => {
+    if (user) {
+        console.log("User signed in:", user.uid);
+        await deleteStuff(user);
+        await initUserData(user);
+        window.user = user;
+        let user_made = new Event("user_made");
+        window.dispatchEvent(user_made);
+    } else {
+        console.log("User signed out");
+        anonSign();
     }
-
-    //Auth Value
-
-    let setupAuthChanged = () => {
-        GET_VALUE();
-        onAuthStateChanged(authValue, authStateChangedFunction);
-    }
-
-    setupAuthChanged();
-
-    var db = null;
 }
 
-initFirebase();
+let setupAuthChanged = () => {
+    onAuthStateChanged(auth, authStateChangedFunction);
+}
+setupAuthChanged();
+
+var db = null;
 
 function anon(auth){
-    GET_VALUE();
     signInAnonymously(auth).then((userCredential) => {
         const user = userCredential.user;
     }).catch((error) => console.error(error));
@@ -103,32 +91,36 @@ export let signInUp = async (email, password) => {
 }
 
 
-
-
 export async function initUserData(user){
-    if(db = null){
-        db = getFirestore(appValue);
+    if(db == null){
+        db = getFirestore(app);
     }
 
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
 
-    if (userSnap.exists()) {
-            const updatedSnap = await getDoc(userRef);
-            console.log("now coins: ", userSnap.data().coins);
-        } else{
-            await setDoc(userRef, {
-                email: user.email || null,
-                displayName: user.displayName || null,
-                coins: user.coins || 0,
-                projects: user.projects || null
+    let isEmptyObject = (obj) => {
+        return Object.keys(obj).length === 0;
+    }
+
+    if (userSnap.exists() && !isEmptyObject(userSnap.data())) {
+        const updatedSnap = await getDoc(userRef);
+        console.log("now coins: ", userSnap.data());
+        setUserDatapoint(updatedSnap.data());
+    } else{
+        const updatedDoc = await setDoc(userRef, {
+            email: user.email || defualtValues.email,
+            displayName: user.displayName || defualtValues.displayName,
+            coins: user.coins || defualtValues.coins,
+            projects: user.projects || defualtValues.projects
         });
+        console.log("now coins: ", updatedDoc);
     }
 }
 
 let deleteStuff = async (user) => {
-    if(db = null){
-        db = getFirestore(appValue);
+    if(db == null){
+        db = getFirestore(app);
     }
     const userRef = doc(db, "users", user.uid);
     await setDoc(userRef, {});
@@ -145,8 +137,8 @@ let defualtValues = {
 export let setUserDatapoint = async (email=null, displayName=null, coins=null, projects=null) => {
     if (!window.user) return console.warn("No user yet");
 
-    if(db = null){
-        db = getFirestore(appValue);
+    if(db == null){
+        db = getFirestore(app);
     }
     
     const userRef = doc(db, "users", window.user.uid);
@@ -216,19 +208,6 @@ let mergeObjects = (object1, object2) => {
     return merged;
 }
 
-let authStateChangedFunction = async (user) => {
-    if (user) {
-        console.log("User signed in:", user.uid);
-        await deleteStuff(user);
-        await initUserData(user);
-        window.user = user;
-        let user_made = new Event("user_made");
-        window.dispatchEvent(user_made);
-    } else {
-        console.log("User signed out");
-        anonSign();
-    }
-}
 
 
 function anonSign(){
