@@ -67,8 +67,8 @@ export let changeNumber = (amm, startString='') => {
         counter.innerHTML = startString + currentCoins;
     }
     if(window.user){
-        window.user
-        console.error("do something here? I don't remember what.");
+        setUserDatapoint(null, null, currentCoins, null);
+        console.error("Save user coin to server");
     }
 }
 

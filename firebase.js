@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebas
 import { getAuth, signInAnonymously, createUserWithEmailAndPassword, 
     signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
 //import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
 
 const firebaseConfig = {
@@ -14,40 +15,24 @@ const firebaseConfig = {
   measurementId: "G-7TREL4ZC4F"
 };
 
-//VALUES
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-//const analytics = getAnalytics(app);
+var db = getFirestore(app);
 
-//Auth Value
+//const analytics = getAnalytics(app);
 
 let authStateChangedFunction = async (user) => {
     if (user) {
         console.log("User signed in:", user.uid);
-        await deleteStuff(user);
         await initUserData(user);
-        window.user = user;
-        let user_made = new Event("user_made");
-        window.dispatchEvent(user_made);
+        userMade(user);
     } else {
-        console.log("User signed out");
+        console.log("User signed out?");
         anonSign();
     }
 }
 
-let setupAuthChanged = () => {
-    onAuthStateChanged(auth, authStateChangedFunction);
-}
-setupAuthChanged();
-
-var db = null;
-
-function anon(auth){
-    signInAnonymously(auth).then((userCredential) => {
-        const user = userCredential.user;
-    }).catch((error) => console.error(error));
-}
+onAuthStateChanged(auth, authStateChangedFunction);
 
 export let createEmail =  async(email, password) => {
     return createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
@@ -89,12 +74,7 @@ export let signInUp = async (email, password) => {
     }
 }
 
-
 export async function initUserData(user){
-    if(db == null){
-        db = getFirestore(app);
-    }
-
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
 
@@ -117,10 +97,7 @@ export async function initUserData(user){
     }
 }
 
-let deleteStuff = async (user) => {
-    if(db == null){
-        db = getFirestore(app);
-    }
+let deleteUserData = async (user) => {
     const userRef = doc(db, "users", user.uid);
     await setDoc(userRef, {});
 }
@@ -132,20 +109,15 @@ let defualtValues = {
     projects: {}
 };
 
-//Somehow, we need to merge the data of what we have online, and on site.
 export let setUserDatapoint = async (email=null, displayName=null, coins=null, projects=null) => {
     if (!window.user) return console.warn("No user yet");
-
-    if(db == null){
-        db = getFirestore(app);
-    }
     
     const userRef = doc(db, "users", window.user.uid);
     const updatedSnap = await getDoc(userRef);
     const data = updatedSnap.data() || {};
 
     const OLD_PROJECTS = data.projects;
-    let saveProjectList = mergeObjects(projects, OLD_PROJECTS);
+    let saveProjectList = mergeObjects(OLD_PROJECTS, projects);
 
     let setEmail = email ?? data.email ?? defualtValues.email;
     let setDisplayName = displayName ?? data.displayName ?? defualtValues.displayName;
@@ -160,53 +132,30 @@ export let setUserDatapoint = async (email=null, displayName=null, coins=null, p
     }, { merge: true });
 }
 
-let mergeObjects = (object1, object2) => {
-    //projectList2 gets priority over projectList1
+let mergeObjects = (object1, object2) => { //projectList2 gets priority over projectList1
+    if(object1 == null || object2 == null) { return object1 == null ? object2 : object1 }
+    
     let merged = {};
 
     let mergeObj = (obj, merge) => {
         let projKeys = Object.keys(obj);
-
         for (const key of projKeys) {
             //projectList1 for loop
             const element = obj[key];
             merge[key] = element;
         }
-
         return merge;
     }
 
-    if(object1 != undefined){
+    if(object1 != null){
         merged = mergeObj(object1, merged);
     }
-    if(object2 != undefined){
+    if(object2 != null){
         merged = mergeObj(object2, merged);
     }
 
-    /*
-    let projKeys1 = Object.keys(object1);
-    let projKeys2 = Object.keys(object2);
-
-    for (const key of projKeys1) {
-        //projectList1 for loop
-        const object = object1[key];
-        merged[key] = object;
-        console.log(object);
-    }
-
-    for (const key of projKeys2) {
-        //projectList2 for loop
-        const object = object2[key];
-        merged[key] = object;
-        console.log(object);
-    }
-    */
-
-    console.log("merged is this now wowww", merged);
-
     return merged;
 }
-
 
 export let getUserData = async () => {
     if(typeof user == "undefined"){return null;}
@@ -215,29 +164,46 @@ export let getUserData = async () => {
     return updatedSnap;
 }
 
-export let userDataOnUserLoad = (projectElement, projectTitle) => {
-    if(db == null){
-        db = getFirestore(app);
-    }
+var updateProjects = []
 
-    let setProjCode = () => {
+let userMade = (user) => {
+    window.user = user;
+    let user_made = new Event("user_made");
+    window.dispatchEvent(user_made);
 
-    }
-
-    
+    let code;
     const userRef = doc(db, "users", user.uid);
     getDoc(userRef).then((userSnap) => {
-        
+        code = userSnap["code"];
     });
 
+    updateProjects.forEach(func => {
+        func(code);
+    });
 }
 
-function anonSign(){
-    signInAnonymously(auth).then((id) => {
-        console.log("Signed in anonymously");
+export let setupProject = (projectDisplay, projectTitle) => {
+    let setProjCode = (code, projectDisplay) => {
+        projectDisplay.codeArea.createText(code);
+    }
+
+    let setProjCodeFilled = (code) => {
+        console.log("projectTitle: ", projectTitle);
+        setProjCode(code, projectDisplay);
+    }    
+
+    updateProjects.push(setProjCodeFilled);
+}
+
+let anonSign = () => {
+    signInAnonymously(auth).then((userCredential) => {
+        console.log("Signed in anonymously, ");
+        console.alert("id passed in is: ", userCredential);
 
         let user = auth.currentUser;
+        //user = userCredential.user;
         let uid = user.uid;
+
         console.log("user is: " + uid);
     })
     .catch((error) => {

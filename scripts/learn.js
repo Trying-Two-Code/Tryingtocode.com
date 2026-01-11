@@ -1,7 +1,7 @@
 //for use in learn.html
 import { Display } from "./projects.js";
 import "./coin.js";
-import { setUserDatapoint, getUserData } from "../firebase.js";
+import { setUserDatapoint, getUserData, setupProject } from "../firebase.js";
 
 let loadIndices = Array.from({length: 50}, (_, i) => [i + 1, "projects"]);
 const DEFAULT_REWARD = 5;
@@ -168,7 +168,9 @@ let checkCompletion = (title, userData=null) => {
 }
 
 let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON, userData) => {
+
     let display = new Display(document, PROJECT_PARENT, JSON, projectIndex);
+    setupProject(display, display.title.innerHTML);
 
     display.projectEl.addEventListener('toggleElements', (shouldShow) => {
         toggleAboveProjects(projectIndex, shouldShow.detail);
@@ -207,9 +209,9 @@ let getMainProject = (projects) => {
 
 let loadProjectsFunction = async (projectsList, section="projects") => {
     const JSON = await loadJSON(section);
-    let userData = await getUserData();
     let projectIndex = 0;
     let projectList = [];
+    let userData = await getUserData();
 
     for (let item of projectsList){
         projectIndex++;
