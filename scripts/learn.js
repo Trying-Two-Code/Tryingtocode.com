@@ -3,12 +3,10 @@ import { Display } from "./projects.js";
 import "./coin.js";
 import { setUserDatapoint, getUserData, setupProject } from "../firebase.js";
 
-let loadIndices = Array.from({length: 50}, (_, i) => [i + 1, "projects"]);
+const LOAD_INDICES = Array.from({length: 50}, (_, i) => [i + 1, "projects"]);
+
 const DEFAULT_REWARD = 5;
-
 const PROJECT_PARENT = document.getElementById('project-parent');
-
-var projects = [];
 
 //for debug purposes, a function to reset player stats
 window.resetStats = () => {
@@ -17,30 +15,17 @@ window.resetStats = () => {
     localStorage.removeItem("coin");
 }
 
+let isBlank = value => {
+    return value === '' || value === null || value === defaultValue || value === '{}';
+}
+
+
 document.addEventListener("keydown", (event) => {
     if(!event.ctrlKey){ return;}
     if((event.key === 'q' || event.key === 'Q')){
         window.resetStats();
     }
 });
-
-function localStore(name, value, defaultValue=""){
-    let currentValue = localStorage.getItem(name);
-
-    let isBlank = value => {
-        return value === '' || value === null || value === defaultValue || value === '{}';
-    }
-
-    if (isBlank(currentValue)){
-        if(isBlank(value)){
-            localStorage.setItem(name, defaultValue);
-        } else{
-            localStorage.setItem(name, value);
-        }
-    }
-
-    return localStorage.getItem(name);
-}
 
 function setStat(name, priorityValue, otherValue, defaultValue=""){
     let setToValue; 
@@ -120,11 +105,6 @@ let saveProject = (this_proj) => {
     }
 };
 
-let getProjects = (title) => {
-    let rawProjects = localStore.getItem("projects");
-}
-
-
 window.addEventListener('correctCode', (details) => {
     let title = window.currentDisplay.title.innerHTML;
     let code = window.currentDisplay.textarea.value;
@@ -133,8 +113,6 @@ window.addEventListener('correctCode', (details) => {
 });
 
 let openProjectAtIndex = index => {
-    console.log(projectDisplays[index]);
-    console.log("open at index", index, projectDisplays, projectDisplays[index]);
     if(projectDisplays[index]){
         toggleAboveProjects(index, {shouldShow: false});
         console.log(projectDisplays[index]);
@@ -145,12 +123,9 @@ let openProjectAtIndex = index => {
 
 //this allows the next project button to work
 window.addEventListener('changeOpen', (details) => { //details requires relativeIndex (0 for no change), currentIndex (index of currently open project)
-    console.log("change open!!!!!!!");
     let relativeIndex = details.detail.relativeIndex;
     let currentIndex = details.detail.index;
     let newIndex = relativeIndex + currentIndex - 1; //-1 because of indexs starting at 0 vs projects starting at 1
-
-    console.log("CHANGE OPEN!", details, relativeIndex, currentIndex, newIndex);
 
     openProjectAtIndex(newIndex);
 });
@@ -188,12 +163,7 @@ let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON, 
         display.reward = 0;
         display.codeArea.createText(code);
         display.completedIcon.classList.remove("hide");
-    } /*else if(mainProj){
-        display.reward = DEFAULT_REWARD;
-        mainProj = false;
-        display.toggleElements(true);
-        console.log("main is " + display.title.innerHTML);
-    }*/
+    }
 
     return display;
 }
@@ -207,12 +177,12 @@ let getMainProject = (projects) => {
     return null;
 }
 
-
 let loadProjectsFunction = async (projectsList, section="projects") => {
     const JSON = await loadJSON(section);
+    let userData = await getUserData();
+
     let projectIndex = 0;
     let projectList = [];
-    let userData = await getUserData();
 
     for (let item of projectsList){
         projectIndex++;
@@ -225,7 +195,7 @@ let loadProjectsFunction = async (projectsList, section="projects") => {
 }
 
 let projectDisplays;
-loadProjectsFunction(loadIndices).then(projectsList => {
+loadProjectsFunction(LOAD_INDICES).then(projectsList => {
     projectDisplays = projectsList;
 });
 

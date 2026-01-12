@@ -26,7 +26,7 @@ let authStateChangedFunction = async (user) => {
         await initUserData(user);
         userMade(user);
     } else {
-        console.log("User signed out?");
+        console.log("User signed out? Or error with user.");
         anonSign();
     }
 }
