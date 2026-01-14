@@ -96,7 +96,7 @@ export async function initUserData(user){
     }
 }
 
-let deleteUserData = async (user) => {
+export let deleteUserData = async (user) => {
     const userRef = doc(db, "users", user.uid);
     await setDoc(userRef, {});
 }
