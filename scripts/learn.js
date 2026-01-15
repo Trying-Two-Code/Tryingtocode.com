@@ -1,7 +1,7 @@
 //for use in learn.html
 import { Display } from "./projects.js";
 import "./coin.js";
-import { setUserDatapoint, getUserData, setupProject } from "../firebase.js";
+import { setUserDatapoint, getUserData, setupProject, deleteUserData } from "../firebase.js";
 
 let loadIndices = Array.from({length: 50}, (_, i) => [i + 1, "projects"]);
 const DEFAULT_REWARD = 5;
@@ -22,6 +22,13 @@ document.addEventListener("keydown", (event) => {
     if((event.key === 'q' || event.key === 'Q')){
         window.resetStats();
     }
+});
+
+const resetButton = document.getElementById('reset-all');
+resetButton.addEventListener('click', async () => {
+    await deleteUserData(window.user);
+    window.resetStats();
+    window.location.reload();
 });
 
 function localStore(name, value, defaultValue=""){
