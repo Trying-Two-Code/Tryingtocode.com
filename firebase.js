@@ -18,6 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+let user;
 
 //const analytics = getAnalytics(app);
 
@@ -35,7 +36,7 @@ onAuthStateChanged(auth, authStateChangedFunction);
 
 export let createEmail =  async(email, password) => {
     return createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-        const user = userCredential.user;
+        user = userCredential.user;
         alert("creating account...");
         return user;
     }).catch((error) => {
@@ -58,7 +59,7 @@ let signIn = async (email, password) => {
 
 export let signInUp = async (email, password) => {
     try{
-        const user = await signIn(email, password);
+        user = await signIn(email, password);
         return user;
     }
     catch (error){
@@ -223,7 +224,7 @@ let anonSign = () => {
         console.log("Signed in anonymously, ");
         console.alert("id passed in is: ", userCredential);
 
-        let user = auth.currentUser;
+        user = auth.currentUser;
         //user = userCredential.user;
         let uid = user.uid;
 
@@ -240,7 +241,13 @@ setPersistence(auth, browserLocalPersistence).then(() => {
     console.error(error);
 });
 
-export let setProject = async (title, data, section="defualt", projectId="1") => {
+export let setProject = async (title, data, section="default", projectId="1") => {
+
+    console.group("--SET PROJECT--");
+    console.log(title, data, section, projectId);
+    console.log(`path: /databases/{database}/documents/projects/${user.uid}/${section}/${projectId}`);
+    console.groupEnd();
+
     const projectRef = doc(db, "projects", user.uid, section, projectId);
     let obj = {
         title: title,
