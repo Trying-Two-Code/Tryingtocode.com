@@ -17,7 +17,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-var db = getFirestore(app);
+const db = getFirestore(app);
 
 //const analytics = getAnalytics(app);
 
@@ -240,7 +240,7 @@ setPersistence(auth, browserLocalPersistence).then(() => {
     console.error(error);
 });
 
-let setProject = async (title, data, section="defualt", projectId="1") => {
+export let setProject = async (title, data, section="defualt", projectId="1") => {
     const projectRef = doc(db, "projects", user.uid, section, projectId);
     let obj = {
         title: title,
@@ -251,6 +251,7 @@ let setProject = async (title, data, section="defualt", projectId="1") => {
         await setDoc(projectRef, obj, {merge: true});
     }catch (error){
         console.error("oops. That project did not set well.", error);
+        console.log(user, user.uid, section, projectId);
     }
 }
 
