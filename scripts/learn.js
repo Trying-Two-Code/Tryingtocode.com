@@ -1,10 +1,9 @@
 //for use in learn.html
 import { Display } from "./projects.js";
 import "./coin.js";
-import { setUserDatapoint, getUserData, setupProject } from "../firebase.js";
+import { setUserDatapoint, getUserData, setupProject, deleteUserData } from "../firebase.js";
 
 const LOAD_INDICES = Array.from({length: 50}, (_, i) => [i + 1, "projects"]);
-
 const DEFAULT_REWARD = 5;
 const PROJECT_PARENT = document.getElementById('project-parent');
 
@@ -12,65 +11,41 @@ const PROJECT_PARENT = document.getElementById('project-parent');
 window.resetStats = () => {
     console.log("reseting stats")
     localStorage.setItem("projects", "{}");
-    localStorage.removeItem("coin");
+    localStorage.setItem("coin", 0);
+    deleteUserData(window.user);
 }
 
-let isBlank = value => {
-    return value === '' || value === null || value === defaultValue || value === '{}';
+let isBlank = (value, extraBlank=undefined) => {
+    let blankValues = ["", null, extraBlank, "{}"];
+    blankValues.forEach(element => {
+        if(element === value){
+            return true;
+        }
+    });
+    return false;
 }
 
-
+//RESET STATS DEBUG
 document.addEventListener("keydown", (event) => {
     if(!event.ctrlKey){ return;}
     if((event.key === 'q' || event.key === 'Q')){
         window.resetStats();
+        window.location.reload();
     }
 });
 
 function setStat(name, priorityValue, otherValue, defaultValue=""){
-    let setToValue; 
-
-    let isBlank = value => {
-        let blankValues = ["", null, defaultValue, "{}"];
-        blankValues.forEach(element => {
-            if(element === value){
-                return true;
-            }
-        });
-        return false;
-    }
-
     let decidePriority = (priority, other) => {
-        if(!isBlank(priority)){
-            return priority;
-        }
-        if(!isBlank(other)){
-            return other;
-        }
-        return null;
+        if(!isBlank(priority, defaultValue)){ return priority; }
+        if(!isBlank(other, defaultValue))   { return other; }
+
+        return defaultValue;
     }
 
     const priority = decidePriority(priorityValue, otherValue);
-    if(priority === null){
-        setToValue = defaultValue;
-    } else{
-        setToValue = priority;
-    }
-    
-    localStorage.setItem(name, setToValue); //THIS IS THE FINAL DECISION
-}
 
-function setStats(names, priorityValues, otherValues, defaultValue=""){
-    for (let index = 0; index < names.length; index++) {
-        const name = names[index];
-        const priorityValue = priorityValues[index];
-        const otherValue = otherValues[index];
-        setStat(name, priorityValue, otherValue, defaultValue);
-    }
+    localStorage.setItem(name, priority); //THIS IS THE FINAL DECISION
 }
-
-setStat("projects", '');
-//setStat("section", sections[0]);
 
 window.addEventListener("user_made", () => {
     const user = window.user;
@@ -166,15 +141,6 @@ let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON, 
     }
 
     return display;
-}
-
-let getMainProject = (projects) => {
-    for (const element in projects) {
-        if(!(element.code)){
-            return element;
-        }
-    }
-    return null;
 }
 
 let loadProjectsFunction = async (projectsList, section="projects") => {

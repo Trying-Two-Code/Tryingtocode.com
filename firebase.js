@@ -96,7 +96,7 @@ export async function initUserData(user){
     }
 }
 
-let deleteUserData = async (user) => {
+export let deleteUserData = async (user) => {
     const userRef = doc(db, "users", user.uid);
     await setDoc(userRef, {});
 }
@@ -129,6 +129,10 @@ export let setUserDatapoint = async (email=null, displayName=null, coins=null, p
         coins: setCoins,
         projects: setProjects
     }, { merge: true });
+}
+
+export let setUserDatapoint2 = async () => {
+    return error;
 }
 
 let mergeObjects = (object1, object2) => { //projectList2 gets priority over projectList1
