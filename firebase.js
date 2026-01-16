@@ -17,17 +17,17 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-var db = getFirestore(app);
+const db = getFirestore(app);
 
 //const analytics = getAnalytics(app);
 
 let authStateChangedFunction = async (user) => {
     if (user) {
-        await initUserData(user);
+        window.user = await initUserData(user);
         userMade(user);
     } else {
         console.log("User signed out? Or error with user.");
-        anonSign();
+        window.user = anonSign();
     }
 }
 
@@ -35,7 +35,7 @@ onAuthStateChanged(auth, authStateChangedFunction);
 
 export let createEmail =  async(email, password) => {
     return createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-        const user = userCredential.user;
+        user = userCredential.user;
         alert("creating account...");
         return user;
     }).catch((error) => {
@@ -58,7 +58,7 @@ let signIn = async (email, password) => {
 
 export let signInUp = async (email, password) => {
     try{
-        const user = await signIn(email, password);
+        user = await signIn(email, password);
         return user;
     }
     catch (error){
@@ -87,10 +87,10 @@ export async function initUserData(user){
         setUserDatapoint(updatedSnap.data());
     } else{
         const updatedDoc = await setDoc(userRef, {
-            email: user.email || defualtValues.email,
-            displayName: user.displayName || defualtValues.displayName,
-            coins: user.coins || defualtValues.coins,
-            projects: user.projects || defualtValues.projects
+            email: user.email || defaultValues.email,
+            displayName: user.displayName || defaultValues.displayName,
+            coins: user.coins || defaultValues.coins,
+            projects: user.projects || defaultValues.projects
         });
         console.log("now coins: ", updatedDoc);
     }
@@ -101,7 +101,7 @@ export let deleteUserData = async (user) => {
     await setDoc(userRef, {});
 }
 
-let defualtValues = {
+let defaultValues = {
     email: null,
     displayName: "guest",
     coins: 0,
@@ -118,10 +118,10 @@ export let setUserDatapoint = async (email=null, displayName=null, coins=null, p
     const OLD_PROJECTS = data.projects;
     let saveProjectList = mergeObjects(OLD_PROJECTS, projects);
 
-    let setEmail = email ?? data.email ?? defualtValues.email;
-    let setDisplayName = displayName ?? data.displayName ?? defualtValues.displayName;
-    let setCoins = coins ?? data.coins ?? defualtValues.coins;
-    let setProjects = saveProjectList ?? defualtValues.projects;
+    let setEmail = email ?? data.email ?? defaultValues.email;
+    let setDisplayName = displayName ?? data.displayName ?? defaultValues.displayName;
+    let setCoins = coins ?? data.coins ?? defaultValues.coins;
+    let setProjects = saveProjectList ?? defaultValues.projects;
 
     await setDoc(userRef, {
         email: setEmail,
@@ -193,7 +193,6 @@ let userMade = (user) => {
         updateProjects = [];
     });
 
-    setProject("hello", "world2");
     printProjects();
 }   
 
@@ -232,6 +231,7 @@ let anonSign = () => {
         let uid = user.uid;
 
         console.log("user is: " + uid);
+        return user
     })
     .catch((error) => {
         console.error(error);
@@ -244,8 +244,20 @@ setPersistence(auth, browserLocalPersistence).then(() => {
     console.error(error);
 });
 
-let setProject = async (title, data, section="defualt", projectId="1") => {
-    const projectRef = doc(db, "projects", user.uid, section, projectId);
+export let setProject = async (title, data, section="default", projectId="1") => {
+    let user = window.user ?? anonSign();
+    console.group("--SET PROJECT--");
+    console.log(title, data, section, projectId);
+    console.log("user");
+    console.log("Checking Auth before Write:", {
+        currentUser: auth.currentUser,
+        isAnonymous: auth.currentUser?.isAnonymous,
+        uid: auth.currentUser?.uid
+    });
+    console.log(`path: /databases/{database}/documents/projects/${user.uid}/${section}/${projectId}`);
+    console.groupEnd();
+
+    const projectRef = doc(db, "projects", user.uid, section, title);
     let obj = {
         title: title,
         data: data,
@@ -255,6 +267,8 @@ let setProject = async (title, data, section="defualt", projectId="1") => {
         await setDoc(projectRef, obj, {merge: true});
     }catch (error){
         console.error("oops. That project did not set well.", error);
+        console.log(user, user.uid, section, projectId);
+        return error;
     }
 }
 

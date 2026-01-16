@@ -83,10 +83,21 @@ body {
     box-shadow: 2px 0 5px rgba(0,0,0,0.5);
 }
 
-.main-content {
-	margin-left: var(--sidebar-width);
-	padding: 20px;
-	z-index: var(--z-base);
+
+
+@media screen and (max-width: 50rem) {
+    .main-content {
+        margin-left: var(--sidebar-width);
+        padding: 0px;
+        z-index: var(--z-base);
+    }
+}
+@media screen and (min-width: 50rem) {
+    .main-content {
+        margin-left: var(--sidebar-width);
+        padding: 20px;
+        z-index: var(--z-base);
+    }
 }
 
 canvas{
