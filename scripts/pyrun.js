@@ -3,6 +3,12 @@ window.languagePluginUrl = 'https://cdn.jsdelivr.net/pyodide/v0.28.2/full/';
 let pyodide = await loadPyodide();
 pyodide.globals.set("input", getInput);
 
+let awaitRunPython = async (python) => {
+    // Create a fresh namespace
+    let NAMESPACE = pyodide.globals.get("dict")(); 
+    return await pyodide.runPythonAsync(python, { globals: NAMESPACE })
+}
+
 export async function runUserCode(code){
     try{
         let tree = await printTree(code);
@@ -18,6 +24,7 @@ export async function runUserCode(code){
     return pyRun(code);
 } 
 
+
 let printTree = async (code) => {
     let tree = await getTree(code);
     checkAsync(tree);
@@ -28,7 +35,7 @@ let printTree = async (code) => {
 async function simplePyRun(code){
     let output = [];
     for (let line of code.split("\n")){
-        output.push(await pyodide.runPythonAsync(line));
+        output.push(await awaitRunPython(line));
     }
     return output;
 }
@@ -104,7 +111,7 @@ async function pyRun(code){
         let output = '';
         pyodide.setStdout({batched: (str) => {output += str.endsWith("\n") ? str : str + "\n";}});
 
-        await pyodide.runPythonAsync(code);
+        await awaitRunPython(code);
 
         return [true, output];
 
@@ -169,7 +176,7 @@ async function getInput(promptText = ""){
 }
 
 export async function getTree(code){
-    let tree = await pyodide.runPythonAsync(
+    let tree = await awaitRunPython(
 `
 import ast, json
 
@@ -186,7 +193,7 @@ def ast_to_dict(node):
 
 tree = ast_to_dict(ast.parse("""${code}"""))
 json.dumps(tree)
-`   
+` 
     );
     tree = JSON.parse(tree);
     return tree;
