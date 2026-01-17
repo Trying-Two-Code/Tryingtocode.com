@@ -27,7 +27,7 @@ let htmlGen =
         <p class="instructions">instructions</p>
         <div class="codeAreaParent"></div>
         <div class="project-buttom-buttons">
-            <button title="run code" name="run-button" class="run-code"><img src="./components/art/play button 1 - big.png"></img></button>
+            <button title="run code" name="run-button" class="run-code"><img class="run-code-button-img" src="./components/art/play button 1 - big.png"></img></button>
             <button title="go to next project" alt="next project" name="next-button" class="next-project" id="next-button"><img src="./components/art/arrow - 1.png"></button>
         </div>
     </div>
@@ -115,7 +115,7 @@ export class Display {
     findElements(){
         const query = (_name_) => {return this.projectEl.querySelector(_name_);}
 
-        this.runButton = query('[name="run-button"]');
+        this.runButton = query('.run-code');
         this.output = query('[name="output"]');
         this.textarea = this.codeArea.textarea;
         this.lineNumbers = query(".line-numbers");
@@ -230,7 +230,7 @@ function rewardPlayer(display){
 }
 
 function setupRunButton(display){
-    display.runButton.addEventListener('click', async () => {
+    let runButtonAction = async() => {
         if(!display.canRun){
             console.log("SHOULDN'T HAVE RUN")
         }
@@ -254,7 +254,9 @@ function setupRunButton(display){
                 }
             });
         }
-    });
+    }
+
+    display.runButton.addEventListener('click', runButtonAction);
 }
 
 function logDiscrepancy(output, code, json){

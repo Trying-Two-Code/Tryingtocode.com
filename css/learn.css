@@ -261,14 +261,13 @@
     height: 50px;
 }
 
-.run-code:active {
+.run-code-button-img:active {
     border: #000000;
-    border-radius: 10%;
     background:fixed;
     transform: translateY(10px);
 }
 
-.run-code:hover:not(:active) {
+.run-code-button-img:hover:not(:active) {
     transform: translateY(-1px);
 }
 

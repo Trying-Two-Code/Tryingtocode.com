@@ -20,15 +20,11 @@ Hey developer! Read these to know what you should fix:
 - mostly dean
 
 - js files need to be optimised and cleaned
-- 4
-- TTC
-
-- save system needs to be reworked
-- 1
-- TTC
-
-- sign in looks mid, needs icons and polish
 - 5
+- TTC
+
+- save system needs to be cleaned up
+- 2
 - TTC
 
 - Create creation page, in order to allow users to make their own learning projects. Support saving, publishing, and internal use
@@ -40,13 +36,21 @@ Hey developer! Read these to know what you should fix:
 - TTC
 
 - Make a footer
-- 7
+- 6
 - TTC
 
-- fix learn.html reload then coins get deleted (finish project, then reload before coins can get to counter)
+- fix learn.html reload then coins get deleted - coins need to be better
 - 5
+- TTC
+
+- phones have squished coins??
+- 8
 - TTC
 
 - Attempt to make it all one page
 - 10
 - not me
+
+- Projects.js - make Toggle a part of it.
+- 7
+- TTC
