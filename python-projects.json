@@ -92,7 +92,7 @@
         },
         "9": {
             "title": "If then 2",
-            "code": "x=1\n\nif(x == 2):\n print('you did it!')",
+            "code": "x = 1\n\nif(x == 2):\n print('you did it!')",
             "instruction": "Make it print 'you did it!'",
             "output-includes": "you did it!",
             "output-discludes": "*",
@@ -142,11 +142,11 @@
         },
         "14": {
             "title": "Variable 4",
-            "code": "x = ' an apple '\ny = ' and '\n\nprint(x + y)",
-            "instruction": "make it print x + x + y + y",
+            "code": "x = 'Can I '\ny = ' eat an apple?'\n\nprint(y + x)",
+            "instruction": "make it print x + y",
             "output-includes": "*",
             "output-discludes": "*",
-            "code-includes": "x + x + y + y",
+            "code-includes": "x + y",
             "code-discludes": "*",
             "failure-shows": "*"
         },
@@ -173,7 +173,7 @@
         "17": {
             "title": "Import",
             "code": "import random\n\nx = random.randint(0, 10)\nprint(x)",
-            "instruction": "Make x go from 0 to 100",
+            "instruction": "Make x range from 0 to 100",
             "output-includes": "*",
             "output-discludes": "*",
             "code-includes": "random.randint(0, 100)",
@@ -313,7 +313,7 @@
         },
         "31": {
             "title": "Append 1",
-            "code": "list = []\n\nfor i in range(10):\n list.append(i)\n\n#edit the print statement below\n\nprint(list)",
+            "code": "numbers = []\n\nfor i in range(10):\n numbers.append(i)\n\n#edit the print statement below\n\nprint(numbers)",
             "instruction": "Don't print 3",
             "output-includes": "*",
             "output-discludes": "3",

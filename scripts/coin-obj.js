@@ -55,10 +55,11 @@ export class CoinObj{
     }
 
     DetectGive(min_dist){ //check if the coin is close enough to give the user
-        let closeEnough = distance(this.x_pos, this.y_pos, this.absolute_gt.x, this.absolute_gt.y) > min_dist
-        if(this.dead !== 0 && closeEnough){
+        let closeEnough = distance(this.x_pos, this.y_pos, this.absolute_gt.x, this.absolute_gt.y) < min_dist
+        let x_axis_close = (this.x_pos - this.absolute_gt.x) < 0
+        if(this.dead !== 0 && (!closeEnough)){
             this.DestroyGive(1);
-        } else if(this.dead === 0 && !closeEnough){
+        } else if(this.dead === 0 && (closeEnough || x_axis_close)){
             this.dead = false;
         }
     }
