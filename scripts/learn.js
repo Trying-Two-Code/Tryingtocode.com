@@ -132,13 +132,6 @@ let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON, 
     display.setupTextarea();
 
     //if(code) logic needs to be implemented|
-    
-    let code = checkCompletion(JSON.title, userData);
-    if(code){
-        display.reward = 0;
-        display.codeArea.createText(code);
-        display.completedIcon.classList.remove("hide");
-    }
 
     return display;
 }

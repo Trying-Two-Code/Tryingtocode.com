@@ -300,8 +300,8 @@ p.pixel-alt  {font-size: 1.5rem;}
 
 .loader-sprite {
   transition: all 1s;
-  width: 32px; /* Width of one frame */
-  height: 32px; /* Height of one frame */
+  width: 32px;
+  height: 32px;
   background: url('../components/art/load-sheet.png') no-repeat;
 
   --load-size: 128px;
@@ -313,7 +313,6 @@ p.pixel-alt  {font-size: 1.5rem;}
   image-rendering: crisp-edges;
   -ms-interpolation-mode: nearest-neighbor;
 
-  /* steps() should match the number of frames in your sheet */
   animation: play-sprite 0.8s steps(6) infinite;
 }
 

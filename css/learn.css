@@ -12,7 +12,7 @@
 **mini . . . . . . . When project is not selected
 
 *PROJECT-BOX
-**code editor  . . . Holds codearea and line-numebers
+**code-editor  . . . Holds codearea and line-numbers
 **input-output . . . Parent of full codearea
 **project  . . . . . Holds full project
 **project-parent . . All projects
@@ -143,14 +143,18 @@
         padding: 0px;
         grid-auto-rows: max-content;
         grid-auto-columns: max-content;
+        margin: .5vw;
     }
+    /*.project{
+        max-height: 80vh;
+    }*/
 }
 
 
 /*------------------------------------*\
     #TEXT-BOXES
 \*------------------------------------*/
-.codearea, .line-numbers, .output {
+.codearea, .line-numbers, .output, .code-lines {
     background-image: repeating-linear-gradient(
         to bottom,
         #333333,

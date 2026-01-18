@@ -3,11 +3,27 @@
 /*------------------------------------*/ 
 /**
 
-*1
-**
+*MAIN
+**create-main  . . . Div holding 
+
+*TEXT
+**title  . . . . . . User project title
 
 **/
 
 /*------------------------------------*\ 
-    #1
+    #MAIN
 /*------------------------------------*/ 
+.create-main {
+    position: relative;
+    flex: content;
+    align-items: center;
+    flex-direction: column;
+}
+
+/*------------------------------------*\ 
+    #TEXT
+/*------------------------------------*/ 
+.create-title {
+    size: 1000%;
+}

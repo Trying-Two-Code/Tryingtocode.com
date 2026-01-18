@@ -1,7 +1,20 @@
 {
   "hosting": {
     "public": "public",
-    "cleanUrls": true
+    "rewrites": [
+      {
+        "source": "/*/learn/*",
+        "destination": "/learn.html"
+      },
+      {
+        "source": "/*/store/*",
+        "destination": "/store.html"
+      },
+      {
+        "source": "/*/create/*",
+        "destination": "/create.html"
+      }
+    ] 
   },
   "functions": [
     {
@@ -16,15 +29,5 @@
         "*.local"
       ]
     }
-  ],
-  "rewrites": [
-      {
-        "source": "/learn",
-        "destination": "/learn.html"
-      },
-      {
-        "source": "/store",
-        "destination": "/store.html"
-      }
   ]
 }

@@ -254,7 +254,7 @@ export let setProject = async (title, data, section="default", projectId="1") =>
         isAnonymous: auth.currentUser?.isAnonymous,
         uid: auth.currentUser?.uid
     });
-    console.log(`path: /databases/{database}/documents/projects/${user.uid}/${section}/${projectId}`);
+    console.log(`path: (database)/projects/${user.uid}/${section}/${projectId}`);
     console.groupEnd();
 
     const projectRef = doc(db, "projects", user.uid, section, title);
