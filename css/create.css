@@ -3,17 +3,33 @@
 /*------------------------------------*/ 
 /**
 
-*MAIN
-**create-main  . . . Div holding 
+*SETTINGS
+**root . . . . . . . General Variables
+
+*DIVS
+**user-cr-project  . Div holding all the below
+**create-main  . . . Div holding title & create
 
 *TEXT
 **title  . . . . . . User project title
 
 **/
+/*------------------------------------*\ 
+    #SETTINGS
+/*------------------------------------*/ 
+:root{
+    --text-width: max(30%, 30rem);
+}
 
 /*------------------------------------*\ 
-    #MAIN
+    #DIVS
 /*------------------------------------*/ 
+.user-create-project {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 .create-main {
     position: relative;
     flex: content;
@@ -25,5 +41,8 @@
     #TEXT
 /*------------------------------------*/ 
 .create-title {
-    size: 1000%;
+    width: var(--text-width);
+}
+.create-code {
+    width: var(--text-width);
 }
