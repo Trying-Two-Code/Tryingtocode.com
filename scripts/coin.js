@@ -16,7 +16,7 @@ let canvas = document.getElementById('render-canvas');
 const coinImgSrc = '../components/art/ttc coin icon.png';
 let objects = [];
 
-let drawAll = (sizeX=30, sizeY=300) => {
+let drawAll = (sizeX=300, sizeY=300) => {
     let drawOne = element => {
         element.RenderImage(coinImgSrc);
         element.tick(.1);

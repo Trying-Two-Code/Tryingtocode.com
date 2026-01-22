@@ -9,11 +9,11 @@
 *DIVS
 **user-cr-project  . Div holding all the below
 **main . . . . . . . Div holding title & code
-**code-container
+**code-container . . Div holding defualt code
 
 *TEXT
 **title  . . . . . . User project title
-**code . . . . . . . User project code
+**code . . . . . . . User project defualt code
 
 **/
 /*------------------------------------*\ 
@@ -34,13 +34,15 @@
 }
 
 .create-main {
+    --sidebar-width: 30px;
+
     display: flex;
     position: relative;
     flex: content;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    width: 50%;
+    width: calc(100% - var(--sidebar-width));
     grid-auto-rows: min-content;
     margin: 0rem;
     gap: 2rem;
@@ -48,7 +50,27 @@
     background: #222;
 }
 
-.create-code-container
+#create-page-holder {
+    width: 50%;
+}
+
+.create-code-container {
+    width: 100%;
+}
+
+.correct-measures {
+    display: flex;
+    flex: content;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+.create-measure {
+    max-width: 50%;
+    flex-basis: 50%;
+    box-sizing: border-box;
+}
 
 /*------------------------------------*\ 
     #TEXT
@@ -61,6 +83,7 @@
 }
 
 .create-code {
+    position: relative;
     width: 100%;
     height: calc(var(--line-height) * 10);
     font-size: large;

@@ -162,8 +162,8 @@
         },
         "16": {
             "title": "Print 3",
-            "code": "x = 1\n\n",
-            "instruction": "print x (don't use ')",
+            "code": "x = 1\n\nprint()",
+            "instruction": "print x (do not use ' or \")",
             "output-includes": "",
             "output-discludes": "*",
             "code-includes": "print(x)",

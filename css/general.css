@@ -31,7 +31,8 @@
 *DEFAULTS
 **selection  . . . . Change highlight color to yellow
 **scrollbar  . . . . Change defualt side scrollbar
-**button . . . . . . Make sure buttons are good (highlighting)
+**button . . . . . . Make sure all buttons look good pressed
+**image  . . . . . . Make sure images don't highlight with phone
 
 *LOADING
 **loader . . . . . . Div that places load to right place
@@ -227,14 +228,16 @@ p.pixel-alt  {font-size: 1.5rem;}
 }
 
 .glow {
-    filter: drop-shadow(0px 0px 12px white);
-    animation: glowing 1s steps(60) infinite;
+    transition: all 1s ease-in-out;
+    filter: drop-shadow(0px 0px 12px rgba(255, 255, 255, 0));
+    animation: glowing-start 1s steps(60),
+               glowing 3s steps(60) infinite 1s;
 }
-
+@keyframes glowing-start {0% {filter: drop-shadow(0px 0px 12px rgba(255, 255, 255, 0))} 100% {filter: drop-shadow(0px 0px 12px white);}}
 @keyframes glowing {
-    10% {filter: drop-shadow(0px 0px 15px white);}
+    0% {filter: drop-shadow(0px 0px 12px white);}
     50% {filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.747));}
-    10% {filter: drop-shadow(0px 0px 12px white);}
+    100% {filter: drop-shadow(0px 0px 12px white);}
 }
 
 /*------------------------------------*\
@@ -329,7 +332,15 @@ p.pixel-alt  {font-size: 1.5rem;}
 }
 
 button {
-  -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color:  #BFB71611; /*don't highlight on phone*/
+}
+
+img {
+    -webkit-tap-highlight-color: #0e0d0b11;
+}
+
+body {
+    -webkit-tap-highlight-color: #0e0d0b11;
 }
 
 /*------------------------------------*\
@@ -401,6 +412,7 @@ button {
     #FOOTER
 \*------------------------------------*/
 .footer {
+    display: none;
     position: absolute;
     background-color: #000;
     text-align: center;

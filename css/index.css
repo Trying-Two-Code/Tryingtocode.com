@@ -31,7 +31,7 @@
     #GENERAL
 \*------------------------------------*/
 ::-webkit-scrollbar {
-  display: none;
+  display: block;
 }
 
 .big-icon{
@@ -43,7 +43,6 @@
 
 body {
   margin: 0;
-  overflow: hidden;
 }
 
 /*------------------------------------*\

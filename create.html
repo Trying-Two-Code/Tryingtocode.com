@@ -42,33 +42,38 @@
     </div>
 
     <div class="main-content main-font">
-        <!--button class="main-font" id="change-setting">change setting</button-->
-        <div id="welcome" class="welcome">
-            <h1 class="welcome--title">Teach others</h1>
-        </div>
-
-        <div class="user-create-project main-font">
-            <div class="create-main">
-                <textarea class="main-font code-lines create-title" name="title" id="create-title" placeholder="title"></textarea>
-                <div class="create-code-container">
-                    <!--div class="code-lines">1</div-->
-                    <textarea class="main-font code-lines create-code" name="defualt code" id="create-code" placeholder="defualt code"></textarea>
+        <div class="create-align">
+            <div class="create" id="create-page-holder">
+                <!--button class="main-font" id="change-setting">change setting</button-->
+                <div id="welcome" class="welcome">
+                    <h1 class="welcome--title">Teach others</h1>
                 </div>
+
+                <div class="user-create-project main-font">
+                    <div class="create-main">
+                        <textarea class="main-font code-lines create-title" name="title" id="create-title" placeholder="title"></textarea>
+                        <div class="create-code-container">
+                            <!--div class="code-lines">1</div-->
+                            <textarea class="main-font code-lines create-code" name="defualt code" id="create-code" placeholder="defualt code"></textarea>
+                        </div>
+                    </div>
+                    <div class="advanced-toggle">extra</div>
+                    <div class="correct-measures">
+                        <textarea class="main-font code-lines create-measure" name="" id="" placeholder="output includes"></textarea>
+                        <textarea class="main-font code-lines create-measure" name="" id="" placeholder="code includes"></textarea>
+                        <textarea class="main-font code-lines create-measure" name="" id="" placeholder="output discludes"></textarea>
+                        <textarea class="main-font code-lines create-measure" name="" id="" placeholder="code discludes"></textarea>
+                    </div>
+                </div>
+                
+                <button id="submit-button">submit</button>
+                <p id="create-output">output</p>
             </div>
-            <div class="advanced-toggle">extra</div>
-            <div class="correct-measures">
-                <textarea class="main-font code-lines" name="" id="" placeholder="code output"></textarea>
-                <textarea class="main-font code-lines" name="" id="" placeholder="code includes"></textarea>
+            <div class="test">
+                <div id="project-parent" class="project-parent"></div>
             </div>
         </div>
         
-        <button id="submit-button">submit</button>
-        <p id="create-output">output</p>
-    </div> 
-
-    
-        
-    
-    
+    </div>
 </body>
 </html>

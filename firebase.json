@@ -3,15 +3,15 @@
     "public": "public",
     "rewrites": [
       {
-        "source": "/*/learn/*",
+        "source": "/learn",
         "destination": "/learn.html"
       },
       {
-        "source": "/*/store/*",
+        "source": "/store",
         "destination": "/store.html"
       },
       {
-        "source": "/*/create/*",
+        "source": "/create",
         "destination": "/create.html"
       }
     ] 
