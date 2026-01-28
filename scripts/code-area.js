@@ -102,7 +102,6 @@ export class CodeArea{
         let upToSelection = text.substring(0, end)
         let subjectiveLineAmmount = upToSelection.split("\n").length; //the ammount of new lines before selection
 
-        console.log(subjectiveLineAmmount, newLineSplit);
         let currentLine = newLineSplit[subjectiveLineAmmount - 1];
 
         return currentLine;
@@ -117,7 +116,6 @@ export class CodeArea{
         let value = this.getCurrentLine();
 
         let tabamm = match(tabReg, value);
-        console.log('ammount: ', tabamm, value);
 
         let before = text.substring(0, start) + "\n" + "\t".repeat(tabamm); //everything before selection area
         this.textarea.selectionStart = before.length;

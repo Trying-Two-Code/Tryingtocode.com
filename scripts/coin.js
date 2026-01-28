@@ -37,6 +37,9 @@ let collectCoin = (coinElement, worth=1) => {
 }
 
 let drawAll = (sizeX=300, sizeY=300) => {
+    ctx.canvas.width  = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+
     let drawOne = element => {
         element.RenderImage(coinImgSrc);
         element.tick(.1);
@@ -57,22 +60,30 @@ if(canvas){
     var title = document.getElementById("main-title");
 
     window.addEventListener('correctCode', (details) => {
-        getCoin(details.detail.value, counter, title);
+        getCoin(details.detail.value, counter, window.currentDisplay.runButton);
         changeNumber(details.detail.value);
     });
 
     window.requestAnimationFrame(drawAll);
 }
 
+let center = (clientRect, isVerticle) => {
+    return  clientRect.top;
+    if(isVerticle) return (- clientRect.top + clientRect.bottom) / 2;
+    return (- clientRect.left + clientRect.right) / 2;
+}
+
 export let getCoin = (amm, go_to, startElementPos, startString = '') => {
+    let spread = 40;
+
     for (let index = 0; index < amm; index++) {
         let clientRect = startElementPos.getBoundingClientRect();
         let coinObj = new CoinObj(
             go_to,
-            clientRect.left + window.scrollX,
-            clientRect.top + window.scrollY,
-            Math.random() * 10,
-            Math.random() * 10,
+            center(clientRect, 0) + window.scrollX,
+            center(clientRect, 1) + window.scrollY,
+            Math.random() * spread,
+            Math.random() * spread,
             canvas,
             ctx,
             coinImgSrc

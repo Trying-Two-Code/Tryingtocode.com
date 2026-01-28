@@ -125,7 +125,12 @@ export class SpriteImage{
         this.image = image;
         this.sprite = sprite;
 
-        this.ogDemensions = [window.screen.availWidth, window.screen.availHeight];
+        this.ogDemensions = this.getScreenDimensions();
+    }
+
+    getScreenDimensions() {
+        return [this.ctx.canvas.clientWidth, this.ctx.canvas.clientHeight];
+        return [window.screen.availWidth, window.screen.availHeight];
     }
 
     RenderImage(sprite, position_x=0, position_y=0, frames=1, index=0){
@@ -138,11 +143,13 @@ export class SpriteImage{
         this.frameOffset = this.spriteWidth * index;
 
         let destination = [position_x, position_y];
-        let size = 10;
-        let scaledWidth = (this.ogDemensions[0] / window.innerWidth) * size; 
-        let scaledHeight = (this.ogDemensions[1] / window.innerHeight) * size;
+        let size = 50;
+        let scaledWidth = (this.getScreenDimensions()[0] / this.ogDemensions[0]) * size; 
+        let scaledHeight = (this.getScreenDimensions()[1] / this.ogDemensions[1]) * size; 
 
-        console.log(scaledWidth, scaledHeight, (this.ogDemensions[1] / window.innerHeight))
+        console.log(scaledWidth, scaledHeight, (this.ogDemensions[1] / this.ctx.canvas.height));
+        console.log(this.ctx.canvas.height);
+        console.log(this.getScreenDimensions());
 
         this.ctx.drawImage(
             this.image,

@@ -44,6 +44,10 @@ Hey developer! Read these to know what you should fix:
 - 9
 - TTC
 
+- seperate tab and space detection in code-area
+- 10
+- TTC
+
 - Attempt to make it all one page
 - 20
 - not me

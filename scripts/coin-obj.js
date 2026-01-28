@@ -32,7 +32,7 @@ export class CoinObj{
         this.spriteImage = new SpriteImage(ctx, this.image, sprite);
     }
 
-    tick(speed=1){
+    tick(speed=10){
         const min_dist = 11;
         this.gravitate(this.go_to, min_dist);
         this.DetectGive(min_dist);
@@ -42,13 +42,13 @@ export class CoinObj{
     }
 
     gravitate(go_to, drag=2){
-        let defualt_slowdown = 2000; //the lower this is, the thicker the air feels
+        let defualt_slowdown = 3000; //the lower this is, the thicker the air feels
         this.absolute_gt = domToCanvas(this.canvas, getAbsolutePosition(go_to)); //position
 
         let x_dist = this.absolute_gt.x - this.x_pos;
         let y_dist = this.absolute_gt.y - this.y_pos;
 
-        let applyDrag = (velocity, normalized_vector, slowdown=2000) => {
+        let applyDrag = (velocity, normalized_vector, slowdown=defualt_slowdown) => {
             let dragged_vector = (normalized_vector / drag);
 
             let slowdown_factor = (drag / slowdown);
