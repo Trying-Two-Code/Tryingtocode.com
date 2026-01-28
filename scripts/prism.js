@@ -1296,6 +1296,11 @@ Prism.languages.python = {
         pattern: /(?:[rub]|br|rb)?("|')(?:\\.|(?!\1)[^\\\r\n])*\1/i,
         greedy: !0
     },
+    "indent-error": /*my addition !!!*/ { 
+        pattern: /:(?:[ \t]*(?:\r\n?|\n))(?=[^\s])/,
+        lookbehind: false,
+        alias: 'error'
+    },
     stringError: /*my addition !!!*/{
         pattern: /("|')(?:\\.|(?!\1)[^\\\r\n])*/, //handles unmatched '
         greedy: true

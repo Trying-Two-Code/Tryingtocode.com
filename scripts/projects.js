@@ -268,7 +268,6 @@ function rewardPlayer(display){
 }
 
 let playerCorrect = (passed, display) => {
-    console.log("results: ", passed, output, output[0]);
     if(passed && output[0]){
         rewardPlayer(display);
         display.nextButton.classList.add("glow");

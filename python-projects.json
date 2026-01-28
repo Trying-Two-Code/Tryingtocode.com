@@ -374,6 +374,17 @@
             "code-discludes": "*",
             "failure-shows": "*",
             "hint": "print(letter)"
+        },
+        "34": {
+            "title": "Lists 5",
+            "code": "letters = ['a', 'b', 'c']\n\n",
+            "instruction": "Print all the letters in the list",
+            "output-includes": "a&&&b&&&c",
+            "output-discludes": "*",
+            "code-includes": "*",
+            "code-discludes": "*",
+            "failure-shows": "*",
+            "hint": "for letter in letters:"
         }
     }
 }

@@ -77,10 +77,15 @@ pre[class*=language-] {
     color: #f92672
 }
 
-.stringError {
+.stringError, 
+.indent-error {
     color: #ff0000;
     /*text-decoration: underline;
     text-decoration-color: #ff000011;*/
+}
+
+.variable {
+    color: #706d52;
 }
 
 .token.boolean,

@@ -1,5 +1,5 @@
 import { CoinObj } from "./coin-obj.js";
-import { getUserData, setUserDatapoint } from "../firebase.js";
+import { getUserData, setUserDatapoint, increaseCoins } from "../firebase.js";
 
 /**
  * This script is meant to tell the canvas to draw coins
@@ -25,9 +25,16 @@ let getUserCoins = async () => {
     return userData.coins;
 }
 
-let userCoins = await getUserCoins();
-console.log(userCoins);
-localStorage.setItem("coin", userCoins);
+let printCoins = async () => {
+    let coins = await getUserCoins()
+    console.log("USER COINS = ", coins);
+}
+printCoins();
+
+let collectCoin = (coinElement, worth=1) => {
+    objects = objects.filter(e => e !== coinElement);
+    incrimentDisplayNumber(worth);
+}
 
 let drawAll = (sizeX=300, sizeY=300) => {
     let drawOne = element => {
@@ -36,8 +43,7 @@ let drawAll = (sizeX=300, sizeY=300) => {
         element.gravitate(counter);
         let gt_rect = counter.getBoundingClientRect();
         if(element.collectedCoin === true){
-            objects = objects.filter(e => e !== element);
-            changeNumber(1);
+            collectCoin(element);
         }
     }
 
@@ -49,30 +55,12 @@ let drawAll = (sizeX=300, sizeY=300) => {
 if(canvas){
     var ctx = canvas.getContext('2d');
     var title = document.getElementById("main-title");
+
     window.addEventListener('correctCode', (details) => {
         getCoin(details.detail.value, counter, title);
-
-        console.log(details);
-        console.log(window.user);
-
-        getUserData(window.user).then((userdata) => {
-            console.log(userdata, userdata.coins);
-
-            console.log(details.detail.value);
-            if(userdata.coins == null) { 
-                localCoinCount = details.detail.value;
-                localStorage.setItem('coin', String(localCoinCount));
-                setUserDatapoint(null, null, details.detail.value, null); 
-                console.log("set coins done");
-            }else {
-                let currentCoins = userdata.coins + details.detail.value;
-                setUserDatapoint(null, null, currentCoins, null);
-                localCoinCount = currentCoins;
-                localStorage.setItem(coin, String(localCoinCount));
-                console.log("set coins done");
-            }
-        }); 
+        changeNumber(details.detail.value);
     });
+
     window.requestAnimationFrame(drawAll);
 }
 
@@ -93,20 +81,49 @@ export let getCoin = (amm, go_to, startElementPos, startString = '') => {
     }
 }
 
-export let changeNumber = (amm, startString='') => {
-    let currentCoins = String(parseInt(localStorage.getItem("coin")) + amm);
-    /*getUserCoins().then(result => {
-        console.log("getting result", result);
-        counter.innerHTML = result;
-    })*/
-    //localStorage.setItem("coin", currentCoins);
+let updateDisplayNumber = (updatedNumber, startString) => {
+    let currentCoins = updatedNumber;
+
     if (counter != null){
         counter.innerHTML = startString + currentCoins;
     }
-    /*if(window.user){ changing this to occur in a more reliable spot
-        setUserDatapoint(null, null, currentCoins, null);
-        console.error("Save user coin to server");
-    }*/
 }
 
-changeNumber(0);
+let subtractString = (a, b) => {
+    let start = a.indexOf(b);
+    let end = start + b.length;
+
+    return a.substring(0, start - 1) + a.substring(end);
+}
+
+let incrimentDisplayNumber = (amm=1, startString='') => {
+    let currentCoins = parseInt(subtractString(counter.innerHTML, startString));
+    let newCoins = currentCoins + amm;
+
+    updateDisplayNumber(newCoins, startString);
+}
+
+export let changeNumber = (amm, startString='') => {
+    let currentNumber = localStorage.getItem("coin");
+    let updatedNumber = String(parseInt(currentNumber) + amm);
+
+    let changeNumber = (updatedNumber) => {
+        localStorage.setItem('coin', updatedNumber);
+        increaseCoins(amm);
+        console.log("set user coins");
+    }
+
+    changeNumber(updatedNumber);
+}
+
+updateDisplayNumber(0, '');
+
+let initDisplay = async () => {
+    let coins = await getUserCoins();
+    console.log("coins = ", coins);
+    updateDisplayNumber(coins, '');
+}
+
+window.addEventListener("user_set", async () => {
+    await initDisplay();
+});

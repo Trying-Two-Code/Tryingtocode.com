@@ -3,7 +3,7 @@ import { Display } from "./projects.js";
 import "./coin.js";
 import { setUserDatapoint, getUserData, setupProject, deleteUserData } from "../firebase.js";
 
-const LOAD_INDICES = Array.from({length: 33}, (_, i) => [i + 1, "projects"]);
+const LOAD_INDICES = Array.from({length: 34}, (_, i) => [i + 1, "projects"]);
 const DEFAULT_REWARD = 5;
 const PROJECT_PARENT = document.getElementById('project-parent');
 
@@ -48,10 +48,9 @@ function setStat(name, priorityValue, otherValue, defaultValue=""){
     localStorage.setItem(name, priority); //THIS IS THE FINAL DECISION
 }
 
-window.addEventListener("user_made", () => {
+window.addEventListener("user_set", async () => {
     const user = window.user;
     setStat("projects", user.projects || "{}");
-    setUserDatapoint();
 });
 
 let goToTop = () => {
@@ -86,6 +85,8 @@ let saveProject = (this_proj) => {
     console.log("projects", JSONprojects);
     JSONprojects[title] = content;
     localStorage.setItem("projects", JSON.stringify(JSONprojects));
+
+    console.log("SAVING USER PROJECT", JSONprojects);
     if(user && JSONprojects !== "{}"){
         setUserDatapoint(null, null, null, JSONprojects);
     }
@@ -94,7 +95,9 @@ let saveProject = (this_proj) => {
 window.addEventListener('correctCode', (details) => {
     let title = window.currentDisplay.title.innerHTML;
     let code = window.currentDisplay.textarea.value;
+
     saveProject(title + ":" + code);
+
     console.log(details.detail.value);
 });
 

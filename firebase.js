@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getAuth, signInAnonymously, createUserWithEmailAndPassword, 
     signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import { getPerformance } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-performance.js";
 
 //import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
@@ -22,13 +22,23 @@ const db = getFirestore(app);
 
 //const analytics = getAnalytics(app);
 
+let setWindowUser = (toThis) => {
+    if(toThis == null) {return null;}
+
+    window.user = toThis;
+
+    let user_set = new Event("user_set");
+    window.dispatchEvent(user_set);
+}
+
 let authStateChangedFunction = async (user) => {
     if (user) {
-        window.user = await initUserData(user);
+        let newUserData = await initUserData(user)
+        setWindowUser(newUserData);
         userMade(user);
     } else {
         console.log("User signed out? Or error with user.");
-        window.user = anonSign();
+        let newUser = await anonSign();
     }
 }
 
@@ -36,7 +46,7 @@ onAuthStateChanged(auth, authStateChangedFunction);
 
 export let createEmail =  async(email, password) => {
     return createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-        user = userCredential.user;
+        let user = userCredential.user;
         alert("creating account...");
         return user;
     }).catch((error) => {
@@ -59,7 +69,7 @@ let signIn = async (email, password) => {
 
 export let signInUp = async (email, password) => {
     try{
-        user = await signIn(email, password);
+        let user = await signIn(email, password);
         return user;
     }
     catch (error){
@@ -115,6 +125,8 @@ export let setUserDatapoint = async (email=null, displayName=null, coins=null, p
     //This sets the user data to the defualt values above **unless they are nothing** (projects is weird though)
 
     if (!window.user) return console.warn("No user yet");
+
+    console.log("saving...");
     
     const userRef = doc(db, "users", window.user.uid);
     const updatedSnap = await getDoc(userRef);
@@ -122,8 +134,8 @@ export let setUserDatapoint = async (email=null, displayName=null, coins=null, p
 
     //all the normal value merges
 
-    let getNonEmptyValue = (...values) => {
-        let isEmpty = value => { return value == null; }
+    let getNonEmptyValue = (defualt, ...values) => {
+        let isEmpty = value => { return (value == null || value == defualt); }
 
         for (let i = 0; i < values.length; i++) {
             const element = values[i];
@@ -136,33 +148,65 @@ export let setUserDatapoint = async (email=null, displayName=null, coins=null, p
         return null;
     }
 
-    let setEmail = getNonEmptyValue(email, data.email, defaultValues.email);
-    let setDisplayName = getNonEmptyValue(displayName, data.displayName, defaultValues.displayName);
-    let setCoins = getNonEmptyValue(coins, data.coins, defaultValues.coins);
+    let updatePayload = {}
+
+    let setEmail = getNonEmptyValue(defaultValues["email"], email, data.email, null);
+    let setDisplayName = getNonEmptyValue(defaultValues["displayName"], displayName, data.displayName, null);
+    let setCoins = getNonEmptyValue(defaultValues["coins"], coins, data.coins, null);
+
+    if(setEmail != null) {updatePayload.email = setEmail;}
+    if(setDisplayName != null) {updatePayload.displayName = setDisplayName;}
+    if(setCoins != null) {updatePayload.coins = setCoins;}
 
     //project merge
 
     let mergeProjects = () => {
         const OLD_PROJECTS = data.projects;
         let saveProjectList = mergeObjects(OLD_PROJECTS, projects);
-        return getNonEmptyValue(saveProjectList, defaultValues.projects);
+        return saveProjectList;
     }
 
+    console.log("should've saved: ", projects);
+
     let setProjects = mergeProjects();
+    console.log(setProjects);
+
+    if(!isObjectEmpty(setProjects)) {updatePayload.projects = setProjects;}
 
     //setting proper
+    await updateDoc(userRef, updatePayload);
 
-    await setDoc(userRef, {
-        email: setEmail,
-        displayName: setDisplayName,
-        coins: setCoins,
-        projects: setProjects
-    });
+    if(projects == null) return;
+
+    console.log("the payload got: ", updatePayload);
+
+    console.log("the reason it is bad? ", projects, setProjects, isObjectEmpty(setProjects));
+
+    let d = await getUserData();
+    console.log(d);
+
 }
 
+export let increaseCoins = async (byAmmount=5) => {
+    if (!window.user) return console.warn("No user yet");
+
+    const userRef = doc(db, "users", window.user.uid);
+
+    let updatePayload = { coins: increment(byAmmount) };
+    console.log('PAYLOAD: ', updatePayload);
+
+    await updateDoc(userRef, updatePayload);
+}
+
+const isObjectEmpty = (obj) => {
+    return obj == null || (Object.keys(obj).length === 0 && obj.constructor === Object);
+};
+
 let mergeObjects = (object1, object2) => { //projectList2 gets priority over projectList1
-    if(object1 == null || object2 == null) { return object1 == null ? object2 : object1 } //return one if the other is null
-    
+    let theChosenOneAhhhh = (isObjectEmpty(object1) ? object2 : object1);
+
+    if(isObjectEmpty(object1) || isObjectEmpty(object2)) { return theChosenOneAhhhh; } //return one if the other is null
+
     let merged = {};
 
     let mergeObj = (obj, merge) => {
@@ -191,22 +235,18 @@ export let getUserData = async (user=window.user) => {
     const userRef = doc(db, "users", user.uid);
     const updatedSnap = await getDoc(userRef);
     
-    return updatedSnap;
+    return updatedSnap.exists() ? updatedSnap.data() : null;
 }
 
 var updateProjects = []
 
 let userMade = (user) => {
-    window.user = user;
+    setWindowUser(user);
     let user_made = new Event("user_made");
     window.dispatchEvent(user_made);
 
     let code;
     const userRef = doc(db, "users", user.uid);
-
-    let openMain = (mainProject) => {
-
-    }
 
     getDoc(userRef).then((userSnap) => {
         console.log(userSnap);
@@ -258,7 +298,8 @@ let anonSign = () => {
         let uid = user.uid;
 
         console.log("user is: " + uid);
-        return user
+        setWindowUser(user);
+        return user;
     })
     .catch((error) => {
         console.error(error);
@@ -300,7 +341,13 @@ export let setProject = async (title, data, section="default", projectId="1") =>
 }
 
 let printProjects = async () => {
-    const projectRef = doc(db, "projects", user.uid);
+    
+    if (!window.user || !window.user.uid) {
+        console.log("printProjects blocked: User not ready.");
+        return;
+    }
+
+    const projectRef = doc(db, "projects", window.user.uid);
     try {
         let projDoc = await getDoc(projectRef);
         console.log("THIS IS THE DOCUMENT!!!", projDoc);

@@ -11,30 +11,20 @@ Hey developer! Read these to know what you should fix:
 
 ]
 
-- fix learn.html reload then coins get deleted - coins need to be better
-- save system needs to be cleaned up
-- 2
+
+- phones have squished coins | help phone support | coins and some icons are blurry
+- 3
 - TTC
 
-
-- Make a footer (footer.js)
+- in learn.html, project.js, auto tabbing isn't perfect
 - 4
 - TTC
 
-
-- in learn.html, project.js, auto tabbing isn't perfect
+- make input() work https://www.npmjs.com/package/sync-message
 - 5
 - TTC
 
-- phones have squished coins?? help phone support
-- 5
-- TTC
-
-- make python-projects.json projects all work
-- 5
-- TTC
-
-- make input() work
+- save system needs to be cleaned up
 - 5
 - TTC
 
@@ -50,6 +40,9 @@ Hey developer! Read these to know what you should fix:
 - 7
 - TTC
 
+- Make a footer (footer.js)
+- 8
+- TTC
 
 - Create creation page, in order to allow users to make their own learning projects. Support saving, publishing, and internal use
 - 9
