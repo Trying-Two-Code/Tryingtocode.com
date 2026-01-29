@@ -42,7 +42,7 @@ let drawAll = (sizeX=300, sizeY=300) => {
 
     let drawOne = element => {
         element.RenderImage(coinImgSrc);
-        element.tick(.1);
+        element.tick(.3);
         element.gravitate(counter);
         let gt_rect = counter.getBoundingClientRect();
         if(element.collectedCoin === true){
@@ -60,7 +60,8 @@ if(canvas){
     var title = document.getElementById("main-title");
 
     window.addEventListener('correctCode', (details) => {
-        getCoin(details.detail.value, counter, window.currentDisplay.runButton);
+        let startElement = window.currentDisplay.output;
+        getCoin(details.detail.value, counter, startElement);
         changeNumber(details.detail.value);
     });
 
@@ -74,16 +75,22 @@ let center = (clientRect, isVerticle) => {
 }
 
 export let getCoin = (amm, go_to, startElementPos, startString = '') => {
-    let spread = 40;
+    let clientRect = startElementPos.getBoundingClientRect();
+
+    let spreadVelocity = 40;
+    let gotoX = (center(clientRect, 0) + window.scrollX);
+    let gotoY = (center(clientRect, 1) + window.scrollY);
+    let spreadPosition = 0;
 
     for (let index = 0; index < amm; index++) {
-        let clientRect = startElementPos.getBoundingClientRect();
+        let xSpread = (Math.random() * spreadPosition) / 10;
+        let ySpread = (Math.random() * spreadPosition) / 10;
         let coinObj = new CoinObj(
             go_to,
-            center(clientRect, 0) + window.scrollX,
-            center(clientRect, 1) + window.scrollY,
-            Math.random() * spread,
-            Math.random() * spread,
+            gotoX + xSpread,
+            gotoY + ySpread,
+            Math.random() * spreadVelocity,
+            Math.random() * spreadVelocity,
             canvas,
             ctx,
             coinImgSrc

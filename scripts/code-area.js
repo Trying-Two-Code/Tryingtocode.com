@@ -15,11 +15,12 @@ const AREAHTML =
 
 `
 export class CodeArea{
-    constructor(document, parent, codeAreaHTML=AREAHTML, lineAmm=1){
+    constructor(document, parent, project=null, codeAreaHTML=AREAHTML, lineAmm=1){
         this.document = document;
         this.parent = parent;
         this.codeAreaHTML = codeAreaHTML;
         this.lineAmm = lineAmm;
+        this.project = project;
 
         this.setAttributes();
     }
@@ -71,8 +72,17 @@ export class CodeArea{
                 event.preventDefault();
                 //if ctr+enter
                 if(event.ctrlKey){
-                    this.parent.displayUserCode(this.textarea.value);
+                    //if ctr+sht+enter
+                    if(event.shiftKey){
+                        this.project.openProject(1);
+                    }
+                    else{
+                        //run code if just ctr+enter
+                        console.log(this.project.displayUserCode);
+                        this.project.evaluateUserCode();
+                    }
                 } else{
+                    //just do normal boring enter stuff
                     let autoTabResult = this.autoTab();
                     let newValue = autoTabResult[0] + autoTabResult[1]
                     this.textarea.value = newValue;

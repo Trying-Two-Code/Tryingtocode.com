@@ -42,7 +42,7 @@ export class CoinObj{
     }
 
     gravitate(go_to, drag=2){
-        let defualt_slowdown = 3000; //the lower this is, the thicker the air feels
+        let defualt_slowdown = 1000; //the lower this is, the thicker the air feels
         this.absolute_gt = domToCanvas(this.canvas, getAbsolutePosition(go_to)); //position
 
         let x_dist = this.absolute_gt.x - this.x_pos;

@@ -147,10 +147,6 @@ export class SpriteImage{
         let scaledWidth = (this.getScreenDimensions()[0] / this.ogDemensions[0]) * size; 
         let scaledHeight = (this.getScreenDimensions()[1] / this.ogDemensions[1]) * size; 
 
-        console.log(scaledWidth, scaledHeight, (this.ogDemensions[1] / this.ctx.canvas.height));
-        console.log(this.ctx.canvas.height);
-        console.log(this.getScreenDimensions());
-
         this.ctx.drawImage(
             this.image,
             this.frameOffset, 0,                         // source x, y

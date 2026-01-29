@@ -134,7 +134,7 @@ export class Display {
 
         this.codeAreaParent = this.projectEl.querySelector('[class="codeAreaParent"]');
 
-        this.codeArea = new CodeArea(document, this.codeAreaParent);
+        this.codeArea = new CodeArea(document, this.codeAreaParent, this);
     }
 
     findElements(){
@@ -195,6 +195,8 @@ export class Display {
         this.editClass("mini", !value);
         this.canRun = value;
         this.rewindButton.disabled = !value;
+
+        if(!value) this.toggleHint(undefined, true);
         
         this.projectEl.dispatchEvent(
             new CustomEvent('toggleElements', {
@@ -207,11 +209,13 @@ export class Display {
         element.editClass("gone", false);
         element.editClass("mini", true);
         element.editClass("gone-anim-over", false);
+        element.toggleHint(element.hintPopup, true);
     }
 
     hide(element=this){ //make totally invisible
         element.editClass("gone", true);
         element.editClass("mini", true);
+        element.toggleHint(element.hintPopup, true);
     }
 
     editClass(className, set=undefined){
@@ -245,11 +249,30 @@ export class Display {
         this.lastLineCount = lines;
     }
 
-    toggleHint(element=this.hintPopup){
+    toggleHint(element=this.hintPopup, toThis=undefined) {
         this.hintToggled = !this.hintToggled;
         console.log("HIDE it!");
-        element.classList.toggle("hide");
+        element.classList.toggle("hide", toThis);
     }
+
+    async evaluateUserCode(){
+        let value = this.textarea.value;
+        let output = await this.displayUserCode(value);
+
+        if(!output[0]){
+            //there was an error
+            console.error("player code incorrect");
+            return false;
+        }
+
+        let json = this.projectJSON;
+        console.log(json, output[1]);
+        
+        correctCode = isCorrectCode(value, json, output[1]).then((passed) => {
+            playerCorrect(passed, this);
+        });
+    }
+    
 }
 
 function rewardPlayer(display){
@@ -285,21 +308,7 @@ function setupRunButton(display){
             console.log("don't run disabled projects (:");
         }
         else{
-            let value = display.textarea.value;
-            let output = await display.displayUserCode(value);
-
-            if(!output[0]){
-                //there was an error
-                console.error("player code incorrect");
-                return false;
-            }
-
-            let json = display.projectJSON;
-            console.log(json, output[1]);
-            
-            correctCode = isCorrectCode(value, json, output[1]).then((passed) => {
-                playerCorrect(passed, display);
-            });
+            display.evaluateUserCode();
         }
     }
 
