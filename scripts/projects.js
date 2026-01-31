@@ -251,7 +251,6 @@ export class Display {
 
     toggleHint(element=this.hintPopup, toThis=undefined) {
         this.hintToggled = !this.hintToggled;
-        console.log("HIDE it!");
         element.classList.toggle("hide", toThis);
     }
 

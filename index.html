@@ -3,35 +3,69 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="a free, gamelike site to learn code">
+    <meta property="og:title" content="Trying to Code">
+    <meta property="og:image" content="https://tryingtocode.com/components/art/ttc coin icon.png">
+    <meta property="og:type" content="website">
+    <meta name="keywords" content="free, learn, code">
+    
     <title>Trying to Code</title>
 
     <link rel="icon" href="../components/art/ttc coin icon.png">
     <link rel="stylesheet" href="./css/general.css">
     <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/prism.css">
 
     <script src="./scripts/index.js" type="module"></script>
     <script src="./scripts/general.js" type="module"></script>
     <script src="./firebase.js" type="module" defer></script>
     <script src="./scripts/footer.js"></script>
+    <script src="./scripts/prism.js"></script>
+
+    <script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": ["SoftwareApplication", "Course"],
+    "name": "Trying to Code: Learn Python",
+    "description": "A free, gamelike curriculum to learn python.",
+    "applicationCategory": "Educational Game",
+    "operatingSystem": "Any",
+    "educationalLevel": "Beginner",
+    "provider": {
+        "@type": "Organization",
+        "name": "Trying to Code",
+        "sameAs": "https://tryingtocode.com/learn"
+    },
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "category": "Free"
+    }
+    }
+    </script>
     
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/pyodide@0.28.2/pyodide.min.js"></script>                  <!--Piodide import-->
 </head>
 <body>
+    <canvas class="js-screen" id="learn-screen">
+        <!--shows coins-->
+    </canvas>
     <div class="sidebar">
         <a href="" title="Home"  class="logo" id="home-icon">
-            <img src="components/art/ttc coin icon.png" alt="Coin logo" class="nice-button">
+            <img src="components/art/ttc coin icon.png" alt="Coin logo" class="nice-button" draggable="false">
         </a>
         <button id="dropdown-button" class="toggle-dropdown">
-            <img class="toggle-dropdown--img nice-button" src="components/art/yellow - toggle arrow up.png" alt="" id="toggle-button" >
+            <img class="toggle-dropdown--img nice-button" src="components/art/yellow - toggle arrow up.png" alt="" id="toggle-button" draggable="false">
         </button>
         <div class="dropdown">
             <ul class="dropdown--list">
                 <li class="dropdown--element"><a href="" title="Home">
-                    <img class="dropdown--image nice-button" src="components/art/clean icon - 9.png" alt="House Icon">
+                    <img class="dropdown--image nice-button" src="components/art/clean icon - 9.png" alt="House Icon" draggable="false">
                 </a></li>
                 <li class="dropdown--element"><a href="learn" title="Learn">
-                    <img class="dropdown--image nice-button dark-glow" src="components/art/clean icon - 10.png" alt="blue book with L on it">
+                    <img class="dropdown--image nice-button dark-glow" src="components/art/clean icon - 10.png" alt="blue book with L on it" draggable="false">
                 </a></li>
                 <!--li><a href="store/" title="Test">
                     <img src="components/art/bottle.png" alt="bottle with blue liquid">
@@ -45,20 +79,47 @@
     <div class="main-content main-font">
         <!--button class="main-font" id="change-setting">change setting</button-->
         <div id="welcome" class="welcome">
-            <h1 class="welcome--title">Welcome to Trying to Code!</h1>
-            <p class="welcome--subtitle">Teach yourself</p>
-            <!--div class="si-section">
-                <button id="toggle-signinup" class="image-button nice-button">
-                    <img src="./components/art/profile - 4.png" alt="" class="big-icon">
-                </button>
-                <div class="" id="sign-in-holder" name="sign-in" alt="Person with green plus symbol, used to sign up to the website" title="Sign in"></div>
+            <div class="left-side">
+                <div class="welcome--learn-div">
+                    <div class="lined-background welcome--learn-div--code-div">
+                        <pre class="code-highlight welcome--learn-div--code" name="pretty-pre"><code class="main-font language-python" id="code-content" name="pretty-code">print('learn code')</code></pre>
+                    </div>
+                    <div class="welcome--side-div">
+                        <button id="welcome--run-code" class="welcome--run-code nice-button" title="Run Code">
+                            <img class="image-button" src="./components/art/play button 1 - big.png" alt="" draggable="false">
+                        </button>
+                        <div class="lined-background welcome--learn-div--output" id="welcome--learn-div--output"></div>
+                        <div id="coin-go-here"></div>
+                    </div>
+                        
+                    <div id="welcome--go-learn">
+                        <img class="big-icon" id="welcome--go-learn--arrow" src="./components/art/arrow.png" alt="">
+                    
+                        <button class="image-button" >
+                            <a href="learn" title="Learn">
+                                <img src="./components/art/clean icon - 10.png" alt="" class="big-icon nice-button" draggable="false" id="welcome--go-learn--button">
+                            </a>
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+            <!--div class="seperator" id="welcome--separator">
+                <div class="super-stretch">|</div>
             </div-->
-            <button id="go-learn" class="image-button dark-outline-box">
-                <a href="learn" title="Learn">
-                    <img src="./components/art/clean icon - 10.png" alt="" class="big-icon nice-button">
-                </a>
-            </button>
+            <!--div class="right-side"> 
+                <div class="si-section">
+                    <button id="toggle-signinup" class="image-button nice-button">
+                        <img src="./components/art/profile - 4.png" alt="" class="big-icon" draggable="false">
+                    </button>
+                    <div class="" id="sign-in-holder" name="sign-in" alt="Person with green plus symbol, used to sign up to the website" title="Sign in"></div>
+                </div>
+            </div-->
+           
         </div>
+
+        <p class="welcome--p">(by the way, it's free)</p>
+
         <div class="footer-parent">
             <ttc-footer copywrite="tryingtocode" mail-to="contact@tryingtocode.com" legal-src="./legal.html"></ttc-footer>
         </div>

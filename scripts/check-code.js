@@ -30,6 +30,7 @@ let scanLines = (lines, forThis, nullValue="*") => { /*detects if forThis is in 
     });
 }
 
+console.log("change the name of this function");
 export let AAAcheckInclusion = (user, expected) => {
     const BLANK = "*";
 

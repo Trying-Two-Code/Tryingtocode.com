@@ -10,6 +10,8 @@
 
 *TOOLS
 **gone . . . . . . . instantly gone no matter what
+**slow-hide  . . . . slow version of gone
+**lined-background . similar to codearea block
 
 *WELCOME
 **welcome  . . . . . main large text
@@ -52,6 +54,7 @@ body {
 	display: none !important;
 	padding: 0% !important;
 }
+
 .slow-hide{
 	transition: all 1s;
 	padding: 0% !important;
@@ -60,16 +63,35 @@ body {
 	width: 0px !important;
 	height: 0px !important;
 }
-.slow-hide > *{
+
+.slow-hide > * {
 	display: none !important;
+}
+
+.lined-background {
+	--line-size: min(8rem, 10vw);
+
+ 	background-image: repeating-linear-gradient(
+        to bottom,
+        #333333 0px,
+        #333333 0px,
+        #1a1a1a 1px,
+        #1a1a1a var(--line-size)
+    );
+    background-attachment: local;
 }
 
 /*------------------------------------*\
     #WELCOME
 \*------------------------------------*/
 .welcome {
-	display: flex;
-	align-items: center;
+    display: grid;
+
+    grid-template-columns: auto /*auto auto*/;
+
+	gap: 10%;
+	padding: 1%;
+
 	flex-direction: column;
 	justify-content: center;
 	flex-wrap: inherit;
@@ -81,30 +103,221 @@ body {
 		 4px -4px 0 #000,
 		-4px  4px 0 #000,
 		 4px  4px 0 #000 ;
-
+	
+	height: 100vh;
+	width: 100%;
+	padding-left: 0;
 }
 
 .welcome--title {
-	text-shadow:
-		-4px -4px 0 #000,  
-		 4px -4px 0 #000,
-		-4px  4px 0 #000,
-		 4px  4px 0 #000 ;
+	--shadow-size: 4px;
+
+	text-shadow: 
+		calc(-1 * var(--shadow-size)) calc(-1 * var(--shadow-size)) 0 #000,  
+		var(--shadow-size) calc(-1 * var(--shadow-size)) 0 #000,
+		calc(-1 * var(--shadow-size)) var(--shadow-size) 0 #000,
+		var(--shadow-size) var(--shadow-size) 0 #000;
 }
 
 .welcome--subtitle {
+	--shadow-size: 2px;
+
 	text-shadow: 
-		-2px -2px 0 #000,  
-		 2px -2px 0 #000,
-		-2px  2px 0 #000,
-		 2px  2px 0 #000 ;
+		calc(-1 * var(--shadow-size)) calc(-1 * var(--shadow-size)) 0 #000,  
+		var(--shadow-size) calc(-1 * var(--shadow-size)) 0 #000,
+		calc(-1 * var(--shadow-size)) var(--shadow-size) 0 #000,
+		var(--shadow-size) var(--shadow-size) 0 #000;
+}
+
+.welcome--p {
+	--shadow-size: 2px;
+
+	font-size: small;
+	text-shadow: 
+		calc(-1 * var(--shadow-size)) calc(-1 * var(--shadow-size)) 0 #000,  
+		var(--shadow-size) calc(-1 * var(--shadow-size)) 0 #000,
+		calc(-1 * var(--shadow-size)) var(--shadow-size) 0 #000,
+		var(--shadow-size) var(--shadow-size) 0 #000;
+}
+
+.welcome--side-div {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+
+	margin: 0%;
+	gap: 5%;
+}
+
+.welcome--learn-div {
+	position: relative;
+	display: flex;
+	width: 40vw;
+	height: 70vh;
+	
+	left: 0;
+	flex-direction: column;
+	padding-top: 0 !important;
+
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+.code-highlight::-webkit-scrollbar {
+  	display: none;
+}
+
+.welcome--learn-div--code-div, .welcome--learn-div--output {
+	display: flex;
+	transition: all 1s;
+	--line-size: 8rem;
+
+	height: calc(var(--line-size) * 1 + 2px); /*1 line, plus the two pixels for line seperation*/
+	width: 100%;
+
+	left: 0;
+
+	border: 10px solid black !important;
+	border-radius: 40px;
+
+	padding: 0%;
+	gap: 0%;
+
+	align-content: center;
+}
+
+.welcome--learn-div--code-div:hover, .welcome--learn-div--output:hover {
+	transition: all 1s;
+	transform: rotate(1deg);
+}
+
+.welcome--learn-div--code-div:active, .welcome--learn-div--output:active {
+	transition: all .5s;
+	transform: 	scale3d(110%, 110%, 90%)
+				rotate(1deg);
+	
+	z-index: 10;
+}
+
+.welcome--learn-div--code {
+	display: block;
+
+	font-size: 2vw;
+	padding: auto;
+	
+	margin-top: -1% !important;
+}
+
+.welcome--learn-div--output{
+	height: calc(var(--line-size) * 1 + 2px); /*1 line, plus the two pixels for line seperation*/
+	align-content: center;
+
+	display: block;
+	margin-bottom: 10px;
+}
+
+.welcome--run-code {
+	background-color: #0000;
+	border: none;
+
+	image-rendering: pixelated;
+}
+
+.left-side {
+	display: flex;
+
+	position: relative;
+	left: 0;
+
+	width: 100%;
+	height: 100vh;
+
+	margin-top: 25%;
+}
+
+.right-side {
+	position: relative;
+	right: 0;
+}
+
+.seperator {
+	z-index: -1;
+	gap: 10px;
+	color: #000;
+
+	--glow-color: #aa0a
+	filter: drop-shadow(0 0 10px var(--glow-color))
+          	drop-shadow(0 0 20px var(--glow-color));
+}
+
+#welcome--go-learn {
+	padding-top: 1%;
+	display: flex;
+	align-content: left;
+}
+
+
+#welcome--go-learn--arrow {
+	width: 200px;
+	height: 200px;
+
+	transform: rotate(10deg);
+}
+
+#welcome--go-learn--button {
+	width: 200px;
+	height: 200px;
+	padding-top: 50%;
+}
+
+#welcome--go-learn--button:not(:hover) {
+	transform: rotate(-3deg);
+}
+
+@media screen and (width < 1000px) {
+	.welcome{
+		grid-template-columns: auto;
+		gap: 0;
+		justify-content: left;
+		gap: 0%;
+	}
+
+	.welcome--learn-div--code {
+		font-size: 4vw !important;
+	}
+
+	#welcome--separator {
+		display: flex;
+		transform: rotate(90deg);
+
+		justify-content: left;
+	}
+
+	.left-side {
+		width: 90%;
+		padding-right: 50px;
+	}
+
+	.welcome--learn-div{
+		width: 90%;
+	}
 }
 
 @media (max-width: 712px) {
     #welcome {
         font-size: 1em;
     }
+
+	.welcome--learn-div--code {
+		font-size: 6vw !important;
+	}
+
+	#welcome--separator {
+		display: none;
+	}
 }
+
+
 
 /*------------------------------------*\
     #SIGN IN

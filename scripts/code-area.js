@@ -57,41 +57,77 @@ export class CodeArea{
     editPresses(call, tab="\t"){
         let prettyCode = this.prettyCode;
 
-        this.textarea.addEventListener('keydown', (event) => {
-            let value = this.textarea.value;
-            createPrettyCode(prettyCode, value);
+        let appendToTextarea = (text) => {
+            let start = this.textarea.selectionStart;
+            let end = this.textarea.selectionEnd;
+            return this.textarea.value.substring(0, start) + text + this.textarea.value.substring(end);
+        }
 
-            if (event.keyCode === 9) { //tab is tab instead of switch
+        let changeEnter = (event) => {
+            event.preventDefault();
+            //if ctr+enter
+            if(event.ctrlKey){
+                //if ctr+sht+enter
+                if(event.shiftKey){
+                    this.project.openProject(1);
+                }
+                else{
+                    //run code if just ctr+enter
+                    console.log(this.project.displayUserCode);
+                    this.project.evaluateUserCode();
+                }
+            } else{
+                //just do normal boring enter stuff
+                let autoTabResult = this.autoTab();
+                let newValue = autoTabResult[0] + autoTabResult[1]
+                this.textarea.value = newValue;
+                this.textarea.selectionStart = autoTabResult[0].length;
+                this.textarea.selectionEnd = autoTabResult[0].length;
+            }
+        }
+
+        let changeTab = (event) => {
+            event.preventDefault();
+            let start = this.textarea.selectionStart;
+            this.textarea.value = appendToTextarea(tab);
+            this.textarea.selectionStart = this.textarea.selectionEnd = start + tab.length;
+
+            this.createText(this.textarea.value);
+            this.createPrettyCode(this.prettyCode, this.textarea.value);
+        }
+
+        let changePairs = (event) => {
+            let brackets = {'(' : ')', '[' : ']', '{' : '}'};
+            let pairs = {'"': '"', "'": "'", "`": "`", ...brackets};
+
+            let beginPairs = Object.keys(pairs);
+
+            if(beginPairs.includes(event.key)){
                 event.preventDefault();
                 let start = this.textarea.selectionStart;
-                let end = this.textarea.selectionEnd;
-                this.textarea.value = this.textarea.value.substring(0, start) + tab + this.textarea.value.substring(end);
-                this.textarea.selectionStart = this.textarea.selectionEnd = start + tab.length;
-            }
-            if (event.keyCode === 13){ //make indents if pressing enter
-                event.preventDefault();
-                //if ctr+enter
-                if(event.ctrlKey){
-                    //if ctr+sht+enter
-                    if(event.shiftKey){
-                        this.project.openProject(1);
-                    }
-                    else{
-                        //run code if just ctr+enter
-                        console.log(this.project.displayUserCode);
-                        this.project.evaluateUserCode();
-                    }
-                } else{
-                    //just do normal boring enter stuff
-                    let autoTabResult = this.autoTab();
-                    let newValue = autoTabResult[0] + autoTabResult[1]
-                    this.textarea.value = newValue;
-                    this.textarea.selectionStart = autoTabResult[0].length;
-                    this.textarea.selectionEnd = autoTabResult[0].length;
+                
+                this.textarea.value = appendToTextarea(event.key + pairs[event.key]);
+                //this.textarea.selectionEnd -= 2;
+                console.log(pairs[event.key]);
+                this.textarea.selectionStart = this.textarea.selectionEnd = start + 1;
 
-                    this.createText(newValue);
-                }
+                //this.createText(this.textarea.value);
+                this.createPrettyCode(this.prettyCode, this.textarea.value);
             }
+        }
+
+        this.textarea.addEventListener('keydown', (event) => {
+            let value = this.textarea.value;
+
+            if (event.key === 'Tab') { //tab is tab instead of switch
+                changeTab(event);
+                this.createText(this.textarea.value);
+            }
+            if (event.key === 'Enter'){ //make indents if pressing enter
+                changeEnter(event);
+                this.createText(this.textarea.value);
+            }
+            changePairs(event);
 
             call();
         });

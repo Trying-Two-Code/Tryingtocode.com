@@ -142,14 +142,14 @@ export class SpriteImage{
         this.spriteHeight = this.image.height;
         this.frameOffset = this.spriteWidth * index;
 
-        let destination = [position_x, position_y];
+        let destination = [position_x - window.scrollX, position_y - window.scrollY];
         let size = 50;
         let scaledWidth = (this.getScreenDimensions()[0] / this.ogDemensions[0]) * size; 
         let scaledHeight = (this.getScreenDimensions()[1] / this.ogDemensions[1]) * size; 
 
         this.ctx.drawImage(
             this.image,
-            this.frameOffset, 0,                         // source x, y
+            this.frameOffset, 0,                    // source x, y
             this.spriteWidth, this.spriteHeight,    // source width, height
             destination[0], destination[1],         // destination x, y
             scaledWidth, scaledHeight               // destination width, height

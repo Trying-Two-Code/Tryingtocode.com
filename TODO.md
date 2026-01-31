@@ -36,7 +36,7 @@ Hey developer! Read these to know what you should fix:
 - 7
 - TTC
 
-- Make a footer (footer.js)
+- make a focus button that rewards users for focusing
 - 8
 - TTC
 

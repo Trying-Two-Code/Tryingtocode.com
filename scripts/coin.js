@@ -74,12 +74,27 @@ let center = (clientRect, isVerticle) => {
     return (- clientRect.left + clientRect.right) / 2;
 }
 
-export let getCoin = (amm, go_to, startElementPos, startString = '') => {
-    let clientRect = startElementPos.getBoundingClientRect();
+let mousePos = {x: 0, y: 0};
+
+window.addEventListener('mousemove', (event) => {
+  mousePos.x = event.clientX;
+  mousePos.y = event.clientY;
+});
+
+export let getCoin = (amm, go_to, startElementPos=null, startString = '') => {
+    let clientRect;
+    let gotoX;
+    let gotoY;
+    if(startElementPos){
+        clientRect = startElementPos.getBoundingClientRect();
+        gotoX = (center(clientRect, 0) + window.scrollX);
+        gotoY = (center(clientRect, 1) + window.scrollY);
+    } else {
+        gotoX = mousePos.x;
+        gotoY = mousePos.y;
+    }
 
     let spreadVelocity = 40;
-    let gotoX = (center(clientRect, 0) + window.scrollX);
-    let gotoY = (center(clientRect, 1) + window.scrollY);
     let spreadPosition = 0;
 
     for (let index = 0; index < amm; index++) {

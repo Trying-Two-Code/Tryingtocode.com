@@ -30,9 +30,10 @@
 **close-restart  . . Div holds close and restart
 **run-code . . . . . Button runs code
 **next-project . . . Navigates to next project
-**button . . . . . . Contains run and next
 **project-button . . Run and next
-
+**button-img . . . . Run button image going down and up
+**hint-popup . . . . Displays hint text
+**hint-button  . . . Toggles hint-popup
 
 *NO-ACTIVE 
 **output . . . . . . (to be determined)
@@ -151,11 +152,7 @@
         grid-auto-columns: max-content;
         margin: .5vw;
     }
-    /*.project{
-        max-height: 80vh;
-    }*/
 }
-
 
 /*------------------------------------*\
     #TEXT-BOXES
@@ -180,7 +177,6 @@
     border: 0 !important;
     outline: none;
     resize: none;
-    tab-size: 2;
     
     height: calc(var(--code-height));
     width: var(--code-width);
@@ -190,6 +186,8 @@
     font-size: 1rem;
 
     white-space: pre; 
+    tab-size: 2em !important; 
+    -moz-tab-size: 40px !important; 
     overflow: auto;
 }
 
@@ -198,16 +196,16 @@
     -moz-appearance: none;
     appearance: none;
     z-index: 1;
-    -webkit-text-fill-color: transparent !important; 
+    -webkit-text-fill-color: #aaa3 !important;
     text-shadow: none !important;
     background-color: #0000;
     
     background-image: none;
 }
 
-.code-highlight {
-    white-space: pre;
-    font-weight: 200 !important;
+.code-highlight, .code-highlight * {
+    tab-size: 2em !important; 
+    -moz-tab-size: 40px !important; 
     z-index: 0;
     pointer-events: none;
     padding-top: 3px !important;
@@ -216,6 +214,7 @@
 .code-highlighting code {
     font-family: inherit;
     font-size: inherit;
+    tab-size: inherit;
     line-height: inherit;
 }
 
@@ -332,6 +331,9 @@
     background-color: #0000;
     width: 50px; 
     height: 50px;
+
+    
+	image-rendering: pixelated;
 }
 
 .run-code-button-img:active {

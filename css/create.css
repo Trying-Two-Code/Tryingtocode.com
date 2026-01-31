@@ -37,9 +37,10 @@
     --sidebar-width: 30px;
 
     display: flex;
+
     position: relative;
     flex: content;
-    align-items: center;
+    
     flex-direction: column;
     justify-content: center;
     width: calc(100% - var(--sidebar-width));
@@ -63,7 +64,6 @@
     flex: content;
     align-items: center;
     flex-wrap: wrap;
-
 }
 
 .create-measure {

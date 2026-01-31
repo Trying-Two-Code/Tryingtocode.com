@@ -66,7 +66,6 @@ let toggleAboveProjects = (index, add) => {
     console.log("toggle above projects: ", index, add);
     let aboveProjects = projectDisplays.slice(0, index - 1)
     aboveProjects.forEach(element => {
-        console.log("hide");
         if (add.shouldShow === true){
             element.hide();
         }else{
