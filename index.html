@@ -53,11 +53,11 @@
         <!--shows coins-->
     </canvas>
     <div class="sidebar">
-        <a href="" title="Home"  class="logo" id="home-icon">
-            <img src="components/art/ttc coin icon.png" alt="Coin logo" class="nice-button" draggable="false">
+        <a href="" title="Home"  class="logo" id="home-icon" draggable="false">
+            <img src="components/art/ttc coin icon.png" alt="Coin logo" class="nice-button">
         </a>
-        <button id="dropdown-button" class="toggle-dropdown">
-            <img class="toggle-dropdown--img nice-button" src="components/art/yellow - toggle arrow up.png" alt="" id="toggle-button" draggable="false">
+        <button id="dropdown-button" class="toggle-dropdown" draggable="false">
+            <img class="toggle-dropdown--img nice-button" src="components/art/yellow - toggle arrow up.png" alt="" id="toggle-button">
         </button>
         <div class="dropdown">
             <ul class="dropdown--list">
@@ -79,14 +79,27 @@
     <div class="main-content main-font">
         <div id="welcome" class="welcome">
             <div class="welcome--demo">
-                <div class="code-lines welcome--demo--input">
-
+                <div class="code-lines welcome--demo--input" id="welcome--demo--input">
+                    <pre class="code-highlight" name="pretty-pre"><code class="main-font language-python welcome--demo--input--text" name="pretty-code" id="code-content">print('learn code')</code></pre>
                 </div>
 
-                <img class="welcome--demo--arrow" src="./components/art/arrow.png" alt="-->">
-                <a href="learn" title="Learn" class="welcome--demo--learn">
-                    <button class="welcome--demo--learn-button"><img class="nice-button" src="./components/art/clean icon - 10.png" alt="learn"></button>
-                </a>
+                <style>.row-container{display: flex; flex-direction: row; justify-content: center;}</style>
+
+                <div class="row-container">
+                    <button class="run-code welcome--demo--output-button nice-button" id="welcome--demo--output-button"><img class="welcome--demo--output-img" src="./components/art/play button - 1.png" alt="" draggable="false"></button>
+                    <div class="code-lines welcome--demo--output">
+                        <div class="welcome--demo--output--text" id="welcome--demo--output--text"></div>
+                    </div>
+                </div>
+
+                <div class="row-container">
+                    <img class="welcome--demo--arrow welcome-img" src="./components/art/arrow.png" alt="-->" draggable="false">
+                    <a href="learn" title="Learn" class="welcome--demo--learn">
+                        <style>.pad-top-30{padding-top: 30px;}</style>
+                        <button class="welcome--demo--learn-button pad-top-30" draggable="false"><img class="nice-button welcome-img" src="./components/art/clean icon - 10.png" alt="learn"></button>
+                    </a>
+                </div>
+                
             </div>
             <!--div class="welcome--sign-in">
                 <a href="#signin" title="Learn">

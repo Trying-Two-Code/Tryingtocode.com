@@ -63,6 +63,12 @@ export class CodeArea{
             return this.textarea.value.substring(0, start) + text + this.textarea.value.substring(end);
         }
 
+        let getCharacter = (relativeIndex=1) => {
+            let start = this.textarea.selectionStart;
+            let end = this.textarea.selectionEnd;
+            return this.textarea.value.substring(start, end + relativeIndex);
+        }
+
         let changeEnter = (event) => {
             event.preventDefault();
             //if ctr+enter
@@ -96,13 +102,23 @@ export class CodeArea{
             this.createPrettyCode(this.prettyCode, this.textarea.value);
         }
 
-        let changePairs = (event) => {
+        let isPair = (string) => {
             let brackets = {'(' : ')', '[' : ']', '{' : '}'};
             let pairs = {'"': '"', "'": "'", "`": "`", ...brackets};
 
             let beginPairs = Object.keys(pairs);
 
-            if(beginPairs.includes(event.key)){
+            return [beginPairs.includes(string), pairs[string]];
+        }
+
+        let changePairs = (event) => {
+            let brackets = {'(' : ')', '[' : ']', '{' : '}'};
+            let pairs = {'"': '"', "'": "'", "`": "`", ...brackets};
+
+            let nextCharacter = getCharacter(1);
+            let goodNextCharacter = nextCharacter.includes(" ") || nextCharacter.includes("\n") || nextCharacter == "";
+
+            if(isPair(event.key)[0] && goodNextCharacter){
                 event.preventDefault();
                 let start = this.textarea.selectionStart;
                 
@@ -133,6 +149,16 @@ export class CodeArea{
                 let focusOn = this.project.runButton;
                 console.log(focusOn);
                 focusOn.focus();
+            }
+            if(event.key === "Backspace"){
+                if(isPair(getCharacter(-1)[0])){
+                    console.log(isPair(getCharacter(-1)), getCharacter(1))
+                    if(isPair(getCharacter(-1))[1] == getCharacter(1)){
+                        this.textarea.selectionStart -= 1;
+                        this.textarea.selectionEnd += 1;
+                        appendToTextarea("");
+                    }
+                }
             }
 
             changePairs(event);

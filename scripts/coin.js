@@ -33,7 +33,7 @@ printCoins();
 
 let collectCoin = (coinElement, worth=1) => {
     objects = objects.filter(e => e !== coinElement);
-    incrimentDisplayNumber(worth);
+    if (worth > 0) {incrimentDisplayNumber(worth)};
 }
 
 let drawAll = (sizeX=300, sizeY=300) => {

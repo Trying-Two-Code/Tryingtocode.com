@@ -37,7 +37,7 @@
     --space-2: 4rem;
     --space-3: 3rem;
 
-	--inner-box-color: #0009;
+	--inner-box-color: rgba(105, 105, 100, 0.26);
 
 	--welcome-z-index: 5;
 
@@ -103,6 +103,12 @@ body {
 		var(--shadow-size) var(--shadow-size) 0 #000;
 }
 
+.welcome-img {
+	width: var(--image-size-1);
+	height: var(--image-size-1);
+	image-rendering: pixelated;
+}
+
 /*------------------------------------*\
     #WELCOME
 \*------------------------------------*/
@@ -110,6 +116,8 @@ body {
 	--shadow-size: 4px;
 
     display: flex;
+
+	justify-content: center;
 
 	text-align: center;
 	color: white;
@@ -124,6 +132,8 @@ body {
 
 .welcome > * {
 	z-index: var(--welcome-z-index);
+
+	outline: #000b solid 2px;
 }
 
 .welcome--demo {
@@ -146,33 +156,54 @@ body {
 }
 
 .welcome--demo--input {
+	margin-block: 10px;
+	outline: #000b solid 5px;
+	border-radius: 3px;
+}
 
-	--width: 50%; /*setting as a variable for extra references later on*/
+.welcome--demo--input--text {
+	display: flex;
 
-	width: var(--width); 
-	height: var(--line-width); 
+	flex-direction: row;
+
+}
+
+.welcome--demo--output, .welcome--demo--input {
+	display: flex;
+	align-items: center;
+
+	height: var(--line-width);
 	--line-width:100px;
+	min-width: 300px;
 
+	padding-inline: 20px;
+}
+
+.welcome--demo--output-img {
+	padding-inline: 30px;
+	--scale: 3;
+
+	width: calc(var(--line-width) * var(--scale));
+	height: calc(var(--line-width) * var(--scale));
 }
 
 .welcome--demo--learn {
 	box-sizing: border-box;
 }
 
-.welcome--demo--learn-button {
+.welcome--demo--learn-button, .welcome--demo--output-button {
 	background-color: #0000;
 	border-color: #0000;
 
+	image-rendering: pixelated;
+}
+
+.welcome--demo--learn-button {
 	width: var(--image-size-1);
 	height: var(--image-size-1);
 }
 
 .welcome--demo--learn-button > * { width: inherit; height: inherit; }
-
-.welcome--demo--arrow {
-	image-rendering: pixelated;
-	width: 10%;
-}
 
 /*------------------------------------*\
     #SIGN IN

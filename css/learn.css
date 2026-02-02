@@ -55,10 +55,10 @@
 .gone {
     max-height: 0px !important;
     flex: 0 0 0 !important;
-    padding: 0;
+    padding-block: 0;
+    padding-inline: 10px;
     margin: 0;
     border: 0;
-    pointer-events: none;
     overflow: hidden;
 }
 
@@ -98,6 +98,10 @@
     opacity: 1;
 }
 
+.project.gone:hover{
+    outline: rgba(68, 136, 255, 0.616) solid 5px;
+}
+
 /*------------------------------------*\
     #PROJECT-BOX
 \*------------------------------------*/
@@ -127,6 +131,8 @@
     overflow: hidden;
     display: block;
     flex: 1 1 100%;
+
+    border: #060c169d solid 5px;
 }
 
 #project-parent {

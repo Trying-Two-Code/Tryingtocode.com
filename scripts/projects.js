@@ -14,12 +14,12 @@ let htmlGen =
             <div class="close-restart">
                 <div class="button">
                     <button class="project-close-button project-button" title="close project">
-                        <img style="width: 30px; height: 30px;" id="close-img" src='./components/art/close button 1.png' class="nice-button">
+                        <img style="width: 30px; height: 30px;" id="close-img" src='./components/art/x.png' class="nice-button">
                     </button>
                 </div>
                 <div class="button">
                     <button class="project-restart-button project-button" title="reset code to defualt">
-                        <img style="width: 30px; height: 30px;" id="reset-img" src="./components/art/rewind icon - stroke.png" class="nice-button">
+                        <img style="width: 30px; height: 30px;" id="reset-img" src="./components/art/reload - 3.png" class="nice-button">
                     </button>
                 </div>
             </div>
@@ -27,7 +27,7 @@ let htmlGen =
             <p class="project-title" id="project-title">Hello World Project:</p>
             <div class="button project-hint-button">
                 <button class="project-hint-button project-button" title="get hint if stuck">
-                    <img style="width: 50px; height: 50px;" id="hint-img" src="./components/art/hint.png" class="nice-button">
+                    <img style="width: 50px; height: 50px;" id="hint-img" src="./components/art/clue - 5.png" class="nice-button">
                 </button>
             </div>
             <dialog class="main-font hint-popup hide" open>404</dialog>
@@ -65,14 +65,7 @@ export class Display {
     initializeDisplay(){
         this.findElements(); 
 
-        let toggleEvent = async () => {
-            if (this.projectEl.classList.contains('mini')) {
-                this.countTimeOpen();
-                this.toggleElements(true);
-            }
-        }
-
-        this.projectEl.addEventListener('click', toggleEvent);
+        this.initializeMinimizationFeatures();
 
         this.initButtons();
 
@@ -85,9 +78,80 @@ export class Display {
         this.countTimeOpen();
     }
 
+    toggleOtherProjects(details = {index: this.projectIndex, toIndex: -1, gone: false, mini: true}){
+        let toggleEvent = new CustomEvent("closeMe", {detail: details});
+        window.dispatchEvent(toggleEvent);
+    }
+
+    openOtherProject(details = {openIndex: 0}){
+        let toggleEvent = new CustomEvent("openMe", {detail: details});
+        window.dispatchEvent(toggleEvent);
+    }
+
+    initializeMinimizationFeatures(){
+        //close others down
+        let makeProjectsGone = () => {
+            this.toggleOtherProjects({index: this.projectIndex, toIndex: -1, gone: true, mini: true})
+        }
+
+        let minimizeBelowCurrentDisplay = () => {
+            if(typeof window.currentDisplay !== "undefined"){
+                this.toggleOtherProjects({index: window.currentDisplay.projectIndex, toIndex: this.projectIndex, gone: false, mini: true});
+
+                window.currentDisplay.minimize({mini: true, gone: false});
+            }
+        }
+
+        //open me up
+        let toggleEvent = (element) => {
+            if (element.projectEl.classList.contains('mini') || element.projectEl.classList.contains('gone')) {
+                element.countTimeOpen();
+
+                minimizeBelowCurrentDisplay();
+                makeProjectsGone();
+
+                this.minimize({mini: false, gone: false});
+
+                window.currentDisplay = element;
+            }
+        }
+
+        let toggleMe = () => {toggleEvent(this);}
+
+        this.projectEl.addEventListener('click', toggleMe);
+
+        //open others up
+        window.addEventListener("openMe", data => {
+            let detail = data.detail;
+
+            if(this.projectIndex == detail.openIndex){
+                toggleEvent(this);
+            }
+
+            window.currentDisplay = this;
+        });
+
+
+        //close me down
+        window.addEventListener("closeMe", data => {
+            let myIndex = this.projectIndex;
+
+            let detail = data.detail;
+
+            let withinRange = detail.index > myIndex && myIndex > detail.toIndex;
+
+            if(withinRange) {
+                console.trace(detail, " is index and mine is: ", this.projectIndex);
+                this.minimize({mini: detail.mini, gone: detail.gone});
+            }
+        })
+    }
+
     initButtons(){
-        let closeButtonEvent = (e) => {e.stopPropagation(); this.toggleElements(false);}
-        let nextButtonEvent = () => {this.openProject(1);}
+        let closeButtonEvent = (e) => {e.stopPropagation(); this.toggleOtherProjects(); this.minimize({mini: true, gone: false});}
+        let nextButtonEvent = (e) => {
+            e.stopPropagation(); this.openProject(1);
+        }
         let rewindButtonEvent = () => {this.codeArea.createText(this.projectJSON.code);}
         let hintButtonEvent = () => {this.toggleHint();}
 
@@ -120,7 +184,8 @@ export class Display {
     openProject(relativeIndex=0){ //open the next project: relativeIndex=1
         //if(relativeIndex == 0) {/* do not change index */ return; }
         console.log("change project bro");
-        var changeOpenProject = new CustomEvent("changeOpen", {detail: {relativeIndex: relativeIndex, index: this.projectIndex}});
+        this.openOtherProject({openIndex: this.projectIndex + relativeIndex});
+        var changeOpenProject = new CustomEvent("closeMe", {detail: {index: this.projectIndex, toIndex: -1, gone: true, mini: false}});
         window.dispatchEvent(changeOpenProject);
     }
 
@@ -181,49 +246,32 @@ export class Display {
                     resolve(this.output.value.slice(this.old.length));
                 }
                 if(e.key === "Backspace"){
-                    
+                    //***
                 }
             }
             this.output.addEventListener("keydown", handler);
         });
     }
 
+    minimize(values = {mini: true, gone: false}){ // true = stop showing this project 
+        let changeClass = (change, value=false) => {
+            this.projectEl.classList.toggle(change, value);
+        }
 
-    toggleElements(value=false){ // false = stop showing this project
-        window.currentDisplay = this;
-        
-        this.editClass("mini", !value);
-        this.canRun = value;
-        this.rewindButton.disabled = !value;
+        changeClass("mini", values.mini); //makes projects small
+        changeClass("gone", values.gone); //makes projects turn into TINY squares (see learn.css)
 
-        if(!value) this.toggleHint(undefined, true);
-        
-        this.projectEl.dispatchEvent(
-            new CustomEvent('toggleElements', {
-                detail: { shouldShow: !this.projectEl.classList.contains("mini") }
+        let detectCanRun = () => {
+            if(values.mini || values.gone){
+                //project should be disabled..
+                this.canRun = false;
+            } else {
+                //the project is totally open...
+                this.canRun = true;
             }
-        ));
-    }
+        }
 
-    minimize(element=this){ //make small
-        element.editClass("gone", false);
-        element.editClass("mini", true);
-        element.editClass("gone-anim-over", false);
-        element.toggleHint(element.hintPopup, true);
-    }
-
-    hide(element=this){ //make totally invisible
-        element.editClass("gone", true);
-        element.editClass("mini", true);
-        element.toggleHint(element.hintPopup, true);
-    }
-
-    editClass(className, set=undefined){
-        this.projectEl.classList.toggle(className, set);
-    }
-
-    toggleClass(className, element){
-        element.classList.toggle(className);
+        detectCanRun();
     }
 
     async displayUserCode(code){

@@ -266,8 +266,6 @@ let userMade = (user) => {
 let firstBlankProject = true;
 
 export let setupProject = (projectDisplay, projectTitle) => {
-    
-
     let setProjCode = (code, projectDisplay) => {
         if(code != null) {
             projectDisplay.codeArea.createText(code);

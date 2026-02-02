@@ -28,7 +28,7 @@ let isBlank = (value, extraBlank=undefined) => {
 //RESET STATS DEBUG
 document.addEventListener("keydown", (event) => {
     if(!event.ctrlKey){ return;}
-    if((event.key === 'q' || event.key === 'Q')){
+    if((event.key === 'y' || event.key === 'Y')){
         window.resetStats().then(() => {
             window.location.reload();
         });
@@ -54,7 +54,7 @@ window.addEventListener("user_set", async () => {
 });
 
 let goToTop = () => {
-    console.error("FIX THIS, make it maintainable, and look at phone when it's sideways... bleck!");
+    console.warn("FIX THIS, make it maintainable, and look at phone when it's sideways... bleck!");
     if(window.innerWidth < 600){
         window.scrollTo({top: 160, left: 0, behavior: "smooth"});
     } else{
@@ -62,16 +62,13 @@ let goToTop = () => {
     }
 }
 
-let toggleAboveProjects = (index, add) => {
-    console.log("toggle above projects: ", index, add);
-    let aboveProjects = projectDisplays.slice(0, index - 1)
-    aboveProjects.forEach(element => {
-        if (add.shouldShow === true){
-            element.hide();
-        }else{
-            element.minimize();
-        }
-    });
+let toggleProject = (element) => {
+    //***
+}
+
+let toggleAboveProjects = (index) => {
+    //***
+
     goToTop();
 }
 
@@ -100,24 +97,6 @@ window.addEventListener('correctCode', (details) => {
     console.log(details.detail.value);
 });
 
-let openProjectAtIndex = index => {
-    if(projectDisplays[index]){
-        toggleAboveProjects(index, {shouldShow: false});
-        console.log(projectDisplays[index]);
-        projectDisplays[index].toggleElements(true);
-    }
-}
-
-//this allows the next project button to work
-window.addEventListener('changeOpen', (details) => { //details requires relativeIndex (0 for no change), currentIndex (index of currently open project)
-    let relativeIndex = details.detail.relativeIndex;
-    let currentIndex = details.detail.index;
-    let newIndex = relativeIndex + currentIndex - 1; //-1 because of indexs starting at 0 vs projects starting at 1
-
-    openProjectAtIndex(newIndex);
-});
-
-
 const loadJSON = async (section="projects") => {
     const response = await fetch('../python-projects.json');
     const json = await response.json();
@@ -132,14 +111,9 @@ let checkCompletion = (title, userData=null) => {
     }
 }
 
-let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON, userData) => {
-
+let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON, userData, lastDisplayNumber=0) => {
     let display = new Display(document, PROJECT_PARENT, JSON, projectIndex);
     setupProject(display, display.title.innerHTML);
-
-    display.projectEl.addEventListener('toggleElements', (shouldShow) => {
-        toggleAboveProjects(projectIndex, shouldShow.detail);
-    });
 
     display.setupTextarea();
 
@@ -156,10 +130,10 @@ let loadProjectsFunction = async (projectsList, section="projects") => {
     let projectList = [];
 
     for (let item of projectsList){
-        projectIndex++;
-        let new_project = loadProject(item[0], DEFAULT_REWARD, projectIndex, JSON[projectIndex], userData);
+        let new_project = loadProject(item[0], DEFAULT_REWARD, projectIndex, JSON[projectIndex + 1], userData, projectList.length);
         let proj_display = new_project;
         projectList.push(new_project);
+        projectIndex++;
     }
     
     return projectList;

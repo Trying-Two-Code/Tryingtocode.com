@@ -34,10 +34,10 @@ let indexGetCoin = (amm) => {
 
 let nice = () => {indexGetCoin(10);}
 
-let runCode = document.getElementById('welcome--run-code');
-let outputBox = document.getElementById("welcome--learn-div--output")
+let runCode = document.getElementById('welcome--demo--output-button');
+let outputBox = document.getElementById("welcome--demo--output--text")
 let codeContent = document.getElementById('code-content');
-codeContent = "print('learn code')"
+codeContent = `print('learn code')`;
 
 runCode.addEventListener("click", nice);
 runCode.addEventListener("click", () => {runCode.removeEventListener("click", nice); });
