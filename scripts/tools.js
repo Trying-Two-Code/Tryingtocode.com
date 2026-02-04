@@ -1,8 +1,6 @@
 //used for things such as sign in toggle button, and sidebar toggle
 export class Toggle{
     constructor(toggleButton, effectedElements, primaryClass, secondaryClass=null, transitionedElement=null, animatedElement=null){
-        console.log("made");
-        
         this.effectedElements = ensureArray(effectedElements);
         this.primaryClass = primaryClass;
         this.secondaryClass = secondaryClass;

@@ -1,13 +1,100 @@
 window.languagePluginUrl = 'https://cdn.jsdelivr.net/pyodide/v0.28.2/full/';
 
-let pyodide = await loadPyodide();
-pyodide.globals.set("input", getInput);
+let interruptBuffer = new Uint8Array(new SharedArrayBuffer(1));
+
+let inputBuffer = new SharedArrayBuffer(1024);
+let inputReady  = new Int32Array(inputBuffer, 0, 1) //32 bits is 4 bytes
+let inputData   = new Uint8Array(inputBuffer, 4);
+
+const worker = new Worker(new URL('./pyrun-worker.js', import.meta.url), {type: "module"});
+worker.onerror = (error) => {
+    console.error(error);
+}
+
+worker.postMessage({ cmd: "setInterruptBuffer", interruptBuffer });
+worker.postMessage({ cmd: "initInputBuffer", inputBuffer });
+
+worker.postMessage({ cmd: "nothing, this is only here in order to make SURE that the worker has loaded stuff, because otherwise users will have to wait a whilllle" });
+
+function interruptExecution() {
+  // 2 stands for SIGINT.
+  interruptBuffer[0] = 2;
+}
 
 let awaitRunPython = async (python) => {
     // Create a fresh namespace
+    // Clear interruptBuffer in case it was accidentally left set after previous code completed.
+    interruptBuffer[0] = 0; 
+
+    //run
+    var data = new Promise((resolve, reject) => {
+        worker.postMessage({ cmd: "awaitPyrun", python: python });
+
+        worker.onmessage = async (message) => {
+            if (message.data.cmd === "input") {
+                await getInput(message.data.promptText || "");
+                return;
+            }
+
+            resolve([true, message.data]);
+        } 
+
+        worker.onerror = (error) => reject([false, error]);
+    });
+
+    //get result
+    var result = await data;
+
+    //async processing
+    if(typeof result.cmd !== "undefined"){
+        if(result.cmd == "input"){
+            playerInput = await getInput();
+            worker.postMessage({cmd: "passInput", playerInput: playerInput});
+            result = null;
+        }
+    }
+    
+    
+
+    //allow inputn
+    if (currentDisplay !== null) {
+        
+        //pyodide.globals.set("input", getInputFilled);
+    }
+
+    console.log("waiting...", data);
+    console.log(result);
+    console.log("result of running the code: ", result);
+    return result;
     let NAMESPACE = pyodide.globals.get("dict")(); 
-    return await pyodide.runPythonAsync(python, { globals: NAMESPACE })
+    return await pyodide.runPythonAsync(python, { globals: NAMESPACE });
 }
+
+const sendInputToWorker = async (input) => {
+    const encoder = new TextEncoder();
+    encoder.encodeInto(input, inputData);
+    Atomics.store(inputReady, 0, 1);
+    Atomics.notify(inputReady, 0);
+}
+
+const getInput = async (promptText = "", currentDisplay=window.currentDisplay) => {
+    if(currentDisplay.output) {
+        currentDisplay.output.value += promptText;
+        currentDisplay.output.value += "\n";
+    }
+
+    console.log(currentDisplay);
+    console.log("gonna get input");
+
+    let input = await currentDisplay.getInput();
+    
+
+    await sendInputToWorker(userInput);
+
+    interruptBuffer[0];
+    return input;
+}
+
 
 export async function runUserCode(code){
     try{
@@ -21,7 +108,7 @@ export async function runUserCode(code){
     if(isAsync){
         code = makeAsync(code);
     }
-    let pyrunOutput = await pyRun(code);
+    let pyrunOutput = await awaitRunPython(code);
     console.log("GO HERE", pyrunOutput);
     return pyrunOutput;
 } 
@@ -33,7 +120,7 @@ let printTree = async (code) => {
     console.log(tree);
     return tree;
 }
-
+/*
 async function simplePyRun(code){
     let output = [];
     for (let line of code.split("\n")){
@@ -41,6 +128,7 @@ async function simplePyRun(code){
     }
     return output;
 }
+*/
 
 let checkBody = (body, functionName) => {
     let elements = [];
@@ -105,7 +193,7 @@ asyncio.run(_SUPERMAIN())
 }
 
 
-
+/*
 async function pyRun(code){
     try{
         //I need to await jsInput if an input is required before continuing:
@@ -158,20 +246,8 @@ async function pyRun(code){
     console.log("the impossible just happened!!!?")
     return false;
 }
+*/
 
-async function getInput(promptText = ""){
-
-    if(window.currentDisplay.output) {
-        window.currentDisplay.output.value += promptText;
-        window.currentDisplay.output.value += "\n";
-    }
-
-    console.log(window.currentDisplay);
-    console.log("gonna get input");
-
-    let inp = await window.currentDisplay.getInput();
-    return inp;
-}
 
 export async function getTree(code){
     let tree = await awaitRunPython(
@@ -195,8 +271,4 @@ json.dumps(tree)
     );
     tree = JSON.parse(tree);
     return tree;
-}
-
-async function serverRun(code){
-    //new code here
 }

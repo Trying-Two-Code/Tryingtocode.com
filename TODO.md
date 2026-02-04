@@ -11,20 +11,15 @@ Hey developer! Read these to know what you should fix:
 
 ]
 
-
-- phones have squished coins | help phone support | coins and some icons are blurry
+- make input() work https://www.npmjs.com/package/sync-message
 - 2
 - TTC
 
-- make input() work https://www.npmjs.com/package/sync-message
-- 5
-- TTC
-
-- save system needs to be cleaned up
-- 5
-- TTC
-
 - make curriculum lists
+- 4
+- TTC
+
+- make a focus button that rewards users for focusing
 - 6
 - TTC
 
@@ -36,7 +31,7 @@ Hey developer! Read these to know what you should fix:
 - 7
 - TTC
 
-- make a focus button that rewards users for focusing
+- save system needs to be cleaned up
 - 8
 - TTC
 

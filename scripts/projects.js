@@ -315,13 +315,15 @@ export class Display {
 
         if(!output[0]){
             //there was an error
+            console.log(output);
             console.error("player code incorrect");
             return false;
         }
 
         let json = this.projectJSON;
-        console.log(json, output[1]);
+        console.log(json, output);
         
+        console.log(output[1]);
         correctCode = isCorrectCode(value, json, output[1]).then((passed) => {
             playerCorrect(passed, this);
         });

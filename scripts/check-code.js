@@ -87,12 +87,12 @@ export let checkInclusion = (parts, whole) => {
 }
 
 export let isCorrectCode = async (code, json, output) => {
-    let tree = await getTree(code);
+    //let tree = await getTree(code);
 
     let expectedOutput = [json['output-includes'], json['output-discludes']];
     let expectedCode = [json['code-includes'], json['code-discludes']];
 
-    console.log(code, tree);
+    //console.log(code, tree);
 
     let OutpuIncluded = checkInclusion(output, expectedOutput[0], expectedOutput[1]);
     let OutpuDiscluded = !checkInclusion(output, expectedOutput[1], expectedOutput[0]);
