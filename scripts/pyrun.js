@@ -108,6 +108,7 @@ export async function runUserCode(code){
     if(isAsync){
         code = makeAsync(code);
     }
+    
     let pyrunOutput = await awaitRunPython(code);
     console.log("GO HERE", pyrunOutput);
     return pyrunOutput;

@@ -76,49 +76,7 @@ export class Display {
         this.countTimeOpen();
     }
 
-    toggleOtherProjects(details = {index: this.projectIndex, toIndex: -1, gone: false, mini: true}){
-        let localToggleEvent = new CustomEvent("closeMe", {detail: details});
-        window.dispatchEvent(localToggleEvent);
-    }
-
-    openOtherProject(details = {openIndex: 0}){
-        let localToggleEvent = new CustomEvent("openMe", {detail: details});
-        window.dispatchEvent(localToggleEvent);
-    }
-
-    toggleEvent(element) {
-
-        //close others down
-
-        let makeProjectsGone = () => {
-            console.log("for myself I'm going from ", -1, " to ", this.projectIndex);
-            this.toggleOtherProjects({index: this.projectIndex, toIndex: -1, gone: true, mini: true})
-        }
-
-        let minimizeBelowCurrentDisplay = () => {
-            if(typeof window.currentDisplay !== "undefined"){
-                this.toggleOtherProjects({index: window.currentDisplay.projectIndex, toIndex: this.projectIndex, gone: false, mini: true});
-                console.log("this is the message I sent out for current display since current display is lazy....");
-                console.log("from all displays from ", window.currentDisplay.projectIndex, " to ", this.projectIndex, " and they are mini now.");
-                window.currentDisplay.minimize({mini: true, gone: false});
-            }
-        }
-
-        //open me up
-
-        if (element.projectEl.classList.contains('mini') || element.projectEl.classList.contains('gone')) {
-            element.countTimeOpen();
-
-            minimizeBelowCurrentDisplay();
-            makeProjectsGone();
-
-            this.minimize({mini: false, gone: false});
-        
-            console.log("set current display");
-            window.currentDisplay = this;
-        }
-
-    }
+    
 
     initializeMinimizationFeatures(){
 
@@ -183,13 +141,11 @@ export class Display {
     }
 
     openProject(relativeIndex=0){ //open the next project: relativeIndex=1
-        //if(relativeIndex == 0) {/* do not change index */ return; }
         this.openOtherProject({openIndex: this.projectIndex + relativeIndex});
         var changeOpenProject = new CustomEvent("closeMe", {detail: {index: this.projectIndex, toIndex: -1, gone: true, mini: false}});
         window.dispatchEvent(changeOpenProject);
 
         if(relativeIndex == 0) {
-            console.log("set current display");
             window.currentDisplay = this;
         }
     }
@@ -211,7 +167,7 @@ export class Display {
         const query = (className) => {return this.projectEl.querySelector(className);}
 
         this.runButton = query('.run-code');
-        this.output = query('[name="output"]');
+        this.output = query('.output');
         this.textarea = this.codeArea.textarea;
         this.lineNumbers = query(".line-numbers");
         this.closeButton = query(".project-close-button");
@@ -256,6 +212,46 @@ export class Display {
             }
             this.output.addEventListener("keydown", handler);
         });
+    }
+    toggleOtherProjects(details = {index: this.projectIndex, toIndex: -1, gone: false, mini: true}){
+        let localToggleEvent = new CustomEvent("closeMe", {detail: details});
+        window.dispatchEvent(localToggleEvent);
+    }
+
+    openOtherProject(details = {openIndex: 0}){
+        let localToggleEvent = new CustomEvent("openMe", {detail: details});
+        window.dispatchEvent(localToggleEvent);
+    }
+
+    toggleEvent(element) {
+        //close others down
+        let makeProjectsGone = () => {
+            this.toggleOtherProjects({index: this.projectIndex, toIndex: -1, gone: true, mini: true})
+        }
+        let makeDisplayGone = () => {
+            this.toggleOtherProjects({index: window.currentDisplay.projectIndex, toIndex: this.projectIndex, gone: false, mini: true});
+            window.currentDisplay.minimize({mini: true, gone: false});
+        }
+
+        let minimizeBelowCurrentDisplay = () => {
+            if(typeof window.currentDisplay !== "undefined"){
+                makeDisplayGone();
+            }
+        }
+
+        //open me up
+        if (element.projectEl.classList.contains('mini') || element.projectEl.classList.contains('gone')) {
+            element.countTimeOpen();
+
+            minimizeBelowCurrentDisplay();
+            makeProjectsGone();
+
+            this.minimize({mini: false, gone: false});
+        
+            console.log("set current display");
+            window.currentDisplay = this;
+        }
+
     }
 
     minimize(values = {mini: true, gone: false}){ // true = stop showing this project 
@@ -315,15 +311,12 @@ export class Display {
 
         if(!output[0]){
             //there was an error
-            console.log(output);
             console.error("player code incorrect");
             return false;
         }
 
         let json = this.projectJSON;
-        console.log(json, output);
-        
-        console.log(output[1]);
+
         correctCode = isCorrectCode(value, json, output[1]).then((passed) => {
             playerCorrect(passed, this);
         });
@@ -333,9 +326,10 @@ export class Display {
 
 function rewardPlayer(display){
     if(display.reward !== 0 && display.reward !== null){
+        const defaultReward = 5;
         correctCode = new CustomEvent("correctCode", {
             detail: {
-                value: (display.reward !== undefined) ? display.reward : 5
+                value: (display.reward !== undefined) ? display.reward : defaultReward
             }
         });
             
@@ -346,7 +340,7 @@ function rewardPlayer(display){
 }
 
 let playerCorrect = (passed, display) => {
-    if(passed && output[0]){
+    if(passed){
         rewardPlayer(display);
         display.nextButton.classList.add("glow");
     }

@@ -1,5 +1,5 @@
 /*
-NOT WORKING, POTENTIALLY WORK ON LATER.
+NOT WORKING, POTENTIALLY WORK ON LATER. (meant to send stuff to the server, workers should be fine as an alternative)
 
 const functions = require("firebase-functions");
 const { spawn } = require("child_process");

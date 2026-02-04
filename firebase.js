@@ -120,10 +120,53 @@ let defaultValues = {
     coins: 0,
     projects: {}
 };
+/*
+export let setUserDatapointWithObject = async (payload = {/*email, displayname, coins, projects* /}) => {
+    if (!window.user) return console.warn("No user yet");
+
+    let isEmpty = (object={}) => {
+        if(object.length == 0 || object == null){
+            return true;
+        }
+        return false;
+    }
+
+    if(isEmpty(payload)){
+        console.error("that is silly, it ain't a thing");
+        return false;
+    }
+
+    console.log("setting data...", payload);
+
+    const userRef = doc(db, "users", window.user.uid);
+    await updateDoc(userRef, payload);
+}*/
 
 export let setUserDatapoint = async (email=null, displayName=null, coins=null, projects=null) => {
-    //This sets the user data to the defualt values above **unless they are nothing** (projects is weird though)
 
+    //BE CAREFUL! DON'T DELETE THIS UNTIL YOU'RE SURE IT'S WORSE
+    /*if (!window.user) return console.warn("No user yet");
+
+    let payload = {};
+
+    let addIfNotNull = (name, property) => {
+        if(property != null) {
+            payload[name] = property;
+        }
+    }
+
+    addIfNotNull("email", email);
+    addIfNotNull("displayName", displayName);
+    addIfNotNull("coins", coins);
+    addIfNotNull("projects", projects);
+
+    setUserDatapointWithObject({
+        payload
+    })*/
+    //(what about moving people from anon into sign in? Wait until sign in is good.)
+
+    //This sets the user data to the defualt values above **unless they are nothing** (projects is weird though)
+    
     if (!window.user) return console.warn("No user yet");
 
     console.log("saving...");
@@ -190,7 +233,7 @@ export let setUserDatapoint = async (email=null, displayName=null, coins=null, p
 
     let d = await getUserData();
     console.log(d);
-
+    
 }
 
 export let increaseCoins = async (byAmmount=5) => {
@@ -208,7 +251,7 @@ const isObjectEmpty = (obj) => {
     return obj == null || (Object.keys(obj).length === 0 && obj.constructor === Object);
 };
 
-let mergeObjects = (object1, object2) => { //projectList2 gets priority over projectList1
+let mergeObjects = (object1, object2) => { //object2 gets priority over object1
     let theChosenOneAhhhh = (isObjectEmpty(object1) ? object2 : object1);
 
     if(isObjectEmpty(object1) || isObjectEmpty(object2)) { return theChosenOneAhhhh; } //return one if the other is null

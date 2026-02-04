@@ -17,6 +17,14 @@
       {
         "source": "/create",
         "destination": "/create.html"
+      },
+      {
+        "source": "/",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/",
+        "destination": "/index.html"
       }
     ] 
   },

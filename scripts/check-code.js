@@ -1,7 +1,3 @@
-import { getTree } from "./pyrun.js";
-
-
-
 function isString(variable) {
   return typeof variable === 'string';
 }
@@ -12,34 +8,6 @@ export let normalizeText = (text) => { /* make text similar to allow flexible pl
         normalizedText = text.toLowerCase().replaceAll(" ", "").replaceAll("'", `"`).replaceAll("\t", "");
     }
     return normalizedText;
-}
-
-let scanLines = (lines, forThis, nullValue="*") => { /*detects if forThis is in lines*/
-    //lines must be a list
-    if(!Array.isArray(lines)){return;}
-    //forThis has to be something
-    if(forThis == null || forThis == nullValue){return;}
-
-    lines.forEach(element => {
-        for (let lines = 0; lines < array.length; lines++) {
-            const element = array[lines];
-            if(element.contains(forThis)){
-                return true;
-            }
-        }
-    });
-}
-
-console.log("change the name of this function");
-export let AAAcheckInclusion = (user, expected) => {
-    const BLANK = "*";
-
-    if(expected == BLANK){return}
-
-    let lineSplit = "\n";
-    let userLines = user.split(lineSplit);
-
-    let contains = scanLines(userLines, expected);
 }
 
 export let checkInclusion = (parts, whole) => {
