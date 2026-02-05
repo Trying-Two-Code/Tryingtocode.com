@@ -12,7 +12,7 @@
             "hint": ""
         },
         "1": {
-            "title": "Run 1",
+            "title": "Run",
             "code": "print('you did it!')",
             "instruction": "press the green arrow button at the bottom",
             "output-includes": "you did it!",
@@ -34,7 +34,7 @@
             "hint": "You can edit the code (the text on the left)."
         },
         "3": {
-            "title": "Run 2",
+            "title": "Comment",
             "code": "this shouldn't show anything",
             "instruction": "Add a # to the beginning of line 1",
             "output-includes": "*",
@@ -53,7 +53,7 @@
             "code-includes": "print('hello world')&&&print('hello world')",
             "code-discludes": "*",
             "failure-shows": "",
-            "hint": "' matters"
+            "hint": "line numbers (the numbers on the far left) don't matter"
         },
         "5": {
             "title": "Print 1",
@@ -64,11 +64,11 @@
             "code-includes": "*",
             "code-discludes": "*",
             "failure-shows": "(check the last lesson)",
-            "hint": "Here is an example: print('bye')"
+            "hint": "print('TEXT HERE')"
         },
         "6": {
             "title": "Variable 1",
-            "code": "x = 1\n",
+            "code": "x = 1",
             "instruction": "make x equal 2",
             "output-includes": "*",
             "output-discludes": "*",
@@ -79,21 +79,21 @@
         },
         "7": {
             "title": "Print 2",
-            "code": "x = 1\nprint(x)\n\n\ny = 2\nprint()",
+            "code": "x = 1\nprint(x)\n\n\ny = 2\nprint() # <- change this line",
             "instruction": "print y",
             "output-includes": "2",
             "output-discludes": "*",
             "code-includes": "print(y)&&&y=",
             "code-discludes": "*",
             "failure-shows": "*",
-            "hint": "x is being printed"
+            "hint": "x is an example"
         },
         "8": {
             "title": "If then",
-            "code": "if(1 == 1):\n\tprint('1 is equal to 1')",
+            "code": "if(1 == 1):\n\tprint(\"don't print this\")",
             "instruction": "Make the if statement: if(1 == 2)",
             "output-includes": "*",
-            "output-discludes": "1 is equal to 1",
+            "output-discludes": "don't print this",
             "code-includes": "1 ==",
             "code-discludes": "1 == 1",
             "failure-shows": "*",
@@ -101,14 +101,14 @@
         },
         "9": {
             "title": "If then 2",
-            "code": "x = 1\n\nif(x == 2):\n\tprint('you did it!')",
+            "code": "if(1 == 2):\n\tprint('you did it!')",
             "instruction": "Make it print 'you did it!'",
             "output-includes": "you did it!",
             "output-discludes": "*",
             "code-includes": "*",
             "code-discludes": "*",
             "failure-shows": "*",
-            "hint": "= is a statement. == is a question."
+            "hint": "both sides of the == have to be the same"
         },
         "10": {
             "title": "Variable 2",
@@ -179,24 +179,24 @@
         "16": {
             "title": "Print 3",
             "code": "x = 1\n\nprint()",
-            "instruction": "print x (do not use ' or \")",
+            "instruction": "print x",
             "output-includes": "",
             "output-discludes": "*",
             "code-includes": "print(x)",
             "code-discludes": "*",
             "failure-shows": "*",
-            "hint": "if it was y, you could print it like this: print(y)"
+            "hint": "example: print(y)"
         },
         "17": {
             "title": "Import",
             "code": "import random\n\nx = random.randint(0, 10)\nprint(x)",
-            "instruction": "Make x range from 0 to 100",
-            "output-includes": "*",
+            "instruction": "Press the run button a bunch of times",
+            "output-includes": "3",
             "output-discludes": "*",
-            "code-includes": "random.randint(0, 100)",
+            "code-includes": "random.randint(0, 10)",
             "code-discludes": "*",
             "failure-shows": "*",
-            "hint": "only change line 3"
+            "hint": "The run button is the green one at the bottom"
         },
         "18": {
             "title": "Lists",
@@ -207,7 +207,7 @@
             "code-includes": "*",
             "code-discludes": "*",
             "failure-shows": "*",
-            "hint": "animals[0] is cat because lists are ordered: 0, 1, 2, etc"
+            "hint": "lists are ordered: 0, 1, 2, etc"
         },
         "19": {
             "title": "Lists 2",
@@ -218,7 +218,7 @@
             "code-includes": "print(animals",
             "code-discludes": "*",
             "failure-shows": "*",
-            "hint": "['dog', 'cat', '!change this!']"
+            "hint": "['dog', 'cat', 'hamster']"
         },
         "20": {
             "title": "Dictionary 1",
@@ -233,7 +233,7 @@
         },
         "21": {
             "title": "If then 4",
-            "code": "animals = ['dog', 'bird']\n\n#hint: what is animals[1]?\n\nif(animals[1] == 'dog'):\n\tprint('you did it!')",
+            "code": "animals = ['dog', 'bird']\n\n#hint: what is animals[1]?\nprint(animals[1])\n\n#change below\nif(animals[1] == 'dog'):\n\tprint('you did it!')",
             "instruction": "Make each side of the == the same",
             "output-includes": "you did it!",
             "output-discludes": "*",
@@ -366,25 +366,25 @@
         },
         "33": {
             "title": "Lists 4",
-            "code": "letters = ['a', 'b', 'c']\n\nfor letter in letters:\n\t#make sure there is a space\n\t",
-            "instruction": "Print all the letters in the list",
-            "output-includes": "a&&&b&&&c",
+            "code": "x = [3, 5, 2, 1, 4]\n\nprint(x[0])",
+            "instruction": "print the last item in the list (4)",
+            "output-includes": "4",
             "output-discludes": "*",
-            "code-includes": "*",
+            "code-includes": "x = [3, 5, 2, 1, 4]",
             "code-discludes": "*",
             "failure-shows": "*",
-            "hint": "print(letter)"
+            "hint": "don't change x at all"
         },
         "34": {
-            "title": "Lists 5",
-            "code": "letters = ['a', 'b', 'c']\n\n",
-            "instruction": "Print all the letters in the list",
-            "output-includes": "a&&&b&&&c",
-            "output-discludes": "*",
-            "code-includes": "*",
+            "title": "Final",
+            "code": "x = [3, 5, 2, 1, 4]\n\nfor x_number in x:\n\tprint(x_number)\n\ny = [8, 10, 7, 6, 9]\n\nfor y_number in y:\n\tprint(\"something here?\")",
+            "instruction": "print every number in y",
+            "output-includes": "6&&&7&&&8&&&9&&&10",
+            "output-discludes": "[8, 10, 7, 6, 9]",
+            "code-includes": "y = [8, 10, 7, 6, 9]",
             "code-discludes": "*",
             "failure-shows": "*",
-            "hint": "for letter in letters:"
+            "hint": "only change the last line"
         }
     }
 }

@@ -11,10 +11,6 @@ Hey developer! Read these to know what you should fix:
 
 ]
 
-- make input() work https://www.npmjs.com/package/sync-message
-- 2
-- TTC
-
 - make curriculum lists
 - 4
 - TTC
@@ -40,6 +36,10 @@ Hey developer! Read these to know what you should fix:
 - TTC
 
 - seperate tab and space detection in code-area
+- 10
+- TTC
+
+- make input() work https://www.npmjs.com/package/sync-message
 - 10
 - TTC
 
