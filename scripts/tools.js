@@ -95,21 +95,42 @@ export class SimpleToggle{
         this.parent = parent;
         this.elements = elements;
         this.images = images;
+        this.setupFunctionality();
+    }
+    setupFunctionality(){
+        if(typeof this.parent.querySelector('img') !== "undefined"){
+            this.parentImage = this.parent.querySelector('img');
+        }
         this.hide();
     }
     hide(){
+        if(this.elements.length == 0){
+            console.error("no elements to hide");
+            return;
+        }
+
         this.hidden = true;
         this.elements.forEach(elem => {
             elem.classList.add("hide");
         });
-        this.parent.querySelector('img').src = this.images[1];
+        
+        if(this.images.length > 0){
+            this.parentImage.src = this.images[1];
+        }
     }
     show(){
+        if(this.elements.length == 0){
+            console.error("no elements to show");
+            return;
+        }
+
         this.hidden = false;
         this.elements.forEach(elem => {
             elem.classList.remove("hide");
         });
-        this.parent.querySelector('img').src = this.images[0];
+        if(this.images.length > 0){
+            this.parentImage.src = this.images[0];
+        }
     }
     toggle(){
         this.hidden ? this.show() : this.hide()

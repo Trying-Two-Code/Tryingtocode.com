@@ -96,3 +96,21 @@
 #create-output {
     width: 50%;
 }
+
+
+
+.advanced--toggle {
+    background-color: #0000;
+    border-radius: 0;
+    border-style: none;
+    size: 64px;
+}
+
+.advanced--toggle--image {
+    --size: 64px;
+
+    image-rendering: pixelated;
+
+    width: var(--size);
+    height: var(--size);
+}

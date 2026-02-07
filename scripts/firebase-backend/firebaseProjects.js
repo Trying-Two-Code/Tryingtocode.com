@@ -8,6 +8,10 @@ const database_name = "projects";
 export let setProject = async ({ owner = window.user, title="default", data="print('hello world')", section="default", language="py" } = {}) => {
     if(typeof owner === "undefined") { console.error("tried proj w/out owner"); return null; }
 
+    const characterLimit = 10000;
+    const characterAmm = (title.length + data.length + section.length + language.length)
+    if(characterAmm > characterLimit) {console.error("character limit exceeded: ", characterAmm); return;}
+
     const projectRef = doc(window.db, database_name, user.uid, section, title);
     let obj = {
         title: title,

@@ -54,7 +54,7 @@ As opposed to other languages, be plentiful with comments (still within reason t
 https://www.w3schools.com/js/js_conventions.asp
 
 But:
-- use () => instead of function
+- always use () => instead of function (if you must use function for [this] functionality, use // comments)
 - keep a header at the top with a simple explanation of code (right below exports?)
 - use tab
 - short objects avoided unless 2 or less properties
