@@ -91,7 +91,11 @@
 \*------------------------------------*/
 body {
     background-color: var(--palette-serika-5);
+    /*background: var(--palette-serika-3); gradient for success?
+    background: radial-gradient(circle,var(--palette-serika-3) 0%, var(--palette-serika-5) 100%);*/
     overflow-x: hidden; /*this gets rid of horizontal bar*/
+    padding: 1px;
+    margin: 1px;
 }
 
 .sidebar {
@@ -169,14 +173,30 @@ body {
 
     /*remove margin when sidebar gone*/
     .main-content {
+        left: 0;
+        position: absolute;
         margin-left: 0;
+        padding-inline: 0;
+        width: 100%;
+        gap: 0;
         margin-top: 8rem; /* Same as the height of the sidebar */
     }
+}
+
+li, ul {
+    list-style-type: none;
 }
 
 /*------------------------------------*\
     #TOOLS
 \*------------------------------------*/
+.sticky {
+    position: sticky;
+    top: 10px;
+    right: 10px !important;
+    z-index: var(--z-overlay);
+}
+
 .main-font {
     font-family: var(--pixel-font), var(--secondary-font);
     font-weight: 200;

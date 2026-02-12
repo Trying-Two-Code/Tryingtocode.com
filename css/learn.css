@@ -45,29 +45,68 @@
 \*------------------------------------*/
 :root{
     --label-width: 2em;
-    --code-height: 20vw;
     --code-width: 50vw;
 
     --flex-bg-color: #222;
     --flex-border-color: rgba(55, 58, 63, 0.589);
     --flex-highlight-border-color: rgba(15, 106, 241, 0.61);
+    
+    --cubic-bez-1: cubic-bezier(0,.35,.61,.96);
+    --cubic-bez-2: cubic-bezier(1,.25,.04,1);
+    --cubic-bez-3: cubic-bezier(.53,.96,0,1);
+    --cubic-bez-overflow: cubic-bezier(.54,1.55,0,1);
+
+    --general-transition: var(--to-transition) var(--transition-speed) var(--cubic-bez-2);
+    --fast-transition: var(--to-transition) calc(var(--transition-speed) / 5) var(--cubic-bez-overflow);
+}
+
+@property --transition-speed {
+    syntax: "<time>";
+    initial-value: .1s;
+    inherits: true;
+}
+
+@property --to-transition { /* doesn't work (: */
+    syntax: "*";
+    initial-value: all;
+    inherits: true;
+}
+
+@media (orientation: landscape) {
+    :root{
+        --code-height: 20vw;
+    }
+}
+
+
+@media (orientation: portrait) {
+    :root{
+        --code-height: 15vh;
+    }
 }
 
 /*------------------------------------*\
     #TOOLS
 \*------------------------------------*/
 .gone {
-    max-height: 0px !important;
-    flex: 0 0 0 !important;
-    padding-block: 3px;
-    padding-inline: 10px;
-    margin: 0;
+    -webkit-transition: var(--general-transition);
+    -moz-transition: var(--general-transition);
+    -o-transition: var(--general-transition);
+    transition: var(--general-transition);
+
+
+    max-height: 0px;
+    flex: 0 0 0;
+    padding-block: 10px;
+    padding-inline: 15px;
+    margin: 10px;
     border: 0;
     overflow: hidden;
 
     user-select: none;
     -moz-user-select: none;
     
+    border-radius: 5px;
 }
 
 /*------------------------------------*\
@@ -80,10 +119,31 @@
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
+
+    background-color: #0003;
+}
+
+@media (orientation: landscape) {
+    #project-parent {
+        justify-content: start;
+    }
+}
+
+@media (orientation: portrait) {
+    #project-parent {
+        justify-content: space-around;
+        width: 100%;
+    }
 }
 
 .project {
+    --transition-speed: .4s;
+
+    -webkit-transition: var(--general-transition);
+    -moz-transition: var(--general-transition);
+    -o-transition: var(--general-transition);
+    transition: var(--general-transition);
+
     height: 100%;
 
     background-color: var(--flex-bg-color);
@@ -93,22 +153,46 @@
     border-style: solid;
 }
 
+.project:not(.mini):not(.gone) {
+    min-width: 100%;
+    border-radius: 0px !important;
+}
+
 .project.gone:hover, .project.mini:hover{
+    -webkit-transition: var(--fast-transition);
+    -moz-transition: var(--fast-transition);
+    -o-transition: var(--fast-transition);
+    transition: var(--fast-transition);
+
     border-color: var(--flex-highlight-border-color);
 }
 
 .project.mini:not(.gone) {
-    transition: cubic-bezier(0.075, 0.82, 0.165, 1) all 1s;
+    --margin: 5px;
 
-    padding-block: 5%;
-    margin: 5px;
+    -webkit-transition: var(--general-transition);
+    -moz-transition: var(--general-transition);
+    -o-transition: var(--general-transition);
+    transition: var(--general-transition);
+
+    padding-bottom: 10%;
+    height: 20px;
+    width: 20px;
+    margin: var(--margin);
     min-height: 100%;
 }
 
 @media (orientation: landscape) {
     .project.mini:not(.gone) {
-        min-width: calc(32% - 5px);
-        max-width: 43%;
+
+        -webkit-transition: var(--general-transition);
+        -moz-transition: var(--general-transition);
+        -o-transition: var(--general-transition);
+        transition: var(--general-transition);
+
+        flex-grow: 1;
+        box-sizing: border-box;
+        flex: 0 0 calc(33.33% - (var(--margin) * 3));
     }
 }
 
@@ -116,24 +200,54 @@
     .project.mini:not(.gone) {
         min-width: 45%;
         max-width: 100%;
+
+        flex: 0 0 100%;
     }
 }
 
-.project.gone:not(.mini) {
+/*.project.gone:not(.mini) {
     transition: cubic-bezier(0.075, 0.82, 0.165, 1) all 1s;
     min-width: 5%;
     max-width: 30%;
-    max-height: 30px;
+    max-height: 100px;
+}*/
+
+.project.gone *, .project.mini *:not(.show-when-mini) {
+    -webkit-transition: var(--general-transition);
+    -moz-transition: var(--general-transition);
+    -o-transition: var(--general-transition);
+    transition: var(--general-transition);
+
+    opacity: 0 !important;
+
+    width: 0px;
+    height: 0px;
+    padding: 0px;
+    margin: 0px;
 }
 
-.project.gone > *, .project.mini > * {
-    display: none;
+
+.project:not(.mini) > * {
+    -webkit-transition: var(--general-transition);
+    -moz-transition: var(--general-transition);
+    -o-transition: var(--general-transition);
+    transition: var(--general-transition);
+
+    opacity: 1 !important;
 }
 
-.project.gone >.project-title {
-    display: block !important;
+.show-when-mini:not(.hide):not(.gone) {
+    visibility: visible;
+    display: flex;
+    opacity: 1;
 
-    padding: 1px;
+    align-self: center;
+
+    top: 0 !important;
+    margin: 0;
+    
+
+    /*padding: 1px;*/
 }
 
 @media (orientation: landscape) {
@@ -155,15 +269,28 @@
     flex-direction: row;
 }
 
+@media (orientation: portrait) {
+    .code-editor, .code-highlight, .line-numbers, .codearea {
+        height: var(--code-height) !important; /*using important here should not be neccisary, be sure to clean this later.*/
+    }
+}
+
 .codearea, .line-numbers, .output, .code-highlight {
     --line-width: 30px; /*defualt value not required*/
 }
 
 .codearea, .code-highlight {
+    --transition-speed: .01s;
+
+     -webkit-transition: var(--general-transition);
+    -moz-transition: var(--general-transition);
+    -o-transition: var(--general-transition);
+    transition: var(--general-transition);
+
     position: relative;
 
     margin: 0 !important; 
-    padding: 0 !important;
+    padding: 0;
     padding-left: 10px !important;
     border: 0 !important;
     outline: none;
@@ -210,6 +337,11 @@
 }
 
 .line-numbers {
+    -webkit-transition: var(--general-transition);
+    -moz-transition: var(--general-transition);
+    -o-transition: var(--general-transition);
+    transition: var(--general-transition);
+
     --this-color: rgba(255, 255, 255, 0.667);
 
     text-align: center;
@@ -247,16 +379,16 @@
         flex-direction: column !important;
     }
     .line-numbers {
-        height: calc(var(--code-height) + 40vh);
+        height: calc(var(--code-height));
     }
     .output {
         /*width: calc(var(--code-width) + var(--label-width)) ;*/
-        margin-top: 40vh;
+        margin-top: 0vh;
         width: 100%;
     }
     .codearea, .code-highlight, .single-block-grid {
         width: 100%;
-        height: calc(var(--code-height) + 40vh);
+        height: calc(var(--code-height));
     }
     .project{
         max-height: 900px;
@@ -298,8 +430,8 @@
 .run-code {
     width: fit-content;
     font-size: large;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     padding: 10px;
     border: #00000000;
     border-radius: 0%;
@@ -317,7 +449,7 @@
     box-sizing: border-box;
 }
 
-.project-button {
+.project-button, .back-to-top-button{
     border: #0000;
     background-color: #0000;
     width: 50px; 

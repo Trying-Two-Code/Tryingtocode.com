@@ -36,14 +36,17 @@ import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/12.8.
 
 
 const auth = getAuth(app);
+window.auth = auth;
 const db = getFirestore(app);
-
 window.db = db;
 
 //console.log("db: ", window.db);
 
 const analytics = getAnalytics(app);
+
 logEvent(analytics, 'page loaded');
+window.logEvent = (log, data={}) => {console.log("loging", log, data); logEvent(analytics, log, data);};
+
 console.log(analytics);
 
 let setWindowUser = (toThis) => {
@@ -53,6 +56,7 @@ let setWindowUser = (toThis) => {
 
     let user_set = new Event("user_set");
     window.dispatchEvent(user_set);
+    console.log(window.user.uid);
 }
 
 let authStateChangedFunction = async (user) => {

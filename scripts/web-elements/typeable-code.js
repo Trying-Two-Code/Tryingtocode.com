@@ -1,54 +1,66 @@
-//output and input area for user code
-const AREAHTML = 
-`
-<div class="top-bar input-output main-font proj-child">
-    <div class="code-editor">
-        <div class="line-numbers lines code-lines proj-child"></div>
-        <div class="single-block-grid proj-child">
-            <textarea class="main-font codearea proj-child" name="user-code" placeholder="code here..." spellcheck="false"></textarea>
-            <pre class="code-highlight code-lines proj-child" name="pretty-pre"><code class="main-font language-python" name="pretty-code"></code>
-            </pre>
-        </div>
-    </div>
-    <textarea name="output" class="lines output main-font code-lines proj-child">output</textarea>
-</div>
+let match = (regex, string) => {
+    string = (string || '');
+    let matches = (string.match(regex) || null);
+    if(matches == null) {return 0;}
+    return matches[0].length;
+}
 
-`
-export class CodeArea{
-    constructor(document, parent, project=null, codeAreaHTML=AREAHTML, lineAmm=1){
-        this.document = document;
-        this.parent = parent; //ish you
-        this.codeAreaHTML = codeAreaHTML;
-        this.lineAmm = lineAmm;
-        this.project = project;
-
-        this.setAttributes();
+class TTCTypeableCode extends HTMLElement {
+    constructor(){
+        super();
     }
+    connectedCallback(){
+        this.render();
+    }
+    render(){
+        const placeholder_text = this.getAttribute("placeholder") ?? "code here...";
+        const language = this.getAttribute("language") ?? "python";
 
-    setAttributes(){
-        let template = document.createElement('template');
+        this.style = `
+        .code-editor {
+            display: flex;
 
-        template.innerHTML = this.codeAreaHTML.trim();
-        this.content = template.content;
-        this.projectEl = this.content.firstElementChild;
-        this.parent.appendChild(this.content);
+            flex-direction: row;
+        }
+        
+        
+        `;
 
-        this.textarea = this.projectEl.querySelector('textarea[name=user-code]');
-        this.prettyCode = this.projectEl.querySelector('code[name=pretty-code]');
-        this.prettyPre = this.projectEl.querySelector('pre[name=pretty-pre]');
-        this.lineNumbers =  this.projectEl.querySelector(".line-numbers");
+        this.innerHTML = `
+<div class="code-editor">
+    <div class="line-numbers lines code-lines proj-child"></div>
+    <div class="single-block-grid proj-child">
+        <textarea class="main-font codearea proj-child" name="user-code" placeholder="${placeholder_text}" spellcheck="false"></textarea>
+        <pre class="code-highlight code-lines proj-child" name="pretty-pre"><code class="main-font language-${language}" name="pretty-code"></code>
+        </pre>
+    </div>
+</div>
+        ` ;
+        console.log("rendered");
+        
+        this.content = this.content;
+        this.projectEl = this.firstElementChild
+        let projectEl = this.projectEl;
+        
+        this.textarea = projectEl.querySelector('textarea[name=user-code]');
+        this.prettyCode = projectEl.querySelector('code[name=pretty-code]');
+        this.prettyPre = projectEl.querySelector('pre[name=pretty-pre]');
+        this.lineNumbers = projectEl.querySelector(".line-numbers");
 
         let matchScrollFilled = () => {this.matchScroll(this.prettyPre, this.textarea);}
         this.textarea.addEventListener('scroll', matchScrollFilled);
-    }
+        
+        let genCode = () => {this.createPrettyCode(this.prettyCode, this.textarea.value);}
 
-    updateLineNumbers(){
-        const lines = this.textarea.value.split('\n').length;
-        this.lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
-        this.lastLineCount = lines;
+        this.textarea.addEventListener('input', () => {this.editPresses(() => {this.updateLineNumbers();}); genCode();});
+
+        this.updateLineNumbers();
+
+        
     }
 
     matchScroll(result_element, element){
+        console.log("matching");
         // Get and set x and y
         result_element.scrollTop = element.scrollTop;
         result_element.scrollLeft = element.scrollLeft;
@@ -59,7 +71,42 @@ export class CodeArea{
         Prism.highlightElement(prettyCodeElement);
     }
 
-    //called by project.js 
+    updateLineNumbers(){
+        const lines = this.textarea.value.split('\n').length;
+        this.lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
+        this.lastLineCount = lines;
+    }
+
+    autoTab(){
+        let text  = this.textarea.value;
+        let start = this.textarea.selectionStart;
+        let end   = this.textarea.selectionEnd
+
+        let tabReg = /^[ \t]+:*|:/
+        let value = this.getCurrentLine();
+
+        let tabamm = match(tabReg, value);
+
+        let before = text.substring(0, start) + "\n" + "\t".repeat(tabamm); //everything before selection area
+        this.textarea.selectionStart = before.length;
+        let after = text.substring(end)
+
+        return [before, after];
+    }
+    getCurrentLine(){
+        const text = this.textarea.value;
+        const newLineSplit = text.split("\n");
+
+        const end = this.textarea.selectionEnd;
+
+        let upToSelection = text.substring(0, end)
+        let subjectiveLineAmmount = upToSelection.split("\n").length; //the ammount of new lines before selection
+
+        let currentLine = newLineSplit[subjectiveLineAmmount - 1];
+
+        return currentLine;
+    }
+
     editPresses(call, tab="\t"){
         let prettyCode = this.prettyCode;
 
@@ -104,7 +151,6 @@ export class CodeArea{
             this.textarea.value = appendToTextarea(tab);
             this.textarea.selectionStart = this.textarea.selectionEnd = start + tab.length;
 
-            this.createText(this.textarea.value);
             this.createPrettyCode(this.prettyCode, this.textarea.value);
         }
 
@@ -147,7 +193,7 @@ export class CodeArea{
             }
             if (event.key === 'Enter'){ //make indents if pressing enter
                 changeEnter(event);
-                this.createText(this.textarea.value);
+                this.createPrettyCode(this.prettyCode, this.textarea.value);
             }
             //accessability setting for tab switchers:
             if(event.key === 'Escape'){
@@ -178,53 +224,7 @@ export class CodeArea{
             createPrettyCode(prettyCode, value);
         });
     }
-
-    getCurrentLine(){
-        const text = this.textarea.value;
-        const newLineSplit = text.split("\n");
-
-        const end = this.textarea.selectionEnd;
-
-        let upToSelection = text.substring(0, end)
-        let subjectiveLineAmmount = upToSelection.split("\n").length; //the ammount of new lines before selection
-
-        let currentLine = newLineSplit[subjectiveLineAmmount - 1];
-
-        return currentLine;
-    }
-    
-    autoTab(){
-        let text  = this.textarea.value;
-        let start = this.textarea.selectionStart;
-        let end   = this.textarea.selectionEnd
-
-        let tabReg = /^[ \t]+:*|:/
-        let value = this.getCurrentLine();
-
-        let tabamm = match(tabReg, value);
-
-        let before = text.substring(0, start) + "\n" + "\t".repeat(tabamm); //everything before selection area
-        this.textarea.selectionStart = before.length;
-        let after = text.substring(end)
-
-        return [before, after];
-    }
-
-    createText(value){
-        this.textarea.value = value;
-        for (let index = 0; index < this.lineAmm - 1; index++) {
-            this.textarea.value += "\n";
-        }
-
-        this.createPrettyCode(this.prettyCode, this.textarea.value);
-
-        return this.textarea.value.split("\n").length;
-    }
 }
 
-let match = (regex, string) => {
-    string = (string || '');
-    let matches = (string.match(regex) || null);
-    if(matches == null) {return 0;}
-    return matches[0].length;
-}
+
+customElements.define("ttc-typeable-code", TTCTypeableCode);

@@ -11,33 +11,33 @@ import { scrollToTop } from "./learn.js";
 let htmlGen = 
 `
     <div id="learn-project" class="project mini main-font">
-        <div class="top-bar">
+        <div class="top-bar proj-child show-when-mini">
             <div class="close-restart">
                 <div class="button">
                     <button class="project-close-button project-button" title="close project">
-                        <img style="width: 30px; height: 30px;" id="close-img" src='./components/art/x.png' class="nice-button">
+                        <img style="width: 30px; height: 30px;" name="close-img" src='./components/art/x.png' class="nice-button">
                     </button>
                 </div>
                 <div class="button">
                     <button class="project-restart-button project-button" title="reset code to defualt">
-                        <img style="width: 30px; height: 30px;" id="reset-img" src="./components/art/reload - 3.png" class="nice-button">
+                        <img style="width: 30px; height: 30px;" name="reset-img" src="./components/art/reload - 3.png" class="nice-button">
                     </button>
                 </div>
             </div>
-            <img src="./components/art/ttc coin icon.png" class="hide completed-icon" id="completed-icon"></img>
-            <p class="project-title" id="project-title">Hello World Project:</p>
+            <img src="./components/art/ttc coin icon.png" class="hide completed-icon show-when-mini" name="completed-icon"></img>
+            <p class="project-title show-when-mini" name="project-title">Hello World Project:</p>
             <div class="button project-hint-button">
                 <button class="project-hint-button project-button" title="get hint if stuck">
-                    <img style="width: 50px; height: 50px;" id="hint-img" src="./components/art/clue - 5.png" class="nice-button">
+                    <img style="width: 50px; height: 50px;" name="hint-img" src="./components/art/clue - 5.png" class="nice-button">
                 </button>
             </div>
             <dialog class="main-font hint-popup hide" open>404</dialog>
         </div>
-        <p class="instructions">instructions</p>
-        <div class="codeAreaParent"></div>
-        <div class="project-button-buttons">
+        <p class="instructions proj-child">instructions</p>
+        <div class="codeAreaParent proj-child"></div>
+        <div class="project-button-buttons proj-child">
             <button title="run code" name="run-button" class="run-code"><img class="run-code-button-img" src="./components/art/play button 1 - big.png"></img></button>
-            <button title="go to next project" alt="next project" name="next-button" class="next-project" id="next-button"><img src="./components/art/arrow - 1.png"></button>
+            <button title="go to next project" alt="next project" name="next-button" class="next-project" name="next-button"><img src="./components/art/arrow - 1.png"></button>
         </div>
     </div>
 `;
@@ -56,6 +56,7 @@ export class Display {
         this.projectJSON = projectJSON;
         this.textareaSize = textareaSize;
         this.projectIndex = projectIndex;
+        this.projectSection = "python 1";
         
         this.createElements(document, parent, htmlString); 
         this.initializeDisplay();
@@ -74,13 +75,11 @@ export class Display {
         this.setAttributes();
 
         this.reward = 5;
-        this.countTimeOpen();
     }
 
     
 
     initializeMinimizationFeatures(){
-
         let toggleMe = () => {this.toggleEvent(this);}
         this.projectEl.addEventListener('click', toggleMe);
 
@@ -92,7 +91,6 @@ export class Display {
                 this.toggleEvent(this);
             }
         });
-
 
         //close me down
         window.addEventListener("closeMe", data => {
@@ -126,6 +124,7 @@ export class Display {
     }
 
     countTimeOpen(){
+        console.log("I, ", this.projectIndex, " am closing.");
         let newTime = Date.now();
 
         let result = null;
@@ -137,13 +136,20 @@ export class Display {
 
         if(result){
             console.log(result);
+            result = result / 1000;
+            result = Math.round(result);
+            try{
+                window.logEvent("time open", { value: result, project_index: this.projectIndex, project_title: this.title.value, project_section: this.projectSection });
+            }catch{
+                console.log("could not log");
+            }
             return result;
         }
     }
 
     openProject(relativeIndex=0){ //open the next project: relativeIndex=1
         this.openOtherProject({openIndex: this.projectIndex + relativeIndex});
-        var changeOpenProject = new CustomEvent("closeMe", {detail: {index: this.projectIndex, toIndex: -1, gone: true, mini: false}});
+        var changeOpenProject = new CustomEvent("closeMe", {detail: {index: this.projectIndex, toIndex: -1, gone: true, mini: true}});
         window.dispatchEvent(changeOpenProject);
 
         if(relativeIndex == 0) {
@@ -159,7 +165,7 @@ export class Display {
         this.projectEl = this.content.firstElementChild;
         parent.appendChild(this.content);
 
-        this.codeAreaParent = this.projectEl.querySelector('[class="codeAreaParent"]');
+        this.codeAreaParent = this.projectEl.querySelector(".codeAreaParent");
 
         this.codeArea = new CodeArea(document, this.codeAreaParent, this);
     }
@@ -167,24 +173,23 @@ export class Display {
     findElements(){
         const query = (className) => {return this.projectEl.querySelector(className);}
 
-        this.runButton = query('.run-code');
-        this.output = query('.output');
-        this.textarea = this.codeArea.textarea;
-        this.lineNumbers = query(".line-numbers");
-        this.closeButton = query(".project-close-button");
+        this.runButton =    query('.run-code');
+        this.output =       query('.output');
+        this.textarea =     this.codeArea.textarea;
+        this.lineNumbers =  query(".line-numbers");
+        this.closeButton =  query(".project-close-button");
         this.rewindButton = query(".project-restart-button");
-        this.title = query(".project-title");
+        this.title =        query(".project-title");
         this.instructions = query(".instructions");
-        this.completedIcon = query(".completed-icon");
-        this.nextButton = query(".next-project");
-        this.hintPopup = query(".hint-popup");
-        this.hintButton = query(".project-hint-button");
+        this.completedIcon= query(".completed-icon");
+        this.nextButton =   query(".next-project");
+        this.hintPopup =    query(".hint-popup");
+        this.hintButton =   query(".project-hint-button");
     }
 
     setAttributes(){
-        //let addAmm = this.projectJSON.code.split("\n").length - 1;
         this.codeArea.createText(this.projectJSON.code);
-        this.codeArea.editPresses(() => this.updateLineNumbers());
+        this.codeArea.editPresses(() => this.codeArea.updateLineNumbers());
         let title = this.projectJSON.title;
         if(this.projectJSON.hint != undefined) {
             this.hintPopup.innerHTML = this.projectJSON.hint;
@@ -229,6 +234,7 @@ export class Display {
         let makeProjectsGone = () => {
             this.toggleOtherProjects({index: this.projectIndex, toIndex: -1, gone: true, mini: true})
         }
+
         let makeDisplayGone = () => {
             this.toggleOtherProjects({index: window.currentDisplay.projectIndex, toIndex: this.projectIndex, gone: false, mini: true});
             window.currentDisplay.minimize({mini: true, gone: false});
@@ -242,7 +248,11 @@ export class Display {
 
         //open me up
         if (element.projectEl.classList.contains('mini') || element.projectEl.classList.contains('gone')) {
-            element.countTimeOpen();
+            if(window.currentDisplay != null){
+                window.currentDisplay.countTimeOpen();
+            }
+            this.timebegan = Date.now();
+            console.log("I, ", this.projectIndex, " am opening up");
 
             minimizeBelowCurrentDisplay();
             makeProjectsGone();
@@ -267,12 +277,9 @@ export class Display {
 
         let detectCanRun = () => {
             if(values.mini || values.gone){
-                //project should be disabled..
                 this.canRun = false;
-
                 this.toggleHint(this.hintPopup, true);
             } else {
-                //the project is totally open...
                 this.canRun = true;
             }
         }
@@ -288,20 +295,17 @@ export class Display {
     }
 
     setupTextarea(){
-        this.textarea.addEventListener('input', () => this.updateLineNumbers());
+        console.error("move this to codearea");
+
+        this.textarea.addEventListener('input', () => this.codeArea.updateLineNumbers());
 
         this.textarea.addEventListener('scroll', () => {
             this.lineNumbers.scrollTop = this.textarea.scrollTop;
         });
         
-        this.updateLineNumbers();
+        this.codeArea.updateLineNumbers();
     }
 
-    updateLineNumbers(){
-        const lines = this.textarea.value.split('\n').length;
-        this.lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
-        this.lastLineCount = lines;
-    }
 
     toggleHint(element=this.hintPopup, toThis=undefined) {
         this.hintToggled = !this.hintToggled;
@@ -313,7 +317,6 @@ export class Display {
         let output = await this.displayUserCode(value);
 
         if(!output[0]){
-            //there was an error
             console.error("player code incorrect");
             return false;
         }

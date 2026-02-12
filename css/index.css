@@ -33,7 +33,7 @@
     #GENERAL
 \*------------------------------------*/
 :root {
-    --space-1: 15vw;
+    --space-1: 5vw;
     --space-2: 4rem;
     --space-3: 3rem;
 
@@ -113,6 +113,8 @@ body {
     #WELCOME
 \*------------------------------------*/
 .welcome {
+	--block-inset: 20px;
+
 	--shadow-size: 4px;
 
     display: flex;
@@ -123,11 +125,24 @@ body {
 	color: white;
 	font-size: 2em;
 	
-	height: 100vh;
 
 	z-index: var(--welcome-z-index);
 
 	box-sizing: border-box;
+}
+
+@media (orientation: landscape) {
+	.welcome{
+		padding-block: var(--block-inset);
+		height: calc(100vh - var(--block-inset) * 2);
+	}
+}
+
+@media (orientation: portrait) {
+	.welcome{
+		padding-block: 0;
+		height: calc(100vh - var(--block-inset) * 4);
+	}
 }
 
 .welcome > * {
@@ -143,7 +158,7 @@ body {
 	align-items: center;
 
 	box-sizing: border-box;
-	width: max(70%, 400px);
+	width: max(90%, 400px);
 	margin-inline: var(--space-1);
 
 	background-color: var(--inner-box-color);
@@ -155,17 +170,30 @@ body {
 	}
 }
 
-.welcome--demo--input {
+.welcome--demo--input, .welcome--demo--output {
 	margin-block: 10px;
 	outline: #000b solid 5px;
 	border-radius: 3px;
+}
+
+@media (orientation: portrait) {
+	.welcome--demo--input {
+		font-size: large;
+		margin: 5px
+	}
 }
 
 .welcome--demo--input--text {
 	display: flex;
 
 	flex-direction: row;
+}
 
+@media (orientation: portrait) {
+	.code-highlight, .welcome--demo--output-img, .welcome--demo--output  {
+		gap: 0 !important;
+		padding: 0 !important;
+	}
 }
 
 .welcome--demo--output, .welcome--demo--input {

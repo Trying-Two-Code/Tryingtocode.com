@@ -74,14 +74,35 @@ window.addEventListener("user_set", async () => {
 
 export let scrollToTop = () => {
     console.warn("FIX THIS, make it maintainable, and look at phone when it's sideways... bleck!");
-    if(window.innerWidth < 600){
-        window.scrollTo({top: 160, left: 0, behavior: "smooth"});
-    } else{
-        window.scrollTo({top: 10, left: 0, behavior: "smooth"});     
+
+    let setScroll = () => {
+        if(window.innerWidth < 600){
+            window.scrollTo({top: 160, left: 0, behavior: "smooth"});
+        } else{
+            window.scrollTo({top: 10, left: 0, behavior: "smooth"});     
+        }
     }
+
+    if(typeof window.currentDisplay !== "undefined"){
+        //window.currentDisplay.projectEl.scrollIntoView({ behavior: "smooth", top: 100 });
+        //window.scrollTo({top: window.currentDisplay.projectEl.getBoundingClientRect().top, left: 0, behavior: "smooth"});
+        setScroll();
+    } else {
+        setScroll();
+    }
+    
+
+    
 }
 
 scrollToTop();
+
+try {
+    let backToTopButton = document.getElementById("main--back-to-top-button");
+    backToTopButton.addEventListener("click", scrollToTop);
+} catch (error) {
+    console.log(error);
+}
 
 // Save or update a project
 let saveProject = (this_proj) => {

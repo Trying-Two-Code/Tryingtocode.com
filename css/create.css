@@ -11,10 +11,20 @@
 **user-cr-project  . Holding all the below
 **main . . . . . . . Div holding title & code
 **code-container . . Div holding defualt code
+**usercode-measure
+**usercode-measure--textarea
 
 *TEXT
 **title  . . . . . . User project title
+**create-mission . . 
 **code . . . . . . . User project defualt code
+**create-output  . . 
+**submit-button  . . 
+
+*TOGGLE
+**advanced--toggle . 
+**advanced--.--image 
+**submit-button--img 
 
 **/
 /*------------------------------------*\ 
@@ -30,7 +40,7 @@
 /*------------------------------------*/ 
 @media (orientation: landscape) {
     #create-page-holder {
-        width: 50%;
+        min-width: 50%;
     }
 }
 @media (orientation: portrait) {
@@ -82,6 +92,16 @@
     resize: none;
 }
 
+.user-create-project--toggled-element {
+    background-color: #0004;
+}
+
+.code-editor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /*------------------------------------*\ 
     #TEXT
 /*------------------------------------*/ 
@@ -115,13 +135,16 @@
     width: 50%;
 }
 
-
-
+/*------------------------------------*\ 
+    #TOGGLE
+/*------------------------------------*/ 
 .advanced--toggle, .submit-button {
     background-color: #0000;
     border-radius: 0;
     border-style: none;
     size: 64px;
+
+    padding-bottom: 20px;
 }
 
 .advanced--toggle--image, .submit-button--image {
@@ -131,4 +154,31 @@
 
     width: var(--size);
     height: var(--size);
+}
+
+/*------------------------------------*\ 
+    #ICON
+/*------------------------------------*/ 
+.language-select {
+    border: none;
+    background: none;
+}
+
+.language-select-elements {
+    display: flex;
+}
+
+/*NOT WORKING*/
+.language-select--image-element--image, .language-select-toggle--image {
+    --language-select-size: 64px;
+
+    image-rendering: pixelated;
+    width: var(--language-select-size);
+    height: var(--language-select-size);
+    cursor: pointer;
+}
+
+.unsupported {
+    opacity: .5;
+    background-color: #9114;
 }

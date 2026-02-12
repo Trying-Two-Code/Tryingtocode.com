@@ -5,19 +5,20 @@ from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js"
 
 const database_name = "projects";
 
-export let setProject = async ({ owner = window.user, title="default", data="print('hello world')", section="default", language="py" } = {}) => {
+export let setProject = async ({ owner = window.user, title="default", data="print('hello world')", section="default", language="py", includeDisclude={} } = {}) => {
     if(typeof owner === "undefined") { console.error("tried proj w/out owner"); return null; }
 
     const characterLimit = 10000;
-    const characterAmm = (title.length + data.length + section.length + language.length)
+    const characterAmm = (title.length + data.length + section.length + language.length);
     if(characterAmm > characterLimit) {console.error("character limit exceeded: ", characterAmm); return;}
 
-    const projectRef = doc(window.db, database_name, user.uid, section, title);
+    const projectRef = doc(window.db, database_name, owner, section, title);
     let obj = {
         title: title,
         data: data,
         lastUpdated: serverTimestamp(),
-        language: language
+        language: language,
+        includeDisclude: includeDisclude
     };
 
     try {
@@ -25,7 +26,7 @@ export let setProject = async ({ owner = window.user, title="default", data="pri
     }
     catch (error){
         console.error("oops. That project did not set well.", error);
-        console.log(user, user.uid, section, title);
+        console.log(user, [user.uid, owner], section, title);
         return error;
     }
 }

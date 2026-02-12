@@ -6,48 +6,85 @@ import { SimpleToggle } from './tools.js';
 
 class LanguageToggle extends SimpleToggle {
     constructor(parent, elements, imageElements, selectedOption="python"){
-        console.log(imageElements);
         super(parent, elements);
-        console.log(imageElements);
+        super.hide();
 
         this.imageElements = imageElements;
-        console.log(this.imageElements);
+        this.parent = parent;
 
-        super.hide();
-        
-        this.setupFunctionality();
+        this.setupLanguageFunctionality();
+        this.selection = parent.firstChild.src;
     }
-    setupFunctionality(){
+    setupLanguageFunctionality(imageElements){
+        console.log(this.imageElements);
         this.setupElements();
     }
     setupElements(){
-        console.log(this.imageElements);
+        if(this.imageElements === undefined) {console.error("O:");}
         for (let index = 0; index < this.imageElements.length; index++) {
-            
+            const element = this.imageElements[index];
+            console.log(element.firstChild.src);
+            element.addEventListener("click", () => {this.changeSelection(element.firstChild.src)})
+        }
+
+        if(localStorage.getItem("lastCreateLanguage")){
+            this.changeSelection(localStorage.getItem("lastCreateLanguage"));
         }
     }
+    changeSelection(toThis) {
+        let parentImage = this.parent.firstChild;
+        parentImage.src = toThis;
+        localStorage.setItem("lastCreateLanguage", toThis);
+        this.getSelection(this.imageToOptionDict, toThis);
+    }
+
     toggle() {
         super.toggle();
     }
+    getSelection(dict, choice){
+        const dictKeys = Object.keys(dict);
+        for (let index = 0; index < dictKeys.length; index++) {
+            const element = dict[dictKeys[index]];
+            let key = dictKeys[index]
 
-    get optionToImageDict(){
-        let optionToImageData = {
-            "python": "/components/art/language logo - python.png",
-            "javascript": "/components/art/language logo - javascript.png",
-            "html": "/components/art/language logo - html.png",
-            "c": "/components/art/language logo - c.png"
+            choice = choice.replaceAll("%20", " ");
+
+
+            if(choice.includes(key)){
+                this.selection = element;
+            }
         }
-        return optionToImageData;
+        console.log(this.selection);
+    }
+
+    get imageToOptionDict(){
+        let imageToOptionData = {
+            "/components/art/language logo - python.png": "python",
+            "/components/art/language logo - javascript.png": "javascript",
+            "/components/art/language logo - html.png": "html",
+            "/components/art/language logo - c.png": "c"
+        }
+        return imageToOptionData;
     } 
 }
 
+window.addEventListener("user_made", () => {
+    console.log("making official data thing");
+    setProject({ owner: "OFFICIAL", data: "it worked", title: "YEAH!", section: "2" });
+})
+
 window.addEventListener('create_project_set', () => {
+
     const CREATE_PROJECT =  document.getElementById("create-project-container");
     let queryCREATE_PROJECT = idname => {return CREATE_PROJECT.querySelector(idname);}
 
     let title =             queryCREATE_PROJECT("#create-title");
     let code =              queryCREATE_PROJECT("#create-code");
     let output =            queryCREATE_PROJECT("#create-output");
+    let outputIncludes =    queryCREATE_PROJECT("#measures--output-includes");
+    let codeIncludes =      queryCREATE_PROJECT("#measures--code-includes");
+    let outputDiscludes =   queryCREATE_PROJECT("#measures--output-discludes");
+    let codeDiscludes =     queryCREATE_PROJECT("#measures--code-discludes");
     let mission =           queryCREATE_PROJECT("#create-mission");
     let submitButton =      queryCREATE_PROJECT("#submit-button");
     let errorElement =      queryCREATE_PROJECT("#submit-button-error");
@@ -57,6 +94,7 @@ window.addEventListener('create_project_set', () => {
     let languageSelectToggle =        queryCREATE_PROJECT("#language-select-toggle");
     let languageSelectToggleElement = document.querySelectorAll(".language-select-elements");
     let languageSelectImageElements = document.querySelectorAll(".language-select--image-element");
+    languageSelectImageElements = Array.from(languageSelectImageElements);
     
     errorElement.innerHTML = "";
 
@@ -105,22 +143,30 @@ window.addEventListener('create_project_set', () => {
     let submitEvent = () => {
         
         let errorMessage = createErrorMessage();
-        
+        debugger;
+
+        let codeIncludesValue = codeIncludes.value;
+        let codeDiscludesValue = codeDiscludes.value;
+        let outputIncludesValue = outputIncludes.value;
+        let outputDiscludesValue = outputDiscludes.value;
+
+        let includeDisclude = {codeIncludes: codeIncludesValue, codeDiscludes: codeDiscludesValue, outputIncludes: outputIncludesValue, outputDiscludes: outputDiscludesValue};
+
+        console.log(codeIncludes, codeDiscludes, outputIncludes, outputDiscludes);
 
         if(errorMessage){
             console.log(errorElement.value, errorMessage)
             errorElement.innerHTML = errorMessage;
         } 
         else{
-            console.log(languageSelector.value);
-            let chosenLanguage = languageSelector.options[languageSelector.selectedIndex].text;
+            let chosenLanguage = toggleLanguageDropdown.selection ?? "python";
             console.log(chosenLanguage);
 
             console.log("got create");
             console.log(title.value, code.value);
 
             errorElement.innerHTML = "";
-            let projectOutput = setProject({ title: title.value, data: code.value, language: chosenLanguage, mission: mission.value});
+            let projectOutput = setProject({ title: title.value, data: code.value, language: chosenLanguage, mission: mission.value, includeDisclude: includeDisclude});
             output.value = projectOutput;
         }
 

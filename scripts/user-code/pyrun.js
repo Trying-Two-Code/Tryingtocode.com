@@ -1,10 +1,18 @@
 window.languagePluginUrl = 'https://cdn.jsdelivr.net/pyodide/v0.28.2/full/';
 
-let interruptBuffer;
+let sharedPyArray;
+let atomicSpace;
+let interuptByte;
 
 if(crossOriginIsolated) {
+    sharedPyArray = new SharedArrayBuffer(1024);
+    atomicSpace = new Int8Array(sharedPyArray);
+    interuptByte = atomicSpace[0];
     console.log("good.");
 } else {
+    sharedPyArray = new ArrayBuffer(1024);
+    atomicSpace = new Int8Array(sharedPyArray);
+    interuptByte = atomicSpace[0];
     console.error("please change to cross origin isolated in order to run code better.");
 }
 
@@ -12,6 +20,12 @@ const worker = new Worker(new URL('./pyrun-worker.js', import.meta.url), {type: 
 worker.onerror = (error) => {
     console.error(error);
 }
+
+worker.postMessage({cmd: "initArrayBuffer", array: sharedPyArray});
+
+const encoder = new TextEncoder();
+const decoder = new TextDecoder();
+
 
 
 let awaitRunPython = async (python) => {
@@ -25,7 +39,9 @@ let awaitRunPython = async (python) => {
             console.log("I tried to send it back...", message);
 
             if (message.data.cmd === "input") {
+                Atomics.store(atomicSpace, 0, 0); // tell worker to wait
                 await getInput(message.data.promptText || "");
+                Atomics.notify(atomicSpace, 0, 1); // tell worker to GET TO WORKKKKK!
                 return;
             }
 
@@ -35,7 +51,17 @@ let awaitRunPython = async (python) => {
                 return;
             }
 
-            resolve([true, output]);
+            if(message.data.cmd === "error"){
+                console.log(message);
+                resolve(message.data.error);
+            }
+
+            if(message.data.cmd === "success"){
+                console.log("successful code.");
+                resolve(message.data.output);
+            }
+
+            resolve(output);
         } 
 
         worker.onerror = (error) => reject([false, error]);
@@ -188,6 +214,8 @@ asyncio.run(_SUPERMAIN())
 
     return wrapper;
 }
+
+
 
 
 /*
