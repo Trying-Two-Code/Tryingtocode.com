@@ -16,13 +16,6 @@ class advancedSettings extends HTMLElement{
                 <li name="language-select--image-element-c" class="language-select--image-element unsupported" id="c-element"><img title="not supported yet" alt="not supported yet" draggable="false" src="../components/art/language logo - c.png" class="language-select--image-element--image"></li>
             </div>
             
-
-            <!--select name="language" class="user-create-project--language-select advanced--language-select" id="user-create-project--language-select">
-                <option value="py">python <img draggable="false" src="../components/art/language logo - python.png" alt=""></img></option> 
-                <option value="js">javascript <img draggable="false" src="../components/art/language logo - javascript.png" alt=""></img></option>
-                <option value="htm">html <img draggable="false" src="../components/art/language logo - html.png" alt=""></img></option>
-                <option value="c">c <img draggable="false" src="../components/art/language logo - c.png" alt=""></img></option>
-            </select-->
             <div data-js-tag="user-measure" class="usercode-measure">
                 <textarea class="main-font code-lines usercode-measure--textarea" data-js-tag="measure-output-includes" name="measures--output-includes" placeholder="output includes">*</textarea>
                 <textarea class="main-font code-lines usercode-measure--textarea" data-js-tag="measure-code-includes" name="measures--code-includes" placeholder="code includes">*</textarea>

@@ -108,6 +108,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 ttc-create-project-output{
@@ -121,7 +122,8 @@ ttc-create-project-output{
     height: 100%;
 }
 
-.codearea, .code-highlight, .single-block-grid {
+
+.codearea, .code-highlight, .single-block-grid, .code-editor, .actual-input-code {
     width: 100% !important;
 }
 

@@ -11,6 +11,7 @@ export let normalizeText = (text) => { /* make text similar to allow flexible pl
 }
 
 export let checkInclusion = (parts, whole) => {
+    console.log(whole);
     const BLANK = '*';
 
     let expectsValue = whole !== BLANK && whole !== "";
@@ -69,7 +70,6 @@ export let isCorrectCode = async (code, json, output) => {
 
     let result = true;
     [OutpuIncluded, OutpuDiscluded, CodeIncluded, CodeDiscluded].forEach(element => {
-        console.log(element);
         if(element === false){
             result = false;
         }

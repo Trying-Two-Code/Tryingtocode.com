@@ -464,6 +464,7 @@ p.pixel-alt  {font-size: 1.5rem;}
 
 button {
     -webkit-tap-highlight-color:  #BFB71611; /*don't highlight on phone*/
+    cursor: pointer;
 }
 
 img {

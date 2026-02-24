@@ -142,7 +142,6 @@ export let changeNumber = (amm, startString='') => {
     let changeNumber = (updatedNumber) => {
         localStorage.setItem('coin', updatedNumber);
         increaseCoins(amm);
-        console.log("set user coins");
     }
 
     changeNumber(updatedNumber);

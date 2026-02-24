@@ -10,7 +10,7 @@ class TTCViewDataProjects extends HTMLElement {
 
         this.innerHTML = `
             <div class="main-font">
-                <button class="nice-button main-font database-button" data-js-tag="load-database-options">load database options</button>
+                <button class="nice-button main-font database-button" data-js-tag="load-database-options">load projects in section</button>
                 <div name="database-project-dropdown" data-js-tag="database-project-dropdown">
                     <p></p>
                 </div>

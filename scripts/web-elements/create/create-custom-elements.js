@@ -15,7 +15,7 @@ class TTCCreateProject extends HTMLElement {
         this.innerHTML = `
 
 <ttc-view-data-projects></ttc-view-data-projects>
-<div class="create-align" >
+<div class="create-align">
     <div class="create" data-js-tag="create-page-holder">
         <div class="user-create-project main-font">
 
@@ -25,7 +25,7 @@ class TTCCreateProject extends HTMLElement {
                     <textarea class="main-font code-lines create-title" name="title" data-js-tag="title-section" placeholder="title"></textarea>
                     <textarea class="code-lines create-mission main-font" name="mission" placeholder="mission" data-js-tag="mission-section"></textarea>
                     <div class="create-code-container">
-                        <ttc-typeable-code data-js-tag="create-code" data-js-tag="create-code" name="defualt code" class="main-font code-lines create-code" placeholder="defualt code" language="python"></ttc-typeable-code>
+                        <ttc-typeable-code data-js-tag="create-code" data-js-tag="create-code" name="defualt code" class="main-font" placeholder="defualt code" language="python"></ttc-typeable-code>
                     </div>
                 </div>
                 <div id="create-output">
@@ -69,7 +69,6 @@ class TTCCreateProject extends HTMLElement {
 
         this.sectionElement =   queryME("create-section");
         this.titleElement =     queryME("title-section");
-        console.log(this.titleElement);
         this.mission =          queryME('mission-section');
         this.codeArea =         queryME("create-code");
         console.log("usuing code area: ", this.codeArea);
@@ -93,6 +92,9 @@ class TTCCreateProject extends HTMLElement {
         this.languageSelectImageElements =        this.querySelectorAll(".language-select--image-element");
 
         this.priorityElement =  this.ADVANCED_SETTINGS.priorityElement;
+        this.canRun = true;
+
+        this.PROJECT_OUTPUT.project = this;
     }
 
     setupViewButton(){
@@ -120,6 +122,7 @@ class TTCCreateProject extends HTMLElement {
         this.mission.value = mission;
         this.codeArea.textarea.value = data;
     }
+
 }
 
 customElements.define("ttc-create-project", TTCCreateProject);

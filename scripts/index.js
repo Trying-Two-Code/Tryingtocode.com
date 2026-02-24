@@ -1,27 +1,27 @@
 //for use in index.html
-//import { SignIn } from "./sign-in.js";
+import { SignIn } from "./sign-in.js";
 //import { signInUp } from '../firebase.js';
 import { getCoin, changeNumber} from "./coin/coin.js";
-//import { Toggle } from "./tools.js";
+import { Toggle } from "./tools.js";
 //import { runUserCode } from "./pyrun.js";
 
 let print = text => {console.log(text);}
 
-/*let signInParent = document.getElementById("sign-in-holder");
+let signInParent = document.getElementById("sign-in-holder");
 let toggleSigninup = document.getElementById("toggle-signinup");
 let signIn = new SignIn(document, signInParent);
 let toggle = new Toggle(toggleSigninup, signInParent, "slow-hide", "sign-in");
-toggle.addEvent(toggle.toggleEventFilled, signIn.exit);*/
+toggle.addEvent(toggle.toggleEventFilled, signIn.exit);
 
 const PROJECT_PARENT = document.getElementById("project-parent");
 
-/*signIn.toggleButton(toggleSigninup);
+//signIn.toggleButton(toggleSigninup);
 signIn.submit.addEventListener("click", (e) => {
     e.preventDefault();
     if(signIn.password.value != null){
         signInUp(signIn.user.value, signIn.password.value);
     }
-});*/
+});
 
 //let goto = document.getElementById("coin-go-here");
 const counter = document.getElementById("coin-counter");

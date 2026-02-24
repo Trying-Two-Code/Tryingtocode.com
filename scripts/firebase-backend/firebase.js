@@ -330,7 +330,6 @@ let userMade = (user) => {
     getDoc(userRef).then((userSnap) => {
         code = userSnap.get("projects");
 
-        console.log(updateProjects);
         updateProjects.forEach(updateProject => {
             //console.log("stuff and things: ", updateProject[0], updateProject[1], code[updateProject[1]]);
             updateProject[0](code[updateProject[1]]);

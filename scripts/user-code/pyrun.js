@@ -8,12 +8,11 @@ if(crossOriginIsolated) {
     sharedPyArray = new SharedArrayBuffer(1024);
     atomicSpace = new Int8Array(sharedPyArray);
     interuptByte = atomicSpace[0];
-    console.log("good.");
 } else {
     sharedPyArray = new ArrayBuffer(1024);
     atomicSpace = new Int8Array(sharedPyArray);
     interuptByte = atomicSpace[0];
-    console.error("please change to cross origin isolated in order to run code better.");
+    console.error("please change to cross origin isolated in order to run code.");
 }
 
 const worker = new Worker(new URL('./pyrun-worker.js', import.meta.url), {type: "module"});
@@ -36,7 +35,6 @@ let awaitRunPython = async (python) => {
         let output = "";
 
         worker.onmessage = async (message) => {
-            console.log("I tried to send it back...", message);
 
             if (message.data.cmd === "input") {
                 Atomics.store(atomicSpace, 0, 0); // tell worker to wait
@@ -46,18 +44,15 @@ let awaitRunPython = async (python) => {
             }
 
             if(message.data.cmd === "stdout") {
-                console.log("I got something here", message.data.text);
                 output += message.data.text;
                 return;
             }
 
             if(message.data.cmd === "error"){
-                console.log(message);
                 resolve(message.data.error);
             }
 
             if(message.data.cmd === "success"){
-                console.log("successful code.");
                 resolve(message.data.output);
             }
 
@@ -87,9 +82,6 @@ let awaitRunPython = async (python) => {
         }
     }
 
-    console.log("waiting...", data);
-    console.log(result);
-    console.log("result of running the code: ", result);
     return result;
     let NAMESPACE = pyodide.globals.get("dict")(); 
     return await pyodide.runPythonAsync(python, { globals: NAMESPACE });

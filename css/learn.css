@@ -264,7 +264,6 @@
     
 }
 
-
 /*------------------------------------*\
     #TEXT-BOXES
 \*------------------------------------*/
@@ -277,7 +276,8 @@
 
 @media (orientation: portrait) {
     .code-editor, .code-highlight, .line-numbers, .codearea {
-        height: var(--code-height) !important; /*using important here should not be neccisary, be sure to clean this later.*/
+        /*height: var(--code-height) !important; /*using important here should not be neccisary, be sure to clean this later.*/
+        height: 100%;
     }
 }
 

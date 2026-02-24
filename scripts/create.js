@@ -66,6 +66,44 @@ class LanguageToggle extends SimpleToggle {
     } 
 }
 
+let getJSONOfProject = (dataObject = { title: "", mission: "", section: "default",
+    outputDiscludes: "", outputIncludes: "", codeIncludes: "", codeDiscludes: "",
+    hint: "", 
+}) => {
+    let passIntoJson = {};
+    Object.keys(dataObject).forEach(key => {
+        const dataPiece = dataObject[key];
+
+        if(dataPiece){
+            passIntoJson[key] = dataPiece;
+        }
+    });
+    return passIntoJson;
+}
+
+export let getJSONOfCurrentCreateProject = (currentProject) => {
+    console.log(currentProject.titleElement);
+    let dataObject = {
+        title: currentProject.titleElement.value,
+        mission: currentProject.mission.value,
+        section: currentProject.sectionElement.value,
+        "output-discludes": currentProject.outputDiscludes.value,
+        "output-includes": currentProject.outputIncludes.value,
+        "code-includes": currentProject.codeIncludes.value,
+        "code-discludes": currentProject.codeDiscludes.value/*,
+        hint: hint*/
+    };
+    let jsonOfCurrentCreateProject = getJSONOfProject(dataObject);
+    console.log(jsonOfCurrentCreateProject);
+    return jsonOfCurrentCreateProject;
+}
+
+/*class CreateProject{
+    constructor(){
+        this.canRun = true;
+    }
+}*/
+
 // this has to be done since create_project is a custom construct:
 // it is not loaded when the window is, but a few miliseconds after.
 

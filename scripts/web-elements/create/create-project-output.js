@@ -1,4 +1,6 @@
 import {TTCComplexTypeableCode} from "../typeable-code.js";
+import { isCorrectCode } from "../../user-code/check-code.js";
+import { getJSONOfCurrentCreateProject } from "../../create.js";
 
 class TTCCreateProjectOutput extends HTMLElement {
     constructor(){
@@ -17,32 +19,6 @@ class TTCCreateProjectOutput extends HTMLElement {
         this.innerHTML = `
 <div id="learn-project" class="project main-font">
         <div class="column-elements">
-            <!--div class="top-bar proj-child show-when-mini">
-                <div class="close-restart">
-                    <div class="button">
-                        <button class="project-close-button project-button" title="close project">
-                            <img style="width: 30px; height: 30px;" name="close-img" src='./components/art/x.png' class="nice-button">
-                        </button>
-                    </div>
-                    <div class="button">
-                        <button class="project-restart-button project-button" title="reset code to defualt">
-                            <img style="width: 30px; height: 30px;" name="reset-img" src="./components/art/reload - 3.png" class="nice-button">
-                        </button>
-                    </div>
-                    <p class="project-title show-when-mini" name="project-title">title</p>
-                    <div class="button project-hint-button">
-                        <button class="project-hint-button project-button" title="get hint if stuck">
-                            <img style="width: 50px; height: 50px;" name="hint-img" src="./components/art/clue - 5.png" class="nice-button">
-                        </button>
-                    </div>
-                </div>
-                <dialog class="main-font hint-popup hide" open>404</dialog>
-            </div>  
-            <p class="instructions proj-child" name="project-mission">mission</p--> 
-            <!--button class="nice-button link-button" name="link-unlink-toggle"><img class="link-button--image" src="../components/art/link-unlink -1.png"></img></button-->
-            <!--div>
-                <ttc-typeable-code name="ttc-typeable-code" readonly="true" language=${language} typing-disabled=${typingDisabled} code-text=${codeText}><ttc-typeable-code>
-            </div-->   
             <div>
                 <ttc-complex-typeable-code closeable="true" output-height="35px" runnable="true" readonly="false" linkable="true"></ttc-complex-typeable-code>
             </div>
@@ -63,7 +39,11 @@ class TTCCreateProjectOutput extends HTMLElement {
         this.mission = this.typeableCodeElement.mission ;
         this.prettyCode = this.typeableCodeElement.prettyCode;
         this.linkUnlink = this.querySelector("[name='link-unlink-toggle']");
-        
+
+        this.typeableCodeElement.project = this;
+        this.canRun = true;
+
+        this.textarea = this.typeableCodeElement.textarea;
     }
 
     updateCode() {
@@ -91,6 +71,41 @@ class TTCCreateProjectOutput extends HTMLElement {
         }
         
         this.languageElement.classList.add(`language-${newLanguage}`);
+    }
+
+    async evaluateUserCode(output){
+        console.log("hello?");
+
+        let decision = (success) => {
+            console.log(success, success && success !== null)
+
+            let outputElement = this.typeableCodeElement.outputArea;
+
+            outputElement.classList.toggle("output-mid", (success === null));
+            outputElement.classList.toggle("output-correct", success && success !== null);
+            outputElement.classList.toggle("output-incorrect", !success && success !== null);
+        }
+        decision(null);
+
+        let value = this.textarea.value;
+        //let output = await this.displayUserCode(value);
+
+        if(!output[0]){
+            decision(false);
+            return false;
+        }
+
+        console.log(this.project);
+        let json = getJSONOfCurrentCreateProject(this.project);
+
+        console.log(json);
+
+        let correctCode = isCorrectCode(value, json, output[1]).then((passed) => {
+            if(passed) {decision(true);}
+            this.playerCorrect(passed);
+        });
+
+        console.log(correctCode);
     }
 }
 

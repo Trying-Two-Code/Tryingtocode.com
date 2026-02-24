@@ -17,6 +17,7 @@ class TTCTypeableCode extends HTMLElement {
     render(){
         const placeholder_text = this.getAttribute("placeholder") ?? "code here...";
         const language = this.getAttribute("language") ?? "python";
+        this.language = language;
         const codeText = this.getAttribute("code-text") ?? "";
         this.readonly = this.getAttribute("readonly") ?? false;
 
@@ -30,13 +31,16 @@ class TTCTypeableCode extends HTMLElement {
         this.innerHTML = `
                     <div data-js-tag="container-for-closeable"></div>
                     <div data-js-tag="container-for-hintable"></div>
-                    <div data-js-tag="editor-container" class="code-editor">
-                        <div data-js-tag="side-numbers" class="line-numbers lines code-lines proj-child"></div>
-                        <div class="single-block-grid proj-child">
-                            <textarea data-js-tag="user-code-section" class="main-font codearea proj-child" name="user-code" placeholder="${placeholder_text}" spellcheck="false">${codeText}</textarea>
-                            <pre data-js-tag="pretty-code--pre" class="code-highlight code-lines proj-child main-font" name="pretty-pre"><code data-js-tag="pretty-code" class="language-${language}" name="code-editor--pretty-code">${codeText}</code>
-                            </pre>
+                    <div data-js-tag="editor-container" class="code-editor input-output">
+                        <div class="actual-input-code" style="display: flex; flex-direction: row !important;">
+                            <div data-js-tag="side-numbers" class="line-numbers lines code-lines proj-child"></div>
+                            <div class="single-block-grid proj-child">
+                                <textarea data-js-tag="user-code-section" class="main-font codearea proj-child" name="user-code" placeholder="${placeholder_text}" spellcheck="false">${codeText}</textarea>
+                                <pre data-js-tag="pretty-code--pre" class="language-${language} code-highlight code-lines proj-child main-font" name="pretty-pre"><code data-js-tag="pretty-code" class="language-${language}" name="code-editor--pretty-code">${codeText}</code>
+                                </pre>
+                            </div>
                         </div>
+                        <div data-js-tag="container-for-output"></div>
                     </div>
                     <div data-js-tag="container-for-runnable"></div>
         ` ;
@@ -52,6 +56,7 @@ class TTCTypeableCode extends HTMLElement {
         this.prettyCode = queryME("pretty-code--pre");
         this.prettyPre = queryME("pretty-code");
         this.lineNumbers = queryME("side-numbers");
+        this.specialEnter = false;
     }
 
     initFunctionality(){
@@ -60,9 +65,11 @@ class TTCTypeableCode extends HTMLElement {
         let matchScrollFilled = () => {this.matchScroll(this.prettyPre, this.textarea); this.matchScroll(this.prettyPre, this.lineNumbers);}
         this.textarea.addEventListener('scroll', matchScrollFilled);
         
-        let genCode = () => {this.createPrettyCode(this.prettyCode, this.textarea.value);}
-
-        this.editPresses(() => {this.updateLineNumbers(); genCode();});
+        let updateEverything = () => {
+            this.createPrettyCode(this.prettyCode, this.textarea.value);
+            this.updateLineNumbers(); 
+        }
+        this.editPresses(updateEverything);
 
         this.updateLineNumbers();
     }
@@ -73,7 +80,7 @@ class TTCTypeableCode extends HTMLElement {
         result_element.scrollLeft = element.scrollLeft;
     }
 
-    createPrettyCode(prettyCodeElement, content){
+    createPrettyCode(prettyCodeElement=this.prettyCode, content=this.textarea.value){
         prettyCodeElement.textContent = content;
         Prism.highlightElement(prettyCodeElement);
     }
@@ -100,6 +107,7 @@ class TTCTypeableCode extends HTMLElement {
 
         return [before, after];
     }
+
     getCurrentLine(){
         const text = this.textarea.value;
         const newLineSplit = text.split("\n");
@@ -132,24 +140,29 @@ class TTCTypeableCode extends HTMLElement {
         let changeEnter = (event) => {
             event.preventDefault();
             //if ctr+enter
-            /*if(event.ctrlKey){
+            if(event.ctrlKey && this.specialEnter){
                 //if ctr+sht+enter
-                if(event.shiftKey){
-                    this.project.openProject(1);
+                if(this.runCode){
+                    if(event.shiftKey){
+                        this.project.openProject(1);
+                    }
+                    else{
+                        //run code if just ctr+enter
+                        console.log(this.project);
+                        this.runCode();
+                    }
                 }
                 else{
-                    //run code if just ctr+enter
-                    console.log(this.project.displayUserCode);
-                    this.project.evaluateUserCode();
-                }*/
-            //} else{
+                    console.log("can't run non existant run code", this.runCode);
+                }
+            } else{
                 //just do normal boring enter stuff
                 let autoTabResult = this.autoTab();
                 let newValue = autoTabResult[0] + autoTabResult[1]
                 this.textarea.value = newValue;
                 this.textarea.selectionStart = autoTabResult[0].length;
                 this.textarea.selectionEnd = autoTabResult[0].length;
-            //}
+            }
         }
 
         let changeTab = (event) => {
@@ -190,6 +203,8 @@ class TTCTypeableCode extends HTMLElement {
             }
         }
 
+        
+
         this.textarea.addEventListener('keydown', (event) => {
             let value = this.textarea.value;
 
@@ -221,13 +236,14 @@ class TTCTypeableCode extends HTMLElement {
 
             changePairs(event);
 
-            call();
+            if(event.defaultPrevented){
+                call();
+            }
         });
 
-        let createPrettyCode = this.createPrettyCode;
-        this.textarea.addEventListener('input', () => {
-            let value = this.textarea.value
-            createPrettyCode(prettyCode, value);
+        this.textarea.addEventListener('input', (input) => {
+            //input happens after keydown
+            call();
         });
     }
 }
@@ -264,36 +280,57 @@ export class TTCComplexTypeableCode extends TTCTypeableCode {
     initComplexValues(){
         this.runnableContainer = this.querySelector("[data-js-tag='container-for-runnable']");
         this.closeableContainer = this.querySelector("[data-js-tag='container-for-closeable']");
-        this.hintableContainer = this.querySelector("[data-js-tag='container-for-hintable']");
+        this.linkableContainer = this.querySelector("[data-js-tag='container-for-hintable']");
 
         this.outputHeight = this.getAttribute("output-height") ?? null;
     }
 
     editToRunnable(){
+        this.outputContainer = this.querySelector("[data-js-tag='container-for-output']");
+
         this.codeOutput = "";
         let nextProjectClass = "";
         if(!this.runnableContainer && !this.nextProjButton) { nextProjectClass = "gone"; }
 
+        this.outputHTML = `
+        <textarea js-data-tag="output-section" name="output" class="lines output output-mid main-font code-lines proj-child">output</textarea>
+        `;
         this.addedRunnableHTML = `
         <div class="project-button-buttons proj-child">
             <button js-data-tag="run-button" title="run code" name="run-button" class="run-code"><img class="run-code-button-img" src="./components/art/play button 1 - big.png"></img></button>
             <button title="go to next project" alt="next project" name="next-button" class="next-project ${nextProjectClass}" name="next-button"><img src="./components/art/arrow - 1.png"></button>
         </div>
-        <textarea js-data-tag="output-section" name="output" class="lines output output-mid main-font code-lines proj-child">output</textarea>
         ` ;
         this.runnableContainer.insertAdjacentHTML("afterbegin", this.addedRunnableHTML);
+        this.outputContainer.insertAdjacentHTML("afterbegin", this.outputHTML);
 
         this.outputArea = this.querySelector("[js-data-tag='output-section']");
         this.runButton = this.querySelector("[js-data-tag='run-button']");
+
+
         this.runButton.addEventListener("click", async() => {
-            this.codeOutput = await runUserCode(this.textarea.value);
-            this.outputArea.value = this.codeOutput[1];
+            console.log(this.project, "1");
+            if(typeof this.project === "undefined") { console.error("if I don't have a display, I can't run"); return; }
+            console.log(this.project, "2");
+            if(this.project.canRun){
+                this.runCode();
+            }
         });
 
         if(this.outputHeight){
             this.outputArea.style.height = this.outputHeight;
         }
         this.outputArea.readOnly = this.readonly;
+        this.specialEnter = true;
+    }
+
+    async runCode(){
+        console.log("ran code");
+        this.codeOutput = await runUserCode(this.textarea.value);
+        console.log("ran code");
+        this.outputArea.value = this.codeOutput[1];
+        console.log("ran code");
+        this.project.evaluateUserCode(this.codeOutput);
     }
 
     editToCloseable(){
@@ -310,32 +347,63 @@ export class TTCComplexTypeableCode extends TTCTypeableCode {
                         <img style="width: 30px; height: 30px;" name="reset-img" src="./components/art/reload - 3.png" class="nice-button">
                     </button>
                 </div>
+                <img draggable="false" src="./components/art/ttc coin icon.png" class="hide completed-icon show-when-mini" name="completed-icon"></img>
                 <p class="project-title show-when-mini" name="project-title">title</p>
-                <div class="button project-hint-button">
-                    <button class="project-hint-button project-button" title="get hint if stuck">
-                        <img style="width: 50px; height: 50px;" name="hint-img" src="./components/art/clue - 5.png" class="nice-button">
-                    </button>
-                </div>
+                <div data-js-tag="hintable-container"></div>
             </div>
-            <dialog class="main-font hint-popup hide" open>404</dialog>
+            <dialog data-js-tag='hint-popup' class="main-font hint-popup hide" open>404</dialog>
         </div>  
         <p class="instructions proj-child" name="project-mission">mission</p> 
         `;
         this.closeableContainer.insertAdjacentHTML("afterbegin", this.addedCloseableHTML);
         this.projectTitle = this.querySelector("[name='project-title']");
         this.mission = this.querySelector("[name='project-mission']");
+        this.hintableContainer = this.querySelector("[data-js-tag='hintable-container']");
+        this.hintablePopup = this.querySelector("[data-js-tag='hint-popup']");
     }
 
     editToHintable(){
+        if(!this.hintableContainer) { return; }
         
+        this.addedHintableHTML = `
+            <div class="button project-hint-button">
+                <button data-js-tag="hint-toggle-button" class="project-hint-button project-button" title="get hint if stuck">
+                    <img style="width: 50px; height: 50px;" name="hint-img" src="./components/art/clue - 5.png" class="nice-button">
+                </button>
+            </div>
+        `;
+        
+        this.hintableContainer.insertAdjacentHTML("afterbegin", this.addedHintableHTML);
+        
+        let addBehaviour = () => {
+            this.hintToggleButton = this.querySelector("[data-js-tag='hint-toggle-button']");
+            let toggleEvent = () => {
+                //console.log(this.hintablePopup);
+                this.hintablePopup.show();
+                this.hintablePopup.classList.toggle("hide");
+            }
+
+            this.hintToggleButton.addEventListener("click", toggleEvent);
+            this.hintablePopup.addEventListener("click", toggleEvent);
+        }
+
+        addBehaviour();
     }
 
     editToLinkable(){
-        this.addedHintableHTML = `
+        this.addedLinkableHTML = `
             <button class="nice-button link-button" name="link-unlink-toggle"><img class="link-button--image" src="../components/art/link-unlink -1.png"></img></button>
         `;
 
-        this.hintableContainer.insertAdjacentHTML("afterbegin", this.addedHintableHTML);
+        this.linkableContainer.insertAdjacentHTML("afterbegin", this.addedLinkableHTML);
+    }
+
+    initResetButton(resetButton, initialCode){
+        if(!this.textarea) { console.error("cannot reset a non existant codearea"); return; }
+        resetButton.addEventListener("click", () => {
+            this.textarea.value = initialCode;
+            this.createPrettyCode();
+        });
     }
 }
 

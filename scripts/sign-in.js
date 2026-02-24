@@ -23,12 +23,16 @@ export class SignIn{
     constructor(document, parent, HTML=htmlGen){
         let template = document.createElement('template');
 
+        console.log(HTML.trim());
         template.innerHTML = HTML.trim();
         this.content = template.content;
         this.projectEl = this.content.firstElementChild;
 
         this.parent = parent;
-        parent.appendChild(this.content);
+
+        console.log(parent);
+
+        this.parent.appendChild(this.content);
 
         this.findElements();
     }

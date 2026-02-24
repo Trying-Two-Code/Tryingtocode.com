@@ -3,7 +3,7 @@
 import { runUserCode } from "./user-code/pyrun.js";
 import { CodeArea } from "./user-code/code-area.js";
 import { isCorrectCode } from  "./user-code/check-code.js";
-import { Toggle } from "./tools.js";
+//import { Toggle } from "./tools.js";
 import { scrollToTop } from "./learn.js";
 
 //general use
@@ -11,7 +11,7 @@ import { scrollToTop } from "./learn.js";
 let htmlGen = 
 `
     <div id="learn-project" class="project mini main-font">
-        <div class="top-bar proj-child show-when-mini" style="cursor: pointer;">
+        <!--div class="top-bar proj-child show-when-mini" style="cursor: pointer;">
             <div class="close-restart">
                 <div class="button">
                     <button class="project-close-button project-button" title="close project">
@@ -32,12 +32,12 @@ let htmlGen =
                 </button>
             </div>
             <dialog class="main-font hint-popup hide" open>404</dialog>
-        </div>
-        <p class="instructions proj-child">instructions</p>
+        </div-->
+        <!--p class="instructions proj-child">instructions</p-->
         <div class="codeAreaParent proj-child"></div>
         <div class="project-button-buttons proj-child">
-            <button title="run code" name="run-button" class="run-code"><img class="run-code-button-img" src="./components/art/play button 1 - big.png"></img></button>
-            <button title="go to next project" alt="next project" name="next-button" class="next-project" name="next-button"><img src="./components/art/arrow - 1.png"></button>
+            <!--button title="run code" name="run-button" class="run-code"><img class="run-code-button-img" src="./components/art/play button 1 - big.png"></img></button>
+            <button title="go to next project" alt="next project" name="next-button" class="next-project" name="next-button"><img src="./components/art/arrow - 1.png"></button-->
         </div>
     </div>
 `;
@@ -69,12 +69,28 @@ export class Display {
 
         this.initButtons();
 
-        this.codeArea.createText("\n");
         this.lastLineCount = 1;
 
         this.setAttributes();
 
         this.reward = 5;
+    }
+
+    findElements(){
+        const query = (className) => {return this.projectEl.querySelector(className);}
+
+        this.runButton =    query('.run-code');
+        this.output =       query('.output');
+        this.textarea =     this.codeArea.textarea;
+        this.lineNumbers =  query(".line-numbers");
+        this.closeButton =  query(".project-close-button");
+        this.rewindButton = query(".project-restart-button");
+        this.title =        query(".project-title");
+        this.instructions = query(".instructions");
+        this.completedIcon= query(".completed-icon");
+        this.nextButton =   query(".next-project");
+        this.hintPopup =    query(".hint-popup");
+        this.hintButton =   query(".project-hint-button");
     }
 
     
@@ -109,18 +125,19 @@ export class Display {
 
     initButtons(){
         let closeButtonEvent = (e) => {e.stopPropagation(); this.toggleOtherProjects(); this.minimize({mini: true, gone: false});}
-        let nextButtonEvent = (e) => {e.stopPropagation(); this.openProject(1);}
-        let rewindButtonEvent = () => {this.codeArea.createText(this.projectJSON.code);}
-        let hintButtonEvent = () => {this.toggleHint();}
+        let nextButtonEvent = (e) => {e.stopPropagation(); this.openProject(1);} 
+        //let rewindButtonEvent = () => {this.codeArea.createText(this.projectJSON.code);} 
+        //let hintButtonEvent = () => {this.toggleHint();}
 
         this.closeButton.addEventListener('click', closeButtonEvent);
         this.nextButton.addEventListener('click', nextButtonEvent);
         //this.nextButton.classList.toggle("glow");
-        this.rewindButton.addEventListener('click', rewindButtonEvent);
-        this.hintButton.addEventListener('click', hintButtonEvent);
-        this.hintPopup.addEventListener('click', hintButtonEvent);
+        //this.rewindButton.addEventListener('click', rewindButtonEvent);
+        this.codeArea.projectEl.initResetButton(this.rewindButton, this.projectJSON.code);
+        //this.hintButton.addEventListener('click', hintButtonEvent);
+        //this.hintPopup.addEventListener('click', hintButtonEvent);
         
-        setupRunButton(this);
+        //setupRunButton(this);
     }
 
     countTimeOpen(){
@@ -170,26 +187,8 @@ export class Display {
         this.codeArea = new CodeArea(document, this.codeAreaParent, this);
     }
 
-    findElements(){
-        const query = (className) => {return this.projectEl.querySelector(className);}
-
-        this.runButton =    query('.run-code');
-        this.output =       query('.output');
-        this.textarea =     this.codeArea.textarea;
-        this.lineNumbers =  query(".line-numbers");
-        this.closeButton =  query(".project-close-button");
-        this.rewindButton = query(".project-restart-button");
-        this.title =        query(".project-title");
-        this.instructions = query(".instructions");
-        this.completedIcon= query(".completed-icon");
-        this.nextButton =   query(".next-project");
-        this.hintPopup =    query(".hint-popup");
-        this.hintButton =   query(".project-hint-button");
-    }
 
     setAttributes(){
-        this.codeArea.createText(this.projectJSON.code);
-        this.codeArea.editPresses(() => this.codeArea.updateLineNumbers());
         let title = this.projectJSON.title;
         if(this.projectJSON.hint != undefined) {
             this.hintPopup.innerHTML = this.projectJSON.hint;
@@ -198,7 +197,11 @@ export class Display {
         }
         this.title.innerHTML = title;
         this.instructions.innerHTML = 'mission: ' + this.projectJSON.instruction;
-        this.output.disabled = true;
+
+        this.codeArea.textarea.value = this.projectJSON.code;
+        this.codeArea.projectEl.createPrettyCode(this.codeArea.prettyPre, this.projectJSON.code);
+        //debugger;
+        //this.output.disabled = true;
     }
 
     async getInput(){
@@ -287,19 +290,13 @@ export class Display {
         detectCanRun();
     }
 
-    async displayUserCode(code){
-        this.output.value = "...";
-        let result = await runUserCode(code);
-        this.output.value = result[1];
-        return result;
-    }
-
     toggleHint(element=this.hintPopup, toThis=undefined) {
+        return;
         this.hintToggled = !this.hintToggled;
         element.classList.toggle("hide", toThis);
     }
 
-    async evaluateUserCode(){
+    async evaluateUserCode(output){
         let decision = (success) => {
             console.log(success, success && success !== null)
 
@@ -310,7 +307,6 @@ export class Display {
         decision(null);
 
         let value = this.textarea.value;
-        let output = await this.displayUserCode(value);
 
         if(!output[0]){
             decision(false);
@@ -321,8 +317,19 @@ export class Display {
 
         correctCode = isCorrectCode(value, json, output[1]).then((passed) => {
             if(passed) {decision(true);}
-            playerCorrect(passed, this);
+            this.playerCorrect(passed);
         });
+    }
+    
+    playerCorrect(passed){
+        if(passed){
+            rewardPlayer(this);
+            this.nextButton.classList.add("glow");
+        }
+        else{
+            //console.log("user code was " + output + " || But the code should've been " + this.projectJSON["output-includes"]);
+            //logDiscrepancy(output, value, json);
+        }
     }
     
 }
@@ -340,30 +347,6 @@ function rewardPlayer(display){
         display.reward = 0;
         display.completedIcon.classList.remove("hide");
     }
-}
-
-let playerCorrect = (passed, display) => {
-    if(passed){
-        rewardPlayer(display);
-        display.nextButton.classList.add("glow");
-    }
-    else{
-        //console.log("user code was " + output + " || But the code should've been " + display.projectJSON["output-includes"]);
-        //logDiscrepancy(output, value, json);
-    }
-}
-
-function setupRunButton(display){
-    let runButtonAction = async() => {
-        if(!display.canRun){
-            console.log("don't run disabled projects (:");
-        }
-        else{
-            display.evaluateUserCode();
-        }
-    }
-
-    display.runButton.addEventListener('click', runButtonAction);
 }
 
 /* //useful log function
