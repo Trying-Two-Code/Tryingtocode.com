@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/prism.css">
 
+    <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
     <script src="./scripts/index.js" type="module"></script>
     <script src="./scripts/general.js" type="module"></script>
     <script src="./scripts/firebase-backend/firebase.js" type="module" defer></script>
@@ -81,16 +82,18 @@
                 </div>
                 
             </div>
-            <div class="welcome--sign-in">
-                <a href="#signin" title="Learn">
-                    <button class="welcome--demo--learn" id="toggle-signinup"><img class="nice-button" src="./components/art/clean icon - 10.png" alt=""></button>
-                </a>
-            </div>
-            <div id="sign-in-holder"></div>
 
         </div>
 
         <p class="welcome--p">(by the way, it's free)</p>
+
+
+        <div class="welcome--sign-in">
+            <a href="#signin" title="Learn">
+                <button class="welcome--demo--learn" id="toggle-signinup"><img class="nice-button" src="./components/art/profile - 4.png" alt=""></button>
+            </a>
+            <div id="sign-in-holder"></div>
+        </div>
 
         <div class="footer-parent">
             <ttc-footer copywrite="tryingtocode" mail-to="contact@tryingtocode.com" legal-src="./legal.html" privacy-src="/privacy-policy.html"></ttc-footer>

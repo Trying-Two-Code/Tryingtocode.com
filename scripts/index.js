@@ -1,11 +1,9 @@
 //for use in index.html
 import { SignIn } from "./sign-in.js";
-//import { signInUp } from '../firebase.js';
+import { signInUp } from './firebase-backend/firebase.js';
 import { getCoin, changeNumber} from "./coin/coin.js";
 import { Toggle } from "./tools.js";
 //import { runUserCode } from "./pyrun.js";
-
-let print = text => {console.log(text);}
 
 let signInParent = document.getElementById("sign-in-holder");
 let toggleSigninup = document.getElementById("toggle-signinup");

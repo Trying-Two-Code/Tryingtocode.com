@@ -233,6 +233,12 @@ body {
 
 .welcome--demo--learn-button > * { width: inherit; height: inherit; }
 
+.welcome--sign-in {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 /*------------------------------------*\
     #SIGN IN
 \*------------------------------------*/

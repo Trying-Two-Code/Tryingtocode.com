@@ -1,4 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js';
+import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app-check.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyABP5ADKcI2zC2ZdQ3pSUkuc1wmwBIbcwo",
@@ -13,6 +14,22 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 window.app = app;
 
+
+
+import { getAuth, signInAnonymously, createUserWithEmailAndPassword,  
+    signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+import { getPerformance } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-performance.js";
+import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
+
+
+
+
+const auth = getAuth(app);
+window.auth = auth;
+const db = getFirestore(app);
+window.db = db;
+
 try {
     const appCheck = initializeAppCheck(app, {
         provider: new ReCaptchaV3Provider("6LdQ-WUsAAAAAOpmabw66DZ63svdPZTj9c6YJyPm"),
@@ -23,21 +40,6 @@ catch (error) {
     console.error("app check not working: ", error);
 }
 
-
-import { getAuth, signInAnonymously, createUserWithEmailAndPassword,  
-    signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-import { getPerformance } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-performance.js";
-import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app-check.js";
-import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
-
-
-
-
-const auth = getAuth(app);
-window.auth = auth;
-const db = getFirestore(app);
-window.db = db;
 
 //console.log("db: ", window.db);
 

@@ -1,3 +1,5 @@
+import { exp } from "firebase/firestore/pipelines";
+
 //to make a button go through a series of images when pressed
 export class ImageButton {
     constructor(button, images){
@@ -229,3 +231,5 @@ export let timeSince = (eventName="something", valueWhenNeverDoneBefore=null) =>
         return valueWhenNeverDoneBefore;
     }
 }
+
+export let print = (text) => {console.log(text);}
