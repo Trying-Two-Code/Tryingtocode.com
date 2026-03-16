@@ -13,29 +13,31 @@ class TTCSignIn extends HTMLElement {
         this.innerHTML = `
             <div data-js-tag="sign-in-holder" class="sign-in-holder"></div>
                 <div class="welcome--sign-in">
-                <a href="#signin" title="Learn">
-                    <button class="no-bg-button" data-js-tag="toggle-signinup"><img class="nice-button si-button-image" src="./components/art/profile - 4.png" alt=""></button>
-                </a>
-                <div data-js-tag="sign-in-elements-holder">
-                    <div data-js-tag="sign-in" class="sign-in">
-                        <form action="">
-                            <h1 class="si-title">Sign in</h1>
-                            <div class="input-box si-input-container">
-                                <input data-js-tag="username" type="text" placeholder="Username" class="si-input main-font" required>
+                    <a href="#signin" title="Learn">
+                        <button class="no-bg-button" data-js-tag="toggle-signinup"><img class="nice-button si-button-image" src="./components/art/profile - 4.png" alt=""></button>
+                    </a>
+                    <div data-js-tag="sign-in-elements-holder">
+                        <div data-js-tag="sign-in" class="sign-in">
+                            <form action="">
+                                <h1 class="si-title">Sign in</h1>
+                                <div class="input-box si-input-container">
+                                    <input data-js-tag="username" type="text" placeholder="Username" class="si-input main-font" required>
+                                </div>
+                                <div class="input-box si-output-container">
+                                    <input type="password" data-js-tag="password" type="text" placeholder="Password" class="si-output main-font" required minlength="4">
+                                </div>
+                            </form>
+                            <div class="si-button-flexbox">
+                                <button data-js-tag="exit-button" class="si-exit main-font">
+                                    <img style="width: 30px; height: 30px;" data-js-tag="close-img" src='./components/art/close button 1.png'>
+                                </button>
+                                <button data-js-tag="submit-button" class="si-submit main-font">Submit</button>
                             </div>
-                            <div class="input-box si-output-container">
-                                <input type="password" data-js-tag="password" type="text" placeholder="Password" class="si-output main-font" required minlength="4">
-                            </div>
-                        </form>
-                        <div class="si-button-flexbox">
-                            <button data-js-tag="exit-button" class="si-exit main-font">
-                                <img style="width: 30px; height: 30px;" data-js-tag="close-img" src='./components/art/close button 1.png'>
-                            </button>
-                            <button data-js-tag="submit-button" class="si-submit main-font">Submit</button>
                         </div>
                     </div>
                 </div>
             </div>
+
             
         `;
 

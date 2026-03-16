@@ -1,11 +1,11 @@
 //to make a button go through a series of images when pressed
 export class ImageButton {
-    constructor(button, images){
+    constructor(button, images, currentImage=0){
         this.button = button;
         console.log(button);
-        this.buttonImage = button.firstChild;
+        this.buttonImage = button.children[0];
         this.images = images;
-        this.currentImage = 0;
+        this.currentImage = currentImage;
 
         this.initializeButtonLogic();
     }

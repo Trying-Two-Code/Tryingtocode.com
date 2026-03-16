@@ -66,7 +66,10 @@ catch (error) {
 const analytics = getAnalytics(app);
 
 logEvent(analytics, 'page loaded');
-window.logEvent = (log, data={}) => {console.log("loging", log, data); logEvent(analytics, log, data);};
+window.logEvent = (log, data={}) => {
+    console.log("loging", log, data); 
+    logEvent(analytics, log, data);
+};
 
 let setWindowUser = (toThis) => {
     if(toThis == null) {console.error("toThis invalid: ", toThis); return null;}

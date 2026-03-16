@@ -156,7 +156,12 @@ export class Display {
             result = result / 1000;
             result = Math.round(result);
             try{
-                window.logEvent("time open", { value: result, project_index: this.projectIndex, project_title: this.title.value, project_section: this.projectSection });
+                window.logEvent("time open", 
+                    {   value: result, 
+                        project_index: this.projectIndex, 
+                        project_title: this.title.value, 
+                        project_section: this.projectSection 
+                    });
             }catch{
                 console.log("could not log");
             }

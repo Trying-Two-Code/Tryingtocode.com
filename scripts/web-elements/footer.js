@@ -15,7 +15,7 @@ class TTCFooter extends HTMLElement {
         const mailTo = this.getAttribute("mail-to");
 
         this.innerHTML = `
-            <footer class="footer">
+            <footer class="footer main-font">
                 <div class="row">
                     <div class="column">
                         <p>about</p>

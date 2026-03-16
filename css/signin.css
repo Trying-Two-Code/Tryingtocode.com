@@ -100,8 +100,11 @@
 	line-height: 0.9em;
 }
 
-.sign-in-holder{
+.sign-in-holder, .settings-holder{
     display: flex;
+	justify-content: center;
+	align-items: center;
+
 }
 
 
@@ -110,4 +113,8 @@
 	image-rendering: pixelated;
 	width: 100px;
 	height: 100px;
+}
+
+.footer-parent{
+	display: flex;
 }
