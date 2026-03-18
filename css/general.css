@@ -571,9 +571,24 @@ body {
 .footer-parent {
     position: flex;
     min-height: 100px;
-    width: calc(100%);
     bottom: 0;
-    left:var(--sidebar-width);
+}
+
+@media (orientation: landscape) {
+    .footer-parent {
+        left:var(--sidebar-width);
+        width: 100%;
+    }
+}
+
+@media (orientation: portrait) {
+    .footer-parent{
+        position: block;
+
+        left: 0;
+        width: 100%;
+        align-items: center;
+    }
 }
 
 .footer {
@@ -605,7 +620,6 @@ body {
 }
 
 
-
 .footer .row {
     display: grid;
     grid-template-columns: auto auto auto auto;
@@ -620,16 +634,4 @@ body {
 	.footer .row {
         grid-template-columns: auto;
     }
-}
-
-@media (orientation: portrait) {
-    .footer-parent{
-        position: block;
-
-        left: 0 !important;
-        width: 100%;
-        align-items: center;
-    }
-
-    
 }

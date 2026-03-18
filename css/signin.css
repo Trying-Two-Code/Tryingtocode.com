@@ -36,7 +36,16 @@
 	height: 0px;
 }
 
-.slow-hide > * {
+.slow-hide * {
+	transition: font-size .1s, width .3s, height .3s, opacity .3s;
+	font-size: 0;
+	width: 0px;
+	height: 0px;
+	opacity: 0;
+	/*display: none;*/
+}
+
+.slow-hide image {
 	display: none;
 }
 
@@ -101,6 +110,8 @@
 }
 
 ttc-sign-in, ttc-settings, .welcome--sign-in{
+	--size-speed: .3s;
+	transition: font-size .1s, width var(--size-speed), height var(--size-speed);
     display: flex;
 	justify-content: center;
 	align-items: center;

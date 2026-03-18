@@ -71,10 +71,15 @@ body {
 	width: 0px;
 	height: 0px;
 }
-
+.slow-hide * {
+	display: none;
+	visibility: none;
+}
+/*
 .slow-hide > * {
 	display: none;
 }
+*/
 
 .lined-background {
 	--line-size: min(8rem, 10vw);

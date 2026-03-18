@@ -11,8 +11,8 @@
 */
 
 let loading = document.querySelector(".loader-sprite");
-if(typeof loading !== "undefined"){
-    loading.style.setProperty("--theme", `url("../components/visuals/icons/lod-animation/${window.theme}.png")`);
+if(typeof loading !== "undefined" && loading != null){
+    loading.style.setProperty("--theme", `url("../components/visuals/icons/load-animation/${window.theme}.png")`);
 }
 
 /*let dropdownButton = document.getElementById("dropdown-button");

@@ -1,4 +1,4 @@
-import { SimpleToggle } from '../tools.js';
+import { Toggle } from '../tools.js';
 import { signInUp } from '../firebase-backend/firebase.js';
 
 class TTCSignIn extends HTMLElement {
@@ -15,7 +15,7 @@ class TTCSignIn extends HTMLElement {
             <div data-js-tag="sign-in-holder" class="sign-in-holder"></div>
                 <div class="welcome--sign-in">
                     <a href="#signin" title="Learn">
-                        <button class="no-bg-button" data-js-tag="toggle-signinup"><img class="nice-button si-button-image" src="./components/art/profile - 4.png" alt=""></button>
+                        <button class="no-bg-button" data-js-tag="toggle-signinup"><img class="nice-button si-button-image" src="./components/visuals/icons/sign-in/new-user/${window.theme}.png" alt=""></button>
                     </a>
                     <div data-js-tag="sign-in-elements-holder">
                         <div data-js-tag="sign-in" class="sign-in">
@@ -30,7 +30,7 @@ class TTCSignIn extends HTMLElement {
                             </form>
                             <div class="si-button-flexbox">
                                 <button data-js-tag="exit-button" class="si-exit main-font">
-                                    <img style="width: 30px; height: 30px;" data-js-tag="close-img" src='./components/art/close button 1.png'>
+                                    <img style="width: 30px; height: 30px;" data-js-tag="close-img" src='./components/visuals/icons/project/close/${window.theme}.png'>
                                 </button>
                                 <button data-js-tag="submit-button" class="si-submit main-font">Submit</button>
                             </div>
@@ -53,12 +53,11 @@ class TTCSignIn extends HTMLElement {
         this.exit = this.querySelector("[data-js-tag='exit-button']");
 
         this.toggler = this.querySelector("[data-js-tag='toggle-signinup'");
-        this.toggleThis = this.querySelector("[data-js-tag='sign-in-elements-holder']");
+        this.toggleThis = this.querySelector("[data-js-tag='sign-in']");
     }
 
     setupElements(){
-        this.mainToggle = new SimpleToggle(this.toggler, [this.toggleThis]);
-        this.mainToggle.setupToggle();
+        this.mainToggle = new Toggle(this.toggler, [this.toggleThis], "slow-hide", "sign-in");
 
         this.setupSigninUp();
         this.setupCloseButton();
@@ -82,7 +81,8 @@ class TTCSignIn extends HTMLElement {
 
     setupCloseButton(){
         let closeEvent = () => {
-            this.mainToggle.hide();
+            console.log("it is trying to work");
+            this.mainToggle.toggleEvent();
         };
         this.exit.addEventListener("click", () => {
             closeEvent();

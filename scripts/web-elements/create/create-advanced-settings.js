@@ -4,16 +4,17 @@ class advancedSettings extends HTMLElement{
     }
 
     render() {
+        this.path = "../components/visuals/icons/create";
         this.innerHTML = `
-        <button class="advanced--toggle nice-button" data-js-tag="advanced-toggle"><img draggable="false" class="advanced--toggle--image" src="../components/art/advanced settings - 1.png" alt="advanced settings"></button>
+        <button class="advanced--toggle nice-button" data-js-tag="advanced-toggle"><img draggable="false" class="advanced--toggle--image" src="${this.path}/advanced-toggle/${window.theme}/frame-1.png" alt="advanced settings"></button>
         <div data-js-tag="settings-toggled-element">
 
-            <button class="language-select nice-button" data-js-tag="language-select-toggle"><img title="select language" draggable="false" src="../components/art/language logo - python.png" alt="select language" class="language-select-toggle--image"></button>
+            <button class="language-select nice-button" data-js-tag="language-select-toggle"><img title="select language" draggable="false" src="${this.path}/language/python/${window.theme}.png" alt="select language" class="language-select-toggle--image"></button>
             <div data-js-tag="language-toggled-element" class="language-toggled-elements">
-                <li name="language-select--image-element-python" class="language-select--image-element" id="python-element"><img title="python" alt="python" draggable="false" src="../components/art/language logo - python.png" class="language-select--image-element--image"></li>
-                <li name="language-select--image-element-javascript" class="language-select--image-element unsupported" id="javascript-element"><img title="not supported yet" alt="not supported yet" draggable="false" src="../components/art/language logo - javascript.png" class="language-select--image-element--image"></li>
-                <li name="language-select--image-element-html" class="language-select--image-element unsupported" id="html-element"><img title="not supported yet" alt="not supported yet" draggable="false" src="../components/art/language logo - html.png" class="language-select--image-element--image"></li>
-                <li name="language-select--image-element-c" class="language-select--image-element unsupported" id="c-element"><img title="not supported yet" alt="not supported yet" draggable="false" src="../components/art/language logo - c.png" class="language-select--image-element--image"></li>
+                <li name="language-select--image-element-python" class="language-select--image-element" id="python-element"><img title="python" alt="python" draggable="false" src="${this.path}/language/python/${window.theme}.png" class="language-select--image-element--image"></li>
+                <li name="language-select--image-element-javascript" class="language-select--image-element unsupported" id="javascript-element"><img title="not supported yet" alt="not supported yet" draggable="false" src="${this.path}/language/js/${window.theme}.png" class="language-select--image-element--image"></li>
+                <li name="language-select--image-element-html" class="language-select--image-element unsupported" id="html-element"><img title="not supported yet" alt="not supported yet" draggable="false" src="${this.path}/language/html/${window.theme}.png" class="language-select--image-element--image"></li>
+                <li name="language-select--image-element-c" class="language-select--image-element unsupported" id="c-element"><img title="not supported yet" alt="not supported yet" draggable="false" src="${this.path}/language/c/${window.theme}.png" class="language-select--image-element--image"></li>
             </div>
             
             <div data-js-tag="user-measure" class="usercode-measure">
@@ -35,6 +36,7 @@ class advancedSettings extends HTMLElement{
 
     initValues(){
         this.priorityElement = this.querySelector("[data-js-tag='priority-section']");
+        window.applySettings();
     }
 }
 

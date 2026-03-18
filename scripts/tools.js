@@ -32,8 +32,9 @@ export class ImageButton {
 }
 
 //used for things such as sign in toggle button, and sidebar toggle
+//mildly more complicated than SimpleToggle
 export class Toggle{
-    constructor(toggleButton, effectedElements, primaryClass, secondaryClass=null, transitionedElement=null, animatedElement=null){
+    constructor(toggleButton, effectedElements, primaryClass, secondaryClass=null, transitionedElement=null, animatedElement=null, startToggled=true){
         this.effectedElements = ensureArray(effectedElements);
         this.primaryClass = primaryClass;
         this.secondaryClass = secondaryClass;
@@ -42,6 +43,8 @@ export class Toggle{
         this.transitionedElement = transitionedElement;
         this.animatedElement = animatedElement;
         this.toggleButton = toggleButton;
+
+        this.startToggled = startToggled;
 
         this.initializeLogic();
     }
@@ -53,7 +56,9 @@ export class Toggle{
         this.addEvent(this.toggleEventFilled);
         this.addEvent(this.triggerGoneFilled);
 
-        this.toggleEvent();
+        if(this.startToggled){
+            this.toggleEvent();
+        }
     }
 
     addEvent(event, button=this.toggleButton){
@@ -123,12 +128,14 @@ let ensureArray = (variable) => {
 }
 
 //An element that is collapsable from a toggle button, and toggles elements
+//keep simple, if you feel like refactoring, maybe just use a different class
 export class SimpleToggle{
     constructor(parent, elements, images=[]){
         this.hidden = true;
         this.parent = parent;
         this.elements = elements;
         this.images = images;
+        this.hideClassName = "hide";
         this.setupFunctionality();
     }
     setupFunctionality(){
@@ -146,7 +153,7 @@ export class SimpleToggle{
 
         this.hidden = true;
         this.elements.forEach(elem => {
-            elem.classList.add("hide");
+            elem.classList.add(this.hideClassName);
         });
         
         if(this.hasImages){
@@ -161,7 +168,7 @@ export class SimpleToggle{
 
         this.hidden = false;
         this.elements.forEach(elem => {
-            elem.classList.remove("hide");
+            elem.classList.remove(this.hideClassName);
         });
         if(this.hasImages){
             this.parentImage.src = this.images[0];

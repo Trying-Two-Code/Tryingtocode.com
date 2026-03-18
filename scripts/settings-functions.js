@@ -91,7 +91,10 @@ export let applySettings = () => {
     }
 
     let applyFont = () => {
-        document.querySelectorAll('*').forEach(element => {
+        let fontElements = document.getElementsByClassName("main-font");
+        fontElements = Array.from(fontElements);
+        //document.querySelectorAll('*').forEach(element => {
+        fontElements.forEach(element => {
             if(!element.classList.contains("main-font")){ return; }
 
             let oneFontSelected = false;
@@ -128,7 +131,9 @@ export let applySettings = () => {
     applyFont();
 }
 
+console.log("settings initialised.");
 requestAnimationFrame(applySettings);
+window.applySettings = () => { applySettings(); };
 
 /*var isPixel = true;
 export let updateSettings = (document) => {

@@ -1,4 +1,4 @@
-import { SimpleToggle } from '../tools.js';
+import { SimpleToggle, Toggle } from '../tools.js';
 import { fontChange } from '../settings-functions.js';
 
 class TTCSettings extends HTMLElement {
@@ -20,7 +20,7 @@ class TTCSettings extends HTMLElement {
                 </button>
             </div>
             <div data-js-tag="settings-holder">
-                <div class="settings">
+                <div class="">
                     <button data-js-tag='toggle-font-button' class="nice-button no-bg-button main-font">dropdown font</button>
                     <div data-js-tag="font-choice">
                         <button class="nice-button no-bg-button pixel-1" data-font="pixel1">default pixel font</button>
@@ -42,7 +42,7 @@ class TTCSettings extends HTMLElement {
                     <br></br>
 
                     <button data-js-tag="exit-button" class="si-exit main-font">
-                        <img style="width: 30px; height: 30px;" data-js-tag="close-img" src="${this.iconPath}/project/close/${this.theme}.png">
+                        <img style="width: 30px; height: 30px;" data-js-tag="close-img" src="${this.iconPath}/project/close/${this.theme}.png" draggable="false"></img>
                     </button>
                 </div>
             </div>
@@ -55,6 +55,7 @@ class TTCSettings extends HTMLElement {
     findElements(){
         this.toggleElement = this.querySelector("[data-js-tag='settings-toggle']");
         this.holderElement = this.querySelector("[data-js-tag='settings-holder']");
+        this.holderElementChild = this.holderElement.children[0];
         
         this.toggleButton = this.toggleElement.querySelector("[data-js-tag='settings-toggle-button']");
 
@@ -68,8 +69,10 @@ class TTCSettings extends HTMLElement {
 
     setupElements(){
         console.log(this.toggleButton);
-        this.mainToggle = new SimpleToggle(this.toggleButton, [this.holderElement]);
-        this.mainToggle.setupToggle();
+        //this.mainToggle = new SimpleToggle(this.toggleButton, [this.holderElement]);
+        this.mainToggle = new Toggle(this.toggleButton, [this.holderElementChild], "slow-hide", "settings");
+        //make it use slow hide rather than hide class
+        //this.mainToggle.setupToggle();
 
         this.fontToggle = new SimpleToggle(this.fontToggleButton, [this.fontChoices]);
         this.fontToggle.setupToggle();
@@ -78,7 +81,7 @@ class TTCSettings extends HTMLElement {
         this.themeToggle.setupToggle();
 
         this.exitButton.addEventListener("click", () => {
-            this.mainToggle.hide();
+            this.mainToggle.toggleEvent();
         });
 
         this.setupFontSetting();
