@@ -324,7 +324,7 @@ export class TTCComplexTypeableCode extends TTCTypeableCode {
         this.addedRunnableHTML = `
         <div class="project-button-buttons proj-child">
             <button js-data-tag="run-button" title="run code" name="run-button" class="run-code"><img class="run-code-button-img big-image" src="./components/visuals/icons/project/run-code/${window.theme}${window.imageExtension}"></img></button>
-            <button title="go to next project" alt="next project" name="next-button" class="next-project ${nextProjectClass} pixel-img" name="next-button"><img src="./components/visuals/icons/project/next-project/${window.theme}${window.imageExtension}"></button>
+            <button title="go to next project" alt="next project" name="next-button" class="next-project ${nextProjectClass} pixel-img" name="next-button"><img class="next-project" src="./components/visuals/icons/project/next-project/${window.theme}${window.imageExtension}"></button>
         </div>
         ` ;
         this.runnableContainer.insertAdjacentHTML("afterbegin", this.addedRunnableHTML);

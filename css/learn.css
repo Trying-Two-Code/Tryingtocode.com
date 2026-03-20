@@ -464,7 +464,6 @@
 }
 
 .run-code {
-    width: fit-content;
     font-size: large;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -475,14 +474,35 @@
 }
 
 .next-project {
+    overflow: hidden;
     font-size: large;
-    margin-top: 10px;
-    margin-bottom: 10px;
     padding: 1px;
     background-color: #00000000;
     border-color: #00000000;
     overflow-y: auto;
     box-sizing: border-box;
+}
+
+.next-project .run-code {
+    width: 100%;
+}
+
+@media (orientation: landscape) {
+    .next-project{
+        max-width: 64px;
+    }
+    .run-code{
+        max-width: 100px;
+    }
+}
+
+@media (orientation: portrait) {
+    .next-project{
+        max-width: 64px;
+    }
+    .run-code{
+        max-width: 100px;
+    }
 }
 
 .project-button, .back-to-top-button{
@@ -494,6 +514,10 @@
     
 	image-rendering: pixelated;
 }
+
+/*.project-button-buttons {
+    max-height: 10vh;
+}*/
 
 .run-code-button-img:active {
     border: #000000;
