@@ -2,6 +2,7 @@
 //it grabs local settings, and puts them in window for use by other scripts
 
 let initSettingsObject = () => {
+    console.log("uh oh!");
     let startObject = {};
     let startSettings = JSON.stringify(startObject);
     localStorage.setItem("user_settings", startSettings);

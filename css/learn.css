@@ -58,7 +58,7 @@
     --cubic-bez-overflow: cubic-bezier(.54,1.55,0,1);
     --cubic-bez-overflow-2: cubic-bezier(0,1.03,.08,1.34);
 
-    --general-transition: var(--to-transition) var(--transition-speed) var(--cubic-bez-3);
+    --general-transition: var(--to-transition) var(--transition-speed) var(--cubic-bez-4);
     --fast-transition: var(--to-transition) calc(var(--transition-speed) / 5) var(--cubic-bez-overflow);
 }
 

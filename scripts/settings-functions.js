@@ -1,5 +1,3 @@
-import { exp } from "firebase/firestore/pipelines";
-
 console.log("readddy for settings rider sir");
 
 const localStorageSettingsString = "user_settings";
@@ -199,7 +197,10 @@ if(hatePixelartButton != null) {
         let newFont = isPixelart ? "arial1" : "pixel1" ;
         fontChange(newFont);
         let newTheme = isPixelart ? "vector-1" : "pixel-1";
-        themeChange(newTheme)
+        editSetting({ "theme": newTheme });
+        let newImageExtension = isPixelart ? ".svg" : ".png";
+        editSetting({ "image-extension": newImageExtension });
+        window.location.reload();
     }
     hatePixelartButton.addEventListener("click", () => {
         togglePixelart();
