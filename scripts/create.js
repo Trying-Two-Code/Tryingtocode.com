@@ -238,8 +238,8 @@ window.addEventListener('create_project_set', () => {
 
     let toggleAdvancedElements = new SimpleToggle(toggleElement, 
                                                 [toggledElements], 
-                                                ["../components/art/advanced settings - 2.png", 
-                                                 "../components/art/advanced settings - 1.png"]);
+                                                [`../components/visuals/icons/create/advanced-toggle/${window.theme}/frame-2${window.imageExtension}`, 
+                                                 `../components/visuals/icons/create/advanced-toggle/${window.theme}/frame-1${window.imageExtension}`]);
     toggleElement.addEventListener("click", () => {toggleAdvancedElements.toggle();});
 
     let toggleLanguageDropdown = new LanguageToggle(languageSelectToggle, 

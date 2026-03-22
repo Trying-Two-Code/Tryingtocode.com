@@ -1,19 +1,18 @@
+# Can I contribute?
+
+Anyone may fork the database and make their own updates to the website! If you believe it should make it into tryingtocode.com then you can request to push, and someone will look it over and consider. Thanks for your help!
+
 # CONVENTIONS
 
 (if you wish to change anything here, or need clarifications, contact me)
 
 ## General
 
-If you see something in the codebase that technically fits
-this but isn't stated, then try to keep it up. If you think
-it is bad, then request a change.
+If you see something in the codebase that technically fitsthis but isn't stated, then try to keep it up. If you think it is bad, then request a change.
 
-Anything that says no tabs is wrong. Tabs are ok. 
-Don't use spaces when a tab would look fine.
-Replace tabs with 4 spaces where neccisary. 
+Use 4 spaces as tabs. (this is done automatically in vs code - with the right settings)
 
-White spaces should usually just be alone.
-Two in a row if very important.
+If you need to seperate two sections of code, use only one white space. Two in a row if very large destinction.
 
 If you find any broken rules in the codebase, feel free to fix them.
 
@@ -23,13 +22,7 @@ Don't use special characters or emoji for anything unless strictly neccisary.
 
 All commits should keep technical debt low.
 
-Titles should be clear as to what you've added. 
-If many minor fixes have been made, in the description of the commit say:
-"
-Minor Tweaks: 
--file_name
--file_name2
-"
+Titles should be clear as to what you've added / removed. Description should state why.
 
 ## HTML
 

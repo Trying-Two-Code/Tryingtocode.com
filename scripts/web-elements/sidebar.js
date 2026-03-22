@@ -124,3 +124,16 @@ class TTCSidebar extends HTMLElement {
 }
 
 customElements.define("ttc-sidebar", TTCSidebar);
+
+
+class TTCHidenSidebar extends HTMLElement {
+    constructor(){
+        super();
+    }
+    connectedCallback(){
+        this.render();
+    }
+    render(){
+        
+    }
+}

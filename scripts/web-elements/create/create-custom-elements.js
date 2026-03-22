@@ -38,7 +38,7 @@ class TTCCreateProject extends HTMLElement {
         
     </div>
 
-    <button class="submit-button nice-button" data-js-tag="submit-button"><img draggable="false" class="submit-button--image" src="../components/art/submit - 1.png" alt="submit"></button>
+    <button class="submit-button nice-button" data-js-tag="submit-button"><img draggable="false" class="submit-button--image" src="../components/visuals/icons/create/submit/${window.theme}${window.imageExtension}" alt="submit"></button>
     <p data-js-tag="error-text" class="error-message">must contain -title- and -mission-</p>
     
     
@@ -148,7 +148,10 @@ class TTCCreateProject extends HTMLElement {
     }
 
     setupLinkButton(){
-        this.linkButtonImageSwapper = new ImageButton(this.linkButton, ["../components/art/link-unlink -1.png", "../components/art/link-unlink -2.png"]);
+        this.linkButtonImageSwapper = new ImageButton(this.linkButton, 
+            [`../components/visuals/icons/project/link/${window.theme}/frame-1${window.imageExtension}`, 
+             `../components/visuals/icons/project/link/${window.theme}/frame-2${window.imageExtension}`]);
+        
         this.linkButtonImageSwapper.changeOnClick();
     }
 
