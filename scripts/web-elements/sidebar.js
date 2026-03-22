@@ -35,12 +35,12 @@ class TTCSidebar extends HTMLElement {
                     <li class="dropdown--element"><a href="learn" title="Learn">
                         <img class="dropdown--image nice-button dark-glow" src="${this.iconPath}/learn/${this.theme}${this.imageExtension}" alt="Learn" draggable="false">
                     </a></li>
-                    <li class="dropdown--element"><a href="create.html" title="Create">
+                    <!--li class="dropdown--element"><a href="create.html" title="Create">
                         <img class="dropdown--image nice-button dark-glow rotate-45" src="${this.iconPath}/create/${this.theme}${this.imageExtension}" alt="Create" draggable="false">
                     </a></li>
                     <li class="dropdown--element"><a href="signin.html" title="Create">
                         <img class="dropdown--image nice-button dark-glow rotate-45" src="${this.iconPath}/sign-in/${this.theme}${this.imageExtension}" alt="Create" draggable="false">
-                    </a></li>
+                    </a></li-->
                 </ul>
             </div>
             <h2 class="main-font" data-js-tag='sidebar-coin-counter'>404</h2>
