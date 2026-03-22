@@ -10,12 +10,13 @@ class TTCSignIn extends HTMLElement {
     }
     render(){
         this.hideIconWhenOpen = this.getAttribute("hide-icon-when-open") ?? false;
+        this.imageExtension = window.imageExtension;
 
         this.innerHTML = `
             <div data-js-tag="sign-in-holder" class="sign-in-holder"></div>
                 <div class="welcome--sign-in">
                     <a href="#signin" title="Learn">
-                        <button class="no-bg-button" data-js-tag="toggle-signinup"><img class="nice-button si-button-image" src="./components/visuals/icons/sign-in/new-user/${window.theme}.png" alt=""></button>
+                        <button class="no-bg-button" data-js-tag="toggle-signinup"><img class="nice-button si-button-image" src="./components/visuals/icons/sign-in/new-user/${window.theme}${this.imageExtension}" alt=""></button>
                     </a>
                     <div data-js-tag="sign-in-elements-holder">
                         <div data-js-tag="sign-in" class="sign-in">
@@ -30,7 +31,7 @@ class TTCSignIn extends HTMLElement {
                             </form>
                             <div class="si-button-flexbox">
                                 <button data-js-tag="exit-button" class="si-exit main-font nice-button no-bg-button">
-                                    <img style="width: 30px; height: 30px;" data-js-tag="close-img" src='./components/visuals/icons/project/close/${window.theme}.png'>
+                                    <img style="width: 30px; height: 30px;" data-js-tag="close-img" src='./components/visuals/icons/project/close/${window.theme}${this.imageExtension}'>
                                 </button>
                                 <button data-js-tag="submit-button" class="si-submit main-font">Submit</button>
                             </div>

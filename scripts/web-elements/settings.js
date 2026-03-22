@@ -12,11 +12,12 @@ class TTCSettings extends HTMLElement {
         this.hideIconWhenOpen = this.getAttribute("hide-icon-when-open") ?? false;
         this.theme = window.theme;
         this.iconPath = "../../components/visuals/icons";
+        this.imageExtension = window.imageExtension;
 
         this.innerHTML = `
             <div data-js-tag="settings-toggle">
                 <button class="nice-button no-bg-button" data-js-tag="settings-toggle-button">
-                    <img class="si-button-image" src="${this.iconPath}/settings/cog/${this.theme}.png" alt="settings">
+                    <img class="si-button-image" src="${this.iconPath}/settings/cog/${this.theme}${this.imageExtension}" alt="settings">
                 </button>
             </div>
             <div data-js-tag="settings-holder">
@@ -44,7 +45,7 @@ class TTCSettings extends HTMLElement {
                     <br></br>
 
                     <button data-js-tag="exit-button" class="si-exit main-font nice-button no-bg-button">
-                        <img style="width: 30px; height: 30px;" data-js-tag="close-img" src="${this.iconPath}/project/close/${this.theme}.png" draggable="false"></img>
+                        <img style="width: 30px; height: 30px;" data-js-tag="close-img" src="${this.iconPath}/project/close/${this.theme}${this.imageExtension}" draggable="false"></img>
                     </button>
                 </div>
             </div>
