@@ -1,0 +1,31 @@
+/*------------------------------------*\ 
+    #CONTENTS
+/*------------------------------------*/ 
+/**
+
+*SETTINGS
+**root . . . . . . . root settings apply everywhere
+
+*POPUPS
+**nice-popup . . . . a tool for general popups
+
+**/
+
+/*------------------------------------*\
+    #SETTINGS
+\*------------------------------------*/
+:root {
+    --palette-serika-1: #525146;
+    --palette-serika-2: #d8d6c3;
+    --palette-serika-3: #bfb716;
+    --palette-serika-4: #718F94;
+    --palette-serika-5: #282828;
+}
+
+/*------------------------------------*\ 
+    #POPUPS
+/*------------------------------------*/ 
+.nice-popup {
+    position: absolute;
+    top: 0;
+}
