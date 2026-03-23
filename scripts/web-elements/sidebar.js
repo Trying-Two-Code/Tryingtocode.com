@@ -114,7 +114,6 @@ class TTCSidebar extends HTMLElement {
 
     updateDisplayNumber(updatedNumber, startString) {
         if(typeof updatedNumber !== "number" || typeof startString !== "string") { console.error("incorrect datatype sent to display number!"); }
-        console.log("update");
         let currentCoins = updatedNumber;
 
         if (this.coinCounter != null){

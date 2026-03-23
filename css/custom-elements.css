@@ -8,6 +8,8 @@
 
 *POPUPS
 **nice-popup . . . . a tool for general popups
+**popup-container  . holds all popup-contents
+**popup-contents . . all visible elements of a popup
 
 **/
 
@@ -20,6 +22,13 @@
     --palette-serika-3: #bfb716;
     --palette-serika-4: #718F94;
     --palette-serika-5: #282828;
+
+    --z-base: 0;
+    --z-sidebar: 5;
+    --z-dropdown: 10;
+    --z-overlay: 20;
+
+    --popup-size: 200px;
 }
 
 /*------------------------------------*\ 
@@ -27,5 +36,27 @@
 /*------------------------------------*/ 
 .nice-popup {
     position: absolute;
+    
     top: 0;
+    right: 0;
+
+    --ratio: 2;
+    width: calc(var(--popup-size) * 2);
+    height: var(--popup-size);
+
+    z-index: var(--z-overlay);
+}
+
+.popup-container{
+    display: flex;
+
+    /*center everything in popup*/
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    /*will need children containers so it's not all one big line*/
+}
+
+.popup-contents{
+    size: 10px;
 }

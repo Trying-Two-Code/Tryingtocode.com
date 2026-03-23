@@ -1,6 +1,59 @@
 // A popup that shows up for users who are new to the site, and have taken 
 // a long time to finish a project.
 
+//backup in case the user misclicks
+class TTCSecondaryBeginnerPopup extends HTMLElement{
+    constructor(){
+        super();
+    }
+
+    init(){
+        this.render();
+        this.initValues();
+        this.initBehaviour();
+    }
+
+    render(){
+        this.innerHTML = `
+            <div class="nice-popup">
+                <dialog data-js-tag="secondary-popup-dialog" closedby="closerequest">
+                    <div class="popup-container">
+                        <button data-js-tag="secondary-help-no-button">
+                            <img src=""></img>
+                        </button>
+                    </div>
+                </dialog>
+            </div>
+        `;
+    }
+
+    initValues(){
+        let queryTag = (jsDataTag, queryThis=this) => { return queryThis.querySelector(`[data-js-tag=${jsDataTag}]`);}
+
+        this.mainDialogElement = queryTag("secondary-popup-dialog");
+        this.helpNoButton = queryTag("secondary-help-no-button", this.mainDialogElement);
+    }
+
+    initBehaviour(){
+        this.mainDialogElement.show();
+
+        this.helpNoButton.addEventListener("click", () => {
+            this.awnser(false);
+        });
+    }
+
+    awnser(userDecision=true){
+        let toggle = (dialog, value=null) => { 
+            (value ?? dialog.open) ? dialog.show() : dialog.close(); 
+        }
+
+        toggle(this.mainDialogElement, userDecision);
+    }
+}
+
+customElements.define("ttc-secondary-help-beginner-popup", TTCSecondaryBeginnerPopup);
+
+//main popup
 class TTCHelpBeginnerPopup extends HTMLElement{
     constructor(){
         super();
@@ -19,22 +72,59 @@ class TTCHelpBeginnerPopup extends HTMLElement{
     render(){
         this.innerHTML = `
             <div class="nice-popup">
-                <dialog data-js-tag="popup-dialog" closedby="closerequest">
-                    <p class="main-font">hey yo, this is the inside of the popup!</p>
+                <dialog data-js-tag="popup-dialog" closedby="any">
+                    <div class="popup-container">
+                        <p class="main-font popup-contents">Do you need help?</p>
+                        <button data-js-tag="help-yes-button" class="nice-button no-bg-button popup-contents">Yes!</button>
+                        <button data-js-tag="help-no-button" class="nice-button no-bg-button popup-contents" >Noo!</button>
+                    </div>
                 </dialog>
             </div>
+            <ttc-secondary-help-beginner-popup data-js-tag="secondary-popup"></ttc-secondary-help-beginner-popup>
         `;
     }
 
     initValues(){
-        let queryTag = (jsDataTag) => { return this.querySelector(`[data-js-tag=${jsDataTag}]`);}
+        let queryTag = (jsDataTag, queryThis=this) => { return queryThis.querySelector(`[data-js-tag=${jsDataTag}]`);}
         
         this.mainDialogElement = queryTag("popup-dialog");
+        this.helpYesButton = queryTag("help-yes-button", this.mainDialogElement);
+        this.helpNoButton =  queryTag("help-no-button",  this.mainDialogElement);
+
+        this.secondaryPopup = queryTag("secondary-popup");
+        console.log(this.secondaryPopup); // == null for some reason?
     }
 
     initBehaviour(){
-        console.log("HELLO?", this.mainDialogElement);
-        this.mainDialogElement.showModal();
+        this.mainDialogElement.show();
+
+        this.mainDialogElement.addEventListener("close", event => { this.mainDialogClosed(event); });
+        this.mainDialogElement.addEventListener("cancel", event => { this.mainDialogClosed(event); });
+
+        this.helpNoButton.addEventListener("click", () => {
+            this.awnser(false);
+        });
+        this.helpYesButton.addEventListener("click", () => {
+            this.awnser(true);
+        });
+    }
+
+    mainDialogClosed(event){
+        console.log(event.type == "cancel");
+        if(event.type === "cancel"){
+            //user may have accidentaly left the popup
+            //therefore, activate a secondary popup
+            console.log(this.secondaryPopup);
+            this.secondaryPopup.init();
+        }
+    }
+
+    awnser(userDecision=true){
+        let toggle = (dialog, value=null) => { 
+            (value ?? dialog.open) ? dialog.show() : dialog.close(); 
+        }
+
+        toggle(this.mainDialogElement, userDecision);
     }
 }
 
