@@ -55,11 +55,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-    <ttc-help-beginner-popup></ttc-help-beginner-popup>
+    <!--         users should be here for 40 seconds before leaving to a different page              -->
+    <ttc-help-beginner-popup showup-time="40" max-xp="3" tutorial-name="tutorial-0"></ttc-help-beginner-popup>
+
     <div class="row-container">
-        <canvas class="js-screen" id="learn-screen">
-            <!--shows coins-->
-        </canvas>
+        <canvas class="js-screen" id="learn-screen"></canvas>
         
         <ttc-sidebar></ttc-sidebar>
 
@@ -87,7 +87,7 @@
                         <script>let arrowEl = document.querySelector(".welcome--demo--arrow"); arrowEl.src = `./components/visuals/icons/arrow/${window.theme}${window.imageExtension}`;</script>
                         <a href="learn" title="Learn" class="welcome--demo--learn">
                             <style>.pad-top-30{padding-top: 30px;}</style>
-                            <button class="welcome--demo--learn-button pad-top-30" draggable="false"><img class="nice-button welcome-img welcome--demo--learn-button-img" src="./components/visuals/icons/sidebar/learn/pixel-1.png" alt="learn"></button>
+                            <button class="welcome--demo--learn-button pad-top-30" draggable="false"><img class="nice-button welcome-img welcome--demo--learn-button-img" src="./components/visuals/icons/sidebar/learn/pixel-1.png" alt="learn" draggable="false"></button>
                             <script>let learnCodeEl = document.querySelector(".welcome--demo--learn-button-img"); learnCodeEl.src = `./components/visuals/icons/sidebar/learn/${window.theme}${window.imageExtension}`;</script>
                         </a>
                     </div>

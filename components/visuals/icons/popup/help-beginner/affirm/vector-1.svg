@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="5in"
+   height="5in"
+   viewBox="0 0 5 5"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="checkmark.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.428125"
+     inkscape:cx="99.270073"
+     inkscape:cy="294.30657"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="2552"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="rotate(-10.182502,2.8445734,0.19918147)">
+    <path
+       style="fill:#61d648;fill-opacity:1;stroke:none;stroke-width:0.349267;stroke-linecap:round;stroke-linejoin:round;stroke-dashoffset:696.375;stroke-opacity:1;paint-order:stroke fill markers"
+       d="M 1.7449371,1.9618688 C 0.87616063,1.6667767 0.91286107,3.6839485 1.5972358,3.6200972 1.9714126,3.5851871 4.2290812,1.5965049 3.8744344,1.4152915 3.4439935,1.1953497 2.4888582,2.0117287 2.1191138,2.4767923 1.539473,3.205863 1.9602121,2.1460233 1.7449371,1.9618688 Z"
+       id="path1-8"
+       sodipodi:nodetypes="csssc" />
+    <path
+       style="fill:#4ab931;fill-opacity:1;stroke:none;stroke-width:0.229173;stroke-linecap:round;stroke-linejoin:round;stroke-dashoffset:696.375;stroke-opacity:1;paint-order:stroke fill markers"
+       d="M 3.6731715,1.9441142 C 3.2146936,1.85944 2.3035912,3.0185576 1.7633116,3.147787 1.2058905,3.2811165 1.1017629,2.9155642 1.0580798,2.6753075 l 0.034409,0.4301128 0.2709715,0.473125 0.3182841,0.030108 0.9419488,-0.6752783 z"
+       id="path2"
+       sodipodi:nodetypes="cscccccc" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.132717;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:696.375;stroke-opacity:1;paint-order:stroke fill markers"
+       d="M 1.7449371,1.9618688 C 0.87616063,1.6667767 0.91286107,3.6839485 1.5972358,3.6200972 1.9714126,3.5851871 4.2290812,1.5965049 3.8744344,1.4152915 3.4439935,1.1953497 2.4888582,2.0117287 2.1191138,2.4767923 1.539473,3.205863 1.9602121,2.1460233 1.7449371,1.9618688 Z"
+       id="path1"
+       sodipodi:nodetypes="csssc" />
+  </g>
+  <metadata
+     id="metadata3">
+    <rdf:RDF>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+      <cc:Work
+         rdf:about="">
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/4.0/" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

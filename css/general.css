@@ -464,6 +464,8 @@ ttc-sidebar{
     flex-direction: column;
     flex-grow: 1;
     min-height: 100vh;
+
+    overflow: hidden;
 }
 
 .big-image{
@@ -507,7 +509,7 @@ ttc-sidebar{
 
 @media (orientation: portrait) {
     .bottom-sidebar{
-        margin-left: 60vw;
+        margin-left: 6vw;
         bottom: 0;
     }
 }

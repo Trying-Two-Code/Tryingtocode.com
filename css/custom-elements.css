@@ -60,3 +60,9 @@
 .popup-contents{
     size: 10px;
 }
+
+.popup-images{
+    --size: 32px;
+    width: var(--size);
+    height: var(--size);
+}
