@@ -43,17 +43,16 @@ class TTCSecondaryBeginnerPopup extends HTMLElement{
     initBehaviour(){
         this.mainDialogElement.show();
 
-        this.helpNoButton.addEventListener("click", () => {
-            this.awnser(false);
-        });
+        this.helpNoButton.addEventListener("click", () => {this.decline();});
+        this.helpYesButton.addEventListener("click", () => {this.approve(); });
     }
 
-    awnser(userDecision=true){
-        let toggle = (dialog, value=null) => { 
-            (value ?? dialog.open) ? dialog.show() : dialog.close(); 
-        }
+    decline(){
+        this.mainDialogElement.close();
+    }
 
-        toggle(this.mainDialogElement, userDecision);
+    approve(){
+        this.mainHelpBeginnerPopup.approve();
     }
 }
 
@@ -113,10 +112,10 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         this.mainDialogElement.addEventListener("cancel", event => { this.mainDialogClosed(event); });
 
         this.helpNoButton.addEventListener("click", () => {
-            this.awnser(false);
+            this.decline();
         });
         this.helpYesButton.addEventListener("click", () => {
-            this.awnser(true);
+            this.approve();
         });
     }
 
@@ -138,9 +137,10 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         }
     }
 
-    serveToUser(showupTime){ // ammount of time to wait before showing up
+    serveToUser(showupTime){ 
+        //ammount of time to wait before showing up
         console.log("wait ", showupTime, " seconds before showing");
-        setInterval(() => {
+        setTimeout(() => {
             this.mainDialogElement.show();
         }, showupTime * 1000);
     }
@@ -150,17 +150,22 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         if(event.type === "cancel"){
             //user may have accidentaly left the popup
             //therefore, activate a secondary popup
-            console.log(this.secondaryPopup);
-            this.secondaryPopup.init();
+            this.setupSecondaryDialog();
         }
     }
 
-    awnser(userDecision=true){
-        let toggle = (dialog, value=null) => { 
-            (value ?? dialog.open) ? dialog.show() : dialog.close(); 
-        }
+    setupSecondaryDialog(){
+        console.log(this.secondaryPopup);
+        this.secondaryPopup.mainHelpBeginnerPopup = this;
+        this.secondaryPopup.init();
+    }
 
-        toggle(this.mainDialogElement, userDecision);
+    decline(){
+        this.mainDialogElement.close();
+    }
+
+    approve(){
+        console.log("go to next step!");
     }
 }
 

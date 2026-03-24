@@ -2,7 +2,7 @@
 //it grabs local settings, and puts them in window for use by other scripts
 
 let initSettingsObject = () => {
-    console.log("new user, needs new settings");
+    //new user, needs new settings
     let startObject = { font: "pixel1", theme: "pixel-1", xp: 0 };
     let startSettings = JSON.stringify(startObject);
     localStorage.setItem("user_settings", startSettings);
@@ -11,7 +11,8 @@ let initSettingsObject = () => {
 let getSettingsObject = () => {
     let settings = localStorage.getItem("user_settings");
 
-    if(settings === null) { //in case user just got here
+    if(settings === null) { 
+        //in case user just got here
         initSettingsObject(); 
         settings = localStorage.getItem("user_settings");
     }
@@ -37,11 +38,6 @@ let changeLocalSetting = (setting, value) => {
     let updatedSettings = JSON.stringify(settingsObject);
     localStorage.setItem("user_settings", updatedSettings);
 }
-
-//changeLocalSetting("theme", "pixel-1");
-//changeLocalSetting("image-extension", ".png");
-//changeLocalSetting("theme", "vector-1");
-//changeLocalSetting("image-extension", ".svg");
 
 let updateThemeFromLocal = () => {
     let theme = getLocalSetting("theme") ?? "pixel-1";
