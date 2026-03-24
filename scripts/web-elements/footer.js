@@ -40,6 +40,7 @@ class TTCFooter extends HTMLElement {
                         <li class="footer--list-element"><a href="https://youtube.com/@tryingcode" class="footer--link">youtube</a></li>
                         <li class="footer--list-element"><a href="https://x.com/TryingtwoCode" class="footer--link">twitter</a></li>
                         <li class="footer--list-element"><a href="https://www.patreon.com/c/TryingToCode" class="footer--link">patreon</a></li>
+                        <li class="footer--list-element"><a href="https://github.com/Trying-Two-Code/Tryingtocode.com" class="footer--link">github</a></li>
                         <li class="footer--list-element"><a href="https://youtu.be/dQw4w9WgXcQ" class="footer--link">facebook</a></li>
                     </div>
                 </div>

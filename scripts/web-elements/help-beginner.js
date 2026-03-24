@@ -16,14 +16,16 @@ class TTCSecondaryBeginnerPopup extends HTMLElement{
     render(){
         this.innerHTML = `
             <div class="nice-popup">
-                <dialog data-js-tag="secondary-popup-dialog" closedby="closerequest">
+                <dialog class="popup-dialog" data-js-tag="secondary-popup-dialog" closedby="closerequest">
                     <div class="popup-container">
-                        <button class="no-bg-button nice-button" data-js-tag="secondary-help-no-button">
-                            <img class="popup-images" src="./components/visuals/icons/popup/help-beginner/decline/${window.theme}${window.imageExtension}" draggable="false"></img>
-                        </button>
-                        <button class="no-bg-button nice-button" data-js-tag="secondary-help-yes-button">
-                            <img class="popup-images" src="./components/visuals/icons/popup/help-beginner/affirm/${window.theme}${window.imageExtension}" draggable="false"></img>
-                        </button>
+                        <div class="row-container">
+                            <button class="no-bg-button nice-button" data-js-tag="secondary-help-no-button">
+                                <img class="popup-images" src="./components/visuals/icons/popup/help-beginner/decline/${window.theme}${window.imageExtension}" draggable="false"></img>
+                            </button>
+                            <button class="no-bg-button nice-button" data-js-tag="secondary-help-yes-button">
+                                <img class="popup-images" src="./components/visuals/icons/popup/help-beginner/affirm/${window.theme}${window.imageExtension}" draggable="false"></img>
+                            </button>
+                        </div>
                     </div>
                 </dialog>
             </div>
@@ -68,6 +70,7 @@ class TTCHelpBeginnerPopup extends HTMLElement{
     }
 
     init(){
+        this.detectShow();
         this.render();
         this.initValues();
         this.initBehaviour();
@@ -76,11 +79,13 @@ class TTCHelpBeginnerPopup extends HTMLElement{
     render(){
         this.innerHTML = `
             <div class="nice-popup">
-                <dialog data-js-tag="popup-dialog" closedby="any">
+                <dialog class="popup-dialog" data-js-tag="popup-dialog" closedby="any">
                     <div class="popup-container">
                         <p class="main-font popup-contents">Do you need help?</p>
-                        <button data-js-tag="help-yes-button" class="nice-button no-bg-button popup-contents">Yes!</button>
-                        <button data-js-tag="help-no-button" class="nice-button no-bg-button popup-contents" >Noo!</button>
+                        <div class="row-container">
+                            <button data-js-tag="help-yes-button" class="nice-button no-bg-button popup-contents main-font">Yes!</button>
+                            <button data-js-tag="help-no-button" class="nice-button no-bg-button popup-contents main-font" >Noo!</button>
+                        </div>
                     </div>
                 </dialog>
             </div>
@@ -104,8 +109,6 @@ class TTCHelpBeginnerPopup extends HTMLElement{
     }
 
     initBehaviour(){
-        this.mainDialogElement.show();
-
         this.mainDialogElement.addEventListener("close", event => { this.mainDialogClosed(event); });
         this.mainDialogElement.addEventListener("cancel", event => { this.mainDialogClosed(event); });
 
@@ -115,6 +118,31 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         this.helpYesButton.addEventListener("click", () => {
             this.awnser(true);
         });
+    }
+
+    detectShow(){
+        let ensureAttribute = (htmlAttribute, jsAttribute) => {
+            let hasAttribute = jsAttribute in this;
+            if (!hasAttribute){
+                this[jsAttribute] = this.getAttribute(htmlAttribute);
+            }
+        }
+        ensureAttribute("max-xp", "maxXP");
+        ensureAttribute("showup-time", "showupTime");
+        
+        let maxXP = parseInt(this.maxXP, 10);
+        
+        if(maxXP > window.xp){
+            let showupTime = parseInt(this.showupTime, 10);
+            this.serveToUser(showupTime);
+        }
+    }
+
+    serveToUser(showupTime){ // ammount of time to wait before showing up
+        console.log("wait ", showupTime, " seconds before showing");
+        setInterval(() => {
+            this.mainDialogElement.show();
+        }, showupTime * 1000);
     }
 
     mainDialogClosed(event){
