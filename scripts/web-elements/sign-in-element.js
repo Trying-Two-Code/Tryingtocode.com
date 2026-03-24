@@ -84,6 +84,7 @@ class TTCSignIn extends HTMLElement {
         let closeEvent = () => {
             console.log("it is trying to work");
             this.mainToggle.toggleEvent();
+            window.scrollTo({top: 0, behavior: "smooth"});
         };
         this.exit.addEventListener("click", () => {
             closeEvent();

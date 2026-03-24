@@ -131,7 +131,7 @@ export class Display {
     }
 
     initButtons(){
-        let closeButtonEvent = (e) => {e.stopPropagation(); this.toggleOtherProjects(); this.minimize({mini: true, gone: false});}
+        let closeButtonEvent = (e) => {e.stopPropagation(); this.toggleOtherProjects(); this.minimize({mini: true, gone: false}); scrollToTop();}
         let nextButtonEvent = (e) => {e.stopPropagation(); this.openProject(1);} 
         //let rewindButtonEvent = () => {this.codeArea.createText(this.projectJSON.code);} 
         //let hintButtonEvent = () => {this.toggleHint();}
