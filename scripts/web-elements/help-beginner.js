@@ -180,6 +180,7 @@ class TTCHelpBeginnerPopup extends HTMLElement{
     approve(){
         this.mainDialogElement.close();
         this.tutorialElement.init();
+        window.startVideo();
     }
 }
 
@@ -193,16 +194,34 @@ class TTCTutorial extends HTMLElement{
     init(){
         this.render();
         this.initValues();
+        this.initBehaviour();
     }
 
     render(){
         this.innerHTML = `
-            <p>tutorial name: ${this.tutorialName}</p>
+            <!--p>tutorial name: ${this.tutorialName}</p-->
+            <!--video preload="auto" controls width="1920" autoplay controls="false" controlslist="nodownload nofullscreen" noremoteplayback disablepictureinpicture>
+                <p>tutorial name: ${this.tutorialName}</p>
+                <source src=
+                <source src="https://youtu.be/5YcsjQ2VrrU type="video/webm"></source>
+                <!--source src="./components/videos/tutorial-1.mp4" type="video/webm"></source-->
+            </video-->
+            <!--iframe width="1920" height="1080" 
+                src="https://www.youtube.com/embed/5YcsjQ2VrrU?autoplay=1?controls=0">
+            </iframe-->
+
+            <div data-js-tag="tutorial-video"></div>
         `;
     }
 
     initValues(){
-        console.log("init value");
+        let queryTag = (jsDataTag, queryThis=this) => { return queryThis.querySelector(`[data-js-tag=${jsDataTag}]`);}
+
+        this.videoElement = queryTag("tutorial-video");
+    }
+
+    initBehaviour(){
+        
     }
 }
 
