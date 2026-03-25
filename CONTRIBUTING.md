@@ -1,6 +1,10 @@
 # Can I contribute?
 
-Anyone may fork the database and make their own updates to the website! If you believe it should make it into tryingtocode.com then you can request to push, and someone will look it over and consider. Thanks for your help!
+Anyone may fork the database and make their own updates to the website! If you believe it should make it into tryingtocode.com then you can request to push, and someone will look it over and consider. Be sure to read Contributing Rules before doing so. Please note that by helping, you do not gain ownership over tryingtocode.com or any of its assets (if you believe this is unfair, please contact@tryingtocode.com). You may be credited (dependant on how much you contribute). Thanks for your help!
+
+# Contributing Rules
+
+Please label any AI content. Be sure to include tests to ensure that everything works as intended, and look for any unintended consequences. All changes should be stateted in the commit, to be clear on what is being updated. More information can be found in README.md.
 
 # CONVENTIONS
 
