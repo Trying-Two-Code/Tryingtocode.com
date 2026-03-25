@@ -26,9 +26,6 @@ var onYouTubeIframeAPIReady = () => {
     //startVideo();
 }
 
-let onPlayerReady = (event) => {
-    //event.target.playVideo();
-}
 
 let startVideo = (VId = videoId) => {
     playerObject = {
@@ -45,18 +42,72 @@ let startVideo = (VId = videoId) => {
         }
     };
     player = new YT.Player('youtube-player', playerObject);
-    player.playVideo();
+    return player;
 }
-
-window.startVideo = (VId=videoId) => { startVideo(VId); }
 
 let done = false;
 let onPlayerStateChange = (event) => {
-    console.log(event);
-    console.log(player.g);
-    //player.g.requestFullscreen();
-    //player.stopVideo();
+    console.log(event.target);
+}
+let onPlayerReady = (event) => {
+    let video = findVideo(event.target.ttcId);
+    video.playerReady();
+    //let video = findVideo(event.target.)
 }
 let stopVideo = () => {
     player.stopVideo();
+}
+
+
+//stuff for outside access:
+class youtubeVideo{
+    constructor(VId){
+        this.id = VId;
+    }
+    setupVideo(){
+        this.playVideo();
+    }
+    playVideo(){
+        //starts a new video
+        let player = startVideo(this.id);
+        player.ttcId = this.id;
+        this.player = player;
+    }
+    playerReady(){
+        //called by player when it is ready to rumble
+        console.log("IT IS WORKING!", this.id);
+        this.player.playVideo();
+    }
+    stopVideo(){
+        //hides and destroys video
+        this.player.stopVideo();
+    }
+    pauseVideo(){
+        //stops video from playing
+    }
+    unpauseVideo(){
+        //starts up a paused video where user left of
+    }
+}
+
+let videos = []
+window.startVideo = (VId=videoId) => { 
+    newVideo = new youtubeVideo(VId);
+    newVideo.setupVideo();
+    videos.push(newVideo);
+    console.log(videos);
+}
+let findVideo = (VId=videoId) => {
+    for (let index = 0; index < videos.length; index++) {
+        const checkVideo = videos[index];
+        console.log(checkVideo.id, VId);
+        if(checkVideo.id == VId){
+            return checkVideo;
+        }
+    }
+    return null;
+}
+window.stopVideo = (VId=videoId) => {
+    let video = findVideo(VId);
+    video.stopVideo();
 }
