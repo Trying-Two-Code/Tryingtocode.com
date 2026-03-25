@@ -11,6 +11,7 @@
 **popup-dialog . . . controls background color and border for popups
 **popup-container  . holds all popup-contents
 **popup-contents . . all visible elements of a popup
+**popup-images . . . all images including button images
 
 **/
 
@@ -30,6 +31,14 @@
     --z-overlay: 20;
 
     --popup-size: 200px;
+
+    --sidebar-height: 8rem; /*for vertical screens*/ /*find in general.cs*/
+}
+
+@property --popup-top{ /*changes depending on if the sidebar is top aligned or not.*/
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 0px;
 }
 
 /*------------------------------------*\ 
@@ -38,7 +47,7 @@
 .nice-popup {
     position: absolute;
     
-    top: 0;
+    top: var(--popup-top);
     right: 0;
 
     --ratio: 2;
@@ -48,6 +57,12 @@
     z-index: var(--z-overlay);
 
     background-color: transparent;
+}
+
+@media (orientation: portrait) {
+    .nice-popup{
+        --popup-top: var(--sidebar-height)
+    }
 }
 
 .popup-dialog{
@@ -81,4 +96,9 @@
     --size: 32px;
     width: var(--size);
     height: var(--size);
+}
+
+.invisible-popup{
+    opacity: 0;
+    pointer-events: none;
 }

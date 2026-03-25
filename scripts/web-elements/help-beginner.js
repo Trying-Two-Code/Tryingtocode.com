@@ -140,6 +140,7 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         if(maxXP > window.xp){
             let showupTime = parseInt(this.showupTime, 10);
             this.serveToUser(showupTime);
+            this.classList.add("invisible-popup");
         }
     }
 
@@ -147,8 +148,13 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         //ammount of time to wait before showing up
         console.log("wait ", showupTime, " seconds before showing");
         setTimeout(() => {
+            this.classList.remove("invisible-popup");
             this.mainDialogElement.show();
         }, showupTime * 1000);
+
+        let hideUntilThen = () => {
+        }
+        hideUntilThen();
     }
 
     mainDialogClosed(event){
