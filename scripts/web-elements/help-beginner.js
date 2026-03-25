@@ -52,7 +52,8 @@ class TTCSecondaryBeginnerPopup extends HTMLElement{
     }
 
     approve(){
-        this.mainHelpBeginnerPopup.approve();
+        this.mainDialogElement.close();         // close self, 
+        this.mainHelpBeginnerPopup.approve();   // send message
     }
 }
 
@@ -89,12 +90,15 @@ class TTCHelpBeginnerPopup extends HTMLElement{
                 </dialog>
             </div>
             <ttc-secondary-help-beginner-popup data-js-tag="secondary-popup"></ttc-secondary-help-beginner-popup>
+            <ttc-tutorial data-js-tag="ttc-tutorial"><ttc-tutorial>
         `;
     }
 
     initValues(){
         let queryTag = (jsDataTag, queryThis=this) => { return queryThis.querySelector(`[data-js-tag=${jsDataTag}]`);}
         
+        this.tutorialElement = queryTag("ttc-tutorial");
+
         this.mainDialogElement = queryTag("popup-dialog");
         this.helpYesButton = queryTag("help-yes-button", this.mainDialogElement);
         this.helpNoButton =  queryTag("help-no-button",  this.mainDialogElement);
@@ -105,6 +109,8 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         this.maxXP =        this.getAttribute("max-xp");
         this.showupTime =   this.getAttribute("showup-time");
         this.tutorialName = this.getAttribute("tutorial-name");
+
+        this.tutorialElement.tutorialName = this.tutorialName;
     }
 
     initBehaviour(){
@@ -162,11 +168,36 @@ class TTCHelpBeginnerPopup extends HTMLElement{
 
     decline(){
         this.mainDialogElement.close();
+        //this.secondaryPopup.mainElement.close(); idea: make decline and accept only with main popup?
     }
 
     approve(){
-        console.log("go to next step!");
+        this.mainDialogElement.close();
+        this.tutorialElement.init();
     }
 }
 
 customElements.define("ttc-help-beginner-popup", TTCHelpBeginnerPopup);
+
+class TTCTutorial extends HTMLElement{
+    constructor(){
+        super();
+    }
+
+    init(){
+        this.render();
+        this.initValues();
+    }
+
+    render(){
+        this.innerHTML = `
+            <p>tutorial name: ${this.tutorialName}</p>
+        `;
+    }
+
+    initValues(){
+        console.log("init value");
+    }
+}
+
+customElements.define("ttc-tutorial", TTCTutorial);
