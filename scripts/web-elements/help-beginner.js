@@ -153,6 +153,7 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         }, showupTime * 1000);
 
         let hideUntilThen = () => {
+            this.hideSelf();
         }
         hideUntilThen();
     }
@@ -172,13 +173,18 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         this.secondaryPopup.init();
     }
 
+    hideSelf(){
+        this.classList.add("invisible-popup");
+        //this.mainDialogElement.close();
+    }
+
     decline(){
-        this.mainDialogElement.close();
+        this.hideSelf();
         //this.secondaryPopup.mainElement.close(); idea: make decline and accept only with main popup?
     }
 
     approve(){
-        this.mainDialogElement.close();
+        this.hideSelf();
         this.tutorialElement.init();
         window.startVideo();
     }

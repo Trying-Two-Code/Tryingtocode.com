@@ -13,6 +13,9 @@
 **popup-contents . . all visible elements of a popup
 **popup-images . . . all images including button images
 
+*VIDEO
+**nice-video . . . . shows youtube videos on the top right
+
 **/
 
 /*------------------------------------*\
@@ -101,4 +104,17 @@
 .invisible-popup{
     opacity: 0;
     pointer-events: none;
+}
+
+/*------------------------------------*\ 
+    #VIDEO
+/*------------------------------------*/ 
+.nice-video {
+    position: absolute;
+    
+    top: var(--popup-top);
+    pointer-events: auto;
+    right: 0;
+
+    z-index: var(--z-overlay);
 }

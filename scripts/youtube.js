@@ -1,9 +1,6 @@
 //this allows the page to show and control youtube videos with the youtube api
 //review https://developers.google.com/youtube/iframe_api_reference
 
-const width = 0;
-const height = 0;
-
 let videoId = "5YcsjQ2VrrU";
 
 let tag = document.createElement('script');
@@ -27,14 +24,18 @@ var onYouTubeIframeAPIReady = () => {
 }
 
 
-let startVideo = (VId = videoId) => {
+let startVideo = (VId = videoId, dimensions = {height: 200, width: 300}) => {
+    console.log(dimensions.height, dimensions.width);
     playerObject = {
-        height: height,
-        width: width,
+        height: dimensions.height,
+        width: dimensions.width,
         videoId: VId,
         playerVars: {
             'playsinline': 1,
-            'fs': 1
+            'fs': 1,
+            'controls': 1,
+            'modestbranding': 1,
+            'rel': 0
         },
         events: {
             'onReady': onPlayerReady,
@@ -63,20 +64,22 @@ let stopVideo = () => {
 class youtubeVideo{
     constructor(VId){
         this.id = VId;
+        this.dimensions = {height: 200, width: 500}
     }
     setupVideo(){
         this.playVideo();
     }
-    playVideo(){
+    playVideo(d){
         //starts a new video
-        let player = startVideo(this.id);
+        let player = startVideo(this.id, this.dimensions);
         player.ttcId = this.id;
         this.player = player;
     }
     playerReady(){
         //called by player when it is ready to rumble
         console.log("IT IS WORKING!", this.id);
-        this.player.playVideo();
+        this.player.playVideo(this.dimensions);
+        this.increaseVideo();
     }
     stopVideo(){
         //hides and destroys video
