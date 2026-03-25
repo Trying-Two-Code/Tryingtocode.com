@@ -118,6 +118,21 @@ body {
     margin-right: 10px;
 	z-index: var(--z-overlay);
     box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+    transition: transform 0.4s cubic-bezier(.53,.96,0,1);
+}
+
+/* Slide left on landscape, slide up on portrait — overrides display:none from .hide */
+.sidebar.hide {
+    display: flex !important;
+    transform: translateX(-100%);
+    pointer-events: none;
+    visibility: hidden;
+}
+
+@media (orientation: portrait) {
+    .sidebar.hide {
+        transform: translateY(-100%);
+    }
 }
 
 @media (orientation: landscape) {
