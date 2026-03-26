@@ -64,20 +64,22 @@ let stopVideo = () => {
 class youtubeVideo{
     constructor(VId){
         this.id = VId;
-        this.dimensions = {height: 200, width: 200 * 1.77777777778}
+        this.ratio = 16 / 9;
+        this.dimensions = {height: 200, width: 200 * this.ratio};
     }
     setupVideo(){
         this.playVideo();
+        console.log("playing video now.");
     }
     playVideo(d){
         //starts a new video
+        this.id = "scc4bHEHtZY";
         let player = startVideo(this.id, this.dimensions);
         player.ttcId = this.id;
         this.player = player;
     }
     playerReady(){
         //called by player when it is ready to rumble
-        console.log("IT IS WORKING!", this.id);
         this.player.playVideo(this.dimensions);
     }
     playerStateChange(event){
@@ -103,6 +105,7 @@ class youtubeVideo{
 
 let videos = []
 window.startVideo = (VId=videoId) => { 
+    console.log(VId);
     newVideo = new youtubeVideo(VId);
     newVideo.setupVideo();
     videos.push(newVideo);

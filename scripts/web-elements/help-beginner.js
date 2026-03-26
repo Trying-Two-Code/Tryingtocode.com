@@ -70,6 +70,7 @@ class TTCHelpBeginnerPopup extends HTMLElement{
     }
 
     init(){
+        this.makeGlobal();
 
         this.detectShow();
         this.render();
@@ -117,6 +118,7 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         this.maxXP =        this.getAttribute("max-xp");
         this.showupTime =   this.getAttribute("showup-time");
         this.tutorialName = this.getAttribute("tutorial-name");
+        this.videoId =      this.getAttribute("video-id");
 
         this.tutorialElement.tutorialName = this.tutorialName;
     }
@@ -193,8 +195,8 @@ class TTCHelpBeginnerPopup extends HTMLElement{
 
     approve(){
         this.hideSelf();
+        this.tutorialElement.videoId = this.videoId;
         this.tutorialElement.init();
-        window.startVideo();
     }
 }
 
@@ -235,7 +237,7 @@ class TTCTutorial extends HTMLElement{
     }
 
     initBehaviour(){
-        
+        window.startVideo(this.videoId);
     }
 }
 
