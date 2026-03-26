@@ -64,7 +64,7 @@ let stopVideo = () => {
 class youtubeVideo{
     constructor(VId){
         this.id = VId;
-        this.dimensions = {height: 200, width: 500}
+        this.dimensions = {height: 200, width: 200 * 1.77777777778}
     }
     setupVideo(){
         this.playVideo();
