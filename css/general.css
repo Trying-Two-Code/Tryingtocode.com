@@ -121,9 +121,8 @@ body {
     transition: transform 0.4s cubic-bezier(.53,.96,0,1);
 }
 
-/* Slide left on landscape, slide up on portrait — overrides display:none from .hide */
+/* Slide left on landscape, slide up on portrait */
 .sidebar.hide {
-    display: flex !important;
     transform: translateX(-100%);
     pointer-events: none;
     visibility: hidden;
@@ -339,6 +338,11 @@ p.pixel-1  {font-size: 1.5rem;}
 .hide{
     display: none;
     padding: 0%;
+}
+
+/* Sidebar uses transform-based hiding instead of display:none */
+.sidebar.hide {
+    display: flex;
 }
 
 .nice-button {
