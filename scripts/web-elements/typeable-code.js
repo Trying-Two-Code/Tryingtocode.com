@@ -323,8 +323,8 @@ export class TTCComplexTypeableCode extends TTCTypeableCode {
         `;
         this.addedRunnableHTML = `
         <div class="project-button-buttons proj-child">
-            <button js-data-tag="run-button" title="run code" name="run-button" class="run-code"><img class="run-code-button-img big-image" src="./components/visuals/icons/project/run-code/${window.theme}${window.imageExtension}"></img></button>
-            <button title="go to next project" alt="next project" name="next-button" class="next-project ${nextProjectClass} pixel-img" name="next-button"><img class="next-project" src="./components/visuals/icons/project/next-project/${window.theme}${window.imageExtension}"></button>
+            <button js-data-tag="run-button" title="run code" name="run-button" class="run-code"><img class="run-code-button-img big-image" src="./components/visuals/icons/project/run-code/${window.TTC.theme}${window.TTC.imageExtension}"></img></button>
+            <button title="go to next project" alt="next project" name="next-button" class="next-project ${nextProjectClass} pixel-img" name="next-button"><img class="next-project" src="./components/visuals/icons/project/next-project/${window.TTC.theme}${window.TTC.imageExtension}"></button>
         </div>
         ` ;
         this.runnableContainer.insertAdjacentHTML("afterbegin", this.addedRunnableHTML);
@@ -362,15 +362,15 @@ export class TTCComplexTypeableCode extends TTCTypeableCode {
             <div class="close-restart show-when-mini">
                 <div class="button">
                     <button class="project-close-button project-button" title="close project">
-                        <img style="width: 30px; height: 30px;" name="close-img" src='./components/visuals/icons/project/close/${window.theme}${window.imageExtension}' class="nice-button">
+                        <img style="width: 30px; height: 30px;" name="close-img" src='./components/visuals/icons/project/close/${window.TTC.theme}${window.TTC.imageExtension}' class="nice-button">
                     </button>
                 </div>
                 <div class="button">
                     <button class="project-restart-button project-button" title="reset code to defualt">
-                        <img style="width: 30px; height: 30px;" name="reset-img" src="./components/visuals/icons/project/reload/${window.theme}${window.imageExtension}" class="nice-button">
+                        <img style="width: 30px; height: 30px;" name="reset-img" src="./components/visuals/icons/project/reload/${window.TTC.theme}${window.TTC.imageExtension}" class="nice-button">
                     </button>
                 </div>
-                <img draggable="false" src="./components/visuals/icons/project/coin-collected-indicator/${window.theme}${window.imageExtension}" class="hide completed-icon show-when-mini pixel-img" name="completed-icon"></img>
+                <img draggable="false" src="./components/visuals/icons/project/coin-collected-indicator/${window.TTC.theme}${window.TTC.imageExtension}" class="hide completed-icon show-when-mini pixel-img" name="completed-icon"></img>
                 <p style="font-size: 1.3rem;" class="project-title show-when-mini" name="project-title">title</p>
                 <div data-js-tag="hintable-container"></div>
             </div>
@@ -391,7 +391,7 @@ export class TTCComplexTypeableCode extends TTCTypeableCode {
         this.addedHintableHTML = `
             <div class="button project-hint-button">
                 <button data-js-tag="hint-toggle-button" class="project-hint-button project-button" title="get hint if stuck">
-                    <img style="width: 50px; height: 50px;" name="hint-img" src="./components/visuals/icons/project/hint/${window.theme}${window.imageExtension}" class="nice-button">
+                    <img style="width: 50px; height: 50px;" name="hint-img" src="./components/visuals/icons/project/hint/${window.TTC.theme}${window.TTC.imageExtension}" class="nice-button">
                 </button>
             </div>
         `;
@@ -415,7 +415,7 @@ export class TTCComplexTypeableCode extends TTCTypeableCode {
 
     editToLinkable(){
         this.addedLinkableHTML = `
-            <button class="nice-button link-button" name="link-unlink-toggle"><img class="link-button--image" src="../components/visuals/icons/project/link/${window.theme}/frame-1${window.imageExtension}"></img></button>
+            <button class="nice-button link-button" name="link-unlink-toggle"><img class="link-button--image" src="../components/visuals/icons/project/link/${window.TTC.theme}/frame-1${window.TTC.imageExtension}"></img></button>
         `;
 
         this.linkableContainer.insertAdjacentHTML("afterbegin", this.addedLinkableHTML);

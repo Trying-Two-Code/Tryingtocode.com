@@ -10,9 +10,9 @@ class TTCSettings extends HTMLElement {
     }
     render(){
         this.hideIconWhenOpen = this.getAttribute("hide-icon-when-open") ?? false;
-        this.theme = window.theme;
+        this.theme = window.TTC.theme;
         this.iconPath = "../../components/visuals/icons";
-        this.imageExtension = window.imageExtension;
+        this.imageExtension = window.TTC.imageExtension;
 
         this.innerHTML = `
             <div data-js-tag="settings-toggle">

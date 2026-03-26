@@ -12,7 +12,7 @@
 
 let loading = document.querySelector(".loader-sprite");
 if(typeof loading !== "undefined" && loading != null){
-    loading.style.setProperty("--theme", `url("../components/visuals/icons/load-animation/${window.theme}.png")`);
+    loading.style.setProperty("--theme", `url("../components/visuals/icons/load-animation/${window.TTC.theme}.png")`);
 }
 
 /*let dropdownButton = document.getElementById("dropdown-button");

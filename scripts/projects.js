@@ -7,7 +7,7 @@ import { isCorrectCode } from  "./user-code/check-code.js";
 import { scrollToTop } from "./learn.js";
 
 //general use
-let theme = window.theme;
+let theme = window.TTC.theme;
 let htmlGen = 
 `
     <div id="learn-project" class="project mini main-font">
@@ -15,7 +15,7 @@ let htmlGen =
             <div class="close-restart">
                 <div class="button">
                     <button class="project-close-button project-button" title="close project">
-                        <img style="width: 30px; height: 30px;" name="close-img" src='./components/visuals/icons/project/close/${window.theme}.png' class="nice-button">
+                        <img style="width: 30px; height: 30px;" name="close-img" src='./components/visuals/icons/project/close/${theme}.png' class="nice-button">
                     </button>
                 </div>
                 <div class="button">

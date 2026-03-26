@@ -238,8 +238,8 @@ window.addEventListener('create_project_set', () => {
 
     let toggleAdvancedElements = new SimpleToggle(toggleElement, 
                                                 [toggledElements], 
-                                                [`../components/visuals/icons/create/advanced-toggle/${window.theme}/frame-2${window.imageExtension}`, 
-                                                 `../components/visuals/icons/create/advanced-toggle/${window.theme}/frame-1${window.imageExtension}`]);
+                                                [`../components/visuals/icons/create/advanced-toggle/${window.TTC.theme}/frame-2${window.TTC.imageExtension}`, 
+                                                 `../components/visuals/icons/create/advanced-toggle/${window.TTC.theme}/frame-1${window.TTC.imageExtension}`]);
     toggleElement.addEventListener("click", () => {toggleAdvancedElements.toggle();});
 
     let toggleLanguageDropdown = new LanguageToggle(languageSelectToggle, 

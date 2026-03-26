@@ -1,6 +1,8 @@
 //this script is a very simple script to be run before anything else
 //it grabs local settings, and puts them in window for use by other scripts
 
+window.TTC = window.TTC || {};
+
 let initSettingsObject = () => {
     //new user, needs new settings
     let startObject = { font: "pixel1", theme: "pixel-1", xp: 0 };
@@ -42,27 +44,27 @@ let changeLocalSetting = (setting, value) => {
 let updateThemeFromLocal = () => {
     let theme = getLocalSetting("theme") ?? "pixel-1";
 
-    window.theme = theme;
+    window.TTC.theme = theme;
 }
 
 updateThemeFromLocal();
-console.log(window.theme);
+console.log(window.TTC.theme);
 
 let updateImageExtensionFromLocal = () => {
     let imageExtension = getLocalSetting("image-extension") ?? ".png";
 
-    window.imageExtension = imageExtension;
+    window.TTC.imageExtension = imageExtension;
 }
 
 updateImageExtensionFromLocal();
-console.log(window.imageExtension);
+console.log(window.TTC.imageExtension);
 
 let updateXPFromLocal = () => {
     let xp = getLocalSetting("xp") ?? "0";
     xp = Math.round(xp);
 
-    window.xp = xp;
+    window.TTC.xp = xp;
 }
 
 updateXPFromLocal();
-console.log(window.level);
+console.log(window.TTC.level);

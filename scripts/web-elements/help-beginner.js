@@ -20,10 +20,10 @@ class TTCSecondaryBeginnerPopup extends HTMLElement{
                     <div class="popup-container">
                         <div class="row-container">
                             <button class="no-bg-button nice-button" data-js-tag="secondary-help-no-button">
-                                <img class="popup-images" src="./components/visuals/icons/popup/help-beginner/decline/${window.theme}${window.imageExtension}" draggable="false"></img>
+                                <img class="popup-images" src="./components/visuals/icons/popup/help-beginner/decline/${window.TTC.theme}${window.TTC.imageExtension}" draggable="false"></img>
                             </button>
                             <button class="no-bg-button nice-button" data-js-tag="secondary-help-yes-button">
-                                <img class="popup-images" src="./components/visuals/icons/popup/help-beginner/affirm/${window.theme}${window.imageExtension}" draggable="false"></img>
+                                <img class="popup-images" src="./components/visuals/icons/popup/help-beginner/affirm/${window.TTC.theme}${window.TTC.imageExtension}" draggable="false"></img>
                             </button>
                         </div>
                     </div>
@@ -70,10 +70,18 @@ class TTCHelpBeginnerPopup extends HTMLElement{
     }
 
     init(){
+
         this.detectShow();
         this.render();
         this.initValues();
         this.initBehaviour();
+    }
+
+    makeGlobal(){ //everybody wants to discuss me, that must mean I'm disgusting well that's just me I'm just obsene
+        window.TTC.helpBeginnerPopup = this; //only works for one popup
+        
+        window.TTC.allBeginnerPopups = window.TTC.allBeginnerPopups || [];
+        window.TTC.allBeginnerPopups.push(this); //works for many
     }
 
     render(){
@@ -137,7 +145,7 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         
         let maxXP = parseInt(this.maxXP, 10);
         
-        if(maxXP > window.xp){
+        if(maxXP > window.TTC.xp){
             let showupTime = parseInt(this.showupTime, 10);
             this.serveToUser(showupTime);
             this.classList.add("invisible-popup");

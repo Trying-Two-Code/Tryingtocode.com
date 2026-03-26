@@ -9,15 +9,15 @@ class advancedSettings extends HTMLElement{
         //note to self: the advanced toggle is referenced in create-custom-elements
         //the reference is then referenced in create.js, which is convoluded.
         this.innerHTML = `
-        <button class="advanced--toggle nice-button" data-js-tag="advanced-toggle"><img draggable="false" class="advanced--toggle--image" src="${this.path}/advanced-toggle/${window.theme}/frame-1${window.imageExtension}" alt="advanced settings"></button>
+        <button class="advanced--toggle nice-button" data-js-tag="advanced-toggle"><img draggable="false" class="advanced--toggle--image" src="${this.path}/advanced-toggle/${window.TTC.theme}/frame-1${window.TTC.imageExtension}" alt="advanced settings"></button>
         <div data-js-tag="settings-toggled-element">
 
-            <button class="language-select nice-button" data-js-tag="language-select-toggle"><img title="select language" draggable="false" src="${this.path}/language/python/${window.theme}${window.imageExtension}" alt="select language" class="language-select-toggle--image"></button>
+            <button class="language-select nice-button" data-js-tag="language-select-toggle"><img title="select language" draggable="false" src="${this.path}/language/python/${window.TTC.theme}${window.TTC.imageExtension}" alt="select language" class="language-select-toggle--image"></button>
             <div data-js-tag="language-toggled-element" class="language-toggled-elements">
-                <li name="language-select--image-element-python" class="language-select--image-element" id="python-element"><img title="python" alt="python" draggable="false" src="${this.path}/language/python/${window.theme}${window.imageExtension}" class="language-select--image-element--image"></li>
-                <li name="language-select--image-element-javascript" class="language-select--image-element unsupported" id="javascript-element"><img title="not supported yet" alt="not supported yet" draggable="false" src="${this.path}/language/js/${window.theme}${window.imageExtension}" class="language-select--image-element--image"></li>
-                <li name="language-select--image-element-html" class="language-select--image-element unsupported" id="html-element"><img title="not supported yet" alt="not supported yet" draggable="false" src="${this.path}/language/html/${window.theme}${window.imageExtension}" class="language-select--image-element--image"></li>
-                <li name="language-select--image-element-c" class="language-select--image-element unsupported" id="c-element"><img title="not supported yet" alt="not supported yet" draggable="false" src="${this.path}/language/c/${window.theme}${window.imageExtension}" class="language-select--image-element--image"></li>
+                <li name="language-select--image-element-python" class="language-select--image-element" id="python-element"><img title="python" alt="python" draggable="false" src="${this.path}/language/python/${window.TTC.theme}${window.TTC.imageExtension}" class="language-select--image-element--image"></li>
+                <li name="language-select--image-element-javascript" class="language-select--image-element unsupported" id="javascript-element"><img title="not supported yet" alt="not supported yet" draggable="false" src="${this.path}/language/js/${window.TTC.theme}${window.TTC.imageExtension}" class="language-select--image-element--image"></li>
+                <li name="language-select--image-element-html" class="language-select--image-element unsupported" id="html-element"><img title="not supported yet" alt="not supported yet" draggable="false" src="${this.path}/language/html/${window.TTC.theme}${window.TTC.imageExtension}" class="language-select--image-element--image"></li>
+                <li name="language-select--image-element-c" class="language-select--image-element unsupported" id="c-element"><img title="not supported yet" alt="not supported yet" draggable="false" src="${this.path}/language/c/${window.TTC.theme}${window.TTC.imageExtension}" class="language-select--image-element--image"></li>
             </div>
             
             <div data-js-tag="user-measure" class="usercode-measure">
