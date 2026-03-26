@@ -48,12 +48,12 @@ let startVideo = (VId = videoId, dimensions = {height: 200, width: 300}) => {
 
 let done = false;
 let onPlayerStateChange = (event) => {
-    console.log(event.target);
+    let video = findVideo(event.target.ttcId);
+    video.playerStateChange(event);
 }
 let onPlayerReady = (event) => {
     let video = findVideo(event.target.ttcId);
     video.playerReady();
-    //let video = findVideo(event.target.)
 }
 let stopVideo = () => {
     player.stopVideo();
@@ -79,11 +79,19 @@ class youtubeVideo{
         //called by player when it is ready to rumble
         console.log("IT IS WORKING!", this.id);
         this.player.playVideo(this.dimensions);
-        this.increaseVideo();
+    }
+    playerStateChange(event){
+        if(event.data === 0){
+            this.videoEnded();
+        }
+    }
+    videoEnded(){
+        this.stopVideo();
     }
     stopVideo(){
         //hides and destroys video
         this.player.stopVideo();
+        this.player.destroy();
     }
     pauseVideo(){
         //stops video from playing
