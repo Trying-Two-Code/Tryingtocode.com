@@ -1,5 +1,3 @@
-console.log("readddy for settings rider sir");
-
 const localStorageSettingsString = "user_settings";
 
 const DEFAULT_SETTINGS = {
@@ -8,15 +6,14 @@ const DEFAULT_SETTINGS = {
     "theme": "pixel-1"
 };
 
-    console.error("change element here:");
 try{
     const TTC_SETTINGS_ELEMENT = document.querySelector("[js-data-tag='settings-holder']").parentElement;
     const FONT_TO_ELEMENT = {
         "pixel1": TTC_SETTINGS_ELEMENT
     };
 } catch {
-    console.log("Insuffecient elements. You are likely in a non settings page.");
-    console.log("If you are in a settings page, please contact@tryingtocode.com");
+    console.error("Insuffecient elements. You are likely in a non settings page.");
+    console.error("If you are in a settings page, please contact@tryingtocode.com");
 }
 
 
@@ -74,7 +71,6 @@ initSettingsObject();
 
 export let editSetting = (newSettings = { /* supported settings: font, theme, xp  */ }) => {
     let settingsObject = getSettingsObject();
-    console.log(newSettings, settingsObject);
     Object.keys(newSettings).forEach(newSettingsKey => {
         settingsObject[newSettingsKey] = newSettings[newSettingsKey];
     });
@@ -92,7 +88,6 @@ export let incrementSetting = (incrementSetting, byAmmount=1) => {
         newValue += Math.round(currentValue);
     } else{ console.error("not a number!"); }
 
-    console.log("set value to ", newValue);
     editSetting({ [incrementSetting]: newValue });
 }
 
@@ -153,7 +148,6 @@ export let applySettings = () => {
     applyFont();
 }
 
-console.log("settings initialised.");
 requestAnimationFrame(applySettings);
 window.applySettings = () => { applySettings(); };
 
@@ -184,7 +178,6 @@ updateSettingsButton.addEventListener("click", filledSettings);
 let hatePixelartButton = document.getElementById("hate-pixel-art-button");
 let likePixelartButton = document.getElementById("like-pixel-art-button");
 
-console.log(typeof hatePixelartButton, hatePixelartButton);
 if(hatePixelartButton != null) { 
     let detectPixelart = () => {
         let isPixelart = getSettingsObject()["font"] == "pixel1";

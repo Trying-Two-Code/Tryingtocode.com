@@ -50,7 +50,6 @@ let updateThemeFromLocal = () => {
 }
 
 updateThemeFromLocal();
-console.log(window.theme);
 
 let updateImageExtensionFromLocal = () => {
     let imageExtension = getLocalSetting("image-extension") ?? ".png";
@@ -59,7 +58,6 @@ let updateImageExtensionFromLocal = () => {
 }
 
 updateImageExtensionFromLocal();
-console.log(window.imageExtension);
 
 let updateXPFromLocal = () => {
     let xp = getLocalSetting("xp") ?? "0";
@@ -69,4 +67,3 @@ let updateXPFromLocal = () => {
 }
 
 updateXPFromLocal();
-console.log(window.level);

@@ -103,7 +103,6 @@ class TTCSidebar extends HTMLElement {
             localCoin = 0;
         }
         this.coinCounter.innerHTML = localCoin;
-        console.log("changing number: ", localCoin, this.coinCounter, this.coinCounter.value);
     }
 
     initHiddenSidebar(){
@@ -114,7 +113,6 @@ class TTCSidebar extends HTMLElement {
 
     updateDisplayNumber(updatedNumber, startString) {
         if(typeof updatedNumber !== "number" || typeof startString !== "string") { console.error("incorrect datatype sent to display number!"); }
-        console.log("update");
         let currentCoins = updatedNumber;
 
         if (this.coinCounter != null){
