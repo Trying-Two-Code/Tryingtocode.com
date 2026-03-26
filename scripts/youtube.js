@@ -73,7 +73,6 @@ class youtubeVideo{
     }
     playVideo(d){
         //starts a new video
-        this.id = "scc4bHEHtZY";
         let player = startVideo(this.id, this.dimensions);
         player.ttcId = this.id;
         this.player = player;
