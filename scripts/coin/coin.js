@@ -34,8 +34,20 @@ let printCoins = async () => {
 }
 printCoins();
 
+let makeCoinJuice = () => {
+    let soundTheme = "pixel-1";
+    let soundExtension = ".mp3";
+    //                       components/sounds/sfx/coin-collect/pixel-1.mp4 404
+    //                       components\sounds\sfx\coin-collect\pixel-1.mp3
+    let coinSoundSrc = `./../components/sounds/sfx/coin-collect/${soundTheme}${soundExtension}`;
+    let coinAudio = new Audio(coinSoundSrc);
+    coinAudio.volume = .1;
+    coinAudio.play();
+}
+
 let collectCoin = (coinElement, worth=1) => {
     objects = objects.filter(e => e !== coinElement);
+    makeCoinJuice();
     if (worth > 0) {incrimentDisplayNumber(worth)};
 }
 
