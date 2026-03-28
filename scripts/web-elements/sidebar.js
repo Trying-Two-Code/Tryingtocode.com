@@ -15,8 +15,8 @@ class TTCSidebar extends HTMLElement {
     render(){
         this.startClosed = this.getAttribute("start-closed") ?? false;
 
-        this.theme = window.theme ?? "pixel-1";
-        this.imageExtension = window.imageExtension ?? ".png"; 
+        this.theme = window.TTC.theme ?? "pixel-1";
+        this.imageExtension = window.TTC.imageExtension ?? ".png"; 
         this.iconPath = "components/visuals/icons/sidebar";
         this.innerHTML = `
     <div data-js-tag="toggle-this-part-of-sidebar" class="sidebar">

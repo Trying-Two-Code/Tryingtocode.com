@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="./css/learn.css">   <!--LEARN,   FOR THIS PAGE-->
     <link rel="stylesheet" href="./css/general.css"> <!--GENERAL, FOR ALL PAGES-->
     <link rel="stylesheet" href="./css/prism.css">
+    <link rel="stylesheet" href="./css/custom-elements.css">
 
+    <script src="./scripts/youtube.js"></script>
     <script src="./scripts/init-settings.js"></script>
     <script src="./scripts/learn.js" type="module" defer></script>
     <script src="./scripts/general.js" type="module" defer></script>
@@ -17,6 +19,7 @@
     <script src="./scripts/firebase-backend/firebase.js" type="module" defer></script>
     <script src="./scripts/prism.js" defer></script>
     <script src="./scripts/web-elements/footer.js"></script>
+    <script src="./scripts/web-elements/help-beginner.js"></script>
     <script src="./scripts/web-elements/sidebar.js" type="module"></script>
     <script src="./scripts/web-elements/typeable-code.js" type="module"></script>
     <script src="./scripts/settings-functions.js" type="module" defer></script>
@@ -24,6 +27,9 @@
     <link as="font" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!--Font import-->
 </head>
 <body>
+    <div id="youtube-player" data-js-tag="youtube-player" class="nice-video"></div>
+    <!--         users should be here for 40 seconds before completing a project             -->
+    <ttc-help-beginner-popup showup-time="40" max-xp="50" tutorial-name="project-tutorial-0" video-id="scc4bHEHtZY"></ttc-help-beginner-popup>
     <div class="row-container">
         <ttc-sidebar></ttc-sidebar>
         <div class="main-content main-font" id="main-content">

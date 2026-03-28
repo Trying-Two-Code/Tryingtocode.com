@@ -7,7 +7,7 @@ import { isCorrectCode } from  "./user-code/check-code.js";
 import { scrollToTop } from "./learn.js";
 
 //general use
-let theme = window.theme;
+let theme = window.TTC.theme;
 let htmlGen = 
 `
     <div id="learn-project" class="project mini main-font">
@@ -15,7 +15,7 @@ let htmlGen =
             <div class="close-restart">
                 <div class="button">
                     <button class="project-close-button project-button" title="close project">
-                        <img style="width: 30px; height: 30px;" name="close-img" src='./components/visuals/icons/project/close/${window.theme}.png' class="nice-button">
+                        <img style="width: 30px; height: 30px;" name="close-img" src='./components/visuals/icons/project/close/${theme}.png' class="nice-button">
                     </button>
                 </div>
                 <div class="button">
@@ -63,8 +63,16 @@ export class Display {
     }
 
     makeMeCurrentDisplay(){
+        if(typeof window.currentDisplay !== "undefined") {window.currentDisplay.stopMeCurrentDisplay();}
         window.currentDisplay = this;
-        this.checkIfNoobInterval = setInterval(this.checkIfNoob, 500);
+        this.timebegan = Date.now();
+        this.checkIfNoobInterval = setInterval(() => {this.checkIfNoob();}, 5000);
+        console.log("waiting half second to check...", this.checkIfNoob());
+    }
+
+    //run if I am stopping being the current display:
+    stopMeCurrentDisplay(){
+        clearInterval(this.checkIfNoobInterval);
     }
 
     initializeDisplay(){
@@ -148,7 +156,12 @@ export class Display {
     }
 
     checkIfNoob(){
-        if(this != window.currentDisplay){return;}
+        if(this != window.currentDisplay){
+            console.error("only current display should affect noob status"); 
+            return;
+        }
+
+        const TIME_LIMIT = 40;
 
         let inexperienced = (threshold=10) => {
             if(window.xp < threshold) {
@@ -156,15 +169,37 @@ export class Display {
                 console.log("maybe is a noob.");
                 console.log("but let's see if they actually need help.");
             } 
-        }
-        //most users leave after around 2 minutes, so don't go longer than that
-        let inNeedOfHelp = (timeLimit=40 /**in seconds */) => {
+        };
+
+        let getRemainingTime = (timeLimit=TIME_LIMIT) => {
             let newTime = Date.now();
-            result = newTime - this.timebegan;
-            timescale = 1000; //seconds
-            if(result / timescale > timeLimit);
-        }
-        console.log("needs help?", inexperienced(), inNeedOfHelp());
+            let result = newTime - this.timebegan;
+            const timescale = 1000; //seconds
+            let remainingTime = (timeLimit) - (result / timescale); //in seconds
+            return remainingTime;
+        };
+
+        //most users leave after around 2 minutes, so don't go longer than that
+        let inNeedOfHelp = (timeLimit=TIME_LIMIT /**in seconds */) => {
+            let remainingTime = getRemainingTime(timeLimit);
+            remainingTime = Math.round(remainingTime);
+            window.TTC.helpBeginnerPopup.serveWithDelay(remainingTime);
+            return "yeah boi";
+        };
+
+        let gotHelp = () => {
+            clearInterval(this.checkIfNoobInterval);
+        };
+
+        let detectGotHelp = () => {
+            const getHelpAt = 0; // when timer reaches this value, this function is obsolete.
+            let remainingTime = getRemainingTime();
+            if(remainingTime <= 0){
+                gotHelp();
+            }
+        };
+
+        console.log("needs help?", inexperienced(), inNeedOfHelp(), detectGotHelp());
 
     }
 

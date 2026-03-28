@@ -1,9 +1,11 @@
 //this script is a very simple script to be run before anything else
 //it grabs local settings, and puts them in window for use by other scripts
 
+window.TTC = window.TTC || {};
+
 let initSettingsObject = () => {
-    console.log("uh oh!");
-    let startObject = {};
+    //new user, needs new settings
+    let startObject = { font: "pixel1", theme: "pixel-1", xp: 0 };
     let startSettings = JSON.stringify(startObject);
     localStorage.setItem("user_settings", startSettings);
 }
@@ -11,7 +13,8 @@ let initSettingsObject = () => {
 let getSettingsObject = () => {
     let settings = localStorage.getItem("user_settings");
 
-    if(settings === null) { //in case user just got here
+    if(settings === null) { 
+        //in case user just got here
         initSettingsObject(); 
         settings = localStorage.getItem("user_settings");
     }
@@ -38,15 +41,10 @@ let changeLocalSetting = (setting, value) => {
     localStorage.setItem("user_settings", updatedSettings);
 }
 
-//changeLocalSetting("theme", "pixel-1");
-//changeLocalSetting("image-extension", ".png");
-//changeLocalSetting("theme", "vector-1");
-//changeLocalSetting("image-extension", ".svg");
-
 let updateThemeFromLocal = () => {
     let theme = getLocalSetting("theme") ?? "pixel-1";
 
-    window.theme = theme;
+    window.TTC.theme = theme;
 }
 
 updateThemeFromLocal();
@@ -54,7 +52,7 @@ updateThemeFromLocal();
 let updateImageExtensionFromLocal = () => {
     let imageExtension = getLocalSetting("image-extension") ?? ".png";
 
-    window.imageExtension = imageExtension;
+    window.TTC.imageExtension = imageExtension;
 }
 
 updateImageExtensionFromLocal();
@@ -63,7 +61,7 @@ let updateXPFromLocal = () => {
     let xp = getLocalSetting("xp") ?? "0";
     xp = Math.round(xp);
 
-    window.xp = xp;
+    window.TTC.xp = xp;
 }
 
 updateXPFromLocal();

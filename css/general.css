@@ -79,7 +79,7 @@
     --space-lg: 2rem;
 
     --sidebar-width: 10rem;
-    --sidebar-height: 8rem; /*for vertical screens*/
+    --sidebar-height: 8rem; /*for vertical screens*//*used in custom-elements.css, some system for syncing should be implemented*/
 
     --pixel-font: 'Press Start 2P';
     --secondary-font: 'monospace';
@@ -116,7 +116,7 @@ body {
 	background-color: var(--palette-serika-1);
     padding-top: 20px;
     margin-right: 10px;
-	z-index: var(--z-overlay);
+	z-index: var(--z-sidebar);
     box-shadow: 2px 0 5px rgba(0,0,0,0.5);
 }
 
@@ -464,6 +464,8 @@ ttc-sidebar{
     flex-direction: column;
     flex-grow: 1;
     min-height: 100vh;
+
+    overflow: hidden;
 }
 
 .big-image{
@@ -507,11 +509,10 @@ ttc-sidebar{
 
 @media (orientation: portrait) {
     .bottom-sidebar{
-        margin-left: 60vw;
+        margin-left: 6vw;
         bottom: 0;
     }
 }
-
 
 /*------------------------------------*\
     #DROPDOWN

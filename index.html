@@ -9,14 +9,16 @@
     <meta property="og:image" content="https://tryingtocode.com/components/art/ttc coin icon.png">
     <meta property="og:type" content="website">
     <meta name="keywords" content="free, learn, code">
-    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeOLmEsAAAAAPksjOmHbSaPZ53wpQuThIHQok7z"></script>
     
     <title>Trying to Code</title>
 
     <link rel="icon" href="../components/art/ttc coin icon.png">
     <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/custom-elements.css">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/prism.css">
+
+    <script src="./scripts/youtube.js"></script>
 
     <script src="./scripts/init-settings.js"></script>
     <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
@@ -24,6 +26,7 @@
     <script src="./scripts/general.js" type="module"></script>
     <script src="./scripts/firebase-backend/firebase.js" type="module" defer></script>
     <script src="./scripts/web-elements/footer.js"></script>
+    <script src="./scripts/web-elements/help-beginner.js"></script>
     <script src="./scripts/web-elements/sidebar.js" type="module" defer></script>
     <script src="./scripts/prism.js" defer></script>
     <script src="./scripts/settings-functions.js" type="module" defer></script>
@@ -53,10 +56,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="youtube-player" data-js-tag="youtube-player" class="nice-video"></div>
+    <!--         users should be here for 10 seconds before leaving to a different page              -->
+    <ttc-help-beginner-popup showup-time="10" max-xp="50" tutorial-name="tutorial-0"  video-id="MDOtgp9vq70"></ttc-help-beginner-popup>
+
     <div class="row-container">
-        <canvas class="js-screen" id="learn-screen">
-            <!--shows coins-->
-        </canvas>
+        <canvas class="js-screen" id="learn-screen"></canvas>
         
         <ttc-sidebar></ttc-sidebar>
 
@@ -73,7 +78,7 @@
                         <button class="run-code welcome--demo--output-button nice-button" id="welcome--demo--output-button">
                             <img class="welcome--demo--output-img" src="./components/visuals/icons/project/run-code/pixel-1.png" alt="run code" draggable="false">
                         </button>
-                        <script>let runCodeEl = document.querySelector(".welcome--demo--output-img"); runCodeEl.src = `./components/visuals/icons/project/run-code/${window.theme}${window.imageExtension}`;</script>
+                        <script>let runCodeEl = document.querySelector(".welcome--demo--output-img"); runCodeEl.src = `./components/visuals/icons/project/run-code/${window.TTC.theme}${window.TTC.imageExtension}`;</script>
                         <div class="code-lines welcome--demo--output">
                             <div class="welcome--demo--output--text" id="welcome--demo--output--text"></div>
                         </div>
@@ -81,17 +86,18 @@
 
                     <div class="row-container">
                         <img class="welcome--demo--arrow welcome-img" src="./components/visuals/icons/arrow/pixel-1.png" alt="-->" draggable="false">
-                        <script>let arrowEl = document.querySelector(".welcome--demo--arrow"); arrowEl.src = `./components/visuals/icons/arrow/${window.theme}${window.imageExtension}`;</script>
+                        <script>let arrowEl = document.querySelector(".welcome--demo--arrow"); arrowEl.src = `./components/visuals/icons/arrow/${window.TTC.theme}${window.TTC.imageExtension}`;</script>
                         <a href="learn" title="Learn" class="welcome--demo--learn">
                             <style>.pad-top-30{padding-top: 30px;}</style>
-                            <button class="welcome--demo--learn-button pad-top-30" draggable="false"><img class="nice-button welcome-img welcome--demo--learn-button-img" src="./components/visuals/icons/sidebar/learn/pixel-1.png" alt="learn"></button>
-                            <script>let learnCodeEl = document.querySelector(".welcome--demo--learn-button-img"); learnCodeEl.src = `./components/visuals/icons/sidebar/learn/${window.theme}${window.imageExtension}`;</script>
+                            <button class="welcome--demo--learn-button pad-top-30" draggable="false"><img class="nice-button welcome-img welcome--demo--learn-button-img" src="./components/visuals/icons/sidebar/learn/pixel-1.png" alt="learn" draggable="false"></button>
+                            <script>let learnCodeEl = document.querySelector(".welcome--demo--learn-button-img"); learnCodeEl.src = `./components/visuals/icons/sidebar/learn/${window.TTC.theme}${window.TTC.imageExtension}`;</script>
                         </a>
                     </div>
                     
                 </div>
 
             </div>
+
 
             <div class="row-container" style="justify-content: space-around;">
                 <p class="welcome--p">(by the way, it's free)</p>
