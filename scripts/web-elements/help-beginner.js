@@ -149,23 +149,35 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         
         if(maxXP > window.TTC.xp){
             let showupTime = parseInt(this.showupTime, 10);
-            this.serveToUser(showupTime);
+            this.serveWithDelay(showupTime);
             this.classList.add("invisible-popup");
         }
     }
 
-    serveToUser(showupTime){ 
-        //ammount of time to wait before showing up
-        console.log("wait ", showupTime, " seconds before showing");
-        setTimeout(() => {
-            this.classList.remove("invisible-popup");
-            this.mainDialogElement.show();
-        }, showupTime * 1000);
+    serveWithDelay(showupTime){ 
+
+        //showupTime = ammount of time (in seconds) to wait before showing up
+        if(this.oldServe){
+            clearTimeout(this.oldServe);
+            console.log("deleting old time");
+        }
+
+        console.log("setting new time to: ", showupTime, " seconds");
+
+        this.oldServe = setTimeout(() => {
+            this.serveToUser();
+        }, showupTime * 1000); //*1000 because it is in seconds
 
         let hideUntilThen = () => {
             this.hideSelf();
         }
+
         hideUntilThen();
+    }
+
+    serveToUser(){
+        this.classList.remove("invisible-popup");
+        this.mainDialogElement.show();
     }
 
     mainDialogClosed(event){
