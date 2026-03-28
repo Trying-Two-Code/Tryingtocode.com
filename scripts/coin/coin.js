@@ -9,9 +9,7 @@ import { getUserData, setUserDatapoint, increaseCoins } from "../firebase-backen
 
 //let counter = document.getElementById("coin-counter");
 const sidebarElement = document.querySelector("ttc-sidebar");
-console.log("sidebar is ", sidebarElement);
 const counter = document.querySelector("[data-js-tag='sidebar-coin-counter']");
-console.log("");
 
 let canvas = document.getElementById('learn-screen');
 
@@ -34,8 +32,20 @@ let printCoins = async () => {
 }
 printCoins();
 
+let makeCoinJuice = () => {
+    let soundTheme = "pixel-1";
+    let soundExtension = ".mp3";
+    //                       components/sounds/sfx/coin-collect/pixel-1.mp4 404
+    //                       components\sounds\sfx\coin-collect\pixel-1.mp3
+    let coinSoundSrc = `./../components/sounds/sfx/coin-collect/${soundTheme}${soundExtension}`;
+    let coinAudio = new Audio(coinSoundSrc);
+    coinAudio.volume = .1;
+    coinAudio.play();
+}
+
 let collectCoin = (coinElement, worth=1) => {
     objects = objects.filter(e => e !== coinElement);
+    makeCoinJuice();
     if (worth > 0) {incrimentDisplayNumber(worth)};
 }
 
@@ -122,7 +132,7 @@ let updateDisplayNumber = (updatedNumber, startString) => {
     try{
         sidebarElement.updateDisplayNumber(updatedNumber, startString);
     } catch (error) {
-        console.log("no sidebar element yet. ", error);
+        console.error("no sidebar element yet. ", error);
     }
     /*let currentCoins = updatedNumber;
 
@@ -161,7 +171,6 @@ updateDisplayNumber(0, '');
 
 let initDisplay = async () => {
     let coins = await getUserCoins();
-    console.log("coins = ", coins);
     updateDisplayNumber(coins, '');
 }
 

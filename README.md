@@ -7,10 +7,13 @@ Copyright (c) Trying to Code. All rights reserved.
 Creative Commons Attribution-NonCommercial-NoDerivs (CC BY-NC-ND)
 
 # Please don't disclose
-By viewing these files, you are viewing private 
+By viewing these files, you are viewing 
 information found in these files that 
-could not otherwise be found publically.
-Please do not disclose any information here.
+could contain security risks. If you find these,
+please refrain from sharing with anyone and make
+an issue on github immediatly.
+Please do not disclose any information found here
+unless necessary.
 
 # Goals
 Keep code clean and orginized. Monetization

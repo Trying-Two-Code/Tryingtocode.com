@@ -103,7 +103,6 @@ class TTCSidebar extends HTMLElement {
             localCoin = 0;
         }
         this.coinCounter.innerHTML = localCoin;
-        console.log("changing number: ", localCoin, this.coinCounter, this.coinCounter.value);
     }
 
     initHiddenSidebar(){

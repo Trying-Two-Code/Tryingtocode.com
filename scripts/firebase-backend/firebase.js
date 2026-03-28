@@ -110,7 +110,6 @@ let signUserOut = async () => {
 let startAuth = async (user) => {
     await auth.authStateReady();
     await authStateChangedFunction(user);
-    console.log("user is ready!");
 }
 
 startAuth();
@@ -292,10 +291,7 @@ export let setUserDatapoint = async (email=null, displayName=null, coins=null, p
         return saveProjectList;
     }
 
-    console.log("should've saved: ", projects);
-
     let setProjects = mergeProjects();
-    console.log(setProjects);
 
     if(!isObjectEmpty(setProjects)) {
         updatePayload.projects = setProjects;

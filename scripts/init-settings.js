@@ -48,7 +48,6 @@ let updateThemeFromLocal = () => {
 }
 
 updateThemeFromLocal();
-console.log(window.TTC.theme);
 
 let updateImageExtensionFromLocal = () => {
     let imageExtension = getLocalSetting("image-extension") ?? ".png";
@@ -57,7 +56,6 @@ let updateImageExtensionFromLocal = () => {
 }
 
 updateImageExtensionFromLocal();
-console.log(window.TTC.imageExtension);
 
 let updateXPFromLocal = () => {
     let xp = getLocalSetting("xp") ?? "0";
@@ -67,4 +65,3 @@ let updateXPFromLocal = () => {
 }
 
 updateXPFromLocal();
-console.log(window.TTC.level);
