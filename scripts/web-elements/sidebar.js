@@ -79,7 +79,7 @@ class TTCSidebar extends HTMLElement {
         this.imageButton.changeOnClick();
         //this.mainDropdown.
 
-        this.toggleSidebar = new Toggle(this.toggleSidebarButton, [this.toggleThisPartOfSidebar], "hide", undefined, undefined, undefined, this.startClosed);
+        this.toggleSidebar = new Toggle(this.toggleSidebarButton, [this.toggleThisPartOfSidebar], "sidebar-hidden", undefined, undefined, undefined, this.startClosed);
         this.toggleSidebarImageButton = new ImageButton(this.toggleSidebarButton, this.toggleSidebarArt, 1);
         this.toggleSidebarImageButton.changeOnClick();
         //this.toggleSidebar.show();
