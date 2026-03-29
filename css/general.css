@@ -115,7 +115,6 @@ body {
 	left: 0;
 	background-color: var(--palette-serika-1);
     padding-top: 20px;
-    margin-right: 10px;
 	z-index: var(--z-sidebar);
     box-shadow: 2px 0 5px rgba(0,0,0,0.5);
 }
@@ -153,11 +152,11 @@ body {
 .main-content {
     margin-bottom: 0px;
     width: 100%;
+    margin-left: 10px;
 }
 
 @media (orientation: landscape) {
     .main-content {
-        /*margin-left: var(--sidebar-width);*/
         padding: 0px;
         z-index: var(--z-base);
     }
