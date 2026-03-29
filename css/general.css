@@ -118,7 +118,11 @@ body {
 	z-index: var(--z-sidebar);
     box-shadow: 2px 0 5px rgba(0,0,0,0.5);
     overflow: hidden;
-    transition: transform 0.28s ease, width 0.28s ease, min-width 0.28s ease, height 0.28s ease, padding 0.28s ease, opacity 0.28s ease;
+	
+	--sidebar-transition-speed: 0.28s;
+	
+    transition: transform var(--sidebar-transition-speed) ease, width var(--sidebar-transition-speed) ease, min-width var(--sidebar-transition-speed) ease,
+				height var(--sidebar-transition-speed) ease, padding var(--sidebar-transition-speed) ease, opacity var(--sidebar-transition-speed) ease;
 }
 
 @media (orientation: landscape) {
