@@ -100,8 +100,11 @@ body {
     /*background: var(--palette-serika-3); gradient for success?
     background: radial-gradient(circle,var(--palette-serika-3) 0%, var(--palette-serika-5) 100%);*/
     overflow-x: hidden; /*this gets rid of horizontal bar*/
-    padding: 1px;
-    margin: 1px;
+    padding: 0px;
+    margin: 0px;
+    -webkit-tap-highlight-color: #0e0d0b11;
+    background-image: linear-gradient(#a59f4605 4px, transparent 1px);
+    background-size: 1em .5em;
 }
 
 .sidebar {
@@ -642,11 +645,6 @@ img {
     -webkit-tap-highlight-color: #0e0d0b11;
 }
 
-body {
-    -webkit-tap-highlight-color: #0e0d0b11;
-    background-image: linear-gradient(#a59f4605 4px, transparent 1px);
-    background-size: 1em .5em;
-}
 
 /*------------------------------------*\
     #PROJECT-INNER
