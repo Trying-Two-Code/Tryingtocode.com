@@ -4,7 +4,11 @@ Anyone may fork the database and make their own updates to the website! If you b
 
 # Contributing Rules
 
-Please label any AI content. Be sure to include tests to ensure that everything works as intended, and look for any unintended consequences. All changes should be stateted in the commit, to be clear on what is being updated. More information can be found in README.md.
+- Please label any AI content. 
+- Be sure to include tests to ensure that everything works as intended, and look for any unintended consequences.
+- All changes should be stated in the commit, to be clear on what is being updated.
+- More information can be found in README.md.
+- Small jokes (silly variable names / functions) in code are allowed, as long as it is still readable.
 
 # CONVENTIONS
 
