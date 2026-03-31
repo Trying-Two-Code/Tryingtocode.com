@@ -118,3 +118,22 @@
 
     z-index: var(--z-overlay);
 }
+
+/*------------------------------------*\ 
+    #SIDEBAR
+/*------------------------------------*/ 
+
+/*HIDDEN SIDEBAR:*/
+.hidden-sidebar{
+    position: fixed;
+    background-color: transparent;
+    border: none !important;
+    box-shadow: none;
+}
+
+.hide-bg-button{
+    position: absolute;
+    background-color: transparent;
+    top: 500px;
+    border-color: transparent;
+}

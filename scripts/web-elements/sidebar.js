@@ -131,7 +131,6 @@ class TTCSidebar extends HTMLElement {
 
     showSidebar(){ //called by hidden sidebar when it is showing up again
         this.toggleSidebar.toggleEvent();
-        this.hiddenSidebar.totallyGone();
     }
 
     updateDisplayNumber(updatedNumber, startString) {
@@ -170,42 +169,58 @@ class TTCHiddenSidebar extends HTMLElement {
         this.iconPath = "components/visuals/icons/sidebar";
 
         this.innerHTML = `
-        <button data-js-tag="show-sidebar" class="show-sidebar nice-button main-font hide-bg-button"><img class="dropdown--image" src="${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-2${this.imageExtension}" draggable="false"></img></button>
-        
-        <div data-js-tag="show-button">...</div>
+        <div data-js-tag="show-button" class="hidden-sidebar sidebar">
+            <button data-js-tag="show-sidebar" class="show-sidebar nice-button main-font hide-bg-button">
+                <img class="dropdown--image" src="${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-2${this.imageExtension}" draggable="false"></img>
+            </button>
+        </div>
         `;
     }
 
     findElements(){
-        console.log("helllloy?");
         let queryTag = (tag) => { return this.querySelector(`[data-js-tag="${tag}"]`); }
 
         this.showSidebarButton = queryTag("show-sidebar");
         this.showButtonDiv = queryTag("show-button");
-        console.log(this.showSidebarButton, this.showButtonDiv);
     }
 
     initFunctionality(){
         this.showSidebarButton.addEventListener('click', () => {
+            this.totallyGone();
             this.showSidebarEvent();
+        });
+
+        //subtle differences between mouseover and mouseenter make this neccissary (I think.)
+        //for more information, visit: https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseover_event
+        this.showButtonDiv.addEventListener("mouseover", (event) => {
+            this.shown();
+        });
+        this.showButtonDiv.addEventListener("mouseenter", (event) => {
+            this.moveShownButton({x: event.x, y: event.y});
+        })
+        this.showButtonDiv.addEventListener("mouseleave", (event) => {
+            console.log("not over");
+            this.hidden();
         });
     }
 
     totallyGone(){ //can't be shown
-        this.classList.add("hide");
+        console.log(this);
+        this.showButtonDiv.classList.add("hide");
     }
 
     hidden(){ //can be shown, but is invisible
-        this.classList.remove("hide");
-
-        console.log(this.showSidebarButton, this.showButtonDiv);
-        this.showSidebarButton.classList.add("nice-button");
+        this.showSidebarButton.classList.add("hide");
     }
 
     shown(){ //shows a button that allows the user to see the sidebar
         this.classList.remove("hide");
+    }
 
-        this.showSidebarButton.classList.remove("nice-button");
+    moveShownButton(mousePosition={x: 0, y: 0}){
+        const Y_OFFSET = -50;
+        this.showSidebarButton.classList.remove("hide");
+        this.showSidebarButton.style.top = `${mousePosition.y + Y_OFFSET}px`;
     }
 }
 
