@@ -22,8 +22,8 @@ export class ImageButton {
         }
     }
 
-    changeOnClick(){
-        this.button.addEventListener("click", () => {
+    changeOnClick(button=this.button){
+        button.addEventListener("click", () => {
             this.changeImage();
         });
     }
@@ -42,6 +42,7 @@ export class Toggle{
         this.animatedElement = animatedElement;
         this.toggleButton = toggleButton;
 
+        this.toggled =      startToggled;
         this.startToggled = startToggled;
 
         this.initializeLogic();
@@ -70,6 +71,8 @@ export class Toggle{
             effectedElement.classList.toggle(primaryClass);
             effectedElement.classList.toggle(secondaryClass, secondaryValue);
         });
+
+        this.toggled = !this.toggled;
     }
 
     goneEvent(){

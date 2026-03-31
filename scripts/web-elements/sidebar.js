@@ -1,5 +1,6 @@
 import { getCoin, changeNumber} from "../coin/coin.js";
 import { Toggle, ImageButton } from "../tools.js";
+import { editSetting, getSetting } from "../settings-functions.js";
 
 /**
  * this script initialises the sidebar, the ui element at the left hand of basically every page
@@ -51,10 +52,14 @@ class TTCSidebar extends HTMLElement {
             </div>
         </div>
     </div>
+    <div data-js-tag="hidden-sidebar-parent" width=30 height=1000><div>
     `;
+
         this.findElements();
         this.setupFunctionality();
         if(typeof window.applySettings !== "undefined"){ window.applySettings(); }
+
+        this.detectStartClosed();
     }
 
     findElements(){
@@ -71,6 +76,8 @@ class TTCSidebar extends HTMLElement {
             `${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-1${this.imageExtension}`,
             `${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-2${this.imageExtension}` 
         ]
+
+        this.hiddenSidebarParent = this.querySelector("[data-js-tag='hidden-sidebar-parent']");
     }
 
     setupFunctionality(){
@@ -79,12 +86,28 @@ class TTCSidebar extends HTMLElement {
         this.imageButton.changeOnClick();
         //this.mainDropdown.
 
-        this.toggleSidebar = new Toggle(this.toggleSidebarButton, [this.toggleThisPartOfSidebar], "sidebar-hidden", undefined, undefined, undefined, this.startClosed);
-        this.toggleSidebarImageButton = new ImageButton(this.toggleSidebarButton, this.toggleSidebarArt, 1);
-        this.toggleSidebarImageButton.changeOnClick();
-        //this.toggleSidebar.show();
+        this.toggleSidebar = new Toggle(
+            this.toggleSidebarButton, 
+            [this.toggleThisPartOfSidebar], 
+            "sidebar-hidden", undefined, undefined, undefined, 
+            this.startClosed
+        );
+        this.toggleSidebar.addEvent(() => {this.toggleSidebarEvent();});
+        console.log(this.toggleSidebar);
+
+        //this.toggleSidebarImageButton = new ImageButton(this.toggleSidebarButton, this.toggleSidebarArt, 1);
+        //this.toggleSidebarImageButton.changeOnClick();
         this.initCoinNumber();
-        this.initHiddenSidebar();
+    }
+
+    detectStartClosed(){
+        let startClosed = getSetting("sidebar-hidden");
+        console.log("detecting...", startClosed);
+        let hideSidebar = () => {
+            this.toggleSidebar.toggleEvent();
+            this.initHiddenSidebar();
+        }
+        return startClosed ? hideSidebar() : false;
     }
 
     initCoinNumber(){
@@ -105,10 +128,25 @@ class TTCSidebar extends HTMLElement {
         this.coinCounter.innerHTML = localCoin;
     }
 
+    toggleSidebarEvent(){
+        if(this.toggleSidebar.toggled){
+            this.initHiddenSidebar();
+        }
+    }
+
     initHiddenSidebar(){
-        this.hiddenSidebarHTML = `
-            <div></div>
-        `;
+        console.log("hiding now.");
+        editSetting({"sidebar-hidden": true});
+        this.hiddenSidebar = this.hiddenSidebar ?? document.createElement("ttc-hidden-sidebar");
+        this.hiddenSidebarParent.appendChild(this.hiddenSidebar);
+        this.hiddenSidebar.showSidebarEvent = () => { this.showSidebar(); }
+        //this.toggleSidebarImageButton.changeOnClick(this.hiddenSidebar.showSidebarButton);
+        //this.toggleSidebarImageButton.changeImage();
+        console.log(this.hiddenSidebar);
+    }
+
+    showSidebar(){ //called by hidden sidebar when it is showing up again
+        this.toggleSidebar.toggleEvent();
     }
 
     updateDisplayNumber(updatedNumber, startString) {
@@ -124,14 +162,94 @@ class TTCSidebar extends HTMLElement {
 customElements.define("ttc-sidebar", TTCSidebar);
 
 
-class TTCHidenSidebar extends HTMLElement {
+class TTCHiddenSidebar extends HTMLElement {
     constructor(){
         super();
     }
+
     connectedCallback(){
-        this.render();
+        this.init();
     }
+
+    init(){
+        this.render();
+        this.findElements();
+        this.initFunctionality();
+
+        this.hidden();
+    }
+
     render(){
-        
+        this.theme = window.TTC.theme ?? "pixel-1";
+        this.imageExtension = window.TTC.imageExtension ?? ".png"; 
+        this.iconPath = "components/visuals/icons/sidebar";
+
+        this.innerHTML = `
+        <div data-js-tag="show-button" class="hidden-sidebar sidebar"></div>
+        <button data-js-tag="show-sidebar" class="show-sidebar nice-button main-font hide-bg-button">
+            <img class="dropdown--image" src="${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-2${this.imageExtension}" draggable="false"></img>
+        </button>
+        `;
+    }
+
+    findElements(){
+        let queryTag = (tag) => { return this.querySelector(`[data-js-tag="${tag}"]`); }
+
+        this.showSidebarButton = queryTag("show-sidebar");
+        this.showButtonDiv = queryTag("show-button");
+    }
+
+    initFunctionality(){
+        this.showSidebarButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            console.log(this.isTotallyGone);
+            this.isTotallyGone ? this.shown() : this.totallyGone();
+            this.showSidebarEvent();
+        });
+
+        //subtle differences between mouseover and mouseenter make this neccissary (I think.)
+        //for more information, visit: https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseover_event
+        this.showButtonDiv.addEventListener("mouseover", (event) => {
+            this.shown();
+        });
+        this.showButtonDiv.addEventListener("mouseenter", (event) => {
+            this.moveShownButton({x: event.x, y: event.y});
+        });
+        this.showButtonDiv.addEventListener("mouseleave", (event) => {
+            if(!this.showSidebarButton.matches(":hover")){
+                this.hidden();
+                this.showButtonDiv.style.pointerEvents = "auto";
+            }
+        });
+
+        this.showSidebarButton.addEventListener("mouseleave", (event) => {
+            this.hidden();
+            this.showButtonDiv.style.pointerEvents = "auto";
+        });
+    }
+
+    totallyGone(){ //can't be shown
+        this.isTotallyGone = true;
+        editSetting({"sidebar-hidden": false});
+        this.showButtonDiv.classList.add("hide");
+    }
+
+    hidden(){ //can be shown, but is invisible
+        this.isTotallyGone = false;
+        this.showSidebarButton.classList.add("hide");
+    }
+
+    shown(){ //shows a button that allows the user to see the sidebar
+        this.isTotallyGone = false;
+        this.showButtonDiv.classList.remove("hide");
+        this.classList.remove("hide");
+    }
+
+    moveShownButton(mousePosition={x: 0, y: 0}){
+        const Y_OFFSET = -50;
+        this.showSidebarButton.classList.remove("hide");
+        this.showSidebarButton.style.top = `${mousePosition.y + Y_OFFSET}px`;
     }
 }
+
+customElements.define("ttc-hidden-sidebar", TTCHiddenSidebar);

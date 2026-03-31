@@ -118,3 +118,34 @@
 
     z-index: var(--z-overlay);
 }
+
+/*------------------------------------*\ 
+    #SIDEBAR
+/*------------------------------------*/ 
+
+/*HIDDEN SIDEBAR:*/
+.hidden-sidebar{
+    position: fixed;
+    background-color: transparent;
+    border: none !important;
+    box-shadow: none;
+}
+
+@media (orientation: landscape) {
+    .hidden-sidebar{
+        width: 10px;
+    }
+}
+
+.hidden-sidebar:active {
+    pointer-events: none;
+}
+
+.hide-bg-button{
+    position: fixed;
+    background-color: transparent;
+    top: 500px;
+    border-color: transparent;
+    left: 0px;
+    z-index: var(--z-overlay);
+}

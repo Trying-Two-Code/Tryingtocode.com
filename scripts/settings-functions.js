@@ -28,7 +28,7 @@ export let changeSetting = (setting, value) => {
         if(playerSetting == setting){
             playerSettings[setting] = value;
         }
-    })
+    });
 }
 
 export let themeChange = (toTheme) => {
@@ -58,6 +58,14 @@ export let getSettingsObject = () => {
     let storedSettings = localStorage.getItem(localStorageSettingsString);
     let storedSettingsObject = JSON.parse(storedSettings);
     return storedSettingsObject;
+}
+
+export let getSetting = (settingName) => {
+    let settingsObject = getSettingsObject();
+    if(settingName in settingsObject){
+        return settingsObject[settingName];
+    }
+    return null;
 }
 
 let initSettingsObject = () => {
