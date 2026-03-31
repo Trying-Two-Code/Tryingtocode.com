@@ -1,6 +1,6 @@
 import { getCoin, changeNumber} from "../coin/coin.js";
 import { Toggle, ImageButton } from "../tools.js";
-import { editSetting } from "../settings-functions.js";
+import { editSetting, getSetting } from "../settings-functions.js";
 
 /**
  * this script initialises the sidebar, the ui element at the left hand of basically every page
@@ -54,9 +54,12 @@ class TTCSidebar extends HTMLElement {
     </div>
     <div data-js-tag="hidden-sidebar-parent" width=30 height=1000><div>
     `;
+
         this.findElements();
         this.setupFunctionality();
         if(typeof window.applySettings !== "undefined"){ window.applySettings(); }
+
+        this.detectStartClosed();
     }
 
     findElements(){
@@ -97,6 +100,16 @@ class TTCSidebar extends HTMLElement {
         this.initCoinNumber();
     }
 
+    detectStartClosed(){
+        let startClosed = getSetting("sidebar-hidden");
+        console.log("detecting...", startClosed);
+        let hideSidebar = () => {
+            this.toggleSidebar.toggleEvent();
+            this.initHiddenSidebar();
+        }
+        return startClosed ? hideSidebar() : false;
+    }
+
     initCoinNumber(){
         //could be incorrect, however it is the fast to recieve localy stored coin number
         let localCoin = localStorage.getItem("coin");
@@ -122,11 +135,13 @@ class TTCSidebar extends HTMLElement {
     }
 
     initHiddenSidebar(){
-        this.hiddenSidebar = document.createElement("ttc-hidden-sidebar");
+        console.log("hiding now.");
+        editSetting({"sidebar-hidden": true});
+        this.hiddenSidebar = this.hiddenSidebar ?? document.createElement("ttc-hidden-sidebar");
         this.hiddenSidebarParent.appendChild(this.hiddenSidebar);
         this.hiddenSidebar.showSidebarEvent = () => { this.showSidebar(); }
         //this.toggleSidebarImageButton.changeOnClick(this.hiddenSidebar.showSidebarButton);
-        this.toggleSidebarImageButton.changeImage();
+        //this.toggleSidebarImageButton.changeImage();
         console.log(this.hiddenSidebar);
     }
 
@@ -222,7 +237,6 @@ class TTCHiddenSidebar extends HTMLElement {
     }
 
     shown(){ //shows a button that allows the user to see the sidebar
-        editSetting({"sidebar-hidden": true});
         this.classList.remove("hide");
     }
 

@@ -60,6 +60,14 @@ export let getSettingsObject = () => {
     return storedSettingsObject;
 }
 
+export let getSetting = (settingName) => {
+    let settingsObject = getSettingsObject();
+    if(settingName in settingsObject){
+        return settingsObject[settingName];
+    }
+    return null;
+}
+
 let initSettingsObject = () => {
     let settingsObject = getSettingsObject();
     if(settingsObject == null){
