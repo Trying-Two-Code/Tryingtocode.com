@@ -202,7 +202,8 @@ class TTCHiddenSidebar extends HTMLElement {
     initFunctionality(){
         this.showSidebarButton.addEventListener('click', (event) => {
             event.stopPropagation();
-            this.totallyGone();
+            console.log(this.isTotallyGone);
+            this.isTotallyGone ? this.shown() : this.totallyGone();
             this.showSidebarEvent();
         });
 
@@ -228,15 +229,19 @@ class TTCHiddenSidebar extends HTMLElement {
     }
 
     totallyGone(){ //can't be shown
+        this.isTotallyGone = true;
         editSetting({"sidebar-hidden": false});
         this.showButtonDiv.classList.add("hide");
     }
 
     hidden(){ //can be shown, but is invisible
+        this.isTotallyGone = false;
         this.showSidebarButton.classList.add("hide");
     }
 
     shown(){ //shows a button that allows the user to see the sidebar
+        this.isTotallyGone = false;
+        this.showButtonDiv.classList.remove("hide");
         this.classList.remove("hide");
     }
 
