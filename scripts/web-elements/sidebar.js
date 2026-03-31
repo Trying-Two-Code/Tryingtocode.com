@@ -1,5 +1,6 @@
 import { getCoin, changeNumber} from "../coin/coin.js";
 import { Toggle, ImageButton } from "../tools.js";
+import { editSetting } from "../settings-functions.js";
 
 /**
  * this script initialises the sidebar, the ui element at the left hand of basically every page
@@ -91,8 +92,8 @@ class TTCSidebar extends HTMLElement {
         this.toggleSidebar.addEvent(() => {this.toggleSidebarEvent();});
         console.log(this.toggleSidebar);
 
-        this.toggleSidebarImageButton = new ImageButton(this.toggleSidebarButton, this.toggleSidebarArt, 1);
-        this.toggleSidebarImageButton.changeOnClick();
+        //this.toggleSidebarImageButton = new ImageButton(this.toggleSidebarButton, this.toggleSidebarArt, 1);
+        //this.toggleSidebarImageButton.changeOnClick();
         this.initCoinNumber();
     }
 
@@ -169,11 +170,10 @@ class TTCHiddenSidebar extends HTMLElement {
         this.iconPath = "components/visuals/icons/sidebar";
 
         this.innerHTML = `
-        <div data-js-tag="show-button" class="hidden-sidebar sidebar">
-            <button data-js-tag="show-sidebar" class="show-sidebar nice-button main-font hide-bg-button">
-                <img class="dropdown--image" src="${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-2${this.imageExtension}" draggable="false"></img>
-            </button>
-        </div>
+        <div data-js-tag="show-button" class="hidden-sidebar sidebar"></div>
+        <button data-js-tag="show-sidebar" class="show-sidebar nice-button main-font hide-bg-button">
+            <img class="dropdown--image" src="${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-2${this.imageExtension}" draggable="false"></img>
+        </button>
         `;
     }
 
@@ -185,7 +185,8 @@ class TTCHiddenSidebar extends HTMLElement {
     }
 
     initFunctionality(){
-        this.showSidebarButton.addEventListener('click', () => {
+        this.showSidebarButton.addEventListener('click', (event) => {
+            event.stopPropagation();
             this.totallyGone();
             this.showSidebarEvent();
         });
@@ -197,15 +198,22 @@ class TTCHiddenSidebar extends HTMLElement {
         });
         this.showButtonDiv.addEventListener("mouseenter", (event) => {
             this.moveShownButton({x: event.x, y: event.y});
-        })
+        });
         this.showButtonDiv.addEventListener("mouseleave", (event) => {
-            console.log("not over");
+            if(!this.showSidebarButton.matches(":hover")){
+                this.hidden();
+                this.showButtonDiv.style.pointerEvents = "auto";
+            }
+        });
+
+        this.showSidebarButton.addEventListener("mouseleave", (event) => {
             this.hidden();
+            this.showButtonDiv.style.pointerEvents = "auto";
         });
     }
 
     totallyGone(){ //can't be shown
-        console.log(this);
+        editSetting({"sidebar-hidden": false});
         this.showButtonDiv.classList.add("hide");
     }
 
@@ -214,6 +222,7 @@ class TTCHiddenSidebar extends HTMLElement {
     }
 
     shown(){ //shows a button that allows the user to see the sidebar
+        editSetting({"sidebar-hidden": true});
         this.classList.remove("hide");
     }
 

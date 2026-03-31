@@ -131,9 +131,21 @@
     box-shadow: none;
 }
 
+@media (orientation: landscape) {
+    .hidden-sidebar{
+        width: 10px;
+    }
+}
+
+.hidden-sidebar:active {
+    pointer-events: none;
+}
+
 .hide-bg-button{
-    position: absolute;
+    position: fixed;
     background-color: transparent;
     top: 500px;
     border-color: transparent;
+    left: 0px;
+    z-index: var(--z-overlay);
 }

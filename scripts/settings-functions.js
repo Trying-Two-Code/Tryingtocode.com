@@ -28,7 +28,7 @@ export let changeSetting = (setting, value) => {
         if(playerSetting == setting){
             playerSettings[setting] = value;
         }
-    })
+    });
 }
 
 export let themeChange = (toTheme) => {
