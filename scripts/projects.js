@@ -39,7 +39,7 @@ export class Display {
     }
 
     makeMeCurrentDisplay(){
-        if(typeof window.currentDisplay !== "undefined") {
+        if(window?.currentDisplay != null) {
             window.currentDisplay.stopMeCurrentDisplay();
         }
         window.currentDisplay = this;
@@ -116,7 +116,14 @@ export class Display {
     }
 
     initButtons(){
-        let closeButtonEvent = (e) => {e.stopPropagation(); this.toggleOtherProjects(); this.changeClasses({mini: true, gone: false}); scrollToTop();}
+        let closeButtonEvent = (e) => {
+            e.stopPropagation(); 
+            this.toggleOtherProjects(); 
+            this.changeClasses({mini: true, gone: false}); 
+            window.currentDisplay = null;
+            scrollToTop();
+            console.log("scroll to top not working anymore!");
+        }
         let nextButtonEvent = (e) => {e.stopPropagation(); this.openProject(1);}
 
         this.closeButton.addEventListener('click', closeButtonEvent);
@@ -274,7 +281,7 @@ export class Display {
         }
 
         let makeCurrentDisplayGone = () => {
-            if(typeof window.currentDisplay !== "undefined"){
+            if(window?.currentDisplay != null){
                 this.toggleOtherProjects({index: window.currentDisplay.projectIndex, toIndex: this.projectIndex, gone: false, mini: true});
                 window.currentDisplay.changeClasses({mini: true, gone: false});
             }

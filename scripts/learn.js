@@ -88,7 +88,7 @@ export let scrollToTop = () => {
         window.currentDisplay.projectEl.scrollIntoView({behavior: "smooth", top: 0});
     }
 
-    if(typeof window.currentDisplay !== "undefined"){
+    if(window?.currentDisplay != null){
         //window.currentDisplay.projectEl.scrollIntoView({ behavior: "smooth", top: 100 });
         //window.scrollTo({top: window.currentDisplay.projectEl.getBoundingClientRect().top, left: 0, behavior: "smooth"});
         window.requestAnimationFrame(scrollToCurrentDisplay);
