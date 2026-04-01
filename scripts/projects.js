@@ -12,9 +12,6 @@ let htmlGen =
 `
     <div id="learn-project" class="project mini main-font">
         <div class="codeAreaParent proj-child show-when-mini"></div>
-        <div class="project-button-buttons proj-child">
-            <button title="go to next project" alt="next project" name="next-button" class="next-project" name="next-button"><img src="./components/art/arrow - 1.png"></button-->
-        </div>
     </div>
 `;
 
@@ -122,6 +119,7 @@ export class Display {
             this.changeClasses({mini: true, gone: false}); 
             window.currentDisplay = null;
             scrollToTop();
+            this.stopMeCurrentDisplay();
             console.log("scroll to top not working anymore!");
         }
         let nextButtonEvent = (e) => {e.stopPropagation(); this.openProject(1);}
