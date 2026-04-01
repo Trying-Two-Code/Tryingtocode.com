@@ -406,7 +406,6 @@ let firstBlankProject = true;
 export let setupProject = (projectDisplay, projectTitle) => {
     let setProjCode = (code, projectDisplay) => {
         if(code != null) {
-            projectDisplay.codeArea.createText(code);
             projectDisplay.reward = 0;
             projectDisplay.completedIcon.classList.remove("hide");
         }
