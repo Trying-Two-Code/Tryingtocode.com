@@ -11,32 +11,8 @@ let theme = window.TTC.theme;
 let htmlGen = 
 `
     <div id="learn-project" class="project mini main-font">
-        <!--div class="top-bar proj-child show-when-mini" style="cursor: pointer;">
-            <div class="close-restart">
-                <div class="button">
-                    <button class="project-close-button project-button" title="close project">
-                        <img style="width: 30px; height: 30px;" name="close-img" src='./components/visuals/icons/project/close/${theme}.png' class="nice-button">
-                    </button>
-                </div>
-                <div class="button">
-                    <button class="project-restart-button project-button" title="reset code to defualt">
-                        <img style="width: 30px; height: 30px;" name="reset-img" src="./components/art/reload - 3.png" class="nice-button">
-                    </button>
-                </div>
-            </div>
-            <img draggable="false" src="./components/art/ttc coin icon.png" class="hide completed-icon show-when-mini" name="completed-icon"></img>
-            <p class="project-title show-when-mini" name="project-title">Hello World Project:</p>
-            <div class="button project-hint-button">
-                <button class="project-hint-button project-button" title="get hint if stuck">
-                    <img style="width: 50px; height: 50px;" name="hint-img" src="./components/art/clue - 5.png" class="nice-button">
-                </button>
-            </div>
-            <dialog class="main-font hint-popup hide" open>404</dialog>
-        </div-->
-        <!--p class="instructions proj-child">instructions</p-->
         <div class="codeAreaParent proj-child show-when-mini"></div>
         <div class="project-button-buttons proj-child">
-            <!--button title="run code" name="run-button" class="run-code"><img class="run-code-button-img" src="./components/art/play button 1 - big.png"></img></button>
             <button title="go to next project" alt="next project" name="next-button" class="next-project" name="next-button"><img src="./components/art/arrow - 1.png"></button-->
         </div>
     </div>
@@ -63,7 +39,7 @@ export class Display {
     }
 
     makeMeCurrentDisplay(){
-        if(typeof window.currentDisplay !== "undefined") {
+        if(window?.currentDisplay != null) {
             window.currentDisplay.stopMeCurrentDisplay();
         }
         window.currentDisplay = this;
@@ -140,7 +116,14 @@ export class Display {
     }
 
     initButtons(){
-        let closeButtonEvent = (e) => {e.stopPropagation(); this.toggleOtherProjects(); this.changeClasses({mini: true, gone: false}); scrollToTop();}
+        let closeButtonEvent = (e) => {
+            e.stopPropagation(); 
+            this.toggleOtherProjects(); 
+            this.changeClasses({mini: true, gone: false}); 
+            window.currentDisplay = null;
+            scrollToTop();
+            console.log("scroll to top not working anymore!");
+        }
         let nextButtonEvent = (e) => {e.stopPropagation(); this.openProject(1);}
 
         this.closeButton.addEventListener('click', closeButtonEvent);
@@ -298,7 +281,7 @@ export class Display {
         }
 
         let makeCurrentDisplayGone = () => {
-            if(typeof window.currentDisplay !== "undefined"){
+            if(window?.currentDisplay != null){
                 this.toggleOtherProjects({index: window.currentDisplay.projectIndex, toIndex: this.projectIndex, gone: false, mini: true});
                 window.currentDisplay.changeClasses({mini: true, gone: false});
             }
