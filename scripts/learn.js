@@ -234,9 +234,10 @@ window.TTC.loadProjectsFromDatabase = async (section="default", owner="OFFICIAL"
 let onlineSections = await loadJSON("online-sections");
 console.log(onlineSections);
 
-let localStorage = getSettingsObject();
-let language = localStorage?.language;
+let language = window.TTC.language;
 console.log(language);
+let codeLanguage = window.TTC.codeLanguage;
+console.log(codeLanguage, localStorage);
 
 let getCodeLanguage = () => {
     const LANGUAGE_STRING = "code-language";
@@ -244,6 +245,7 @@ let getCodeLanguage = () => {
     let URLString = window.location.search;
     const searchURLString = new URLSearchParams(URLString);
 
+    
     let isCodeLanguageInURL = searchURLString.has(LANGUAGE_STRING);
     let codeLanguageInURL = isCodeLanguageInURL ? searchURLString.get(LANGUAGE_STRING) : null;
     let currentCodeLanguage = codeLanguageInURL ?? "python";

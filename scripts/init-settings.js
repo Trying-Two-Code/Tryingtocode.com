@@ -73,3 +73,43 @@ let updateXPFromLocal = () => {
 }
 
 updateXPFromLocal();
+
+let updateVariableFromLocal = ({variableName = "", defualtValue = null, shouldTypesBeSame = true, canBeNullish = false, setLocalStorage = false} = {}) => {
+    let variableValue = getLocalSetting(variableName);
+    console.log(`setting ${variableName} to ${defualtValue} or ${variableValue}`);
+
+    let areTypesTheSame = typeof variableValue !== typeof defualtValue;
+    if(shouldTypesBeSame && !areTypesTheSame){
+        window.TTC[variableName] = defualtValue;
+        console.error("the default value type was not the same as the variable type!!");
+        return defualtValue;
+    }
+
+    variableValue = canBeNullish ? variableValue : (variableValue ?? defualtValue);
+
+    canBeNullish && console.assert(variableName != null);
+    setLocalStorage && changeLocalSetting(variableName, variableValue);
+    
+    console.log(`choice: ${variableValue}`);
+
+    window.TTC[variableName] = variableValue;
+
+
+    return variableName;
+}
+
+updateVariableFromLocal({ 
+    variableName: "language", 
+    defualtValue: "english", 
+    shouldTypesBeSame: true,
+    canBeNullish: false,
+    setLocalStorage: true
+});
+
+updateVariableFromLocal({
+    variableName: "codeLanguage",
+    defualtValue: "python",
+    shouldTypesBeSame: true,
+    canBeNullish: false,
+    setLocalStorage: true
+});
