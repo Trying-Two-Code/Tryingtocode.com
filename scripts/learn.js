@@ -1,4 +1,6 @@
 //for use in learn.html
+//connects resources needed in learn.html but shouldn't actually be doing very much!
+
 import { Display } from "./projects.js";
 import "./coin/coin.js";
 import { setUserDatapoint, getUserData, setupProject, deleteUserData } from "./firebase-backend/firebase.js";
