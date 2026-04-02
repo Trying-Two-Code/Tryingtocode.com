@@ -2,10 +2,18 @@
 //it grabs local settings, and puts them in window for use by other scripts
 
 window.TTC = window.TTC || {};
+let navigator = window.navigator;
+let defualtLanguage = navigator.language;
 
 let initSettingsObject = () => {
     //new user, needs new settings
-    let startObject = { font: "pixel1", theme: "pixel-1", xp: 0 };
+    let startObject = { 
+        font: "pixel1", 
+        theme: "pixel-1", 
+        xp: 0,
+        language: "english",
+        codeLanguage: "python"
+    };
     let startSettings = JSON.stringify(startObject);
     localStorage.setItem("user_settings", startSettings);
 }

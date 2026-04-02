@@ -1,4 +1,17 @@
 {
+    "online-sections": {
+        "Python": {
+            "1": {
+                "owner": "OFFICIAL",
+                "section": "Python Lists"
+            },
+            "2": {
+                "owner": "OFFICIAL",
+                "section": "Python Lists 2"
+            }
+        }
+    },
+
     "projects": {
         "ex": {
             "title": "",

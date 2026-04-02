@@ -4,7 +4,7 @@ import "./coin/coin.js";
 import { setUserDatapoint, getUserData, setupProject, deleteUserData } from "./firebase-backend/firebase.js";
 import { findProject, findProjects } from "./firebase-backend/firebaseProjects.js";
 import './firebase-backend/firebaseProjects.js';
-import { applySettings } from "./settings-functions.js";
+import { applySettings, getSettingsObject } from "./settings-functions.js";
 
 const LOAD_INDICES = Array.from({length: 33}, (_, i) => [i + 1, "projects"]);
 const DEFAULT_REWARD = 5;
@@ -189,33 +189,7 @@ loadProjectsFunction(LOAD_INDICES).then(projectsList => {
     Prism.highlightAll();
     applySettings();
 });
-/***code
-: 
-"x = 1"
-code-discludes
-: 
-"*"
-code-includes
-: 
-"x = 2"
-failure-shows
-: 
-"*"
-hint
-: 
-"x equals 1 right now, change that"
-instruction
-: 
-"make x equal 2"
-output-discludes
-: 
-"*"
-output-includes
-: 
-"*"
-title
-: 
-"Variable 1" */
+
 window.TTC.loadProjectsFromDatabase = async (section="default", owner="OFFICIAL") => {
     let projects = await findProjects({ section : section, owner : owner }); 
     console.log(projects);
@@ -230,11 +204,6 @@ window.TTC.loadProjectsFromDatabase = async (section="default", owner="OFFICIAL"
         let reward = project?.reward || DEFAULT_REWARD;
         let hint = project?.hint || "";
 
-        /*console.log(project.includeDisclude);
-        console.log(project.language);
-        console.log(project.title);
-        console.log(project.mission);
-        console.log(project.data);*/
         let projectJSON = {
             "code": project.data,
             "code-discludes": project.includeDisclude.codeDiscludes,
@@ -262,6 +231,39 @@ window.TTC.loadProjectsFromDatabase = async (section="default", owner="OFFICIAL"
     applySettings();
 }
 
+let onlineSections = await loadJSON("online-sections");
+console.log(onlineSections);
+
+let localStorage = getSettingsObject();
+let language = localStorage?.language;
+console.log(language);
+
+let getCodeLanguage = () => {
+    const LANGUAGE_STRING = "code-language";
+
+    let URLString = window.location.search;
+    const searchURLString = new URLSearchParams(URLString);
+
+    let isCodeLanguageInURL = searchURLString.has(LANGUAGE_STRING);
+    let codeLanguageInURL = isCodeLanguageInURL ? searchURLString.get(LANGUAGE_STRING) : null;
+    let currentCodeLanguage = codeLanguageInURL ?? "python";
+
+    console.log(currentCodeLanguage);
+    try{
+        if(!codeLanguageInURL){
+            //location.replace(`${URLString}?code-language=${currentCodeLanguage}`);
+
+            //chatgpt: do not trust these 3 lines of code
+            const url = new URL(window.location);
+            url.searchParams.set(LANGUAGE_STRING, currentCodeLanguage);
+            window.history.replaceState({}, "", url);
+        }
+    } catch (error) {
+        console.error("location assigning ain't gonna work there buddy ol pal. Here is why: ", error);
+    }
+}
+
+getCodeLanguage();
 
 console.error("for all yall devs out there looking through the log and thinking to yourself: what is this? why is this? this hurts my head! why do you have so many logs in production?");
 console.error("it's allllll good I'll fix it later 👍");
