@@ -150,18 +150,19 @@ let checkCompletion = (title, userData=null) => {
     }
 }
 
-let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON, userData, lastDisplayNumber=0) => {
+let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON, userData=null, lastDisplayNumber=0) => {
     let display = new Display(document, PROJECT_PARENT, JSON, projectIndex);
     setupProject(display, display.title.innerHTML);
 
     return display;
 }
 
+let projectIndex = 0;
+
 let loadProjectsFunction = async (projectsList, section="projects") => {
     const JSON = await loadJSON(section);
     let userData = await getUserData();
 
-    let projectIndex = 0;
     let projectList = [];
 
     for (let item of projectsList){
@@ -175,10 +176,10 @@ let loadProjectsFunction = async (projectsList, section="projects") => {
 }
 
 let projectDisplays;
+const loaderElement = document.getElementById("loader");
 loadProjectsFunction(LOAD_INDICES).then(projectsList => {
     projectDisplays = projectsList;
 
-    let loaderElement = document.getElementById("loader");
     if (loaderElement != null){
         console.log(loaderElement);
         loaderElement.classList.add("loader-fade");
@@ -188,6 +189,78 @@ loadProjectsFunction(LOAD_INDICES).then(projectsList => {
     Prism.highlightAll();
     applySettings();
 });
+/***code
+: 
+"x = 1"
+code-discludes
+: 
+"*"
+code-includes
+: 
+"x = 2"
+failure-shows
+: 
+"*"
+hint
+: 
+"x equals 1 right now, change that"
+instruction
+: 
+"make x equal 2"
+output-discludes
+: 
+"*"
+output-includes
+: 
+"*"
+title
+: 
+"Variable 1" */
+window.TTC.loadProjectsFromDatabase = async (section="default", owner="OFFICIAL") => {
+    let projects = await findProjects({ section : section, owner : owner }); 
+    console.log(projects);
+    console.assert(typeof projects === "object");
+
+    const projectKeys = Object.keys(projects);
+    console.log("you need to order these by priority");
+    for (let keyIndex = 0; keyIndex < projectKeys.length; keyIndex++) {
+        const key = projectKeys[keyIndex];
+        const project = projects[key];
+        
+        let reward = project?.reward || DEFAULT_REWARD;
+        let hint = project?.hint || "";
+
+        /*console.log(project.includeDisclude);
+        console.log(project.language);
+        console.log(project.title);
+        console.log(project.mission);
+        console.log(project.data);*/
+        let projectJSON = {
+            "code": project.data,
+            "code-discludes": project.includeDisclude.codeDiscludes,
+            "code-includes": project.includeDisclude.codeIncludes,
+            "output-discludes": project.includeDisclude.outputDiscludes,
+            "output-includes": project.includeDisclude.outputIncludes,
+            "failure-shows": "",
+            "hint": hint,
+            "instruction": project.mission,
+            "title": project.title
+        };
+        console.log(projectJSON);
+
+        let newProject = loadProject(
+            project.title,
+            reward,
+            projectIndex,
+            projectJSON
+        )
+        projectIndex++;
+    }
+    
+
+    Prism.highlightAll();
+    applySettings();
+}
 
 
 console.error("for all yall devs out there looking through the log and thinking to yourself: what is this? why is this? this hurts my head! why do you have so many logs in production?");
