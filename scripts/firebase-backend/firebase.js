@@ -342,7 +342,7 @@ const isObjectEmpty = (obj) => {
     return obj == null || (Object.keys(obj).length === 0 && obj.constructor === Object);
 };
 
-let mergeObjects = (object1, object2) => { //object2 gets priority over object1
+export let mergeObjects = (object1, object2) => { //object2 gets priority over object1
     let theChosenOneAhhhh = (isObjectEmpty(object1) ? object2 : object1);
 
     if(isObjectEmpty(object1) || isObjectEmpty(object2)) { return theChosenOneAhhhh; } //return one if the other is null
