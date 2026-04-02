@@ -231,8 +231,6 @@ window.TTC.loadProjectsFromDatabase = async (section="default", owner="OFFICIAL"
     applySettings();
 }
 
-let onlineSections = await loadJSON("online-sections");
-console.log(onlineSections);
 
 let language = window.TTC.language;
 console.log(language);
@@ -263,9 +261,35 @@ let getCodeLanguage = () => {
     } catch (error) {
         console.error("location assigning ain't gonna work there buddy ol pal. Here is why: ", error);
     }
+
+    return currentCodeLanguage;
 }
 
-getCodeLanguage();
+language = getCodeLanguage();
+
+let onlineSections = await loadJSON("online-sections");
+console.log(onlineSections);
+
+if(language in onlineSections) {
+    let languageSections = onlineSections[language];
+    let languageSectionsKeys = Object.keys(languageSections);
+    for (let sectionIndex = 0; sectionIndex < languageSectionsKeys.length; sectionIndex++) {
+        const key = languageSectionsKeys[sectionIndex];
+        const section = languageSections[key];
+        console.log(key);
+
+        const owner = section.owner;
+        const sectionName = section.section;
+        console.log(owner, sectionName);
+
+        // this is the function that adds it to the page, but it also takes up resources in firebase so don't go calling it 1000 times a second.
+        //window.TTC.loadProjectsFromDatabase({ section: sectionName, owner: owner });
+    }
+} else{
+    console.log(language, "not in", onlineSections);
+    window.alert("your language ain't here bud! Try changing the ?code-language to =python");
+}
+
 
 console.error("for all yall devs out there looking through the log and thinking to yourself: what is this? why is this? this hurts my head! why do you have so many logs in production?");
 console.error("it's allllll good I'll fix it later 👍");
