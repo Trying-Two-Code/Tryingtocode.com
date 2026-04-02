@@ -380,7 +380,8 @@
 .output {
     user-select: none;
     height: var(--code-height);
-    width: max(30vw, 5em);
+    /*width: max(30vw, 5em);*/
+    width: 100%;
     padding-left: 10px !important;
     overflow-y: auto;
     box-sizing: border-box;
@@ -394,6 +395,11 @@
     border: none;
 
     --bg-color-main: #1b1b1b !important;
+}
+
+.output-container{
+    width: 100%;
+    height: 100%;
 }
 
 .output-correct {
