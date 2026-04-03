@@ -4,12 +4,13 @@
 import { Display } from "./projects.js";
 import "./coin/coin.js";
 import { setUserDatapoint, getUserData, setupProject, deleteUserData } from "./firebase-backend/firebase.js";
-import { findProject, findProjects } from "./firebase-backend/firebaseProjects.js";
 import './firebase-backend/firebaseProjects.js';
+import './load-projects-into-learn.js';
 import { applySettings, getSettingsObject } from "./settings-functions.js";
 
 const LOAD_INDICES = Array.from({length: 33}, (_, i) => [i + 1, "projects"]);
 const DEFAULT_REWARD = 5;
+window.TTC.DEFAULT_REWARD = DEFAULT_REWARD;
 const PROJECT_PARENT = document.getElementById('project-parent');
 
 //for debug purposes, a function to reset player stats
@@ -192,105 +193,28 @@ loadProjectsFunction(LOAD_INDICES).then(projectsList => {
     applySettings();
 });
 
-window.TTC.loadProjectsFromDatabase = async (section="default", owner="OFFICIAL") => {
-    let projects = await findProjects({ section : section, owner : owner }); 
-    console.log(projects);
-    console.assert(typeof projects === "object");
+window.TTC.events.addEventListener("createLearnProject", (details) => {
+    /* let newProject = {
+            title: project.title,
+            reward: reward,
+            index: projectIndex,
+            projectData: projectJSON
+        };*/
+    let data = details.detail;
+    let title = data.title;
+    let reward = data.reward;
+    let index = data.index;
+    let projectData = data.projectData;
 
-    const projectKeys = Object.keys(projects);
-    console.log("you need to order these by priority");
-    for (let keyIndex = 0; keyIndex < projectKeys.length; keyIndex++) {
-        const key = projectKeys[keyIndex];
-        const project = projects[key];
-        
-        let reward = project?.reward || DEFAULT_REWARD;
-        let hint = project?.hint || "";
+    let newProject = loadProject(
+        title,
+        reward, 
+        index, 
+        projectData
+    );
 
-        let projectJSON = {
-            "code": project.data,
-            "code-discludes": project.includeDisclude.codeDiscludes,
-            "code-includes": project.includeDisclude.codeIncludes,
-            "output-discludes": project.includeDisclude.outputDiscludes,
-            "output-includes": project.includeDisclude.outputIncludes,
-            "failure-shows": "",
-            "hint": hint,
-            "instruction": project.mission,
-            "title": project.title
-        };
-        console.log(projectJSON);
-
-        let newProject = loadProject(
-            project.title,
-            reward,
-            projectIndex,
-            projectJSON
-        )
-        projectIndex++;
-    }
-    
-
-    Prism.highlightAll();
-    applySettings();
-}
-
-
-let language = window.TTC.language;
-console.log(language);
-let codeLanguage = window.TTC.codeLanguage;
-console.log(codeLanguage, localStorage);
-
-let getCodeLanguage = () => {
-    const LANGUAGE_STRING = "code-language";
-
-    let URLString = window.location.search;
-    const searchURLString = new URLSearchParams(URLString);
-
-    
-    let isCodeLanguageInURL = searchURLString.has(LANGUAGE_STRING);
-    let codeLanguageInURL = isCodeLanguageInURL ? searchURLString.get(LANGUAGE_STRING) : null;
-    let currentCodeLanguage = codeLanguageInURL ?? "python";
-
-    console.log(currentCodeLanguage);
-    try{
-        if(!codeLanguageInURL){
-            //location.replace(`${URLString}?code-language=${currentCodeLanguage}`);
-
-            //chatgpt: do not trust these 3 lines of code
-            const url = new URL(window.location);
-            url.searchParams.set(LANGUAGE_STRING, currentCodeLanguage);
-            window.history.replaceState({}, "", url);
-        }
-    } catch (error) {
-        console.error("location assigning ain't gonna work there buddy ol pal. Here is why: ", error);
-    }
-
-    return currentCodeLanguage;
-}
-
-language = getCodeLanguage();
-
-let onlineSections = await loadJSON("online-sections");
-console.log(onlineSections);
-
-if(language in onlineSections) {
-    let languageSections = onlineSections[language];
-    let languageSectionsKeys = Object.keys(languageSections);
-    for (let sectionIndex = 0; sectionIndex < languageSectionsKeys.length; sectionIndex++) {
-        const key = languageSectionsKeys[sectionIndex];
-        const section = languageSections[key];
-        console.log(key);
-
-        const owner = section.owner;
-        const sectionName = section.section;
-        console.log(owner, sectionName);
-
-        // this is the function that adds it to the page, but it also takes up resources in firebase so don't go calling it 1000 times a second.
-        //window.TTC.loadProjectsFromDatabase({ section: sectionName, owner: owner });
-    }
-} else{
-    console.log(language, "not in", onlineSections);
-    window.alert("your language ain't here bud! Try changing the ?code-language to =python");
-}
+    console.log(newProject);
+})
 
 
 console.error("for all yall devs out there looking through the log and thinking to yourself: what is this? why is this? this hurts my head! why do you have so many logs in production?");

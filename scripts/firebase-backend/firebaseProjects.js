@@ -64,6 +64,7 @@ export let findProjects = async ({ section = "default", owner = window.user.uid 
 
         console.log(documentsSnapshot);
     } catch (error) {
+        console.log(section, owner, "not exist.");
         console.error(error);
         return null;
     }

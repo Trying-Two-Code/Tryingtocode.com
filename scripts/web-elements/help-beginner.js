@@ -113,7 +113,6 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         this.helpNoButton =  queryTag("help-no-button",  this.mainDialogElement);
 
         this.secondaryPopup = queryTag("secondary-popup");
-        console.log(this.secondaryPopup); // == null for some reason?
 
         this.maxXP =        this.getAttribute("max-xp");
         this.showupTime =   this.getAttribute("showup-time");
@@ -159,10 +158,7 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         //showupTime = ammount of time (in seconds) to wait before showing up
         if(this.oldServe){
             clearTimeout(this.oldServe);
-            console.log("deleting old time");
         }
-
-        console.log("setting new time to: ", showupTime, " seconds");
 
         this.oldServe = setTimeout(() => {
             this.serveToUser();
@@ -181,7 +177,6 @@ class TTCHelpBeginnerPopup extends HTMLElement{
     }
 
     mainDialogClosed(event){
-        console.log(event.type == "cancel");
         if(event.type === "cancel"){
             //user may have accidentaly left the popup
             //therefore, activate a secondary popup
@@ -190,7 +185,6 @@ class TTCHelpBeginnerPopup extends HTMLElement{
     }
 
     setupSecondaryDialog(){
-        console.log(this.secondaryPopup);
         this.secondaryPopup.mainHelpBeginnerPopup = this;
         this.secondaryPopup.init();
     }
