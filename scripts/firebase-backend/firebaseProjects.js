@@ -48,7 +48,6 @@ export let findProjects = async ({ section = "default", owner = window.user.uid 
     let projectLimit = 100;
 
     let projects = [];
-    console.log(owner);
 
     try{
         const projectQuery = query(

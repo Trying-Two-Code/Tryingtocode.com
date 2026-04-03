@@ -1,13 +1,16 @@
 //for use in learn.html
+//connects resources needed in learn.html but shouldn't actually be doing very much!
+
 import { Display } from "./projects.js";
 import "./coin/coin.js";
 import { setUserDatapoint, getUserData, setupProject, deleteUserData } from "./firebase-backend/firebase.js";
-import { findProject, findProjects } from "./firebase-backend/firebaseProjects.js";
 import './firebase-backend/firebaseProjects.js';
-import { applySettings } from "./settings-functions.js";
+import './load-projects-into-learn.js';
+import { applySettings, getSettingsObject } from "./settings-functions.js";
 
 const LOAD_INDICES = Array.from({length: 33}, (_, i) => [i + 1, "projects"]);
 const DEFAULT_REWARD = 5;
+window.TTC.DEFAULT_REWARD = DEFAULT_REWARD;
 const PROJECT_PARENT = document.getElementById('project-parent');
 
 //for debug purposes, a function to reset player stats
@@ -150,18 +153,19 @@ let checkCompletion = (title, userData=null) => {
     }
 }
 
-let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON, userData, lastDisplayNumber=0) => {
+let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON, userData=null, lastDisplayNumber=0) => {
     let display = new Display(document, PROJECT_PARENT, JSON, projectIndex);
     setupProject(display, display.title.innerHTML);
 
     return display;
 }
 
+let projectIndex = 0;
+
 let loadProjectsFunction = async (projectsList, section="projects") => {
     const JSON = await loadJSON(section);
     let userData = await getUserData();
 
-    let projectIndex = 0;
     let projectList = [];
 
     for (let item of projectsList){
@@ -175,10 +179,10 @@ let loadProjectsFunction = async (projectsList, section="projects") => {
 }
 
 let projectDisplays;
+const loaderElement = document.getElementById("loader");
 loadProjectsFunction(LOAD_INDICES).then(projectsList => {
     projectDisplays = projectsList;
 
-    let loaderElement = document.getElementById("loader");
     if (loaderElement != null){
         console.log(loaderElement);
         loaderElement.classList.add("loader-fade");
@@ -188,6 +192,23 @@ loadProjectsFunction(LOAD_INDICES).then(projectsList => {
     Prism.highlightAll();
     applySettings();
 });
+
+window.TTC.events.addEventListener("createLearnProject", (details) => {
+    let data = details.detail;
+    let title = data.title;
+    let reward = data.reward;
+    let index = data.index;
+    let projectData = data.projectData;
+
+    let newProject = loadProject(
+        title,
+        reward, 
+        index, 
+        projectData
+    );
+
+    console.log(newProject);
+})
 
 
 console.error("for all yall devs out there looking through the log and thinking to yourself: what is this? why is this? this hurts my head! why do you have so many logs in production?");
