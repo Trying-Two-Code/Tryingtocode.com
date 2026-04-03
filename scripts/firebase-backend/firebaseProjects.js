@@ -48,7 +48,6 @@ export let findProjects = async ({ section = "default", owner = window.user.uid 
     let projectLimit = 100;
 
     let projects = [];
-    console.log(owner);
 
     try{
         const projectQuery = query(
@@ -64,7 +63,6 @@ export let findProjects = async ({ section = "default", owner = window.user.uid 
 
         console.log(documentsSnapshot);
     } catch (error) {
-        console.log(section, owner, "not exist.");
         console.error(error);
         return null;
     }

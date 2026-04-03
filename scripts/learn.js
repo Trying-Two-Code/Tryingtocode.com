@@ -194,12 +194,6 @@ loadProjectsFunction(LOAD_INDICES).then(projectsList => {
 });
 
 window.TTC.events.addEventListener("createLearnProject", (details) => {
-    /* let newProject = {
-            title: project.title,
-            reward: reward,
-            index: projectIndex,
-            projectData: projectJSON
-        };*/
     let data = details.detail;
     let title = data.title;
     let reward = data.reward;
