@@ -233,6 +233,7 @@ export let setUserDatapointWithObject = async ( payload = {email: null, displayN
 
     const userRef = doc(db, "users", window.user.uid);
 
+    console.log("but guess what? I'm the one actually sending it: ", newData);
     updateDoc(userRef, newData);
 
     const updatedSnap = await getDoc(userRef);

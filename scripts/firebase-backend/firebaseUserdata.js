@@ -54,6 +54,7 @@ export let testUserData = async (noConfirm) => {
     ];
 
     testValues.forEach(testValue => {
+        console.log(`testing value: ${testValue.datapoint}`);
         if(testConfirm){
             let newUserDatapoint = testAndGiveDefault(testValue);
             newUserData[testValue.datapoint] = newUserDatapoint;
