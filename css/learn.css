@@ -448,11 +448,12 @@
 }
 
 .completed-icon {
+    display: block;
     --size: 50px;
     position: relative;
     align-self: center;
     padding-right: 10px;
-    width: var(--size);
+    width: var(--size) !important;
     height: var(--size);
 }
 
@@ -461,6 +462,9 @@
     display: flex;
     flex-direction: row;
     padding-right: 10px;
+    width: max(40%, 200px);
+    
+    height: 64px;
 }
 
 .run-code {
@@ -535,6 +539,7 @@
     align-self: center;
     top: 0%;
     background-color: #000;
+    width: 100%;
 }
 
 .project-hint-button {
