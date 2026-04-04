@@ -1,4 +1,5 @@
 /*
+this file is for firebase server functions
 NOT WORKING, POTENTIALLY WORK ON LATER. (meant to send user code stuff to the server, workers should be fine as an alternative)
 
 const functions = require("firebase-functions");
