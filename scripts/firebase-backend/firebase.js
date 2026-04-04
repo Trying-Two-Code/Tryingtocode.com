@@ -204,7 +204,6 @@ const defaultValues = {
 };
 
 export let setUserDatapointWithObject = async ( payload = {email: null, displayName: null, coins: null, projects: null, prioritizePayload: false} ) => {
-    console.trace();
     if(window?.user == null) { return false; }
     let newData = {};
 
@@ -234,7 +233,6 @@ export let setUserDatapointWithObject = async ( payload = {email: null, displayN
 
     const userRef = doc(db, "users", window.user.uid);
 
-    console.log("but guess what? I'm the one actually sending it: ", newData);
     updateDoc(userRef, newData);
 
     const updatedSnap = await getDoc(userRef);
@@ -270,11 +268,7 @@ export let setUserDatapoint = async (email=null, displayName=null, coins=null, p
         return null;
     }
 
-    let updatePayload = {}
-
-    console.log("email is being set to: ", getNonEmptyValue(defaultValues["email"], email, data.email, null));
-    console.log("email is: ", email);
-    console.trace();
+    let updatePayload = {};
 
     let setEmail = getNonEmptyValue(defaultValues["email"], email, data.email, null);
     let setDisplayName = getNonEmptyValue(defaultValues["displayName"], displayName, data.displayName, null);

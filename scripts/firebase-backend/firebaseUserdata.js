@@ -54,7 +54,6 @@ export let testUserData = async (noConfirm) => {
     ];
 
     testValues.forEach(testValue => {
-        console.log(`testing value: ${testValue.datapoint}`);
         if(testConfirm){
             let newUserDatapoint = testAndGiveDefault(testValue);
             newUserData[testValue.datapoint] = newUserDatapoint;
@@ -73,9 +72,7 @@ window.addEventListener("user_made", async () => {
 
     newUserData = await testUserData();
     newUserData.prioritizePayload = true;
-    console.log("I set result ok? It is ", newUserData);
-    let result = await setUserDatapointWithObject(newUserData);
-    console.log(result);
+    //let result = await setUserDatapointWithObject(newUserData);
     
     newUserData = await getUserData(window.user);
 });
