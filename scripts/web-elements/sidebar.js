@@ -214,6 +214,7 @@ class TTCHiddenSidebar extends HTMLElement {
         });
         this.showButtonDiv.addEventListener("mouseenter", (event) => {
             this.moveShownButton({x: event.x, y: event.y});
+            this.showButtonDiv.classList.add("hidden-sidebar_hover");
         });
         this.showButtonDiv.addEventListener("mouseleave", (event) => {
             if(!this.showSidebarButton.matches(":hover")){
@@ -225,6 +226,7 @@ class TTCHiddenSidebar extends HTMLElement {
         this.showSidebarButton.addEventListener("mouseleave", (event) => {
             this.hidden();
             this.showButtonDiv.style.pointerEvents = "auto";
+            this.showButtonDiv.classList.remove("hidden-sidebar_hover");
         });
     }
 

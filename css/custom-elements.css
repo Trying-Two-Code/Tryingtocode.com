@@ -131,6 +131,10 @@
     box-shadow: none;
 }
 
+.hidden-sidebar:hover, .hidden-sidebar_hover{
+    background-color: #6bc8d823;
+}
+
 @media (orientation: landscape) {
     .hidden-sidebar{
         width: 10px;
