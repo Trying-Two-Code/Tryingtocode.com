@@ -126,19 +126,19 @@
 /*HIDDEN SIDEBAR:*/
 .hidden-sidebar{
     position: fixed;
-    background-color: #115f6d13;
+    background-color: #115f6d00;
     border: none !important;
     box-shadow: none;
+}
+
+.hidden-sidebar:hover{
+    background-color: #6bc8d823;
 }
 
 @media (orientation: landscape) {
     .hidden-sidebar{
         width: 10px;
     }
-}
-
-.hidden-sidebar:active {
-    pointer-events: none;
 }
 
 .hide-bg-button{

@@ -13,4 +13,9 @@ export let testAll = async (noConfirm=false) => {
     await testTestUserData();
 }
 
-window.testAllFirebaseUserdata = () => {testTestUserData();}
+export let deleteUserData = () => {
+    
+};
+
+window.testAllFirebaseUserdata = () => {testTestUserData();};
+window.deleteAllFirebaseUserdata = () => {deleteUserData();};

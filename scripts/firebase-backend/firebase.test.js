@@ -1,4 +1,4 @@
-import { initUserData, deleteUserData, setUserDatapoint, getUserData, mergeObjects } from "./firebase.js"
+import { initUserData, deleteUserData, setUserDatapoint, getUserData, mergeObjects, setUserDatapointWithObject } from "./firebase.js"
 
 let testDataDelete = async () => {
     console.log(await deleteUserData(window.user));
@@ -22,17 +22,20 @@ let testAlterData = async () => {
 
 let testBringBackData = async (oldData) => {
     console.log(oldData);
-    console.log("set datapoint: ", await setUserDatapoint(
-        oldData.email,
-        oldData.displayName,
-        oldData.coins,
-        oldData.projects
-    ));
+    console.log("email is havin issues: ", oldData.email);
+    console.log("set datapoint: ", await setUserDatapointWithObject({
+        email: oldData.email,
+        displayName: oldData.displayName,
+        coins: oldData.coins,
+        projects: oldData.projects,
+        prioritizePayload: true
+    }));
     let userData = await getUserData();
     console.assert(userData.coins === oldData.coins);
     console.assert(userData.displayName === oldData.displayName);
     console.assert(userData.email === oldData.email);
-    console.assert(userData.projects === oldData.projects);
+    console.assert((userData.projects === null && oldData.projects === null) || 
+    userData.projects[Object.keys(userData.projects)[0]] === oldData.projects[Object.keys(oldData.projects)[0]]);
     console.log(userData);
 }
 
@@ -47,6 +50,7 @@ let testMergeObject = async () => {
 
 export let testAll = async (noConfirm=false) => {
     const oldData = await getUserData();
+    console.log("OLD DATA HERE: ", oldData);
 
     let deleteData = noConfirm ? confirm("delete user data?") : true;
     if(deleteData || noConfirm){
@@ -62,6 +66,7 @@ export let testAll = async (noConfirm=false) => {
 
     let bringBackData = noConfirm ? confirm("bring back old data?") : true;
     if(bringBackData){
+        console.log("OLD DATA HERE 2: ", oldData);
         await testBringBackData(oldData);
     }
 

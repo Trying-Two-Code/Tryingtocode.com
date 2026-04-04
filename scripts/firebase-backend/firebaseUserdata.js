@@ -6,20 +6,22 @@ export let testUserData = async (noConfirm) => {
     let newUserData = structuredClone(userData);
     let testConfirm = true;
     
-    let testAndGiveDefault = ({ datapoint = "coins", expectedType = "string", defaultValue = 0 }={}) => {
-        let dataNotNull = datapoint in userData;
+    let testAndGiveDefault = ({ datapoint = "coins", expectedType = "string", defaultValue = 0, canBeNull = false }={}) => {
+        let dataNotUndefined = datapoint in userData;
         let returnCurrentValue = false;
         let currentValue = null;
 
-        if(dataNotNull){
+        if(dataNotUndefined){
             currentValue = userData[datapoint];
             let dataFitsExpectedType = typeof currentValue === expectedType;
             dataFitsExpectedType = dataFitsExpectedType || currentValue === null;
             returnCurrentValue = dataFitsExpectedType; // I realise that dataFitsExpectedType is useless, but it is readable I think.
         }
 
-        if(!returnCurrentValue) {
-            testConfirm = confirm("your data may be corrupted, we can try to fix it, but you may lose some information. Proceed?");
+        let bypassNull = canBeNull && dataNotUndefined && userData[datapoint] == null;
+
+        if(!returnCurrentValue && !bypassNull) {
+            testConfirm = confirm(`your data for -${datapoint}- may be corrupted, we can try to fix it, but you may lose some information. Proceed?`);
             if(!testConfirm){ return currentValue; }
         }
 
@@ -40,16 +42,19 @@ export let testUserData = async (noConfirm) => {
         {
             datapoint: "email",
             expectedType: "string",
-            defaultValue: null
+            defaultValue: null,
+            canBeNull: true
         },
         {
             datapoint: "displayName",
             expectedType: "string",
-            defaultValue: null
+            defaultValue: null,
+            canBeNull: true
         }
     ];
 
     testValues.forEach(testValue => {
+        console.log(`testing value: ${testValue.datapoint}`);
         if(testConfirm){
             let newUserDatapoint = testAndGiveDefault(testValue);
             newUserData[testValue.datapoint] = newUserDatapoint;
@@ -59,14 +64,19 @@ export let testUserData = async (noConfirm) => {
     return newUserData;
 }
 
+export let deleteAllUserData = () => {
+    
+}
+
 window.addEventListener("user_made", async () => {
-    console.log("user made!");
-    let newUserData = await testUserData();
+    let newUserData = await getUserData(window.user);
+
+    newUserData = await testUserData();
+    newUserData.prioritizePayload = true;
+    console.log("I set result ok? It is ", newUserData);
     let result = await setUserDatapointWithObject(newUserData);
+    console.log(result);
+    
     newUserData = await getUserData(window.user);
-    console.log(newUserData);
-
-    console.log(userData);
-
 });
 

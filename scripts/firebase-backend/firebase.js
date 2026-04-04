@@ -179,7 +179,7 @@ export async function initUserData(user){
     if (userEmpty) {
         const updatedSnap = await getDoc(userRef);
         
-        setUserDatapoint(updatedSnap.data());
+        setUserDatapointWithObject(updatedSnap.data());
     } else{
         const updatedDoc = await setDoc(userRef, {
             email: user.email || defaultValues.email,
@@ -202,49 +202,27 @@ const defaultValues = {
     coins: 0,
     projects: {}
 };
-/*
-export let setUserDatapointWithObject = async (payload = {/*email, displayname, coins, projects* /}) => {
-    if (!window.user) return console.warn("No user yet");
 
-    let isEmpty = (object={}) => {
-        if(object.length == 0 || object == null){
-            return true;
-        }
-        return false;
-    }
-
-    if(isEmpty(payload)){
-        console.error("that is silly, it ain't a thing");
-        return false;
-    }
-
-    console.log("setting data...", payload);
-
-    const userRef = doc(db, "users", window.user.uid);
-    await updateDoc(userRef, payload);
-}*/
-
-//export let setUserDatapointWithObject = async ({email = null, displayName = null, coins = null, projects = null}) => {
-export let setUserDatapointWithObject = async ( payload = {email: null, displayName: null, coins: null, projects: null} ) => {
+export let setUserDatapointWithObject = async ( payload = {email: null, displayName: null, coins: null, projects: null, prioritizePayload: false} ) => {
+    console.trace();
     if(window?.user == null) { return false; }
     let newData = {};
 
-    let currentData = getUserData(window.user);
+    let currentData = await getUserData(window.user);
     let payloadKeys = Object.keys(payload);
 
     let changeData = (key, toData) => {
         newData[key] = toData;
     }
 
-    console.log("THIS METHOD DEPENDS ON PREVIOUS DATA!");
-
     let detectChangeData = (key) => {
         const payloadDatapoint = payload[key];
-        if(key in currentData){
+
+        if(!payload.prioritizePayload && key in currentData){
             const currentDatapoint = currentData[key];
-            changeData(key, payloadDatapoint);
+            changeData(key, currentDatapoint);
         } else {
-            console.error("key does not exist: ", key);
+            changeData(key, payloadDatapoint);
         }
     }
 
@@ -256,6 +234,7 @@ export let setUserDatapointWithObject = async ( payload = {email: null, displayN
 
     const userRef = doc(db, "users", window.user.uid);
 
+    console.log("but guess what? I'm the one actually sending it: ", newData);
     updateDoc(userRef, newData);
 
     const updatedSnap = await getDoc(userRef);
@@ -269,7 +248,7 @@ export let setUserDatapoint = async (email=null, displayName=null, coins=null, p
     
     if (!window.user) return console.warn("No user yet");
 
-    //console.log("saving...");
+    console.trace("I am setting email! To: ", email);
     
     const userRef = doc(db, "users", window.user.uid);
     const updatedSnap = await getDoc(userRef);
@@ -450,7 +429,6 @@ export let setupProject = (projectDisplay, projectTitle) => {
 }
 
 let anonSign = async () => {
-    console.log(window.user);
     if(typeof window.user !== "undefined") { console.error("user already exists, why you doing this?"); throw "uh oh, don't do that"; }
 
     await signInAnonymously(auth).then((userCredential) => {
