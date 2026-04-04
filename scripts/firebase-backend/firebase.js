@@ -1,5 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js';
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app-check.js";
+import "./firebaseUserdata.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyABP5ADKcI2zC2ZdQ3pSUkuc1wmwBIbcwo",
@@ -13,8 +15,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 window.app = app;
-
-
 
 import { getAuth, signInAnonymously, createUserWithEmailAndPassword,  
     signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
@@ -98,7 +98,7 @@ let authStateChangedFunction = async (user) => {
     }
 }
 
-let signUserOut = async () => { 
+export let signUserOut = async () => { 
     signOut(auth).then(async () => {
         await anonSign();
         console.log("made user anon");
@@ -179,7 +179,7 @@ export async function initUserData(user){
     if (userEmpty) {
         const updatedSnap = await getDoc(userRef);
         
-        setUserDatapoint(updatedSnap.data());
+        setUserDatapointWithObject(updatedSnap.data());
     } else{
         const updatedDoc = await setDoc(userRef, {
             email: user.email || defaultValues.email,
@@ -196,62 +196,59 @@ export let deleteUserData = async (user) => {
     await setDoc(userRef, {});
 }
 
-let defaultValues = {
+const defaultValues = {
     email: null,
     displayName: "guest",
     coins: 0,
     projects: {}
 };
-/*
-export let setUserDatapointWithObject = async (payload = {/*email, displayname, coins, projects* /}) => {
-    if (!window.user) return console.warn("No user yet");
 
-    let isEmpty = (object={}) => {
-        if(object.length == 0 || object == null){
-            return true;
+export let setUserDatapointWithObject = async ( payload = {email: null, displayName: null, coins: null, projects: null, prioritizePayload: false} ) => {
+    console.trace();
+    if(window?.user == null) { return false; }
+    let newData = {};
+
+    let currentData = await getUserData(window.user);
+    let payloadKeys = Object.keys(payload);
+
+    let changeData = (key, toData) => {
+        newData[key] = toData;
+    }
+
+    let detectChangeData = (key) => {
+        const payloadDatapoint = payload[key];
+
+        if(!payload.prioritizePayload && key in currentData){
+            const currentDatapoint = currentData[key];
+            changeData(key, currentDatapoint);
+        } else {
+            changeData(key, payloadDatapoint);
         }
-        return false;
     }
 
-    if(isEmpty(payload)){
-        console.error("that is silly, it ain't a thing");
-        return false;
-    }
+    for (let payloadValue = 0; payloadValue < payloadKeys.length; payloadValue++) {
+        const key = payloadKeys[payloadValue];
 
-    console.log("setting data...", payload);
+        detectChangeData(key);
+    }
 
     const userRef = doc(db, "users", window.user.uid);
-    await updateDoc(userRef, payload);
-}*/
+
+    console.log("but guess what? I'm the one actually sending it: ", newData);
+    updateDoc(userRef, newData);
+
+    const updatedSnap = await getDoc(userRef);
+    return updatedSnap;
+}
+
 
 export let setUserDatapoint = async (email=null, displayName=null, coins=null, projects=null) => {
-
-    //BE CAREFUL! DON'T DELETE THIS UNTIL YOU'RE SURE IT'S WORSE
-    /*if (!window.user) return console.warn("No user yet");
-
-    let payload = {};
-
-    let addIfNotNull = (name, property) => {
-        if(property != null) {
-            payload[name] = property;
-        }
-    }
-
-    addIfNotNull("email", email);
-    addIfNotNull("displayName", displayName);
-    addIfNotNull("coins", coins);
-    addIfNotNull("projects", projects);
-
-    setUserDatapointWithObject({
-        payload
-    })*/
-    //(what about moving people from anon into sign in? Wait until sign in is good.)
 
     //This sets the user data to the defualt values above **unless they are nothing** (projects is weird though)
     
     if (!window.user) return console.warn("No user yet");
 
-    //console.log("saving...");
+    console.trace("I am setting email! To: ", email);
     
     const userRef = doc(db, "users", window.user.uid);
     const updatedSnap = await getDoc(userRef);
@@ -274,6 +271,10 @@ export let setUserDatapoint = async (email=null, displayName=null, coins=null, p
     }
 
     let updatePayload = {}
+
+    console.log("email is being set to: ", getNonEmptyValue(defaultValues["email"], email, data.email, null));
+    console.log("email is: ", email);
+    console.trace();
 
     let setEmail = getNonEmptyValue(defaultValues["email"], email, data.email, null);
     let setDisplayName = getNonEmptyValue(defaultValues["displayName"], displayName, data.displayName, null);
@@ -309,7 +310,8 @@ export let setUserDatapoint = async (email=null, displayName=null, coins=null, p
 
     console.log("the reason it is bad? ", projects, setProjects, isObjectEmpty(setProjects));*/
 
-    let d = await getUserData();
+    let newData = await getUserData();
+    return newData;
     //console.log(d);
     
 }
@@ -342,7 +344,7 @@ const isObjectEmpty = (obj) => {
     return obj == null || (Object.keys(obj).length === 0 && obj.constructor === Object);
 };
 
-let mergeObjects = (object1, object2) => { //object2 gets priority over object1
+export let mergeObjects = (object1, object2) => { //object2 gets priority over object1
     let theChosenOneAhhhh = (isObjectEmpty(object1) ? object2 : object1);
 
     if(isObjectEmpty(object1) || isObjectEmpty(object2)) { return theChosenOneAhhhh; } //return one if the other is null
@@ -370,7 +372,10 @@ let mergeObjects = (object1, object2) => { //object2 gets priority over object1
 }
 
 export let getUserData = async (user=window.user) => {
-    if(typeof user == "undefined"){return null;}
+    if(user == null || user?.uid == null){
+        console.error("cannot get user data; no user yet!"); 
+        return null;
+    }
 
     const userRef = doc(db, "users", user.uid);
     const updatedSnap = await getDoc(userRef);
@@ -424,7 +429,6 @@ export let setupProject = (projectDisplay, projectTitle) => {
 }
 
 let anonSign = async () => {
-    console.log(window.user);
     if(typeof window.user !== "undefined") { console.error("user already exists, why you doing this?"); throw "uh oh, don't do that"; }
 
     await signInAnonymously(auth).then((userCredential) => {

@@ -40,7 +40,7 @@ class TTCTypeableCode extends HTMLElement {
                                 </pre>
                             </div>
                         </div>
-                        <div data-js-tag="container-for-output"></div>
+                        <div class="output-container" data-js-tag="container-for-output"></div>
                     </div>
                     <div data-js-tag="container-for-runnable"></div>
         ` ;
