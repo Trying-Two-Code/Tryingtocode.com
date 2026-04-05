@@ -39,6 +39,10 @@ Hey developer! Read these to know what you should fix:
 - 8
 - TTC
 
+- make coins not squish when hide is removed from their classlist
+- 8
+- TTC
+
 - make create better
 - 8
 - TTC
