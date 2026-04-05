@@ -117,14 +117,23 @@ if(crossOriginIsolated){
         }
 
         errorLoading(){
-            console.log("error!");
+            console.log("Use Youtube Page Instead!");
             this.innerHTML = `
             <a href=${this.source} target="_blank" data-js-tag="link-to-youtube">
-                <p class="main-font">Something went wrong. Please watch the tutorial on Youtube: </p>
+                <p class="main-font">Click here to go to video on seperate tab.</p>
             </a>
             `;
             this.youtubeLink = this.querySelector(`[data-js-tag="link-to-youtube"]`);
             this.linkToYoutube();
+            const width = 480;
+            const height = 270;
+            const left = window.screenX + window.innerWidth - width - 20;
+            const top = window.screenY + 20;
+            window.open(
+                `${this.source}?autoplay=1`,
+                'PiPWindow',
+                `width=${width},height=${height},top=${top},left=${left},alwaysOnTop=yes,toolbar=no,menubar=no,scrollbars=no,resizable=no`
+            );
         }
 
         loaded(){
