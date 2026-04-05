@@ -11,7 +11,7 @@ Hey developer! Read these to know what you should fix:
 
 ]
 
-- make curriculum lists
+- make curriculum lists sections showup nicely for users to select in some page?
 - 2
 - TTC
 
@@ -19,7 +19,7 @@ Hey developer! Read these to know what you should fix:
 - 3
 - TTC
 
-- make sign in .html work nicely
+- make sign in .html work nicely -- make youtube video for one that works badly
 - 3
 - TTC
 
@@ -47,10 +47,6 @@ Hey developer! Read these to know what you should fix:
 - 8
 - TTC
 
-- Create creation page, in order to allow users to make their own learning projects. Support saving, publishing, and internal use
-- 9
-- TTC
-
 - seperate tab and space detection in code-area
 - 10
 - TTC
@@ -59,6 +55,6 @@ Hey developer! Read these to know what you should fix:
 - 10
 - TTC
 
-- Attempt to make it all one page
+- Attempt to the entire website work in one dynamic page
 - 20
 - not me
