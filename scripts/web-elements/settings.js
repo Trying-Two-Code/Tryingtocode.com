@@ -1,6 +1,9 @@
 import { SimpleToggle, Toggle } from '../tools.js';
 import { fontChange } from '../settings-functions.js';
 
+import "../productivity/focus.js";
+import "../productivity/user-tracking.js";
+
 class TTCSettings extends HTMLElement {
     constructor(){
         super();
@@ -32,9 +35,9 @@ class TTCSettings extends HTMLElement {
 
                     <br></br>
 
-                    <button class="nice-button no-bg-button main-font">focus for 30 minutes</button>
+                    <button class="nice-button no-bg-button main-font" data-js-tag="focus-button">focus for 30 minutes</button>
 
-                    <br><br>
+                    <br></br>
 
                     <button data-js-tag='toggle-theme-button' class="nice-button no-bg-button main-font">dropdown theme</button>
                     <div data-js-tag="theme-choice">
@@ -68,6 +71,8 @@ class TTCSettings extends HTMLElement {
         this.themeChoices = this.holderElement.querySelector("[data-js-tag='theme-choice']");
 
         this.exitButton = this.querySelector("[data-js-tag='exit-button']");
+
+        this.focusButton = this.querySelector("[data-js-tag='focus-button']");
     }
 
     setupElements(){
@@ -75,7 +80,6 @@ class TTCSettings extends HTMLElement {
         //this.mainToggle = new SimpleToggle(this.toggleButton, [this.holderElement]);
         this.mainToggle = new Toggle(this.toggleButton, [this.holderElementChild], "slow-hide", "settings");
         //make it use slow hide rather than hide class
-        //this.mainToggle.setupToggle();
 
         this.fontToggle = new SimpleToggle(this.fontToggleButton, [this.fontChoices]);
         this.fontToggle.setupToggle();
@@ -88,6 +92,8 @@ class TTCSettings extends HTMLElement {
         });
 
         this.setupFontSetting();
+
+
     }
 
 
