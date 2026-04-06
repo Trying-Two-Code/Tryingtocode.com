@@ -10,13 +10,11 @@ document.addEventListener("visibilitychange", () => {
 });
 
 window.addEventListener('focus', () => {
-    console.log("window is active!");
     userInWindow = true;
     updateTimeSinceUserInWindow();
 });
 
 window.addEventListener('blur', () => {
-    console.warn("window is not active!");
     userInWindow = false;
     updateTimeSinceUserInWindow();
 });

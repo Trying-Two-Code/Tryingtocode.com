@@ -72,7 +72,6 @@ export let makeFocusKey = async ({
     };
 
     let result = await detectSuccess(keyObject);
-    console.log(result);
     if(result == "error"){ throw "seems like you need to do some code refactoring."; }
 
     result ? callback(keyObject) : negativeCallback(keyObject);

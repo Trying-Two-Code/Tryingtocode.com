@@ -97,9 +97,11 @@ class TTCSettings extends HTMLElement {
     }
 
     setupFocusButton(){
+        this.defaultFocusTimeSeconds = 1;
+        const focusTime = this.getAttribute("focus-time") || (this.defaultFocusTimeSeconds * 1000);
         this.focusButton.addEventListener("click", () => {
-            console.log("pressed");
             makeFocusKey({
+                shouldLast: focusTime,
                 callback: this.focusSuccess,
                 negativeCallback: this.focusFailure
             });
