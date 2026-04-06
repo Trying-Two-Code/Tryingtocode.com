@@ -1,8 +1,6 @@
 import { SimpleToggle, Toggle } from '../tools.js';
 import { fontChange } from '../settings-functions.js';
-
-import "../productivity/focus.js";
-import "../productivity/user-tracking.js";
+import { makeFocusKey } from '../productivity/focus.js';
 
 class TTCSettings extends HTMLElement {
     constructor(){
@@ -10,6 +8,11 @@ class TTCSettings extends HTMLElement {
     }
     connectedCallback(){
         this.render();
+
+        this.findElements();
+        this.setupElements();
+
+        this.setupFocusButton();
     }
     render(){
         this.hideIconWhenOpen = this.getAttribute("hide-icon-when-open") ?? false;
@@ -53,9 +56,6 @@ class TTCSettings extends HTMLElement {
                 </div>
             </div>
         `;
-
-        this.findElements();
-        this.setupElements();
     }
 
     findElements(){
@@ -94,6 +94,24 @@ class TTCSettings extends HTMLElement {
         this.setupFontSetting();
 
 
+    }
+
+    setupFocusButton(){
+        this.focusButton.addEventListener("click", () => {
+            console.log("pressed");
+            makeFocusKey({
+                callback: this.focusSuccess,
+                negativeCallback: this.focusFailure
+            });
+        });
+    }
+
+    focusSuccess(){
+        console.log("les go!");
+    }
+
+    focusFailure(){
+        console.log("uh oh!");
     }
 
 

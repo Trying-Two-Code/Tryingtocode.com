@@ -116,6 +116,10 @@ if(crossOriginIsolated){
             this.youtubeLink.target = "_blank";
         }
 
+        checkIframeEnd(){
+            this.iframe.on
+        }
+
         errorLoading(){
             console.log("Use Youtube Page Instead!");
             this.innerHTML = `
