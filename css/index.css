@@ -167,6 +167,26 @@ body {
 	margin-inline: var(--space-1);
 
 	background-color: var(--inner-box-color);
+
+	border-color: #000;
+	border-width: 10px;
+	border-style: block;
+	margin-block: 10px;
+	outline: #000b solid 5px;
+	border-radius: 3px;
+}
+
+.bevel-corners{
+	--bevel-variable: 50px; 
+	--bevel-oposite: calc(100% - var(--bevel-variable));
+	clip-path: polygon(var(--bevel-variable) 0%, 
+	var(--bevel-oposite) 0%, 
+	100% var(--bevel-variable), 
+	100% var(--bevel-oposite), 
+	var(--bevel-oposite) 100%, 
+	var(--bevel-variable) 100%, 
+	0% var(--bevel-oposite), 
+	0% var(--bevel-variable));
 }
 
 @media (orientation: portrait) {
@@ -302,4 +322,64 @@ body {
 	margin: 0.5rem 0.5rem; /* uniform spacing */
 	font-size: 0.8em;
 	line-height: 0.9em;
+}
+
+
+
+/*------------------------------------*\
+    #PIXEL CARD
+\*------------------------------------*/
+@property --transition-speed {
+  syntax: "<time>";
+  inherits: true;
+  initial-value: 0.1s;
+}
+
+.pixel-card {
+  transition: transform var(--transition-speed, 0.5s);
+
+  --pixel-size: 100px;
+  /*keep width and height the same*/
+  --pixel-width: 10;
+  --pixel-height: 10;
+
+  width: calc(var(--pixel-size) * var(--pixel-width));
+  height: calc(var(--pixel-size) * var(--pixel-height));
+  background: rgb(213, 236, 228);
+
+  border: solid;
+  border-style: block;
+  border-color: black;
+  border-width: var(--pixel-size);
+
+  --clip-inset: 10%;
+
+  --inset-opposite: calc(100% - var(--clip-inset));
+  clip-path: polygon(
+    0% var(--clip-inset),
+    var(--clip-inset) var(--clip-inset),
+    var(--clip-inset) 0%,
+    var(--inset-opposite) 0%,
+    var(--inset-opposite) var(--clip-inset),
+    100% var(--clip-inset),
+    100% var(--inset-opposite),
+    var(--inset-opposite) var(--inset-opposite),
+    var(--inset-opposite) 100%,
+    var(--clip-inset) 100%,
+    var(--clip-inset) var(--inset-opposite),
+    0% var(--inset-opposite)
+  );
+
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.pixel-card:hover {
+  transform: rotate(10deg);
+}
+
+.pixel-card:active {
+  transform: scale(90%) rotate(10deg);
 }
