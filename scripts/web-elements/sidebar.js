@@ -14,7 +14,7 @@ class TTCSidebar extends HTMLElement {
         this.render();
     }
     render(){
-        this.startClosed = this.getAttribute("start-closed") ?? false;
+        this.startClosed = getSetting("sidebar-hidden") ?? this.getAttribute("start-closed") ?? false;
 
         this.theme = window.TTC.theme ?? "pixel-1";
         this.imageExtension = window.TTC.imageExtension ?? ".png"; 
@@ -75,7 +75,7 @@ class TTCSidebar extends HTMLElement {
         this.toggleSidebarArt = [
             `${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-1${this.imageExtension}`,
             `${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-2${this.imageExtension}` 
-        ]
+        ];
 
         this.hiddenSidebarParent = this.querySelector("[data-js-tag='hidden-sidebar-parent']");
     }
@@ -101,10 +101,10 @@ class TTCSidebar extends HTMLElement {
     }
 
     detectStartClosed(){
-        let startClosed = getSetting("sidebar-hidden");
+        let startClosed = this.startClosed;
+        console.log("lookie here ", getSetting("sidebar-hidden"), this.startClosed);
         console.log("detecting...", startClosed);
         let hideSidebar = () => {
-            this.toggleSidebar.toggleEvent();
             this.initHiddenSidebar();
         }
         return startClosed ? hideSidebar() : false;
@@ -129,17 +129,30 @@ class TTCSidebar extends HTMLElement {
     }
 
     toggleSidebarEvent(){
-        if(this.toggleSidebar.toggled){
-            this.initHiddenSidebar();
-        }
+        console.log(`hidden sidebar is toggled? ${this.toggleSidebar.toggled}`);
+        this.initHiddenSidebar();
     }
 
     initHiddenSidebar(){
         console.log("hiding now.");
-        editSetting({"sidebar-hidden": true});
-        this.hiddenSidebar = this.hiddenSidebar ?? document.createElement("ttc-hidden-sidebar");
-        this.hiddenSidebarParent.appendChild(this.hiddenSidebar);
-        this.hiddenSidebar.showSidebarEvent = () => { this.showSidebar(); }
+
+        console.log(this?.hiddenSidebar)
+        console.log((this?.hiddenSidebar == null));
+        if((this?.hiddenSidebar == null)){
+            console.log("existinainealo");
+            this.hiddenSidebar = document.createElement("ttc-hidden-sidebar");
+            this.hiddenSidebarParent.appendChild(this.hiddenSidebar);
+            this.hiddenSidebar.showSidebarEvent = () => { this.showSidebar(); }
+        } 
+        if(!(this?.hiddenSidebar == null) && !this.getAttribute("start-closed")){
+            editSetting({"sidebar-hidden": true});
+        }
+
+        console.log("hidddddd noten", this.hiddenSidebar.hidden);
+        this.hiddenSidebar.shown();
+        
+
+        //this.hiddenSidebar.
         //this.toggleSidebarImageButton.changeOnClick(this.hiddenSidebar.showSidebarButton);
         //this.toggleSidebarImageButton.changeImage();
         console.log(this.hiddenSidebar);

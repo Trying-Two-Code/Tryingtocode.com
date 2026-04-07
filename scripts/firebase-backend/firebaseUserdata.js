@@ -68,7 +68,8 @@ export let deleteAllUserData = () => {
     
 }
 
-window.addEventListener("user_made", async () => {
+let startEvent = async () => {
+    window.removeEventListener("user_made", startEvent);
     let newUserData = await getUserData(window.user);
 
     newUserData = await testUserData();
@@ -76,5 +77,7 @@ window.addEventListener("user_made", async () => {
     //let result = await setUserDatapointWithObject(newUserData);
     
     newUserData = await getUserData(window.user);
-});
+}
+
+window.addEventListener("user_made", startEvent);
 
