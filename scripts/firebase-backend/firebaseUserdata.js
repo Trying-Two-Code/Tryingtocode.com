@@ -74,7 +74,7 @@ let startEvent = async () => {
 
     newUserData = await testUserData();
     newUserData.prioritizePayload = true;
-    //let result = await setUserDatapointWithObject(newUserData);
+    let result = await setUserDatapointWithObject(newUserData);
     
     newUserData = await getUserData(window.user);
 }
