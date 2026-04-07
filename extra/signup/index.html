@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="a free, gamelike site to learn code">
+    <meta property="og:title" content="Trying to Code">
+    <meta property="og:image" content="https://tryingtocode.com/components/art/ttc coin icon.png">
+    <meta property="og:type" content="website">
+    <meta name="keywords" content="free, learn, code">
+    
+    <title>Trying to Code</title>
+
+    <link rel="icon" href="/../../components/art/ttc coin icon.png">
+    <link rel="stylesheet" href="../../css/general.css">
+    <link rel="stylesheet" href="../../css/signin.css">
+    <link rel="stylesheet" href="../../css/prism.css">
+
+    <script src="../../scripts/init-settings.js"></script>
+    <script src="../../scripts/sign-in-page.js" type="module"></script>
+    <script src="../../scripts/general.js" type="module"></script>
+    <script src="../../scripts/sign-in.js" type="module"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdQ-WUsAAAAAOpmabw66DZ63svdPZTj9c6YJyPm"></script>
+    <script src="../../scripts/firebase-backend/firebase.js" type="module" defer></script>
+    <script src="../../scripts/web-elements/footer.js"></script>
+    <script src="../../scripts/web-elements/sidebar.js" type="module" defer></script>
+    <script src="../../scripts/web-elements/sign-in-element.js" type="module" defer></script>
+    <script src="../../scripts/prism.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="row-container">
+
+        <canvas class="js-screen" id="learn-screen">
+            <!--shows coins-->
+        </canvas>
+
+        <div class="main-content main-font">
+            <ttc-sign-in></ttc-sign-in>
+            <div class="footer-parent">
+                <ttc-footer copywrite="tryingtocode" mail-to="contact@tryingtocode.com" legal-src="../../legal.html" privacy-src="/privacy-policy.html" class="footer-parent"></ttc-footer>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
