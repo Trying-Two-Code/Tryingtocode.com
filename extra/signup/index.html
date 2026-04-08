@@ -21,7 +21,7 @@
     <script src="../../scripts/init-settings.js"></script>
     <script src="../../scripts/firebase-backend/firebase.js" type="module" defer></script>
     <script src="../../scripts/settings-functions.js" type="module" defer></script>
-    <script src="./signup.js"></script>
+    <script src="./signup.js" type="module" defer></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
@@ -32,7 +32,7 @@
     </canvas>
     <div class="signup-container">
 
-        <div class="main-content main-font">
+        <div class="main-font center-all">
             <!--ttc-sign-in></ttc-sign-in-->
             <div data-js-tag="">
                 <h1 class="main-font">sign up!</h1>
@@ -43,8 +43,8 @@
         </div>
 
         <div>
-            <textarea class="input-box si-input main-font" placeholder="username" name="username" id=""></textarea>
-            <textarea class="input-box si-input main-font" placeholder="password" name="password" id=""></textarea>
+            <textarea data-js-tag="username-field" class="input-box si-input main-font" placeholder="username" name="username" id="" required minlength="5" maxlength="100" rows="3"></textarea>
+            <input data-js-tag="password-field" autocomplete="current-password" type="password" class="input-box si-input main-font" placeholder="password" name="password" id="" minlength="5" maxlength="100" rows="1" required></input>
         </div>
     </div>
 
