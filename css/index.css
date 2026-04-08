@@ -148,6 +148,10 @@ body {
 		padding-block: 0;
 		height: calc(100vh - var(--block-inset) * 4);
 	}
+	.bevel-corners::before{
+		height: min(38%, calc(100vh - var(--block-inset) * 6));
+		width: max(85%, 400px);
+	}
 }
 
 .welcome > * {
@@ -164,8 +168,6 @@ body {
 	align-items: center;
 
 	box-sizing: border-box;
-	width: max(90%, 400px);
-	height: 70%;
 	margin-inline: var(--space-1);
 
 	background-color: var(--inner-box-color);
@@ -177,8 +179,17 @@ body {
 	outline: #000b solid 0px;
 	border-radius: 3px;
 }
-
+@media (orientation: landscape) {
+	.bevel-corners::before{
+		height: min(calc(38% * 1.8), calc(100vh - var(--block-inset) * 4));
+		width: max(90%, 400px);
+		
+		margin-block: 60px;
+	}
+}
 .bevel-corners{
+	width: max(90%, 400px);
+	height: 70%;
 	/*--bevel-variable: 50px; 
 	--bevel-oposite: calc(100% - var(--bevel-variable));
 	clip-path: polygon(var(--bevel-variable) 0%, 
@@ -191,12 +202,12 @@ body {
 	0% var(--bevel-variable));*/
 }
 
-.bevel-corners::after{
+.bevel-corners::before{
 	position: absolute;
 	content: "";
 	border: 3px #141414 solid;
-	width: max(90%, 400px);
-	height: 70%;
+	/*width: max(80%, 400px);
+	height: 70%;*/
 	background-color: #141414;
 	z-index: -1;
 
