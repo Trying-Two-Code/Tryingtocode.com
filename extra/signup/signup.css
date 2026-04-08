@@ -1,0 +1,47 @@
+/*------------------------------------*\ 
+    #CONTENTS
+/*------------------------------------*/ 
+/**
+
+*settings
+**root
+
+**/
+
+/*------------------------------------*\ 
+    #settings
+/*------------------------------------*/
+:root{
+    
+}
+
+/*------------------------------------*\ 
+    #MAIN
+/*------------------------------------*/ 
+.signup-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    flex-direction: column;
+}
+
+/*------------------------------------*\ 
+    #TEXTAREAS
+/*------------------------------------*/ 
+.si-input {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 1.5em;
+	text-align: center;
+	margin: 0.5rem 0.5rem; /* uniform spacing */
+	font-size: 0.8em;
+	line-height: 0.9em;
+}
+/*success*/
+
+/*failure*/
