@@ -160,24 +160,26 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	align-self: center;
 	align-items: center;
 
 	box-sizing: border-box;
 	width: max(90%, 400px);
+	height: 70%;
 	margin-inline: var(--space-1);
 
 	background-color: var(--inner-box-color);
 
-	border-color: #000;
-	border-width: 10px;
+	border-color: #00000000;
+	border-width: 0px;
 	border-style: block;
 	margin-block: 10px;
-	outline: #000b solid 5px;
+	outline: #000b solid 0px;
 	border-radius: 3px;
 }
 
 .bevel-corners{
-	--bevel-variable: 50px; 
+	/*--bevel-variable: 50px; 
 	--bevel-oposite: calc(100% - var(--bevel-variable));
 	clip-path: polygon(var(--bevel-variable) 0%, 
 	var(--bevel-oposite) 0%, 
@@ -186,16 +188,16 @@ body {
 	var(--bevel-oposite) 100%, 
 	var(--bevel-variable) 100%, 
 	0% var(--bevel-oposite), 
-	0% var(--bevel-variable));
+	0% var(--bevel-variable));*/
 }
 
-.bevel-corners::before{
+.bevel-corners::after{
 	position: absolute;
 	content: "";
-	border: 3px #00000000 solid;
-	width: 70%;
-	height: 80%;
-	background-color: rgba(0, 0, 0, 0.616);
+	border: 3px #141414 solid;
+	width: max(90%, 400px);
+	height: 70%;
+	background-color: #141414;
 	z-index: -1;
 
     --x-stretch-left-far: 30px;
