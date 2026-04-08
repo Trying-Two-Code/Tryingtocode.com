@@ -33,19 +33,27 @@
     <div class="signup-container">
 
         <div class="main-font center-all">
-            <!--ttc-sign-in></ttc-sign-in-->
-            <div data-js-tag="">
-                <h1 class="main-font">sign up!</h1>
+            <div class="actual-factual-sign-in-box">
+                <!--ttc-sign-in></ttc-sign-in-->
+                <div data-js-tag="">
+                    <h1 class="main-font">sign up!</h1>
+                </div>
+
+                <div>
+                    <textarea data-js-tag="username-field" class="input-box si-input main-font" placeholder="username" name="username" id="" required minlength="5" maxlength="100" rows="3"></textarea>
+                    <input data-js-tag="password-field" autocomplete="new-password" type="password" class="input-box si-input main-font" placeholder="password" name="password" id="" pattern=".{5,}" minlength="5" maxlength="100" rows="1" required></input>
+                </div>
+
+                <div class="row-container left-side">
+                    <button class="no-bg-button nice-button left-side">
+                        <img src="../../components/visuals/icons/project/run-code/pixel-1.png" alt="submit">
+                    </button>
+                    <input data-js-tag="stay-logged-in" type="checkbox" value="stay-in" checked> keep me logged in</input>
+                </div>
             </div>
-            <div class="footer-parent">
-                <ttc-footer copywrite="tryingtocode" mail-to="contact@tryingtocode.com" legal-src="../../legal.html" privacy-src="/privacy-policy.html" class="footer-parent"></ttc-footer>
-            </div>
+            
         </div>
 
-        <div>
-            <textarea data-js-tag="username-field" class="input-box si-input main-font" placeholder="username" name="username" id="" required minlength="5" maxlength="100" rows="3"></textarea>
-            <input data-js-tag="password-field" autocomplete="current-password" type="password" class="input-box si-input main-font" placeholder="password" name="password" id="" minlength="5" maxlength="100" rows="1" required></input>
-        </div>
     </div>
 
 </body>
