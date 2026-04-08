@@ -189,6 +189,46 @@ body {
 	0% var(--bevel-variable));
 }
 
+.bevel-corners::before{
+	position: absolute;
+	content: "";
+	border: 3px #00000000 solid;
+	width: 70%;
+	height: 80%;
+	background-color: rgba(0, 0, 0, 0.616);
+	z-index: -1;
+
+    --x-stretch-left-far: 30px;
+	--x-stretch-right-far: calc(100% - var(--x-stretch-left-far));
+    --x-stretch-left: 50px;
+    --x-stretch-right: calc(100% - var(--x-stretch-left));
+
+    --y-stretch-top-far: 30px;
+    --y-stretch-bottom-far: calc(100% - var(--y-stretch-top-far));
+    --y-stretch-top: 50px;
+    --y-stretch-bottom: calc(100% - var(--y-stretch-top));
+
+    clip-path: polygon(
+        var(--x-stretch-right-far) 100%, 
+        var(--x-stretch-left-far) 100%, 
+        0% var(--y-stretch-bottom-far), 
+        0% var(--y-stretch-top-far), 
+        var(--x-stretch-left-far) 0%, 
+        var(--x-stretch-right-far) 0%, 
+        100% var(--y-stretch-top-far), 
+        100% var(--y-stretch-bottom-far), /*this is the outside area*/
+        var(--x-stretch-right-far) 100%, 
+        var(--x-stretch-right-far) var(--y-stretch-bottom), 
+        var(--x-stretch-right-far) var(--y-stretch-top), 
+        var(--x-stretch-right) var(--y-stretch-top-far), 
+        var(--x-stretch-left) var(--y-stretch-top-far), 
+        var(--x-stretch-left-far) var(--y-stretch-top), 
+        var(--x-stretch-left-far) var(--y-stretch-bottom), 
+        var(--x-stretch-left) var(--y-stretch-bottom-far), 
+        var(--x-stretch-right) var(--y-stretch-bottom-far), 
+        var(--x-stretch-right-far) var(--y-stretch-bottom)); /*this is the inside masked out*/
+}
+
 @media (orientation: portrait) {
 	.welcome--demo {
 		margin: 10%;

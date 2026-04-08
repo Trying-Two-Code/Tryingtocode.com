@@ -542,6 +542,42 @@ ttc-sidebar{
     }
 }
 
+.bevel-mask{
+
+}
+
+.bevel-border-mask{
+    --x-stretch-right-far: 80%;
+    --x-stretch-left-far: 20%;
+    --x-stretch-right: 70%;
+    --x-stretch-left: 30%;
+
+    --y-stretch-bottom-far: 80%;
+    --y-stretch-top-far: 20%;
+    --y-stretch-bottom: 70%;
+    --y-stretch-top: 30%;
+
+    clip-path: polygon(
+        var(--x-stretch-right-far) 100%, 
+        var(--x-stretch-left-far) 100%, 
+        0% var(--y-stretch-bottom-far), 
+        0% var(--y-stretch-top-far), 
+        var(--x-stretch-left-far) 0%, 
+        var(--x-stretch-right-far) 0%, 
+        100% var(--y-stretch-top-far), 
+        100% var(--y-stretch-bottom-far), /*this is the outside area*/
+        var(--x-stretch-right-far) 100%, 
+        var(--x-stretch-right-far) var(--y-stretch-bottom), 
+        var(--x-stretch-right-far) var(--y-stretch-top), 
+        var(--x-stretch-right) var(--y-stretch-top-far), 
+        var(--x-stretch-left) var(--y-stretch-top-far), 
+        var(--x-stretch-left-far) var(--y-stretch-top), 
+        var(--x-stretch-left-far) var(--y-stretch-bottom), 
+        var(--x-stretch-left) var(--y-stretch-bottom-far), 
+        var(--x-stretch-right) var(--y-stretch-bottom-far), 
+        var(--x-stretch-right-far) var(--y-stretch-bottom)); /*this is the inside masked out*/
+}
+
 /*------------------------------------*\
     #DROPDOWN
 \*------------------------------------*/
