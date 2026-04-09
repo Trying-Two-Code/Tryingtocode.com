@@ -1,8 +1,6 @@
 //this allows the page to show and control youtube videos with the youtube api
 //review https://developers.google.com/youtube/iframe_api_reference
 
-console.log("for some reason, the page isn't cross origin isolated, that means we can have more functionality: ");
-
 let videoId = "5YcsjQ2VrrU";
 
 let tag = document.createElement('script');
@@ -19,10 +17,7 @@ let playerObject;
 window.youtubeReady = false;
 
 if(crossOriginIsolated){
-    console.log("youtube don't work normal if cross origin isolated.");
-    console.log("well it does, just it don't work reallll nice.");
-
-    
+    console.log("cross origin isolated procedure activated.");
 
     let defaultDimensions = {height: 200, width: 300};
     let youtubePlayerParent;
@@ -64,12 +59,13 @@ if(crossOriginIsolated){
                 {height: this.playerObject.height, width: this.playerObject.width}
             );
             this.linkToYoutube();
+            this.setupCloseButton();
         }
         initLooks(){
 
             this.innerHTML = `
             <div class="column-container">
-                <button class="nice-button no-bg-button main-font">
+                <button class="nice-button no-bg-button main-font" data-js-tag="close-button">
                     <img alt="x" src="./components/visuals/icons/project/close/${window.TTC.theme}${window.TTC.imageExtension}"></img>
                 </button>
                 <button class="nice-button no-bg-button main-font">
@@ -86,6 +82,7 @@ if(crossOriginIsolated){
         findElements(){
             this.iframe = this.querySelector("iframe");
             this.youtubeLink = this.querySelector(`[data-js-tag="link-to-youtube"]`);
+            this.closeButton = this.querySelector(`[data-js-tag="close-button"]`);
         }
 
 
@@ -116,11 +113,18 @@ if(crossOriginIsolated){
             this.youtubeLink.target = "_blank";
         }
 
-        checkIframeEnd(){
-            this.iframe.on
+        setupCloseButton(){
+            let close = () => {
+                this.innerHTML = ``;
+                this.ignoreErrors = true;
+                this.remove();
+            }
+            this.closeButton.addEventListener("click", close);
         }
 
         errorLoading(){
+            if(this?.ignoreErrors) {return;}
+
             console.log("Use Youtube Page Instead!");
             this.innerHTML = `
             <a href=${this.source} target="_blank" data-js-tag="link-to-youtube">
