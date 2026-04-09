@@ -1,5 +1,6 @@
 import { SimpleToggle, Toggle } from '../tools.js';
 import { fontChange } from '../settings-functions.js';
+import { makeFocusKey } from '../productivity/focus.js';
 
 class TTCSettings extends HTMLElement {
     constructor(){
@@ -7,6 +8,11 @@ class TTCSettings extends HTMLElement {
     }
     connectedCallback(){
         this.render();
+
+        this.findElements();
+        this.setupElements();
+
+        this.setupFocusButton();
     }
     render(){
         this.hideIconWhenOpen = this.getAttribute("hide-icon-when-open") ?? false;
@@ -32,9 +38,9 @@ class TTCSettings extends HTMLElement {
 
                     <br></br>
 
-                    <button class="nice-button no-bg-button main-font">focus for 30 minutes</button>
+                    <button class="nice-button no-bg-button main-font" data-js-tag="focus-button">focus for 30 minutes</button>
 
-                    <br><br>
+                    <br></br>
 
                     <button data-js-tag='toggle-theme-button' class="nice-button no-bg-button main-font">dropdown theme</button>
                     <div data-js-tag="theme-choice">
@@ -50,9 +56,6 @@ class TTCSettings extends HTMLElement {
                 </div>
             </div>
         `;
-
-        this.findElements();
-        this.setupElements();
     }
 
     findElements(){
@@ -68,6 +71,8 @@ class TTCSettings extends HTMLElement {
         this.themeChoices = this.holderElement.querySelector("[data-js-tag='theme-choice']");
 
         this.exitButton = this.querySelector("[data-js-tag='exit-button']");
+
+        this.focusButton = this.querySelector("[data-js-tag='focus-button']");
     }
 
     setupElements(){
@@ -75,7 +80,6 @@ class TTCSettings extends HTMLElement {
         //this.mainToggle = new SimpleToggle(this.toggleButton, [this.holderElement]);
         this.mainToggle = new Toggle(this.toggleButton, [this.holderElementChild], "slow-hide", "settings");
         //make it use slow hide rather than hide class
-        //this.mainToggle.setupToggle();
 
         this.fontToggle = new SimpleToggle(this.fontToggleButton, [this.fontChoices]);
         this.fontToggle.setupToggle();
@@ -88,6 +92,28 @@ class TTCSettings extends HTMLElement {
         });
 
         this.setupFontSetting();
+
+
+    }
+
+    setupFocusButton(){
+        this.defaultFocusTimeSeconds = 1;
+        const focusTime = this.getAttribute("focus-time") || (this.defaultFocusTimeSeconds * 1000);
+        this.focusButton.addEventListener("click", () => {
+            makeFocusKey({
+                shouldLast: focusTime,
+                callback: this.focusSuccess,
+                negativeCallback: this.focusFailure
+            });
+        });
+    }
+
+    focusSuccess(){
+        console.log("les go!");
+    }
+
+    focusFailure(){
+        console.log("uh oh!");
     }
 
 
