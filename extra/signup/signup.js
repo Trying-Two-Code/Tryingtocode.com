@@ -41,3 +41,39 @@ passwordField.addEventListener("beforeinput", (input) => {
 usernameField.addEventListener("beforeinput", (input) => {
     stopGrossInputs(input);
 });
+
+passwordField.addEventListener("click", (input) => {
+    swapElements(passwordField, usernameField);
+});
+
+let checkSibling = (element1, element2) => {
+    return element1.parentNode === element2.parentNode;
+}
+
+let swapSiblings = (sibling1, sibling2) => {
+    console.assert(sibling1.parentNode === sibling2.parentNode);
+    console.assert(sibling1 !== sibling2);
+    const parent = sibling1.parentNode;
+
+    const next1 = sibling1.nextSibling;
+    const next2 = sibling2.nextSibling;
+
+    parent.insertBefore(sibling1, next2);
+    parent.insertBefore(sibling2, next1);
+}
+
+let swapParents = (element1, element2) => {
+    let parent1 = element1.parentNode;
+    let parent2 = element2.parentNode;
+
+    parent1.append(element2);
+    parent2.append(element1);
+}
+
+let swapElements = (element1, element2) => {
+    if(checkSibling(element1, element2) == true) {
+        swapSiblings(element1, element2);
+    } else{
+        swapParents(element1, element2);
+    }
+}
