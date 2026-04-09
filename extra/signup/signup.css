@@ -118,14 +118,16 @@
 	line-height: 0.9em;
     resize: none;
     margin-inline: 0 !important;
+
+    background-color: #3b3b3b;
 }
 
 .si-input:invalid:placeholder-shown{
-    border: 2px dashed rgb(164, 180, 19);
+    border: 2px dashed rgb(116, 116, 116);
 }
 
 .si-input:invalid:not(:placeholder-shown){
-    border: 2px dashed rgb(180, 19, 19);
+    border: 2px dashed rgb(212, 34, 34);
 }
 
 .si-input:valid{

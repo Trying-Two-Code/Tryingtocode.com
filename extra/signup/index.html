@@ -33,7 +33,7 @@
     <div class="signup-container">
 
         <div class="main-font center-all">
-            <div class="actual-factual-sign-in-box">
+            <form class="actual-factual-sign-in-box">
                 <!--ttc-sign-in></ttc-sign-in-->
                 <div data-js-tag="">
                     <h1 class="main-font">sign up!</h1>
@@ -45,12 +45,16 @@
                 </div>
 
                 <div class="row-container left-side">
-                    <button class="no-bg-button nice-button left-side">
-                        <img src="../../components/visuals/icons/project/run-code/pixel-1.png" alt="submit">
+                    <button class="nice-bg-button nice-button left-side main-font">
+                        create account
+                        <!--img src="../../components/visuals/icons/project/run-code/pixel-1.png" alt="submit"-->
                     </button>
-                    <input data-js-tag="stay-logged-in" type="checkbox" value="stay-in" checked> keep me logged in</input>
+                    <div>
+                        <label for="stay-logged-in">keep me logged in</label>
+                        <input data-js-tag="stay-logged-in" type="checkbox" value="stay-in" id="stay-logged-in" checked></input>
+                    </div>
                 </div>
-            </div>
+            </form>
             
         </div>
 
