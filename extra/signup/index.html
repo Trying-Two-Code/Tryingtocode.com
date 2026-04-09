@@ -39,13 +39,18 @@
                     <h1 class="main-font">sign up!</h1>
                 </div>
 
+                <div class="log-me-in">
+                    <label for="log-me-in" class="horrible-label">sign me up</label>
+                    <input data-js-tag="log-me-in" type="checkbox" value="stay-in" id="log-me-in" class="annoying-element horrible-input" required></input>
+                </div>
+
                 <div>
                     <textarea data-js-tag="username-field" class="input-box si-input main-font" placeholder="username" name="username" id="" required minlength="5" maxlength="100" rows="3"></textarea>
                     <input data-js-tag="password-field" autocomplete="new-password" type="password" class="input-box si-input main-font" placeholder="password" name="password" id="" pattern=".{5,}" minlength="5" maxlength="100" rows="1" required></input>
                 </div>
 
                 <div class="row-container left-side">
-                    <button class="nice-bg-button nice-button left-side main-font">
+                    <button data-js-tag="submit-button" class="nice-bg-button nice-button left-side main-font">
                         create account
                         <!--img src="../../components/visuals/icons/project/run-code/pixel-1.png" alt="submit"-->
                     </button>

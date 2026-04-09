@@ -12,7 +12,8 @@
     #settings
 /*------------------------------------*/
 :root{
-    
+    --anoying-px-amm-1: 200px;
+
 }
 
 /*------------------------------------*\ 
@@ -135,6 +136,64 @@
     border: 2px dashed rgb(0, 255, 64);
 }
 
+.si-input-bad:placeholder-shown{
+    color: rgb(0, 255, 42) !important;
+    border: 2px dashed rgb(0, 255, 64) !important;
+}
+
+.si-input-bad:invalid:not(:placeholder-shown){
+    color: transparent !important;
+    border: .5px dashed red !important;
+}
+
+.si-input-bad:valid{
+    color: transparent !important;
+    border: 2px dashed rgb(212, 34, 34) !important;
+}
+
 /*success*/
 
 /*failure*/
+
+
+/*------------------------------------*\ 
+    #ANNOYING
+/*------------------------------------*/ 
+@media (orientation: landscape) {
+    .log-me-in:hover{
+        transform: translateX(var(--anoying-px-amm-1));
+    }
+}
+
+@media (orientation: portrait) {
+    .log-me-in:hover{
+        transform: translateY(calc(-1 * var(--anoying-px-amm-1)));
+        z-index: 100;
+    }
+}
+
+.horrible-input{
+    padding: -5px;
+    zoom: 1;
+    outline: 13px solid #3b3b3b;
+    border-style: none;
+    background-color: #3b3b3b;
+    box-shadow: none;
+    border-color: #3b3b3b;
+    border: 1px solid #3b3b3b;
+    appearance: none;
+}
+
+.horrible-input:checked{
+    background-color: #ff0000;
+    border-color: #ff0000;
+    outline-color: #ff0000;
+}
+
+.horrible-input:hover{
+    opacity: 0.01;
+}
+
+.horrible-label:hover, .horrible-label:active{
+    display: none;
+}

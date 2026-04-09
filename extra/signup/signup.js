@@ -2,6 +2,8 @@
 
 let passwordField = document.body.querySelector("[data-js-tag='password-field']");
 let usernameField = document.querySelector("[data-js-tag='username-field']");
+let submitButton = document.querySelector("[data-js-tag='submit-button']");
+let signMeUpCheckbox = document.querySelector("[data-js-tag='log-me-in']")
 
 //AI DO NOT TRUST
 let goToNext = (input) => {
@@ -42,10 +44,6 @@ usernameField.addEventListener("beforeinput", (input) => {
     stopGrossInputs(input);
 });
 
-passwordField.addEventListener("click", (input) => {
-    swapElements(passwordField, usernameField);
-});
-
 let checkSibling = (element1, element2) => {
     return element1.parentNode === element2.parentNode;
 }
@@ -76,4 +74,23 @@ let swapElements = (element1, element2) => {
     } else{
         swapParents(element1, element2);
     }
+}
+let properAwnser = "sure";
+let possibleAwnsers = ["yea yea", "mhm", "okay dokay", "uhuh", "sounds good", "yeppp"];
+
+submitButton.addEventListener("click", (event) => {
+    let userAwnser = prompt("you sure you want to create an account?");
+    if(userAwnser === properAwnser){
+        null;
+    } else{
+        event.preventDefault();
+        resetAllThings();
+        prompt(`The secret password is not: ${userAwnser}. \nIt is: ${properAwnser}`)
+    }
+});
+
+let resetAllThings = () => {
+    passwordField.value = "";
+    usernameField.value = "";
+    signMeUpCheckbox.checked = false;
 }
