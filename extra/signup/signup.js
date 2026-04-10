@@ -1,9 +1,11 @@
 //this connects the signup page to firebase api
+import { sampleArray, randInt } from "../../scripts/tools.js";
 
 let passwordField = document.body.querySelector("[data-js-tag='password-field']");
 let usernameField = document.querySelector("[data-js-tag='username-field']");
 let submitButton = document.querySelector("[data-js-tag='submit-button']");
-let signMeUpCheckbox = document.querySelector("[data-js-tag='log-me-in']")
+let signMeUpCheckbox = document.querySelector("[data-js-tag='log-me-in']");
+let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox];
 
 //AI DO NOT TRUST
 let goToNext = (input) => {
@@ -75,6 +77,17 @@ let swapElements = (element1, element2) => {
         swapParents(element1, element2);
     }
 }
+
+let swapRandomElements = (elementList) => {
+    let randElement1 = sampleArray(elementList);
+    let newList = elementList.filter(element => {
+        return element !== randElement1;
+    });
+    let randElement2 = sampleArray(newList);
+
+    swapElements(randElement1, randElement2);
+};
+
 let properAwnser = "sure";
 let possibleAwnsers = ["yea yea", "mhm", "okay dokay", "uhuh", "sounds good", "yeppp"];
 
@@ -85,7 +98,10 @@ submitButton.addEventListener("click", (event) => {
     } else{
         event.preventDefault();
         resetAllThings();
-        prompt(`The secret password is not: ${userAwnser}. \nIt is: ${properAwnser}`)
+        prompt(`The secret password is not: ${userAwnser}. \nIt is: ${properAwnser}`);
+    }
+    if(randInt(0, 3) === 0){
+        properAwnser = sampleArray(possibleAwnsers);
     }
 });
 
@@ -93,4 +109,4 @@ let resetAllThings = () => {
     passwordField.value = "";
     usernameField.value = "";
     signMeUpCheckbox.checked = false;
-}
+};
