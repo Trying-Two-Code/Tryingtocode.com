@@ -50,21 +50,25 @@ let collectCoin = (coinElement, worth=1) => {
 }
 
 let drawAll = (sizeX=300, sizeY=300) => {
-    ctx.canvas.width  = window.innerWidth;
-    ctx.canvas.height = window.innerHeight;
+    let widthSame = ctx.canvas.width === window.innerWidth;
+    let heightSame = ctx.canvas.height === window.innerHeight;
+    if(!widthSame || !heightSame){
+        !widthSame ? ctx.canvas.width = window.innerWidth : null;
+        !heightSame ? ctx.canvas.height = window.innerHeight : null;
+    }
 
     let drawOne = element => {
-        let counter = sidebarElement.coinCounter;
+        //let counter = sidebarElement.coinCounter;
         element.RenderImage(coinImgSrc);
         element.tick(.3);
-        element.gravitate(counter);
-        let gt_rect = counter.getBoundingClientRect();
+        //element.gravitate(counter);
+        //let gt_rect = counter.getBoundingClientRect();
         if(element.collectedCoin === true){
             collectCoin(element);
         }
     }
 
-    ctx.clearRect(0, 0, sizeX, sizeY);
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     objects.forEach(drawOne);
     window.requestAnimationFrame(drawAll);
 }

@@ -27,20 +27,26 @@ export class CoinObj{
         }
         this.image = new Image();
         this.spriteImage = new SpriteImage(ctx, this.image, sprite);
+        
+        this.getAbsoluteGTPosition(go_to);
     }
 
-    tick(speed=10){
+    tick(speed=13){
         const min_dist = 11;
-        this.gravitate(this.go_to, min_dist);
+        this.gravitate();
         this.DetectGive(min_dist);
 
         this.x_pos += this.x_vel * speed;
         this.y_pos += this.y_vel * speed;
     }
 
-    gravitate(go_to, drag=2){
-        let defualt_slowdown = 1000; //the lower this is, the thicker the air feels
-        this.absolute_gt = domToCanvas(this.canvas, getAbsolutePosition(go_to)); //position
+    getAbsoluteGTPosition(go_to){
+        this.absolute_gt = domToCanvas(this.canvas, getAbsolutePosition(go_to));
+        console.log(this.absolute_gt);
+    }
+
+    gravitate(drag=1.7){
+        let defualt_slowdown = 1500; //the lower this is, the thicker the air feels
 
         let x_dist = this.absolute_gt.x - this.x_pos;
         let y_dist = this.absolute_gt.y - this.y_pos;
