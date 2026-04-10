@@ -1,25 +1,7 @@
 //for use in index.html
-//import { SignIn } from "./sign-in.js";
-//import { signInUp } from './firebase-backend/firebase.js';
 import { getCoin, changeNumber} from "./coin/coin.js";
-import { Toggle } from "./tools.js";
-//import { runUserCode } from "./pyrun.js";
-
-//let signInParent = document.getElementById("sign-in-holder");
-//let toggleSigninup = document.getElementById("toggle-signinup");
-//let signIn = new SignIn(signInParent);
-//let toggle = new Toggle(toggleSigninup, signInParent, "slow-hide", "sign-in");
-//toggle.addEvent(toggle.toggleEventFilled, signIn.exit);
 
 const PROJECT_PARENT = document.getElementById("project-parent");
-
-//signIn.toggleButton(toggleSigninup);
-/*signIn.submit.addEventListener("click", (e) => {
-    e.preventDefault();
-    if(signIn.password.value != null){
-        signInUp(signIn.user.value, signIn.password.value);
-    }
-});*/
 
 //let goto = document.getElementById("coin-go-here");
 const sidebarElement = document.querySelector("ttc-sidebar");
@@ -30,6 +12,7 @@ let indexGetCoin = (amm) => {
 
 let nice = () => {indexGetCoin(10);}
 
+let nextPartButton = document.querySelector("[data-js-tag='next-part-button']");
 let runCode = document.getElementById('welcome--demo--output-button');
 let outputBox = document.getElementById("welcome--demo--output--text")
 let codeContent = document.getElementById('code-content');
@@ -49,6 +32,19 @@ runCode.addEventListener("mouseup", async() => {
     //let output = await runUserCode(codeContent)
     let output = [true, "learn code"]
     outputBox.innerHTML = output[1];
+    nextPartButton.classList.remove("hide");
+    nextPartButton.classList.add("smooth-appear");
+});
+
+nextPartButton.addEventListener("click", () => {
+    console.log("move along");
+    //runCode.classList.add("hide");
+    let firstCodeExample = document.querySelector("[data-js-tag='first-code-example']");
+    let secondCodeExample = document.querySelector("[data-js-tag='second-example']");
+    firstCodeExample.classList.add("move-offscreen");
+    secondCodeExample.classList.add("move-onscreen");
+    secondCodeExample.classList.remove("hide");
+    nextPartButton.classList.add("move-offscreen");
 });
 
 /*window.addEventListener("user_set", async () => {

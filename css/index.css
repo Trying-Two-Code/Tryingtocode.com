@@ -43,6 +43,10 @@
 
 	--image-size-1: 15rem;
 	--image-size-2: 5rem;
+
+	--sidebar-active: 1px;
+
+	--line-width:100px;
 }
 
 body {
@@ -114,6 +118,15 @@ body {
 	image-rendering: pixelated;
 }
 
+.normal-img{
+	image-rendering: pixelated;
+	/*max-height: 10%;
+	max-width: 10%;*/
+
+	width: 320px;
+	height: 320px;
+}
+
 /*------------------------------------*\
     #WELCOME
 \*------------------------------------*/
@@ -158,15 +171,90 @@ body {
 
 .welcome--demo {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	justify-content: center;
+	align-self: center;
 	align-items: center;
 
 	box-sizing: border-box;
-	width: max(90%, 400px);
 	margin-inline: var(--space-1);
 
 	background-color: var(--inner-box-color);
+
+	border-color: #00000000;
+	border-width: 0px;
+	border-style: block;
+	margin-block: 10px;
+	outline: #000b solid 0px;
+	border-radius: 3px;
+}
+@media (orientation: landscape) {
+	.bevel-corners::before{
+		height: min(calc(38% * 1.8), calc(100vh - var(--block-inset) * 4));
+		width: max(calc(90% - var(--sidebar-active) * 100), calc(400px - var(--sidebar-active) * 50));
+		
+		margin-block: 60px;
+	}
+}
+@media (orientation: portrait) {
+	.bevel-corners::before{
+		height: min(38%, calc(100vh - var(--block-inset) * 6));
+		width: max(calc(85% - var(--sidebar-active) * 10), calc(400px - var(--sidebar-active) * 10));
+	}
+}
+.bevel-corners{
+	width: max(90%, 400px);
+	height: 70%;
+	/*--bevel-variable: 50px; 
+	--bevel-oposite: calc(100% - var(--bevel-variable));
+	clip-path: polygon(var(--bevel-variable) 0%, 
+	var(--bevel-oposite) 0%, 
+	100% var(--bevel-variable), 
+	100% var(--bevel-oposite), 
+	var(--bevel-oposite) 100%, 
+	var(--bevel-variable) 100%, 
+	0% var(--bevel-oposite), 
+	0% var(--bevel-variable));*/
+}
+
+.bevel-corners::before{
+	position: absolute;
+	content: "";
+	border: 3px #141414 solid;
+	/*width: max(80%, 400px);
+	height: 70%;*/
+	background-color: #141414;
+	z-index: -1;
+
+    --x-stretch-left-far: 30px;
+	--x-stretch-right-far: calc(100% - var(--x-stretch-left-far));
+    --x-stretch-left: 50px;
+    --x-stretch-right: calc(100% - var(--x-stretch-left));
+
+    --y-stretch-top-far: 30px;
+    --y-stretch-bottom-far: calc(100% - var(--y-stretch-top-far));
+    --y-stretch-top: 50px;
+    --y-stretch-bottom: calc(100% - var(--y-stretch-top));
+
+    clip-path: polygon(
+        var(--x-stretch-right-far) 100%, 
+        var(--x-stretch-left-far) 100%, 
+        0% var(--y-stretch-bottom-far), 
+        0% var(--y-stretch-top-far), 
+        var(--x-stretch-left-far) 0%, 
+        var(--x-stretch-right-far) 0%, 
+        100% var(--y-stretch-top-far), 
+        100% var(--y-stretch-bottom-far), /*this is the outside area*/
+        var(--x-stretch-right-far) 100%, 
+        var(--x-stretch-right-far) var(--y-stretch-bottom), 
+        var(--x-stretch-right-far) var(--y-stretch-top), 
+        var(--x-stretch-right) var(--y-stretch-top-far), 
+        var(--x-stretch-left) var(--y-stretch-top-far), 
+        var(--x-stretch-left-far) var(--y-stretch-top), 
+        var(--x-stretch-left-far) var(--y-stretch-bottom), 
+        var(--x-stretch-left) var(--y-stretch-bottom-far), 
+        var(--x-stretch-right) var(--y-stretch-bottom-far), 
+        var(--x-stretch-right-far) var(--y-stretch-bottom)); /*this is the inside masked out*/
 }
 
 @media (orientation: portrait) {
@@ -190,7 +278,7 @@ body {
 
 .welcome--demo--input--text {
 	display: flex;
-
+	text-align: center;
 	flex-direction: row;
 }
 
@@ -204,6 +292,7 @@ body {
 .welcome--demo--output, .welcome--demo--input {
 	display: flex;
 	align-items: center;
+	text-align: center;
 
 	height: var(--line-width);
 	--line-width:100px;
@@ -212,13 +301,29 @@ body {
 	padding-inline: 20px;
 }
 
-.welcome--demo--output-img {
+.welcome--demo--output-img, .welcome--demo--next-img {
+	image-rendering: pixelated;
 	padding-inline: 30px;
 	--scale: 3;
 
 	width: calc(var(--line-width) * var(--scale));
 	height: calc(var(--line-width) * var(--scale));
 }
+/*
+.smooth-appear{
+    box-sizing: border-box;
+    animation: 1s ease-in-out 0s 1 smooth-appear normal forwards;
+}
+
+@keyframes smooth-appear{
+    0%{
+        width: 0px;
+    }
+    100%{
+		--scale: 3;
+        width: calc(var(--line-width) * var(--scale));
+    }
+}*/
 
 .welcome--demo--learn {
 	box-sizing: border-box;
@@ -302,4 +407,64 @@ body {
 	margin: 0.5rem 0.5rem; /* uniform spacing */
 	font-size: 0.8em;
 	line-height: 0.9em;
+}
+
+
+
+/*------------------------------------*\
+    #PIXEL CARD
+\*------------------------------------*/
+@property --transition-speed {
+  syntax: "<time>";
+  inherits: true;
+  initial-value: 0.1s;
+}
+
+.pixel-card {
+  transition: transform var(--transition-speed, 0.5s);
+
+  --pixel-size: 100px;
+  /*keep width and height the same*/
+  --pixel-width: 10;
+  --pixel-height: 10;
+
+  width: calc(var(--pixel-size) * var(--pixel-width));
+  height: calc(var(--pixel-size) * var(--pixel-height));
+  background: rgb(213, 236, 228);
+
+  border: solid;
+  border-style: block;
+  border-color: black;
+  border-width: var(--pixel-size);
+
+  --clip-inset: 10%;
+
+  --inset-opposite: calc(100% - var(--clip-inset));
+  clip-path: polygon(
+    0% var(--clip-inset),
+    var(--clip-inset) var(--clip-inset),
+    var(--clip-inset) 0%,
+    var(--inset-opposite) 0%,
+    var(--inset-opposite) var(--clip-inset),
+    100% var(--clip-inset),
+    100% var(--inset-opposite),
+    var(--inset-opposite) var(--inset-opposite),
+    var(--inset-opposite) 100%,
+    var(--clip-inset) 100%,
+    var(--clip-inset) var(--inset-opposite),
+    0% var(--inset-opposite)
+  );
+
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.pixel-card:hover {
+  transform: rotate(10deg);
+}
+
+.pixel-card:active {
+  transform: scale(90%) rotate(10deg);
 }
