@@ -599,6 +599,24 @@ ttc-sidebar{
     }
 }
 
+.move-onscreen{
+    transition: transform 1s ease-in-out;
+
+    animation: 1s ease-in-out 0s 1 go-onscreen normal forwards;
+}
+
+@keyframes go-onscreen{
+    0%{
+        position: relative;
+        transform: translateX(100vw);
+        opacity: 0;
+    }
+    100%{
+        transform: translateX(0vw);
+        opacity: 1;
+    }
+}
+
 /*------------------------------------*\
     #DROPDOWN
 \*------------------------------------*/

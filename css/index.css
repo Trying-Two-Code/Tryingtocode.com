@@ -116,6 +116,15 @@ body {
 	image-rendering: pixelated;
 }
 
+.normal-img{
+	image-rendering: pixelated;
+	/*max-height: 10%;
+	max-width: 10%;*/
+
+	width: 320px;
+	height: 320px;
+}
+
 /*------------------------------------*\
     #WELCOME
 \*------------------------------------*/
