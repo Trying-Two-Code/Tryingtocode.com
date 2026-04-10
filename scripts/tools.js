@@ -242,5 +242,29 @@ export let timeSince = (eventName="something", valueWhenNeverDoneBefore=null) =>
         return valueWhenNeverDoneBefore;
     }
 }
-
+//
 export let print = (text) => {console.log(text);}
+
+export let randInt = (minInclusive, maxExlusive) => {
+    console.assert(maxExlusive > minInclusive);
+
+    const range = maxExlusive - minInclusive;
+    const randomRange = Math.floor( Math.random() * range );
+
+    return randomRange + minInclusive;
+}
+
+export let sampleArray = (array) => {
+    //this takes an array and spits a random element of the array
+    console.assert(typeof array === "object");
+
+    const arrayLength = array.length;
+    const choice = randInt(0, arrayLength);
+    /*
+    const startMath = Math.random();
+    
+    let choice = startMath * arrayLength;
+    choice = Math.floor(choice);
+    */
+    return array[choice];
+};

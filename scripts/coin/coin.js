@@ -50,6 +50,14 @@ let collectCoin = (coinElement, worth=1) => {
 }
 
 let drawAll = (sizeX=300, sizeY=300) => {
+    let leave = objects.length <= 0;
+    if(leave){
+        setTimeout(() => {
+            drawAll();
+        }, 100);
+        return;
+    }
+
     let widthSame = ctx.canvas.width === window.innerWidth;
     let heightSame = ctx.canvas.height === window.innerHeight;
     if(!widthSame || !heightSame){

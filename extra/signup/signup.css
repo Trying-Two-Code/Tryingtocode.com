@@ -12,7 +12,13 @@
     #settings
 /*------------------------------------*/
 :root{
-    
+    --anoying-px-amm-1: 200px;
+
+}
+
+img{
+    max-width: 100vw;
+    max-height: 100vh;
 }
 
 /*------------------------------------*\ 
@@ -43,11 +49,13 @@
 }
 
 .actual-factual-sign-in-box{
+    /*background-image: url("./image/jaclou-dl-eurasier-aloha-puppy-9442845 (1).webp");*/
     position: relative;
     display: flex;
     align-items: left;
     flex-direction: column;
-    background-color: #161616c2;
+    /*background-color: #161616c2;*/
+    background: radial-gradient(circle,rgba(22, 22, 22, 1) 0%, rgba(29, 29, 29, 0.92) 100%);
     
     padding: 5%;
     --corner-offset: 50px;
@@ -59,6 +67,9 @@
         0% var(--opposite-corner), 0% var(--corner-offset)
     );
     z-index: 1;
+
+    -webkit-box-shadow: 13px 21px 49px -3px #534040; 
+    box-shadow: 13px 21px 49px -3px #502727;
 }
 
 .actual-factual-sign-in-box::before {
@@ -105,6 +116,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+    vertical-align: middle;
 
     --padding-and-border: 2px;
     padding: var(--padding-and-border);
@@ -135,6 +147,72 @@
     border: 2px dashed rgb(0, 255, 64);
 }
 
+.si-input-bad:placeholder-shown{
+    color: rgb(0, 255, 42) !important;
+    border: 2px dashed rgb(0, 255, 64) !important;
+}
+
+.si-input-bad:invalid:not(:placeholder-shown){
+    color: transparent !important;
+    border: .5px dashed red !important;
+}
+
+.si-input-bad:valid{
+    color: transparent !important;
+    border: 2px dashed rgb(212, 34, 34) !important;
+}
+
 /*success*/
 
 /*failure*/
+
+
+/*------------------------------------*\ 
+    #ANNOYING
+/*------------------------------------*/ 
+@media (orientation: landscape) {
+    .log-me-in:hover{
+        transform: translateX(var(--anoying-px-amm-1));
+    }
+}
+
+@media (orientation: portrait) {
+    .log-me-in:hover{
+        transform: translateY(calc(-1 * var(--anoying-px-amm-1)));
+        z-index: 100;
+    }
+}
+
+.horrible-input{
+    padding: -5px;
+    zoom: 1;
+    border-style: none;
+    background-color: #3b3b3b;
+    outline: 13px solid #3b3b3b;
+    box-shadow: none;
+    border-color: #3b3b3b;
+    border: 1px solid #3b3b3b;
+    appearance: none;
+}
+
+.horrible-input:checked{
+    background-color: #ff0000;
+    border-color: #ff0000;
+    outline-color: #ff0000;
+}
+
+.horrible-input:hover{
+    opacity: 0.01;
+}
+
+.horrible-label:hover, .horrible-label:active{
+    display: none;
+}
+
+.fps{
+    width: 200px;
+    text-align: center;
+    color: #77dd77;
+    border-style: dashed;
+    border-color: #3b3b3b;
+}
