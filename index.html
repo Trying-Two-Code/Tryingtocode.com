@@ -70,30 +70,34 @@
         <div class="main-content main-font nes-container is-dark with-title">
             <div id="welcome" class="welcome">
                 <div class="welcome--demo bevel-corners" >
-                    <div class="code-lines welcome--demo--input nes-textarea" id="welcome--demo--input">
-                        <pre class="code-highlight" name="pretty-pre"><code class="main-font language-python welcome--demo--input--text" name="pretty-code" id="code-content">print('learn code')</code></pre>
+                    <div class="column-container">
+                        <div class="code-lines welcome--demo--input nes-textarea" id="welcome--demo--input">
+                            <pre class="code-highlight" name="pretty-pre"><code class="main-font language-python welcome--demo--input--text" name="pretty-code" id="code-content">print('learn code')</code></pre>
+                        </div>
+
+                        <style>.row-container{display: flex; flex-direction: row; justify-content: center;}</style>
+
+                        <button class="run-code welcome--demo--output-button nice-button" id="welcome--demo--output-button">
+                            <img class="welcome--demo--output-img" src="./components/visuals/icons/project/run-code/pixel-1.png" alt="run code" draggable="false">
+                        </button>
+                        <script>let runCodeEl = document.querySelector(".welcome--demo--output-img"); runCodeEl.src = `./components/visuals/icons/project/run-code/${window.TTC.theme}${window.TTC.imageExtension}`;</script>
+                        <div class="code-lines welcome--demo--output">
+                            <p class="welcome--demo--output--text" id="welcome--demo--output--text"></p>
+                        </div>
+
+                        <!--div class="row-container">
+                            <img class="welcome--demo--arrow welcome-img" src="./components/visuals/icons/arrow/pixel-1.png" alt="->" draggable="false">
+                            <script>let arrowEl = document.querySelector(".welcome--demo--arrow"); arrowEl.src = `./components/visuals/icons/arrow/${window.TTC.theme}${window.TTC.imageExtension}`;</script>
+                            <a href="learn" title="Learn" class="welcome--demo--learn">
+                                <style>.pad-top-30{padding-top: 30px;}</style>
+                                <button class="welcome--demo--learn-button pad-top-30" draggable="false"><img class="nice-button welcome-img welcome--demo--learn-button-img" src="./components/visuals/icons/sidebar/learn/pixel-1.png" alt="learn" draggable="false"></button>
+                                <script>let learnCodeEl = document.querySelector(".welcome--demo--learn-button-img"); learnCodeEl.src = `./components/visuals/icons/sidebar/learn/${window.TTC.theme}${window.TTC.imageExtension}`;</script>
+                            </a>
+                        </div-->
                     </div>
-
-                    <style>.row-container{display: flex; flex-direction: row; justify-content: center;}</style>
-
-                    <button class="run-code welcome--demo--output-button nice-button" id="welcome--demo--output-button">
-                        <img class="welcome--demo--output-img" src="./components/visuals/icons/project/run-code/pixel-1.png" alt="run code" draggable="false">
+                    <button data-js-tag='next-part-button' class="hide nice-button no-bg-button">
+                        <img src="./components/visuals/icons/arrow/pixel-1.png" alt="next" class="welcome--demo--next-img">
                     </button>
-                    <script>let runCodeEl = document.querySelector(".welcome--demo--output-img"); runCodeEl.src = `./components/visuals/icons/project/run-code/${window.TTC.theme}${window.TTC.imageExtension}`;</script>
-                    <div class="code-lines welcome--demo--output">
-                        <div class="welcome--demo--output--text" id="welcome--demo--output--text"></div>
-                    </div>
-
-                    <!--div class="row-container">
-                        <img class="welcome--demo--arrow welcome-img" src="./components/visuals/icons/arrow/pixel-1.png" alt="->" draggable="false">
-                        <script>let arrowEl = document.querySelector(".welcome--demo--arrow"); arrowEl.src = `./components/visuals/icons/arrow/${window.TTC.theme}${window.TTC.imageExtension}`;</script>
-                        <a href="learn" title="Learn" class="welcome--demo--learn">
-                            <style>.pad-top-30{padding-top: 30px;}</style>
-                            <button class="welcome--demo--learn-button pad-top-30" draggable="false"><img class="nice-button welcome-img welcome--demo--learn-button-img" src="./components/visuals/icons/sidebar/learn/pixel-1.png" alt="learn" draggable="false"></button>
-                            <script>let learnCodeEl = document.querySelector(".welcome--demo--learn-button-img"); learnCodeEl.src = `./components/visuals/icons/sidebar/learn/${window.TTC.theme}${window.TTC.imageExtension}`;</script>
-                        </a>
-                    </div-->
-                    
                 </div>
 
             </div>
