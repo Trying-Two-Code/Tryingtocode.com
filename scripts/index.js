@@ -37,6 +37,9 @@ runCode.addEventListener("mouseup", async() => {
 
 nextPartButton.addEventListener("click", () => {
     console.log("move along");
+    runCode.classList.add("hide");
+    let firstCodeExample = document.querySelector("[data-js-tag='first-code-example']");
+    firstCodeExample.classList.add("move-offscreen");
 });
 
 /*window.addEventListener("user_set", async () => {
