@@ -105,6 +105,7 @@ class TTCSidebar extends HTMLElement {
         console.log("lookie here ", getSetting("sidebar-hidden"), this.startClosed);
         console.log("detecting...", startClosed);
         let hideSidebar = () => {
+            document.documentElement.style.setProperty('--sidebar-active', '0px');
             this.initHiddenSidebar();
         }
         return startClosed ? hideSidebar() : false;
@@ -131,6 +132,7 @@ class TTCSidebar extends HTMLElement {
     toggleSidebarEvent(){
         console.log(`hidden sidebar is toggled? ${this.toggleSidebar.toggled}`);
         this.initHiddenSidebar();
+        document.documentElement.style.setProperty('--sidebar-active', '0px');
     }
 
     initHiddenSidebar(){
@@ -150,7 +152,6 @@ class TTCSidebar extends HTMLElement {
 
         console.log("hidddddd noten", this.hiddenSidebar.hidden);
         this.hiddenSidebar.shown();
-        
 
         //this.hiddenSidebar.
         //this.toggleSidebarImageButton.changeOnClick(this.hiddenSidebar.showSidebarButton);
@@ -160,6 +161,8 @@ class TTCSidebar extends HTMLElement {
 
     showSidebar(){ //called by hidden sidebar when it is showing up again
         this.toggleSidebar.toggleEvent();
+        document.documentElement.style.setProperty('--sidebar-active', '1px');
+        editSetting({"sidebar-hidden": false});
     }
 
     updateDisplayNumber(updatedNumber, startString) {
@@ -248,7 +251,6 @@ class TTCHiddenSidebar extends HTMLElement {
 
     totallyGone(){ //can't be shown
         this.isTotallyGone = true;
-        editSetting({"sidebar-hidden": false});
         this.showButtonDiv.classList.add("hide");
     }
 
@@ -261,6 +263,7 @@ class TTCHiddenSidebar extends HTMLElement {
         this.isTotallyGone = false;
         this.showButtonDiv.classList.remove("hide");
         this.classList.remove("hide");
+        editSetting({"sidebar-hidden": true});
     }
 
     moveShownButton(mousePosition={x: 0, y: 0}){
