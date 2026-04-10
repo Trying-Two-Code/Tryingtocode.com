@@ -45,6 +45,8 @@
 	--image-size-2: 5rem;
 
 	--sidebar-active: 1px;
+
+	--line-width:100px;
 }
 
 body {
@@ -307,6 +309,21 @@ body {
 	width: calc(var(--line-width) * var(--scale));
 	height: calc(var(--line-width) * var(--scale));
 }
+/*
+.smooth-appear{
+    box-sizing: border-box;
+    animation: 1s ease-in-out 0s 1 smooth-appear normal forwards;
+}
+
+@keyframes smooth-appear{
+    0%{
+        width: 0px;
+    }
+    100%{
+		--scale: 3;
+        width: calc(var(--line-width) * var(--scale));
+    }
+}*/
 
 .welcome--demo--learn {
 	box-sizing: border-box;

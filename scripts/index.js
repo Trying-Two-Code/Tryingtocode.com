@@ -33,6 +33,7 @@ runCode.addEventListener("mouseup", async() => {
     let output = [true, "learn code"]
     outputBox.innerHTML = output[1];
     nextPartButton.classList.remove("hide");
+    nextPartButton.classList.add("smooth-appear");
 });
 
 nextPartButton.addEventListener("click", () => {
