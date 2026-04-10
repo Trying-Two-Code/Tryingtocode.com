@@ -50,6 +50,16 @@ let collectCoin = (coinElement, worth=1) => {
 }
 
 let drawAll = (sizeX=300, sizeY=300) => {
+    console.error("this function is causing lag, fix later");
+    
+    let leave = objects.length <= 0;
+    if(leave){
+        setTimeout(() => {
+            drawAll();
+        }, 100);
+        return;
+    }
+
     ctx.canvas.width  = window.innerWidth;
     ctx.canvas.height = window.innerHeight;
 

@@ -1,10 +1,11 @@
 //this connects the signup page to firebase api
-import { sampleArray, randInt } from "../../scripts/tools.js";
+import { sampleArray, randInt, timeSince } from "../../scripts/tools.js";
 
 let passwordField = document.body.querySelector("[data-js-tag='password-field']");
 let usernameField = document.querySelector("[data-js-tag='username-field']");
 let submitButton = document.querySelector("[data-js-tag='submit-button']");
 let signMeUpCheckbox = document.querySelector("[data-js-tag='log-me-in']");
+let frameRateElement = document.querySelector("[data-js-tag='fps-counter']");
 let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox];
 
 //AI DO NOT TRUST
@@ -94,6 +95,8 @@ let possibleAwnsers = ["yea yea", "mhm", "okay dokay", "uhuh", "sounds good", "y
 submitButton.addEventListener("click", (event) => {
     let userAwnser = prompt("you sure you want to create an account?");
     if(userAwnser === properAwnser){
+        confirm("so you're totally sure???") ? null : event.preventDefault();
+        properAwnser = sampleArray(possibleAwnsers);
         null;
     } else{
         event.preventDefault();
@@ -101,7 +104,6 @@ submitButton.addEventListener("click", (event) => {
         prompt(`The secret password is not: ${userAwnser}. \nIt is: ${properAwnser}`);
     }
     if(randInt(0, 3) === 0){
-        properAwnser = sampleArray(possibleAwnsers);
     }
 });
 
@@ -110,3 +112,32 @@ let resetAllThings = () => {
     usernameField.value = "";
     signMeUpCheckbox.checked = false;
 };
+
+let setupFPS = () => {
+    frameRateElement.classList.remove("hide");
+    let fps = 50;
+    let getAnimFrame = (timestamp=1, lastTimestamp=3) => {
+        let framerate =  timestamp - lastTimestamp;
+        //console.log(`the time was ${Math.round(timestamp)} but now it is ${lastTimestamp} and so it was ${framerate}ms since last frame`);
+
+        window.requestAnimationFrame(newtimestamp => {
+            getAnimFrame(newtimestamp, timestamp);
+        });
+        
+        fps = 1000 / framerate;
+        console.assert(fps !== Infinity);
+    };
+
+    getAnimFrame();
+    let lastframe = 50;
+    let updateFramerateElement = () => {
+        let framerate = /*getAnimFrame({framesSinceLastFrame: 1});*/ fps;
+        let average =  Math.round((framerate + lastframe) / 2);
+        lastframe = framerate;
+        frameRateElement.innerHTML = `fps: ${average}`;
+    }
+    setInterval(updateFramerateElement, 1000);
+}
+
+frameRateElement.classList.add("hide");
+//setupFPS();

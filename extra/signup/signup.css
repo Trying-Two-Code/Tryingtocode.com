@@ -208,3 +208,11 @@ img{
 .horrible-label:hover, .horrible-label:active{
     display: none;
 }
+
+.fps{
+    width: 200px;
+    text-align: center;
+    color: #77dd77;
+    border-style: dashed;
+    border-color: #3b3b3b;
+}
