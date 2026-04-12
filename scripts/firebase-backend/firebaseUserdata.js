@@ -75,6 +75,8 @@ let startEvent = async () => {
     newUserData = await testUserData();
     newUserData.prioritizePayload = true;
     let result = await setUserDatapointWithObject(newUserData);
+
+    localStorage.setItem("coin", String(newUserData.coins));
     
     newUserData = await getUserData(window.user);
 }
