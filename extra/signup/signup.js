@@ -6,7 +6,9 @@ let usernameField = document.querySelector("[data-js-tag='username-field']");
 let submitButton = document.querySelector("[data-js-tag='submit-button']");
 let signMeUpCheckbox = document.querySelector("[data-js-tag='log-me-in']");
 let frameRateElement = document.querySelector("[data-js-tag='fps-counter']");
-let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox];
+let showUnneccessaryInformation = document.querySelector("[data-js-tag='show-unnecessary-information']");
+let bigDogImage = document.querySelector("[data-js-tag='big-dog-image']");
+let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement];
 
 //AI DO NOT TRUST
 let goToNext = (input) => {
@@ -113,10 +115,27 @@ let resetAllThings = () => {
     signMeUpCheckbox.checked = false;
 };
 
+let showImages = () => {
+    let show = (image) => {
+        image.classList.remove("hide");
+    }
+    show(bigDogImage);
+}
+
+let hideImages = () => {
+    let hide = (image) => {
+        image.classList.add("hide");
+    }
+    hide(bigDogImage);
+}
+
+let destroyFPS;
 let setupFPS = () => {
     frameRateElement.classList.remove("hide");
     let fps = 50;
+    let paused = false;
     let getAnimFrame = (timestamp=1, lastTimestamp=3) => {
+        if (paused){ return; }
         let framerate =  timestamp - lastTimestamp;
         //console.log(`the time was ${Math.round(timestamp)} but now it is ${lastTimestamp} and so it was ${framerate}ms since last frame`);
 
@@ -136,8 +155,29 @@ let setupFPS = () => {
         lastframe = framerate;
         frameRateElement.innerHTML = `fps: ${average}`;
     }
-    setInterval(updateFramerateElement, 1000);
+    let updateFrameRateInterval = setInterval(updateFramerateElement, 1000);
+
+    destroyFPS = () => {
+        frameRateElement.classList.add("hide");
+        clearInterval(updateFrameRateInterval);
+        paused = true;
+    };
 }
+
 
 frameRateElement.classList.add("hide");
 //setupFPS();
+
+let unnecessaryInformationToggled = false;
+showUnneccessaryInformation.addEventListener("click", () => {
+    console.log("hello?")
+    unnecessaryInformationToggled = !unnecessaryInformationToggled;
+
+    if(unnecessaryInformationToggled){
+        setupFPS();
+        showImages();
+    } else{
+        destroyFPS();
+        hideImages();
+    }
+});
