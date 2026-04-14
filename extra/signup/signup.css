@@ -221,3 +221,9 @@ img{
     border-style: dashed;
     border-color: #3b3b3b;
 }
+
+.petme:hover, .petme:active{
+    cursor: pointer !important;
+    user-drag: none; 
+    -webkit-user-drag: none;
+}

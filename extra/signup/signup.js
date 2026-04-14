@@ -94,7 +94,20 @@ let swapRandomElements = (elementList) => {
 let properAwnser = "sure";
 let possibleAwnsers = ["yea yea", "mhm", "okay dokay", "uhuh", "sounds good", "yeppp"];
 
+let checkSubmit = event => {
+    if(!isDoggyGood){
+        return false;
+    }
+
+    return true
+}
+
 submitButton.addEventListener("click", (event) => {
+    if (!checkSubmit(event)){
+        event.preventDefault();
+        return;
+    } 
+
     let userAwnser = prompt("you sure you want to create an account?");
     if(userAwnser === properAwnser){
         confirm("so you're totally sure???") ? null : event.preventDefault();
@@ -181,3 +194,28 @@ showUnneccessaryInformation.addEventListener("click", () => {
         hideImages();
     }
 });
+
+let isDoggyGood = false;
+let doggyDragGood = () => {
+    isDoggyGood = true;
+}
+
+let doggyDragStart = () => {
+    timeSince("mouseDownOnDoggy", 0);
+}
+
+let doggyDragEnd = () => {
+    const mustBeMinimum = 300; //ms
+    let timeSinceDoggyPet = timeSince("mouseDownOnDoggy");
+    console.log("up", timeSinceDoggyPet);
+    if(timeSinceDoggyPet > mustBeMinimum){
+        doggyDragGood();
+    }
+}
+
+/*bigDogImage.addEventListener("mousedown", doggyDragStart);
+bigDogImage.addEventListener("mouseup", doggyDragEnd);
+bigDogImage.addEventListener("touchstart", doggyDragStart);
+bigDogImage.addEventListener("touchend", doggyDragStart);*/
+bigDogImage.addEventListener("pointerdown", doggyDragStart);
+bigDogImage.addEventListener("pointerup", doggyDragEnd);
