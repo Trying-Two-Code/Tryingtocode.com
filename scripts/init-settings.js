@@ -12,7 +12,8 @@ let initSettingsObject = () => {
         theme: "pixel-1", 
         xp: 0,
         language: "english",
-        codeLanguage: "python"
+        codeLanguage: "python",
+        learnSection: null
     };
     let startSettings = JSON.stringify(startObject);
     localStorage.setItem("user_settings", startSettings);
@@ -74,7 +75,9 @@ let updateXPFromLocal = () => {
 
 updateXPFromLocal();
 
-let updateVariableFromLocal = ({variableName = "", defualtValue = null, shouldTypesBeSame = true, canBeNullish = false, setLocalStorage = false} = {}) => {
+let updateVariableFromLocal = ({variableName = "", defualtValue = null, 
+    shouldTypesBeSame = true, canBeNullish = false, setLocalStorage = false} = {}) => {
+    
     let variableValue = getLocalSetting(variableName);
     console.log(`setting ${variableName} to ${defualtValue} or ${variableValue}`);
 
@@ -94,7 +97,7 @@ let updateVariableFromLocal = ({variableName = "", defualtValue = null, shouldTy
 
     window.TTC[variableName] = variableValue;
 
-
+    console.log(`window.ttc[${variableName}] = ${variableValue}`);
     return variableName;
 }
 
@@ -111,5 +114,13 @@ updateVariableFromLocal({
     defualtValue: "python",
     shouldTypesBeSame: true,
     canBeNullish: false,
+    setLocalStorage: true
+});
+
+updateVariableFromLocal({
+    variableName: "learnSection",
+    defualtValue: null,
+    shouldTypesBeSame: true,
+    canBeNullish: true,
     setLocalStorage: true
 });

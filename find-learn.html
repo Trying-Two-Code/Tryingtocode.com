@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../components/art/ttc coin icon.png">
+    <title>Trying to Learn</title>
+
+    <link rel="stylesheet" href="./css/learn.css">   <!--LEARN,   FOR THIS PAGE-->
+    <link rel="stylesheet" href="./css/general.css"> <!--GENERAL, FOR ALL PAGES-->
+    <link rel="stylesheet" href="./css/prism.css">
+    <link rel="stylesheet" href="./css/custom-elements.css">
+
+    <script src="./scripts/youtube.js"></script>
+    <script src="./scripts/init-settings.js"></script>
+    <script src="./scripts/learn.js" type="module" defer></script>
+    <script src="./scripts/general.js" type="module" defer></script>
+    <script>window.Prism = { manual: true };</script>
+    <script src="./scripts/firebase-backend/firebase.js" type="module" defer></script>
+    <script src="./scripts/prism.js" defer></script>
+    <script src="./scripts/web-elements/footer.js"></script>
+    <script src="./scripts/web-elements/help-beginner.js"></script>
+    <script src="./scripts/web-elements/sidebar.js" type="module"></script>
+    <script src="./scripts/web-elements/typeable-code.js" type="module"></script>
+    <script src="./scripts/settings-functions.js" type="module" defer></script>
+    
+    <link as="font" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!--Font import-->
+</head>
+<body>
+    <div id="youtube-player" data-js-tag="youtube-player" class="nice-video"></div>
+    <!--         users should be here for 40 seconds before completing a project             -->
+    <ttc-help-beginner-popup showup-time="40" max-xp="50" tutorial-name="project-tutorial-0" video-id="scc4bHEHtZY"></ttc-help-beginner-popup>
+    <div class="row-container">
+        <ttc-sidebar></ttc-sidebar>
+        <div class="main-content main-font" id="main-content">
+
+            <!--button id="main--back-to-top-button" class="sticky nice-button main-font back-to-top-button">top</button-->
+            
+            <!--button class="main-font" id="change-setting">change setting</button-->
+            <header>
+                <h1 class="main-title main-font" id="main-title">Project Based Learning</h1>
+                <p class="main-font">For total beginners.</p>
+            </header>
+            <canvas class="js-screen" id="learn-screen">
+                <!--shows coins-->
+            </canvas>
+            <div id="project-parent" autocapitalize="off">
+                <!-- projects insert here -->
+            </div>
+            <button class="nice-button no-bg-button arial-1" id="hate-pixel-art-button">I hate pixel art</button>
+            <button class="nice-button no-bg-button hide pixel-1" id="like-pixel-art-button">I like pixel art</button>
+            <div class="footer-parent">
+                <ttc-footer copywrite="tryingtocode" mail-to="contact@tryingtocode.com" legal-src="./legal.html" privacy-src="/privacy-policy.html"></ttc-footer>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

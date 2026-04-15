@@ -44,7 +44,7 @@ export let setProject = async ({ owner = window.user,
 
 
 export let findProjects = async ({ section = "default", owner = window.user.uid } = {}) => {
-    console.log("finding projects");
+    console.log("finding projects: ", section, owner);
     let projectLimit = 100;
 
     let projects = [];

@@ -41,7 +41,7 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-function setStat(name, priorityValue, otherValue, defaultValue=""){
+let setStat = (name, priorityValue, otherValue, defaultValue="") => {
     let decidePriority = (priority, other) => {
         if(!isBlank(priority, defaultValue)){ return priority; }
         if(!isBlank(other, defaultValue))   { return other; }
@@ -53,7 +53,7 @@ function setStat(name, priorityValue, otherValue, defaultValue=""){
 
     localStorage.setItem(name, priority); //THIS IS THE FINAL DECISION
 }
-
+/*
 const doSomethingWithProject = (projects) => {
     console.log("here it is");
 
@@ -62,7 +62,7 @@ const doSomethingWithProject = (projects) => {
     }) ;
 
     console.log("projects = ", projects);
-}
+}*/
 
 window.addEventListener("user_set", async () => {
     const user = window.user;
@@ -180,17 +180,23 @@ let loadProjectsFunction = async (projectsList, section="projects") => {
 
 let projectDisplays;
 const loaderElement = document.getElementById("loader");
-loadProjectsFunction(LOAD_INDICES).then(projectsList => {
-    projectDisplays = projectsList;
 
+let stopLoading = () => {
     if (loaderElement != null){
         console.log(loaderElement);
         loaderElement.classList.add("loader-fade");
         loaderElement.classList.remove("loader");
     }
+};
 
-    Prism.highlightAll();
-    applySettings();
+window.TTC.events.addEventListener("learnProjectsNoWorky", (detail) => {
+    loadProjectsFunction(LOAD_INDICES).then(projectsList => {
+        setTimeout(stopLoading, 100);
+        projectDisplays = projectsList;
+
+        Prism.highlightAll();
+        applySettings();
+    });
 });
 
 window.TTC.events.addEventListener("createLearnProject", (details) => {
@@ -206,9 +212,11 @@ window.TTC.events.addEventListener("createLearnProject", (details) => {
         index, 
         projectData
     );
+    setTimeout(stopLoading, 100);
 
     console.log(newProject);
 })
+
 
 
 console.error("for all yall devs out there looking through the log and thinking to yourself: what is this? why is this? this hurts my head! why do you have so many logs in production?");
