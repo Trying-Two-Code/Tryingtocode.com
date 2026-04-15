@@ -22,6 +22,7 @@
     <script src="./scripts/web-elements/help-beginner.js"></script>
     <script src="./scripts/web-elements/sidebar.js" type="module"></script>
     <script src="./scripts/web-elements/typeable-code.js" type="module"></script>
+    <script src="./scripts/web-elements/select-section.js"></script>
     <script src="./scripts/settings-functions.js" type="module" defer></script>
     
     <link as="font" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!--Font import-->
@@ -32,7 +33,7 @@
     <ttc-help-beginner-popup showup-time="40" max-xp="50" tutorial-name="project-tutorial-0" video-id="scc4bHEHtZY"></ttc-help-beginner-popup>
     <div class="row-container">
         <ttc-sidebar></ttc-sidebar>
-        <div class="main-content main-font" id="main-content">
+        <div class="main-content main-font" id="main-content" data-js-tag="main-content">
             <div style="position: relative;">
                 <div id="loader" class="loader">
                     <div class="spinner"></div>

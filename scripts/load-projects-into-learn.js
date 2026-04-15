@@ -111,7 +111,8 @@ let findSection = () => {
         if(proj0Key1 == null){return null;}
         projectList = proj0Key1[0];
         if(projectList){
-            console.log('%c It would be best to store numbers, but this does work technically ', 'background: #ff000056; color: #ffa167', proj0Key1[1], projectList);
+            console.log('%c It would be best to store numbers, but this does work technically ', 
+                'background: #ff000056; color: #ffa167', proj0Key1[1], projectList);
             userDecidedSection = proj0Key1[1];
             return true;
         } else{
@@ -126,7 +127,7 @@ let sendSection = (owner, section) => {
     window.TTC.loadProjectsFromDatabase({ section: section, owner: owner });
 };
 
-let sendAppropriateInformationForSectionAndOwner = () => {
+export let sendAppropriateInformationForSectionAndOwner = () => {
     let timeSinceLastCalled = timeSince("sendAppropriateInformationForSectionAndOwner", 10000);
     if(timeSinceLastCalled < 10000) {return;}
     const owner = "OFFICIAL";
@@ -135,8 +136,8 @@ let sendAppropriateInformationForSectionAndOwner = () => {
         const section = userDecidedSection;
         sendSection(owner, section);
     } else{
-        console.log("show user a section", window.TTC.events);
-        window.TTC.events
+        let showSectionSelectionEvent = new CustomEvent("showSectionSelection", {detail: {language: language, sections: onlineSections[language]}});
+        window.TTC.events.dispatchEvent(showSectionSelectionEvent);
     }
 };
 

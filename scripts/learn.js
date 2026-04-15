@@ -215,7 +215,37 @@ window.TTC.events.addEventListener("createLearnProject", (details) => {
     setTimeout(stopLoading, 100);
 
     console.log(newProject);
-})
+});
+
+let createSectionButton = (name, owner="OFFICIAL") => {
+    let sectionElement = document.createElement("ttc-section-button");
+    let mainContentContainer = document.querySelector("[data-js-tag='main-content']")
+    sectionElement.innerHTML = name;
+    mainContentContainer.insertBefore(sectionElement, mainContentContainer.firstChild);
+    console.log(sectionElement);
+}
+
+let showSectionSelections = async (language, sections) => {
+    const biggestLength = 50;
+    console.log("showing sectioons", sections);
+    if(sections.length > biggestLength){
+        console.error("ain't no way! More than ", biggestLength, " is not allowed!");
+        return null;
+    }
+
+    let sectionKeys = Object.keys(sections);
+
+    sectionKeys.forEach((key) => {
+        let section = sections[key];
+        createSectionButton(section.section, section.owner);
+    });
+
+    stopLoading();
+}
+
+window.TTC.events.addEventListener("showSectionSelection", (detail) => {
+    showSectionSelections(detail.detail.language, detail.detail.sections);
+});
 
 
 
