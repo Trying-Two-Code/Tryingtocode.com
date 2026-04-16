@@ -217,10 +217,15 @@ window.TTC.events.addEventListener("createLearnProject", (details) => {
     console.log(newProject);
 });
 
-let createSectionButton = (name, owner="OFFICIAL") => {
+let createSectionButton = (name, language="python", owner="OFFICIAL") => {
     let sectionElement = document.createElement("ttc-section-button");
     let mainContentContainer = document.querySelector("[data-js-tag='main-content']")
     sectionElement.innerHTML = name;
+
+    sectionElement.sectionOwner = owner;
+    sectionElement.sectionName = name;
+    sectionElement.sectionLanguage = language
+
     mainContentContainer.insertBefore(sectionElement, mainContentContainer.firstChild);
     console.log(sectionElement);
 }
@@ -237,7 +242,7 @@ let showSectionSelections = async (language, sections) => {
 
     sectionKeys.forEach((key) => {
         let section = sections[key];
-        createSectionButton(section.section, section.owner);
+        createSectionButton(section.section, language, section.owner);
     });
 
     stopLoading();
