@@ -105,6 +105,8 @@ export let setDefault = (key) => {
     //editSetting( { [key]: DEFAULT_SETTINGS[key] } );
 }
 
+const fontElements = document.getElementsByClassName("main-font");
+
 export let applySettings = () => {
     let settingsObject = getSettingsObject();
     let fontOptions = {
@@ -116,10 +118,9 @@ export let applySettings = () => {
     }
 
     let applyFont = () => {
-        let fontElements = document.getElementsByClassName("main-font");
-        fontElements = Array.from(fontElements);
+        let fontElementsArray = Array.from(fontElements);
         //document.querySelectorAll('*').forEach(element => {
-        fontElements.forEach(element => {
+        fontElementsArray.forEach(element => {
             if(!element.classList.contains("main-font")){ return; }
 
             let oneFontSelected = false;

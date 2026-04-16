@@ -1,6 +1,7 @@
 import { SimpleToggle, Toggle } from '../tools.js';
 import { fontChange } from '../settings-functions.js';
 import { makeFocusKey } from '../productivity/focus.js';
+import { applySettings } from '../settings-functions.js';
 
 class TTCSettings extends HTMLElement {
     constructor(){
@@ -93,7 +94,7 @@ class TTCSettings extends HTMLElement {
 
         this.setupFontSetting();
 
-
+        applySettings();
     }
 
     setupFocusButton(){
