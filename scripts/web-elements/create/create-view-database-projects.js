@@ -91,6 +91,7 @@ class TTCViewDataProjects extends HTMLElement {
             return null;
         }
 
+        console.log("this section is: _", this.section ,"_")
         this.projects = await findProjects({ owner: this.owner, section: this.section });
         this.projects = this.orderOptionsFromPriority(this.projects);
         this.timeSinceLastDone = 0;

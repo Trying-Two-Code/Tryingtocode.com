@@ -219,7 +219,8 @@ window.TTC.events.addEventListener("createLearnProject", (details) => {
 
 let createSectionButton = (name, language="python", owner="OFFICIAL", sibling = null) => {
     let sectionElement = document.createElement("ttc-section-button");
-    let parent = document.querySelector("[data-js-tag='main-content']");
+    let parent = document.querySelector("[data-js-tag='section-selection-container']");
+    console.log(parent);
     sibling = sibling ?? parent.firstElementChild;
     sectionElement.innerHTML = name;
 

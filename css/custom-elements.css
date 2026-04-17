@@ -32,6 +32,7 @@
     --palette-serika-5: #282828;
 
     --z-base: 0;
+    --z-element: 3;
     --z-sidebar: 5;
     --z-dropdown: 10;
     --z-overlay: 20;
@@ -157,6 +158,8 @@
     #SECTION-SELECTION
 /*------------------------------------*/ 
 .section-button{
+    position: relative;
+
     margin: 10px;
     height: 10%;
     width: 10%;
@@ -164,8 +167,22 @@
     border-style: none;
 
     background-color: #141414;
+
+    z-index: var(--z-element);
 }
 
 .section-button .glow{
     
+}
+
+.section-button.left{
+    left: 10px;
+    align-self: left;
+    margin-right: 80% !important;
+}
+
+.section-button.right{
+    right: 10px;
+    align-self: right;
+    margin-left: 80% !important;
 }

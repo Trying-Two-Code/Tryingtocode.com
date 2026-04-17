@@ -18,8 +18,10 @@ class TTCSectionButton extends HTMLElement{
     makeElement(){
         let name = this.innerHTML;
         console.log(name, " is name");
+        this.classOrientation = Math.random() < 0.5;
+        this.classOrientation = this.classOrientation ? "left" : "right";
         this.innerHTML = `
-        <button data-js-tag="section-button" class="main-font section-button">
+        <button data-js-tag="section-button" class="main-font section-button nice-button ${this.classOrientation}">
             ${name}
             <img
             src="./components/visuals/icons/create/language/${this.sectionLanguage}/${window.TTC.theme}${window.TTC.imageExtension}"
