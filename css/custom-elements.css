@@ -16,6 +16,9 @@
 *VIDEO
 **nice-video . . . . shows youtube videos on the top right
 
+*SECTION-SELECTION
+**section-button . . if user presses this, it shows that section
+
 **/
 
 /*------------------------------------*\
@@ -148,4 +151,21 @@
     border-color: transparent;
     left: 0px;
     z-index: var(--z-overlay);
+}
+
+/*------------------------------------*\ 
+    #SECTION-SELECTION
+/*------------------------------------*/ 
+.section-button{
+    margin: 10px;
+    height: 10%;
+    width: 10%;
+    border-radius: 0;
+    border-style: none;
+
+    background-color: #141414;
+}
+
+.section-button .glow{
+    
 }

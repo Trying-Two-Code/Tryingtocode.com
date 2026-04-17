@@ -1,3 +1,5 @@
+import { applySettings } from "../settings-functions.js";
+
 class TTCSectionButton extends HTMLElement{
     static selectionInstances = new Set();
 
@@ -19,8 +21,12 @@ class TTCSectionButton extends HTMLElement{
         this.innerHTML = `
         <button data-js-tag="section-button" class="main-font section-button">
             ${name}
+            <img
+            src="./components/visuals/icons/create/language/${this.sectionLanguage}/${window.TTC.theme}${window.TTC.imageExtension}"
+            ></img>
         </button>
         `;
+        applySettings();
     }
     findElements(){
         this.sectionButton = this.querySelector("[data-js-tag='section-button']");
@@ -33,7 +39,7 @@ class TTCSectionButton extends HTMLElement{
     showSection(){
         //sectionOwner & sectionName & sectionLanguage are set in learn.js: createSectionButton
         console.log(this.sectionOwner, this.sectionName);
-        window.TTC.loadProjectsFromDatabase({ section: this.sectionName, owner: this.sectionOwne });
+        window.TTC.loadProjectsFromDatabase({ section: this.sectionName, owner: this.sectionOwner });
         TTCSectionButton.hideAllSections();
     }
     hideMe(){

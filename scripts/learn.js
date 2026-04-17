@@ -217,17 +217,21 @@ window.TTC.events.addEventListener("createLearnProject", (details) => {
     console.log(newProject);
 });
 
-let createSectionButton = (name, language="python", owner="OFFICIAL") => {
+let createSectionButton = (name, language="python", owner="OFFICIAL", sibling = null) => {
     let sectionElement = document.createElement("ttc-section-button");
-    let mainContentContainer = document.querySelector("[data-js-tag='main-content']")
+    let parent = document.querySelector("[data-js-tag='main-content']");
+    sibling = sibling ?? parent.firstElementChild;
     sectionElement.innerHTML = name;
 
     sectionElement.sectionOwner = owner;
     sectionElement.sectionName = name;
     sectionElement.sectionLanguage = language
 
-    mainContentContainer.insertBefore(sectionElement, mainContentContainer.firstChild);
+    //parent.insertBefore(sectionElement, sibling);
+    sibling.after(sectionElement);
     console.log(sectionElement);
+
+    return sectionElement;
 }
 
 let showSectionSelections = async (language, sections) => {
@@ -239,10 +243,12 @@ let showSectionSelections = async (language, sections) => {
     }
 
     let sectionKeys = Object.keys(sections);
-
+    let sectionElement = null;
+    console.log("starting up...");
     sectionKeys.forEach((key) => {
         let section = sections[key];
-        createSectionButton(section.section, language, section.owner);
+        sectionElement = createSectionButton(section.section, language, section.owner, sectionElement);
+        console.log(sectionElement);
     });
 
     stopLoading();
