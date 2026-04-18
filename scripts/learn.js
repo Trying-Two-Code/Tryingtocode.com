@@ -226,7 +226,8 @@ let createSectionButton = (name, language="python", owner="OFFICIAL", sibling = 
 
     sectionElement.sectionOwner = owner;
     sectionElement.sectionName = name;
-    sectionElement.sectionLanguage = language
+    sectionElement.sectionLanguage = language;
+    sectionElement.sectionSelectionParent = parent;
 
     //parent.insertBefore(sectionElement, sibling);
     sibling.after(sectionElement);

@@ -116,7 +116,8 @@ let findSection = () => {
             userDecidedSection = proj0Key1[1];
             return true;
         } else{
-            console.error(projectList, " ain't nothin! Lookee here: ", language, userDecidedSection, onlineSections);
+            //console.error(projectList, " ain't nothin! Lookee here: ", language, userDecidedSection, onlineSections);
+            return 
             return null;
         }
     }
@@ -127,10 +128,32 @@ let sendSection = (owner, section) => {
     window.TTC.loadProjectsFromDatabase({ section: section, owner: owner });
 };
 
+let checkIfURLHasSection = (sectionString="code-section") => {
+    let URLString = window.location.search;
+    const searchURLString = new URLSearchParams(URLString);
+
+    let isSectionInURL = searchURLString.has(sectionString);
+    if(isSectionInURL){
+        return searchURLString.get(sectionString)
+    } else{
+        return null;
+    }
+}
+
+let checkIfLocalUserdataHasSection = () => {
+
+}
+
+let checkForSection = () => {
+    let currentSection = checkIfURLHasSection() || checkIfLocalUserdataHasSection();
+
+    return currentSection == null ? false : currentSection;
+}
+
 export let sendAppropriateInformationForSectionAndOwner = () => {
     let timeSinceLastCalled = timeSince("sendAppropriateInformationForSectionAndOwner", 10000);
     if(timeSinceLastCalled < 10000) {return;}
-    const owner = "OFFICIAL";
+    const owner = "OFFICIAL"; // change this later when supporting user projects
     if(findSection()){
         console.assert(projectList != null);
         const section = userDecidedSection;
