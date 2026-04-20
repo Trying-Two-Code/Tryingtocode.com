@@ -3,9 +3,13 @@
         "python": {
             "1": {
                 "owner": "OFFICIAL",
-                "section": "Python Lists"
+                "section": "Python for Beginners"
             },
             "2": {
+                "owner": "OFFICIAL",
+                "section": "Python Lists"
+            },
+            "3": {
                 "owner": "OFFICIAL",
                 "section": "Python Lists 2"
             }

@@ -41,7 +41,7 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-function setStat(name, priorityValue, otherValue, defaultValue=""){
+let setStat = (name, priorityValue, otherValue, defaultValue="") => {
     let decidePriority = (priority, other) => {
         if(!isBlank(priority, defaultValue)){ return priority; }
         if(!isBlank(other, defaultValue))   { return other; }
@@ -53,7 +53,7 @@ function setStat(name, priorityValue, otherValue, defaultValue=""){
 
     localStorage.setItem(name, priority); //THIS IS THE FINAL DECISION
 }
-
+/*
 const doSomethingWithProject = (projects) => {
     console.log("here it is");
 
@@ -62,7 +62,7 @@ const doSomethingWithProject = (projects) => {
     }) ;
 
     console.log("projects = ", projects);
-}
+}*/
 
 window.addEventListener("user_set", async () => {
     const user = window.user;
@@ -180,17 +180,23 @@ let loadProjectsFunction = async (projectsList, section="projects") => {
 
 let projectDisplays;
 const loaderElement = document.getElementById("loader");
-loadProjectsFunction(LOAD_INDICES).then(projectsList => {
-    projectDisplays = projectsList;
 
+let stopLoading = () => {
     if (loaderElement != null){
         console.log(loaderElement);
         loaderElement.classList.add("loader-fade");
         loaderElement.classList.remove("loader");
     }
+};
 
-    Prism.highlightAll();
-    applySettings();
+window.TTC.events.addEventListener("learnProjectsNoWorky", (detail) => {
+    loadProjectsFunction(LOAD_INDICES).then(projectsList => {
+        setTimeout(stopLoading, 100);
+        projectDisplays = projectsList;
+
+        Prism.highlightAll();
+        applySettings();
+    });
 });
 
 window.TTC.events.addEventListener("createLearnProject", (details) => {
@@ -206,9 +212,54 @@ window.TTC.events.addEventListener("createLearnProject", (details) => {
         index, 
         projectData
     );
+    setTimeout(stopLoading, 100);
 
     console.log(newProject);
-})
+});
+
+let createSectionButton = (name, language="python", owner="OFFICIAL", sibling = null) => {
+    let sectionElement = document.createElement("ttc-section-button");
+    let parent = document.querySelector("[data-js-tag='section-selection-container']");
+    console.log(parent);
+    sibling = sibling ?? parent.firstElementChild;
+    sectionElement.innerHTML = name;
+
+    sectionElement.sectionOwner = owner;
+    sectionElement.sectionName = name;
+    sectionElement.sectionLanguage = language;
+    sectionElement.sectionSelectionParent = parent;
+
+    //parent.insertBefore(sectionElement, sibling);
+    sibling.after(sectionElement);
+    console.log(sectionElement);
+
+    return sectionElement;
+}
+
+let showSectionSelections = async (language, sections) => {
+    const biggestLength = 50;
+    console.log("showing sectioons", sections);
+    if(sections.length > biggestLength){
+        console.error("ain't no way! More than ", biggestLength, " is not allowed!");
+        return null;
+    }
+
+    let sectionKeys = Object.keys(sections);
+    let sectionElement = null;
+    console.log("starting up...");
+    sectionKeys.forEach((key) => {
+        let section = sections[key];
+        sectionElement = createSectionButton(section.section, language, section.owner, sectionElement);
+        console.log(sectionElement);
+    });
+
+    stopLoading();
+}
+
+window.TTC.events.addEventListener("showSectionSelection", (detail) => {
+    showSectionSelections(detail.detail.language, detail.detail.sections);
+});
+
 
 
 console.error("for all yall devs out there looking through the log and thinking to yourself: what is this? why is this? this hurts my head! why do you have so many logs in production?");

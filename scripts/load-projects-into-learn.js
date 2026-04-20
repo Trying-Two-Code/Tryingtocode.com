@@ -1,4 +1,6 @@
 import { findProject, findProjects } from "./firebase-backend/firebaseProjects.js";
+import { getSettingsObject } from "./settings-functions.js";
+import { timeSince } from "./tools.js";
 
 let projectIndex = 35;
 window.TTC.events = window.TTC?.events || new EventTarget();
@@ -84,8 +86,87 @@ let getCodeLanguage = () => {
 
 language = getCodeLanguage();
 
+const settingsObject = getSettingsObject();
+let userDecidedSection = settingsObject.learnSection;
+console.log(settingsObject.learnSection, "OFFICIAL");
+
 let onlineSections = await loadJSON("online-sections");
 
+let projectList = onlineSections[language][userDecidedSection];
+let findSection = () => {
+    if(!projectList){
+        let checkSectionNames = (language, forName) => {
+            let languageSpecificSections = onlineSections[language];
+            let sectionKeys = Object.keys(languageSpecificSections);
+
+            for (let index = 0; index < sectionKeys.length; index++) {
+                const key = sectionKeys[index];
+                const proj = onlineSections[language][key];
+
+                if(proj.section == forName){ return [proj, forName]; } 
+            }
+        };
+
+        let proj0Key1 = checkSectionNames(language, userDecidedSection);
+        if(proj0Key1 == null){return null;}
+        projectList = proj0Key1[0];
+        if(projectList){
+            console.log('%c It would be best to store numbers, but this does work technically ', 
+                'background: #ff000056; color: #ffa167', proj0Key1[1], projectList);
+            userDecidedSection = proj0Key1[1];
+            return true;
+        } else{
+            //console.error(projectList, " ain't nothin! Lookee here: ", language, userDecidedSection, onlineSections);
+            return 
+            return null;
+        }
+    }
+    return true;
+};
+
+let sendSection = (owner, section) => {
+    window.TTC.loadProjectsFromDatabase({ section: section, owner: owner });
+};
+
+let checkIfURLHasSection = (sectionString="code-section") => {
+    let URLString = window.location.search;
+    const searchURLString = new URLSearchParams(URLString);
+
+    let isSectionInURL = searchURLString.has(sectionString);
+    if(isSectionInURL){
+        return searchURLString.get(sectionString)
+    } else{
+        return null;
+    }
+}
+
+let checkIfLocalUserdataHasSection = () => {
+
+}
+
+let checkForSection = () => {
+    let currentSection = checkIfURLHasSection() || checkIfLocalUserdataHasSection();
+
+    return currentSection == null ? false : currentSection;
+}
+
+export let sendAppropriateInformationForSectionAndOwner = () => {
+    let timeSinceLastCalled = timeSince("sendAppropriateInformationForSectionAndOwner", 10000);
+    if(timeSinceLastCalled < 10000) {return;}
+    const owner = "OFFICIAL"; // change this later when supporting user projects
+    if(findSection()){
+        console.assert(projectList != null);
+        const section = userDecidedSection;
+        sendSection(owner, section);
+    } else{
+        let showSectionSelectionEvent = new CustomEvent("showSectionSelection", {detail: {language: language, sections: onlineSections[language]}});
+        window.TTC.events.dispatchEvent(showSectionSelectionEvent);
+    }
+};
+
+window.addEventListener("user_set", sendAppropriateInformationForSectionAndOwner);
+
+/*
 if(language in onlineSections) {
     let languageSections = onlineSections[language];
     let languageSectionsKeys = Object.keys(languageSections);
@@ -102,4 +183,4 @@ if(language in onlineSections) {
 } else{
     console.log(language, "not in", onlineSections);
     //window.alert("your language ain't here bud! Try changing the ?code-language to =python");
-}
+}*/

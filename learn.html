@@ -22,6 +22,7 @@
     <script src="./scripts/web-elements/help-beginner.js"></script>
     <script src="./scripts/web-elements/sidebar.js" type="module"></script>
     <script src="./scripts/web-elements/typeable-code.js" type="module"></script>
+    <script src="./scripts/web-elements/select-section.js" type="module" defer></script>
     <script src="./scripts/settings-functions.js" type="module" defer></script>
     
     <link as="font" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!--Font import-->
@@ -32,7 +33,7 @@
     <ttc-help-beginner-popup showup-time="40" max-xp="50" tutorial-name="project-tutorial-0" video-id="scc4bHEHtZY"></ttc-help-beginner-popup>
     <div class="row-container">
         <ttc-sidebar></ttc-sidebar>
-        <div class="main-content main-font" id="main-content">
+        <div class="main-content main-font" id="main-content" data-js-tag="main-content">
             <div style="position: relative;">
                 <div id="loader" class="loader">
                     <div class="spinner"></div>
@@ -41,26 +42,27 @@
                 </div>
             </div>
 
-            <!--button id="main--back-to-top-button" class="sticky nice-button main-font back-to-top-button">top</button-->
-            
-            <!--button class="main-font" id="change-setting">change setting</button-->
-            <header>
-                <h1 class="main-title main-font" id="main-title">Project Based Learning</h1>
-                <p class="main-font">For total beginners.</p>
-            </header>
-            <canvas class="js-screen" id="learn-screen">
-                <!--shows coins-->
-            </canvas>
-            <div id="project-parent" autocapitalize="off">
-                <!-- projects insert here -->
-            </div>
-            <button class="nice-button no-bg-button arial-1" id="hate-pixel-art-button">I hate pixel art</button>
-            <button class="nice-button no-bg-button hide pixel-1" id="like-pixel-art-button">I like pixel art</button>
-            <div class="footer-parent">
-                <ttc-footer copywrite="tryingtocode" mail-to="contact@tryingtocode.com" legal-src="./legal.html" privacy-src="/privacy-policy.html"></ttc-footer>
+            <div>
+                <div data-js-tag="section-selection-container" class="column-container section-selection-container">
+                    <br>
+                </div>
+
+                <!--button id="main--back-to-top-button" class="sticky nice-button main-font back-to-top-button">top</button-->
+                
+                <div id="project-parent" autocapitalize="off">
+                    <!-- projects insert here -->
+                </div>
+                <button class="nice-button no-bg-button arial-1" id="hate-pixel-art-button">I hate pixel art</button>
+                <button class="nice-button no-bg-button hide pixel-1" id="like-pixel-art-button">I like pixel art</button>
+                <div class="footer-parent">
+                    <ttc-footer copywrite="tryingtocode" mail-to="contact@tryingtocode.com" legal-src="./legal.html" privacy-src="/privacy-policy.html"></ttc-footer>
+                </div>
             </div>
         </div>
     </div>
+    <canvas class="js-screen" id="learn-screen">
+        <!--shows coins-->
+    </canvas>
     
 </body>
 </html>
