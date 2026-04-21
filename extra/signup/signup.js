@@ -53,7 +53,7 @@ let enlarge = (element) => {
         element.removeEventListener("mouseout", dislarge);
         element.classList.remove("enlarge");
     }
-    
+
     element.addEventListener("mouseout", dislarge);
 }
 
@@ -133,7 +133,11 @@ submitButton.addEventListener("click", (event) => {
     let userAwnser = prompt("you sure you want to create an account?");
     if(userAwnser === properAwnser){
         confirm("so you're totally sure???") ? null : event.preventDefault();
-        
+        let reSubmit = confirm("for added security, would you like to re-submit all information?");
+        if(reSubmit){
+            resetAllThings();
+            event.preventDefault();
+        }
     } else{
         event.preventDefault();
         resetAllThings();
