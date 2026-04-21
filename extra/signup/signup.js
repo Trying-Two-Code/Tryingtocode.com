@@ -242,6 +242,13 @@ showUnneccessaryInformation.addEventListener("click", () => {
 let isDoggyGood = false;
 let doggyDragGood = () => {
     isDoggyGood = true;
+    bigDogImage.classList.add("petme-done");
+    bigDogImage.classList.remove("petme-not-done");
+}
+
+let doggyDragNotGood = () => {
+    bigDogImage.classList.remove("petme-done");
+    bigDogImage.classList.add("petme-not-done");
 }
 
 let doggyDragStart = () => {
@@ -254,6 +261,8 @@ let doggyDragEnd = () => {
     console.log("up", timeSinceDoggyPet);
     if(timeSinceDoggyPet > mustBeMinimum){
         doggyDragGood();
+    } else{
+        doggyDragNotGood();
     }
 }
 
@@ -263,3 +272,7 @@ bigDogImage.addEventListener("touchstart", doggyDragStart);
 bigDogImage.addEventListener("touchend", doggyDragStart);*/
 bigDogImage.addEventListener("pointerdown", doggyDragStart);
 bigDogImage.addEventListener("pointerup", doggyDragEnd);
+
+let stopShowingProgress = () => {
+
+}

@@ -228,6 +228,18 @@ img{
     -webkit-user-drag: none;
 }
 
+.petme-done{
+    border-style: dashed;
+    border-width: 10px;
+    border-color: #77dd77;
+}
+
+.petme-not-done{
+    border-style: dashed;
+    border-width: 10px;
+    border-color: #dd7777;
+}
+
 .annoying-image{
     width: 70%;
 }
