@@ -246,3 +246,9 @@ img{
 .swap-elements-button:active{
     border-color: #111111;
 }
+
+/*tool classes*/
+.enlarge{
+    width: 100%;
+    height: 90px;
+}

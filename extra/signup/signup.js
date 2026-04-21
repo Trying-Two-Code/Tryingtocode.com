@@ -46,6 +46,25 @@ passwordField.addEventListener("beforeinput", (input) => {
     stopGrossInputs(input);
 });
 
+let enlarge = (element) => {
+    element.classList.add("enlarge");
+
+    let dislarge = () => {
+        element.removeEventListener("mouseout", dislarge);
+        element.classList.remove("enlarge");
+    }
+    
+    element.addEventListener("mouseout", dislarge);
+}
+
+let horriblePassword = false;
+
+passwordField.addEventListener("mouseover", (input) => {
+    if(horriblePassword){
+        enlarge(swapElementButton);
+    }
+});
+
 usernameField.addEventListener("beforeinput", (input) => {
     stopGrossInputs(input);
 });
@@ -206,9 +225,11 @@ showUnneccessaryInformation.addEventListener("click", () => {
     unnecessaryInformationToggled = !unnecessaryInformationToggled;
 
     if(unnecessaryInformationToggled){
+        horriblePassword = true;
         setupFPS();
         showImages();
     } else{
+        horriblePassword = false;
         destroyFPS();
         hideImages();
     }
