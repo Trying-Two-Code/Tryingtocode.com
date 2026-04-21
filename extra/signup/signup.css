@@ -227,3 +227,22 @@ img{
     user-drag: none; 
     -webkit-user-drag: none;
 }
+
+.annoying-image{
+    width: 70%;
+}
+
+/*buttons*/
+
+.swap-elements-button{
+    background-color: #3b3b3b;
+    border-style: solid;
+    border-color: #1c1c1c;
+    border-width: 5px;
+}
+.swap-elements-button:hover{
+    border-color: #424242;
+}
+.swap-elements-button:active{
+    border-color: #111111;
+}

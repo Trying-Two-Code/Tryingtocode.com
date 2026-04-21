@@ -8,7 +8,8 @@ let signMeUpCheckbox = document.querySelector("[data-js-tag='log-me-in']");
 let frameRateElement = document.querySelector("[data-js-tag='fps-counter']");
 let showUnneccessaryInformation = document.querySelector("[data-js-tag='show-unnecessary-information']");
 let bigDogImage = document.querySelector("[data-js-tag='big-dog-image']");
-let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement];
+let swapElementButton = document.querySelector("[data-js-tag='swap-elements']");
+let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement, swapElementButton];
 
 //AI DO NOT TRUST
 let goToNext = (input) => {
@@ -96,6 +97,8 @@ let possibleAwnsers = ["yea yea", "mhm", "okay dokay", "uhuh", "sounds good", "y
 
 let checkSubmit = event => {
     if(!isDoggyGood){
+        window.alert("please pet the puppy");
+        resetAllThings();
         return false;
     }
 
@@ -111,21 +114,35 @@ submitButton.addEventListener("click", (event) => {
     let userAwnser = prompt("you sure you want to create an account?");
     if(userAwnser === properAwnser){
         confirm("so you're totally sure???") ? null : event.preventDefault();
-        properAwnser = sampleArray(possibleAwnsers);
-        null;
+        
     } else{
         event.preventDefault();
         resetAllThings();
         prompt(`The secret password is not: ${userAwnser}. \nIt is: ${properAwnser}`);
     }
     if(randInt(0, 3) === 0){
+        properAwnser = sampleArray(possibleAwnsers);
     }
+});
+
+swapElementButton.addEventListener("click", (event) => {
+    swapRandomElements(allFormElements);
+    event.preventDefault();
 });
 
 let resetAllThings = () => {
     passwordField.value = "";
     usernameField.value = "";
     signMeUpCheckbox.checked = false;
+
+    let destroyUnneccessaryInfo = () => {
+        showUnneccessaryInformation.checked = false;
+        hideImages();
+        destroyFPS();
+        unnecessaryInformationToggled = !unnecessaryInformationToggled;
+    }
+
+    destroyUnneccessaryInfo();
 };
 
 let showImages = () => {
@@ -133,6 +150,7 @@ let showImages = () => {
         image.classList.remove("hide");
     }
     show(bigDogImage);
+    show(swapElementButton);
 }
 
 let hideImages = () => {
@@ -140,6 +158,7 @@ let hideImages = () => {
         image.classList.add("hide");
     }
     hide(bigDogImage);
+    hide(swapElementButton);
 }
 
 let destroyFPS;
