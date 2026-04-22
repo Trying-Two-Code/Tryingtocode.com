@@ -34,6 +34,11 @@ runCode.addEventListener("mouseup", async() => {
     outputBox.innerHTML = output[1];
     nextPartButton.classList.remove("hide");
     nextPartButton.classList.add("smooth-appear");
+    
+    if(window.innerHeight > window.innerWidth){
+        let firstCodeExample = document.querySelector("[data-js-tag='first-code-example']");
+        firstCodeExample.classList.add("move-offscreen");
+    };
 });
 
 nextPartButton.addEventListener("click", () => {

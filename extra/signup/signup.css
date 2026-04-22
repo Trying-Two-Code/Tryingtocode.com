@@ -134,17 +134,17 @@ img{
     background-color: #3b3b3b;
 }
 
+.gender{
+    padding-block: 20px;
+}
+
+/*failure*/
 .si-input:invalid:placeholder-shown{
     border: 2px dashed rgb(116, 116, 116);
 }
 
 .si-input:invalid:not(:placeholder-shown){
     border: 2px dashed rgb(212, 34, 34);
-}
-
-.si-input:valid{
-    color: rgb(0, 255, 42);
-    border: 2px dashed rgb(0, 255, 64);
 }
 
 .si-input-bad:placeholder-shown{
@@ -157,19 +157,25 @@ img{
     border: .5px dashed red !important;
 }
 
+/*success*/
+.si-input:valid{
+    color: rgb(0, 255, 42);
+    border: 2px dashed rgb(0, 255, 64);
+}
+
 .si-input-bad:valid{
     color: transparent !important;
     border: 2px dashed rgb(212, 34, 34) !important;
 }
 
-/*success*/
-
-/*failure*/
-
 
 /*------------------------------------*\ 
     #ANNOYING
 /*------------------------------------*/ 
+.log-me-in{
+    margin: 10px;
+}
+
 @media (orientation: landscape) {
     .log-me-in:hover{
         transform: translateX(var(--anoying-px-amm-1));
@@ -184,7 +190,6 @@ img{
 }
 
 .horrible-input{
-    padding: -5px;
     zoom: 1;
     border-style: none;
     background-color: #3b3b3b;
@@ -193,6 +198,8 @@ img{
     border-color: #3b3b3b;
     border: 1px solid #3b3b3b;
     appearance: none;
+    width: 1px;
+    height: 1px;
 }
 
 .horrible-input:checked{
@@ -215,4 +222,47 @@ img{
     color: #77dd77;
     border-style: dashed;
     border-color: #3b3b3b;
+}
+
+.petme:hover, .petme:active{
+    cursor: pointer !important;
+    user-drag: none; 
+    -webkit-user-drag: none;
+}
+
+.petme-done{
+    border-style: dashed;
+    border-width: 10px;
+    border-color: #77dd77;
+}
+
+.petme-not-done{
+    border-style: dashed;
+    border-width: 10px;
+    border-color: #dd7777;
+}
+
+.annoying-image{
+    width: 70%;
+}
+
+/*buttons*/
+
+.swap-elements-button{
+    background-color: #3b3b3b;
+    border-style: solid;
+    border-color: #1c1c1c;
+    border-width: 5px;
+}
+.swap-elements-button:hover{
+    border-color: #424242;
+}
+.swap-elements-button:active{
+    border-color: #111111;
+}
+
+/*tool classes*/
+.enlarge{
+    width: 100%;
+    height: 90px;
 }

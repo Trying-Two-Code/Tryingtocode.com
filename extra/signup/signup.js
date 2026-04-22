@@ -6,7 +6,13 @@ let usernameField = document.querySelector("[data-js-tag='username-field']");
 let submitButton = document.querySelector("[data-js-tag='submit-button']");
 let signMeUpCheckbox = document.querySelector("[data-js-tag='log-me-in']");
 let frameRateElement = document.querySelector("[data-js-tag='fps-counter']");
-let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox];
+let showUnneccessaryInformation = document.querySelector("[data-js-tag='show-unnecessary-information']");
+let bigDogImage = document.querySelector("[data-js-tag='big-dog-image']");
+let swapElementButton = document.querySelector("[data-js-tag='swap-elements']");
+let genderInputInformation = document.querySelector("[data-js-tag='gender-input-information']");
+let genderInputInfoParent = genderInputInformation.parentElement;
+let addressField = document.querySelector("[data-js-tag='adress-field']");
+let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement, swapElementButton, genderInputInformation];
 
 //AI DO NOT TRUST
 let goToNext = (input) => {
@@ -41,6 +47,30 @@ passwordField.addEventListener("beforeinput", (input) => {
     console.log(passwordField.checkValidity);
     console.log(input.data);
     stopGrossInputs(input);
+});
+
+addressField.addEventListener("beforeinput", (input) => {
+    addressField.checkValidity();
+    stopGrossInputs(input);
+});
+
+let enlarge = (element) => {
+    element.classList.add("enlarge");
+
+    let dislarge = () => {
+        element.removeEventListener("mouseout", dislarge);
+        element.classList.remove("enlarge");
+    }
+
+    element.addEventListener("mouseout", dislarge);
+}
+
+let horriblePassword = false;
+
+passwordField.addEventListener("mouseover", (input) => {
+    if(horriblePassword){
+        enlarge(swapElementButton);
+    }
 });
 
 usernameField.addEventListener("beforeinput", (input) => {
@@ -92,31 +122,87 @@ let swapRandomElements = (elementList) => {
 let properAwnser = "sure";
 let possibleAwnsers = ["yea yea", "mhm", "okay dokay", "uhuh", "sounds good", "yeppp"];
 
+let checkSubmit = event => {
+    if(!isDoggyGood){
+        window.alert("please pet the puppy");
+        resetAllThings();
+        return false;
+    }
+
+    return true
+}
+
 submitButton.addEventListener("click", (event) => {
+    if (!checkSubmit(event)){
+        event.preventDefault();
+        return;
+    } 
+
     let userAwnser = prompt("you sure you want to create an account?");
     if(userAwnser === properAwnser){
         confirm("so you're totally sure???") ? null : event.preventDefault();
-        properAwnser = sampleArray(possibleAwnsers);
-        null;
+        let reSubmit = confirm("for added security, would you like to re-submit all information?");
+        if(reSubmit){
+            resetAllThings();
+            event.preventDefault();
+        }
     } else{
         event.preventDefault();
         resetAllThings();
         prompt(`The secret password is not: ${userAwnser}. \nIt is: ${properAwnser}`);
     }
     if(randInt(0, 3) === 0){
+        properAwnser = sampleArray(possibleAwnsers);
     }
+});
+
+swapElementButton.addEventListener("click", (event) => {
+    swapRandomElements(allFormElements);
+    event.preventDefault();
 });
 
 let resetAllThings = () => {
     passwordField.value = "";
     usernameField.value = "";
     signMeUpCheckbox.checked = false;
+
+    let destroyUnneccessaryInfo = () => {
+        showUnneccessaryInformation.checked = false;
+        toggleUnnecessary();
+        destroyFPS();
+        unnecessaryInformationToggled = !unnecessaryInformationToggled;
+    }
+
+    destroyUnneccessaryInfo();
 };
 
+let toggleUnnecessary = (to=true) => {
+    const hideClass = "hide";
+
+    let show = (image) => {
+        console.assert(image.classList.contains(hideClass));
+        image.classList.remove(hideClass);
+    }
+    let hide = (image) => {
+        image.classList.add(hideClass);
+    }
+    let toggle = (element, toggleTo=to) => {
+        toggleTo ? show(element) : hide(element);
+    }
+
+    toggle(bigDogImage);
+    toggle(swapElementButton);
+    toggle(genderInputInfoParent);
+    toggle(addressField.parentElement);
+}
+
+let destroyFPS;
 let setupFPS = () => {
     frameRateElement.classList.remove("hide");
     let fps = 50;
+    let paused = false;
     let getAnimFrame = (timestamp=1, lastTimestamp=3) => {
+        if (paused){ return; }
         let framerate =  timestamp - lastTimestamp;
         //console.log(`the time was ${Math.round(timestamp)} but now it is ${lastTimestamp} and so it was ${framerate}ms since last frame`);
 
@@ -136,8 +222,69 @@ let setupFPS = () => {
         lastframe = framerate;
         frameRateElement.innerHTML = `fps: ${average}`;
     }
-    setInterval(updateFramerateElement, 1000);
+    let updateFrameRateInterval = setInterval(updateFramerateElement, 1000);
+
+    destroyFPS = () => {
+        frameRateElement.classList.add("hide");
+        clearInterval(updateFrameRateInterval);
+        paused = true;
+    };
 }
+
 
 frameRateElement.classList.add("hide");
 //setupFPS();
+
+let unnecessaryInformationToggled = false;
+showUnneccessaryInformation.addEventListener("click", () => {
+    console.log("hello?")
+    unnecessaryInformationToggled = !unnecessaryInformationToggled;
+
+    if(unnecessaryInformationToggled){
+        horriblePassword = true;
+        setupFPS();
+        toggleUnnecessary(true);
+    } else{
+        horriblePassword = false;
+        destroyFPS();
+        toggleUnnecessary(false);
+    }
+});
+
+let isDoggyGood = false;
+let doggyDragGood = () => {
+    isDoggyGood = true;
+    bigDogImage.classList.add("petme-done");
+    bigDogImage.classList.remove("petme-not-done");
+}
+
+let doggyDragNotGood = () => {
+    bigDogImage.classList.remove("petme-done");
+    bigDogImage.classList.add("petme-not-done");
+}
+
+let doggyDragStart = () => {
+    timeSince("mouseDownOnDoggy", 0);
+}
+
+let doggyDragEnd = () => {
+    const mustBeMinimum = 300; //ms
+    let timeSinceDoggyPet = timeSince("mouseDownOnDoggy");
+    console.log("up", timeSinceDoggyPet);
+    if(timeSinceDoggyPet > mustBeMinimum){
+        doggyDragGood();
+    } else{
+        doggyDragNotGood();
+    }
+}
+
+/*bigDogImage.addEventListener("mousedown", doggyDragStart);
+bigDogImage.addEventListener("mouseup", doggyDragEnd);
+bigDogImage.addEventListener("touchstart", doggyDragStart);
+bigDogImage.addEventListener("touchend", doggyDragStart);*/
+bigDogImage.addEventListener("pointerdown", doggyDragStart);
+bigDogImage.addEventListener("pointerup", doggyDragEnd);
+
+let stopShowingProgress = () => {
+
+}
