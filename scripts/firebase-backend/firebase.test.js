@@ -1,4 +1,4 @@
-import { initUserData, deleteUserData, setUserDatapoint, getUserData, mergeObjects, setUserDatapointWithObject } from "./firebase.js"
+import { initUserData, deleteUserData, setUserDatapoint, getUserData, mergeObjects, setUserDatapointWithObject, signUp, deleteCurrentUser } from "./firebase.js"
 
 let testDataDelete = async () => {
     console.log(await deleteUserData(window.user));
@@ -48,6 +48,27 @@ let testMergeObject = async () => {
     console.log(JSONMO, JSONEXPECTEDMO);
 }
 
+const exampleUser = {
+    email: "example@gmail.com",
+    username: "example_user",
+    password: "password123",
+    setWindowUser: false
+};
+
+let testSignIn = async () => {
+
+};
+
+let testDeleteUser = async (testuser) => {
+    console.log("wait! User is not properly defined yet.");
+    await deleteCurrentUser(testuser)
+};
+
+let testSignUp = async () => {
+    //depends on the user being deleted first
+    await signUp(exampleUser);
+};
+
 export let testAll = async (noConfirm=false) => {
     const oldData = await getUserData();
     console.log("OLD DATA HERE: ", oldData);
@@ -70,5 +91,21 @@ export let testAll = async (noConfirm=false) => {
         await testBringBackData(oldData);
     }
 
+    console.error("look over this test code:");
+    let shouldTestSignUp = noConfirm ? confirm("test sign in+up and delete+remake default user?") : true;
+    if(shouldTestSignUp){
+        console.log("testing deletion...");
+        let oldUser;
+        if(window.auth.currentUser || window.user){
+            oldUser = window.auth.currentUser || window.user;
+        }
+        const TEST_USER = await testSignIn();
+        await testDeleteUser(TEST_USER);
+        await testSignUp();
+        if(oldUser){
+            await testSignIn(oldUser);
+        }
+    }
+
     await testMergeObject();
-}
+};
