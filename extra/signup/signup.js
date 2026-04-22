@@ -1,4 +1,5 @@
 //this connects the signup page to firebase api
+import { signup } from "../../scripts/firebase-backend/firebase.js";
 import { sampleArray, randInt, timeSince } from "../../scripts/tools.js";
 
 let passwordField = document.body.querySelector("[data-js-tag='password-field']");

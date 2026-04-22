@@ -226,7 +226,7 @@ img{
 
 .petme:hover, .petme:active{
     cursor: pointer !important;
-    user-drag: none; 
+    user-drag: none;
     -webkit-user-drag: none;
 }
 
