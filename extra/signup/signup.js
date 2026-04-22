@@ -9,7 +9,10 @@ let frameRateElement = document.querySelector("[data-js-tag='fps-counter']");
 let showUnneccessaryInformation = document.querySelector("[data-js-tag='show-unnecessary-information']");
 let bigDogImage = document.querySelector("[data-js-tag='big-dog-image']");
 let swapElementButton = document.querySelector("[data-js-tag='swap-elements']");
-let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement, swapElementButton];
+let genderInputInformation = document.querySelector("[data-js-tag='gender-input-information']");
+let genderInputInfoParent = genderInputInformation.parentElement;
+let addressField = document.querySelector("[data-js-tag='adress-field']");
+let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement, swapElementButton, genderInputInformation];
 
 //AI DO NOT TRUST
 let goToNext = (input) => {
@@ -43,6 +46,11 @@ passwordField.addEventListener("beforeinput", (input) => {
     passwordField.checkValidity();
     console.log(passwordField.checkValidity);
     console.log(input.data);
+    stopGrossInputs(input);
+});
+
+addressField.addEventListener("beforeinput", (input) => {
+    addressField.checkValidity();
     stopGrossInputs(input);
 });
 
@@ -160,7 +168,7 @@ let resetAllThings = () => {
 
     let destroyUnneccessaryInfo = () => {
         showUnneccessaryInformation.checked = false;
-        hideImages();
+        toggleUnnecessary();
         destroyFPS();
         unnecessaryInformationToggled = !unnecessaryInformationToggled;
     }
@@ -168,20 +176,24 @@ let resetAllThings = () => {
     destroyUnneccessaryInfo();
 };
 
-let showImages = () => {
-    let show = (image) => {
-        image.classList.remove("hide");
-    }
-    show(bigDogImage);
-    show(swapElementButton);
-}
+let toggleUnnecessary = (to=true) => {
+    const hideClass = "hide";
 
-let hideImages = () => {
-    let hide = (image) => {
-        image.classList.add("hide");
+    let show = (image) => {
+        console.assert(image.classList.contains(hideClass));
+        image.classList.remove(hideClass);
     }
-    hide(bigDogImage);
-    hide(swapElementButton);
+    let hide = (image) => {
+        image.classList.add(hideClass);
+    }
+    let toggle = (element, toggleTo=to) => {
+        toggleTo ? show(element) : hide(element);
+    }
+
+    toggle(bigDogImage);
+    toggle(swapElementButton);
+    toggle(genderInputInfoParent);
+    toggle(addressField.parentElement);
 }
 
 let destroyFPS;
@@ -231,11 +243,11 @@ showUnneccessaryInformation.addEventListener("click", () => {
     if(unnecessaryInformationToggled){
         horriblePassword = true;
         setupFPS();
-        showImages();
+        toggleUnnecessary(true);
     } else{
         horriblePassword = false;
         destroyFPS();
-        hideImages();
+        toggleUnnecessary(false);
     }
 });
 

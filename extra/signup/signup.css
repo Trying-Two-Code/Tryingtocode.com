@@ -134,17 +134,17 @@ img{
     background-color: #3b3b3b;
 }
 
+.gender{
+    padding-block: 20px;
+}
+
+/*failure*/
 .si-input:invalid:placeholder-shown{
     border: 2px dashed rgb(116, 116, 116);
 }
 
 .si-input:invalid:not(:placeholder-shown){
     border: 2px dashed rgb(212, 34, 34);
-}
-
-.si-input:valid{
-    color: rgb(0, 255, 42);
-    border: 2px dashed rgb(0, 255, 64);
 }
 
 .si-input-bad:placeholder-shown{
@@ -157,14 +157,16 @@ img{
     border: .5px dashed red !important;
 }
 
+/*success*/
+.si-input:valid{
+    color: rgb(0, 255, 42);
+    border: 2px dashed rgb(0, 255, 64);
+}
+
 .si-input-bad:valid{
     color: transparent !important;
     border: 2px dashed rgb(212, 34, 34) !important;
 }
-
-/*success*/
-
-/*failure*/
 
 
 /*------------------------------------*\ 
