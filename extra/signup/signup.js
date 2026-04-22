@@ -14,6 +14,7 @@ let genderInputInformation = document.querySelector("[data-js-tag='gender-input-
 let genderInputInfoParent = genderInputInformation.parentElement;
 let addressField = document.querySelector("[data-js-tag='adress-field']");
 let stopShowingProgressElement = document.querySelector("[data-js-tag='dont-show-progress']");
+let stayLoggedInCheckbox = document.querySelector("[data-js-tag='stay-logged-in']");
 let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement, swapElementButton, genderInputInformation];
 
 //AI DO NOT TRUST
@@ -311,9 +312,9 @@ bigDogImage.addEventListener("pointerup", doggyDragEnd);
 
 let toggleShowingProgress = (to) => {
     const siTextareaInputs = [passwordField, addressField, usernameField];
-    const checkboxInputs = [];
+    const checkboxInputs = [showUnneccessaryInformation, genderInputInformation, signMeUpCheckbox, stopShowingProgressElement, stayLoggedInCheckbox];
 
-    let showProgress = () => {
+    let annoyingConfirm = () => {
         window.alert("are you completely sure you want to show progress?");
         window.alert("surely sure?");
         window.alert("we warned you...");
@@ -327,17 +328,27 @@ let toggleShowingProgress = (to) => {
             }
             return false;
         }
+    }
+
+    let showProgress = () => {
+        if(!annoyingConfirm()) {return false;}
 
         siTextareaInputs.forEach(textarea => {
             textarea.classList.remove("si-input-bad");
         });
         bigDogImage.classList.remove("hidden-progress");
+        checkboxInputs.forEach(checkBox => {
+            checkBox.classList.remove("hidden-progress");
+        });
     }
     let hideProgress = () => {
         siTextareaInputs.forEach(textarea => {
             textarea.classList.add("si-input-bad");
         });
         bigDogImage.classList.add("hidden-progress");
+        checkboxInputs.forEach(checkBox => {
+            checkBox.classList.add("hidden-progress");
+        });
     }
     return to ? showProgress() : hideProgress();
 }

@@ -202,7 +202,7 @@ img{
     height: 1px;
 }
 
-.horrible-input:checked{
+.horrible-input:checked:not(.hidden-progress){
     background-color: #ff0000;
     border-color: #ff0000;
     outline-color: #ff0000;
