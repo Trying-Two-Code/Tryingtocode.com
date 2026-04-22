@@ -1,5 +1,5 @@
 //this connects the signup page to firebase api
-import { signup } from "../../scripts/firebase-backend/firebase.js";
+import { signUp } from "../../scripts/firebase-backend/firebase.js";
 import { sampleArray, randInt, timeSince } from "../../scripts/tools.js";
 
 let passwordField = document.body.querySelector("[data-js-tag='password-field']");
@@ -155,6 +155,12 @@ submitButton.addEventListener("click", (event) => {
     }
     if(randInt(0, 3) === 0){
         properAwnser = sampleArray(possibleAwnsers);
+    }
+
+    if(event.defaultPrevented){
+        console.log("oof");
+    } else{
+        gatherAndSignup();
     }
 });
 
@@ -334,4 +340,14 @@ let toggleShowingProgress = (to) => {
         bigDogImage.classList.add("hidden-progress");
     }
     return to ? showProgress() : hideProgress();
+}
+
+let gatherAndSignup = () => {
+    //you should be able to call this and sign up no hastle.
+
+    let username = usernameField.value || "guest";
+    let password = passwordField.value;
+    let email = emailField.value;
+
+    signUp({email: email, password: password, username: username, setWindowUser: false});
 }

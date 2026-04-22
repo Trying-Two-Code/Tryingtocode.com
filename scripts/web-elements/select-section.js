@@ -28,7 +28,7 @@ class TTCSectionButton extends HTMLElement{
         console.log(name, " is name");
         this.classOrientation = (this.id % 2 == 1) ? "left" : "right";
         this.innerHTML = `
-            <label data-js-tag="section-label-title" class="simple-title main-font smaller-text" for="ttc-section-button--button-${this.id}">
+            <label data-js-tag="section-label-title" class="hide simple-title main-font smaller-text" for="ttc-section-button--button-${this.id}">
                 ${name}
             </label>
             <button data-js-tag="section-button" class="main-font section-button nice-button" id="ttc-section-button--button-${this.id}">
@@ -46,10 +46,36 @@ class TTCSectionButton extends HTMLElement{
         this.labelTitle = this.querySelector("[data-js-tag='section-label-title']");
         console.log("make label hidden until hovered over");
     }
+
+    initToggleLabel(){
+        let initHide = () => {
+            let initHideOnClick = () => {
+                let hide = () => {
+                    this.labelTitle.classList.add("hide");
+                    document.removeEventListener("click", hide);
+                };
+                document.addEventListener("click", hide);
+
+                this.sectionButton.removeEventListener("pointerleave", initHideOnClick); //{once: true}
+            }
+            this.sectionButton.addEventListener("pointerleave", initHideOnClick);
+        }
+
+        let initShow = () => {
+            this.sectionButton.addEventListener("pointerenter", () => {
+                this.labelTitle.classList.remove("hide");
+                initHide();
+            });
+        }
+
+        initShow();
+    }
+
     initFunctionality(){
         this.sectionButton.addEventListener('click', () => {
             this.showSection();
         });
+        this.initToggleLabel();
     }
     showSection(){
         //sectionOwner & sectionName & sectionLanguage are set in learn.js: createSectionButton

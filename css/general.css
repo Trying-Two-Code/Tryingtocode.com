@@ -259,7 +259,7 @@ li, ul {
 }
 
 @property --text-outline-size{
-    syntax: "<size>";
+    syntax: "<length>";
     inherits: true;
     initial-value: 1px;
 }

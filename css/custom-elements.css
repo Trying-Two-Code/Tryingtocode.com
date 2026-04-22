@@ -190,9 +190,13 @@ ttc-section-button{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+
+    justify-content: center;
+    text-align: center;
 }
 
 .section-button{
+    display: flex;
     position: relative;
 
     --min-size: 50%;
@@ -206,6 +210,7 @@ ttc-section-button{
     border-style: none;
 
     background-color: #141414;
+    align-content: center;
 
     z-index: var(--z-element);
 }
@@ -214,15 +219,19 @@ ttc-section-button{
     
 }
 
-.section-button.left{
-    left: 100px;
-    margin-left: 50% !important;
-    width: 100%;
+@property --section-select-margin{
+    syntax: "<length-percentage>";
+    inherits: true;
+    initial-value: 20%;
 }
-.section-button.right{
-    right: 100px;
-    margin-right: 50% !important;
-    width: 100%;
+
+.left{
+    margin-left: var(--section-select-margin);
+    align-self: baseline;
+}
+.right{
+    margin-right: var(--section-select-margin);
+    align-self: last baseline;
 }
 /*
 */
