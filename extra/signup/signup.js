@@ -12,6 +12,7 @@ let swapElementButton = document.querySelector("[data-js-tag='swap-elements']");
 let genderInputInformation = document.querySelector("[data-js-tag='gender-input-information']");
 let genderInputInfoParent = genderInputInformation.parentElement;
 let addressField = document.querySelector("[data-js-tag='adress-field']");
+let stopShowingProgressElement = document.querySelector("[data-js-tag='dont-show-progress']");
 let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement, swapElementButton, genderInputInformation];
 
 //AI DO NOT TRUST
@@ -194,6 +195,7 @@ let toggleUnnecessary = (to=true) => {
     toggle(swapElementButton);
     toggle(genderInputInfoParent);
     toggle(addressField.parentElement);
+    toggle(stopShowingProgressElement.parentElement);
 }
 
 let destroyFPS;
@@ -251,6 +253,21 @@ showUnneccessaryInformation.addEventListener("click", () => {
     }
 });
 
+let stopShowingProgressToggled = false;
+stopShowingProgressElement.addEventListener("click", () => {
+    stopShowingProgressToggled = !stopShowingProgressToggled;
+
+    if(stopShowingProgressToggled){
+        let hideAllElementsResult = toggleShowingProgress(false);
+        if(hideAllElementsResult === false){
+            //it was not actually toggled...
+            console.log("It didn't work!");
+        }
+    } else{
+        toggleShowingProgress(true);
+    }
+});
+
 let isDoggyGood = false;
 let doggyDragGood = () => {
     isDoggyGood = true;
@@ -285,6 +302,35 @@ bigDogImage.addEventListener("touchend", doggyDragStart);*/
 bigDogImage.addEventListener("pointerdown", doggyDragStart);
 bigDogImage.addEventListener("pointerup", doggyDragEnd);
 
-let stopShowingProgress = () => {
+let toggleShowingProgress = (to) => {
+    const siTextareaInputs = [passwordField, addressField, usernameField];
+    const checkboxInputs = [];
 
+    let showProgress = () => {
+        window.alert("are you completely sure you want to show progress?");
+        window.alert("surely sure?");
+        window.alert("we warned you...");
+        window.confirm("oh wait I mean to use this type");
+        let confirm = window.confirm("so you are not sure?");
+
+        if(confirm){
+            confirm = window.confirm("oh.... ok, should we keep your information?");
+            if(!confirm){
+                resetAllThings();
+            }
+            return false;
+        }
+
+        siTextareaInputs.forEach(textarea => {
+            textarea.classList.remove("si-input-bad");
+        });
+        bigDogImage.classList.remove("hidden-progress");
+    }
+    let hideProgress = () => {
+        siTextareaInputs.forEach(textarea => {
+            textarea.classList.add("si-input-bad");
+        });
+        bigDogImage.classList.add("hidden-progress");
+    }
+    return to ? showProgress() : hideProgress();
 }

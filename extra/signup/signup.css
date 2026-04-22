@@ -165,7 +165,7 @@ img{
 
 .si-input-bad:valid{
     color: transparent !important;
-    border: 2px dashed rgb(212, 34, 34) !important;
+    border: 2px dashed rgb(0, 255, 64) !important;
 }
 
 
@@ -230,13 +230,13 @@ img{
     -webkit-user-drag: none;
 }
 
-.petme-done{
+.petme-done:not(.hidden-progress){
     border-style: dashed;
     border-width: 10px;
     border-color: #77dd77;
 }
 
-.petme-not-done{
+.petme-not-done:not(.hidden-progress){
     border-style: dashed;
     border-width: 10px;
     border-color: #dd7777;

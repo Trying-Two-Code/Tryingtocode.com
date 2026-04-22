@@ -28,17 +28,23 @@ class TTCSectionButton extends HTMLElement{
         console.log(name, " is name");
         this.classOrientation = (this.id % 2 == 1) ? "left" : "right";
         this.innerHTML = `
-        <button data-js-tag="section-button" class="main-font section-button nice-button ${this.classOrientation}">
-            ${name}
-            <img
-            src="./components/visuals/icons/create/language/${this.sectionLanguage}/${window.TTC.theme}${window.TTC.imageExtension}"
-            ></img>
-        </button>
+            <label data-js-tag="section-label-title" class="simple-title main-font smaller-text" for="ttc-section-button--button-${this.id}">
+                ${name}
+            </label>
+            <button data-js-tag="section-button" class="main-font section-button nice-button" id="ttc-section-button--button-${this.id}">
+                <img
+                class="pixel-img big-img"
+                src="./components/visuals/icons/create/language/${this.sectionLanguage}/${window.TTC.theme}${window.TTC.imageExtension}"
+                ></img>
+            </button>
         `;
+        this.classList.add(`${this.classOrientation}`);
         applySettings();
     }
     findElements(){
         this.sectionButton = this.querySelector("[data-js-tag='section-button']");
+        this.labelTitle = this.querySelector("[data-js-tag='section-label-title']");
+        console.log("make label hidden until hovered over");
     }
     initFunctionality(){
         this.sectionButton.addEventListener('click', () => {
