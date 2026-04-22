@@ -96,10 +96,20 @@ class TTCSectionButton extends HTMLElement{
     }
 
     static hideAllSections(){
+        console.assert(TTCSectionButton.sectionSelectionParent != null);
         TTCSectionButton.sectionSelectionParent.classList.add("closed");
         for (const inst of TTCSectionButton.selectionInstances) {
             inst.hideMe();
         }
+    }
+}
+
+export const hideAllSectionsExport = (sectionParent=null) => {
+    if(TTCSectionButton.id > 0){ //a section button has been made
+        TTCSectionButton.hideAllSections();
+    } else{ //DIY
+        console.assert(sectionParent !== null);
+        sectionParent.classList.add("closed");
     }
 }
 

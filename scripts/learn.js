@@ -219,7 +219,8 @@ window.TTC.events.addEventListener("createLearnProject", (details) => {
 
 let createSectionButton = (name, language="python", owner="OFFICIAL", sibling = null) => {
     let sectionElement = document.createElement("ttc-section-button");
-    let parent = document.querySelector("[data-js-tag='section-selection-container']");
+    // CODE SMELL WARNING: I have a copy of this (parent) in load projects-into-learn due to hideAllSectionsExport needing to intake the parent, a better fix would be nice
+    let parent = document.querySelector("[data-js-tag='section-selection-container']"); 
     console.log(parent);
     sibling = sibling ?? parent.firstElementChild;
     sectionElement.innerHTML = name;

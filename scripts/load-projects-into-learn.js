@@ -1,6 +1,7 @@
 import { findProject, findProjects } from "./firebase-backend/firebaseProjects.js";
 import { getSettingsObject } from "./settings-functions.js";
 import { timeSince } from "./tools.js";
+import { hideAllSectionsExport } from "./web-elements/select-section.js";
 
 let projectIndex = 35;
 window.TTC.events = window.TTC?.events || new EventTarget();
@@ -108,8 +109,7 @@ let findSection = () => {
         };
 
         let proj0Key1 = checkSectionNames(language, userDecidedSection);
-        if(proj0Key1 == null){return null;}
-        projectList = proj0Key1[0];
+        projectList = proj0Key1?.[0];
         if(projectList){
             console.log('%c It would be best to store numbers, but this does work technically ', 
                 'background: #ff000056; color: #ffa167', proj0Key1[1], projectList);
@@ -117,24 +117,27 @@ let findSection = () => {
             return true;
         } else{
             //console.error(projectList, " ain't nothin! Lookee here: ", language, userDecidedSection, onlineSections);
-            return 
-            return null;
+            let URLHasSection = checkIfURLHasSection({setUserDecided: true});
+            return URLHasSection != null;
         }
     }
     return true;
 };
 
 let sendSection = (owner, section) => {
+    console.log("I sent the section over");
     window.TTC.loadProjectsFromDatabase({ section: section, owner: owner });
 };
 
-let checkIfURLHasSection = (sectionString="code-section") => {
+let checkIfURLHasSection = ({sectionString="code-section", setUserDecided=false}={}) => {
     let URLString = window.location.search;
     const searchURLString = new URLSearchParams(URLString);
 
     let isSectionInURL = searchURLString.has(sectionString);
     if(isSectionInURL){
-        return searchURLString.get(sectionString)
+        let urlDecision = searchURLString.get(sectionString);
+        setUserDecided ? userDecidedSection = urlDecision : null;
+        return urlDecision;
     } else{
         return null;
     }
@@ -154,10 +157,14 @@ export let sendAppropriateInformationForSectionAndOwner = () => {
     let timeSinceLastCalled = timeSince("sendAppropriateInformationForSectionAndOwner", 10000);
     if(timeSinceLastCalled < 10000) {return;}
     const owner = "OFFICIAL"; // change this later when supporting user projects
-    if(findSection()){
+    let foundSection = findSection();
+    console.log(foundSection);
+    if(foundSection){
         console.assert(projectList != null);
         const section = userDecidedSection;
         sendSection(owner, section);
+        let parent = document.querySelector("[data-js-tag='section-selection-container']");
+        hideAllSectionsExport(parent);
     } else{
         let showSectionSelectionEvent = new CustomEvent("showSectionSelection", {detail: {language: language, sections: onlineSections[language]}});
         window.TTC.events.dispatchEvent(showSectionSelectionEvent);
