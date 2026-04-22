@@ -187,6 +187,7 @@ ttc-section-button{
     width: 20%;
     height: 33%;
     margin-block: 5%;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -211,6 +212,7 @@ ttc-section-button{
 
     background-color: #141414;
     align-content: center;
+    align-self: center;
 
     z-index: var(--z-element);
 }
