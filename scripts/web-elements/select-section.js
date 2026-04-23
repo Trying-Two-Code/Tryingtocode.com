@@ -1,4 +1,4 @@
-import { applySettings } from "../settings-functions.js";
+import { applySettings, editSetting } from "../settings-functions.js";
 
 class TTCSectionButton extends HTMLElement{
     static selectionInstances = new Set();
@@ -8,21 +8,25 @@ class TTCSectionButton extends HTMLElement{
     constructor(){
         super();
     }
+
     connectedCallback(){
         this.init();
     }
+
     init(){
         this.identifySelf();
         this.makeElement();
         this.findElements();
         this.initFunctionality();
     }
+
     identifySelf(){
         TTCSectionButton.selectionInstances.add(this);
         TTCSectionButton.id += 1;
         TTCSectionButton.sectionSelectionParent = this.sectionSelectionParent;
         this.id = TTCSectionButton.id;
     }
+
     makeElement(){
         let name = this.innerHTML;
         console.log(name, " is name");
@@ -41,10 +45,10 @@ class TTCSectionButton extends HTMLElement{
         this.classList.add(`${this.classOrientation}`);
         applySettings();
     }
+
     findElements(){
         this.sectionButton = this.querySelector("[data-js-tag='section-button']");
         this.labelTitle = this.querySelector("[data-js-tag='section-label-title']");
-        console.log("make label hidden until hovered over");
     }
 
     initToggleLabel(){
@@ -90,6 +94,7 @@ class TTCSectionButton extends HTMLElement{
         window.history.replaceState({}, "", url);
 
         TTCSectionButton.hideAllSections();
+        editSetting({learnSection: this.sectionName});
     }
     hideMe(){
         this.classList.add("hide");
@@ -127,7 +132,7 @@ class TTCBringbackSectionSelection extends HTMLElement{
     }
     makeElement(){
         this.innerHTML = `
-        
+            <button>bring it home<button>
         `;
     }
 }
