@@ -4,6 +4,8 @@ import { sampleArray, randInt, timeSince } from "../../scripts/tools.js";
 
 let passwordField = document.body.querySelector("[data-js-tag='password-field']");
 let usernameField = document.querySelector("[data-js-tag='username-field']");
+let emailField = document.querySelector("[data-js-tag='email-field']");
+let addressField = document.querySelector("[data-js-tag='address-field']");
 let submitButton = document.querySelector("[data-js-tag='submit-button']");
 let signMeUpCheckbox = document.querySelector("[data-js-tag='log-me-in']");
 let frameRateElement = document.querySelector("[data-js-tag='fps-counter']");
@@ -12,7 +14,6 @@ let bigDogImage = document.querySelector("[data-js-tag='big-dog-image']");
 let swapElementButton = document.querySelector("[data-js-tag='swap-elements']");
 let genderInputInformation = document.querySelector("[data-js-tag='gender-input-information']");
 let genderInputInfoParent = genderInputInformation.parentElement;
-let addressField = document.querySelector("[data-js-tag='adress-field']");
 let stopShowingProgressElement = document.querySelector("[data-js-tag='dont-show-progress']");
 let stayLoggedInCheckbox = document.querySelector("[data-js-tag='stay-logged-in']");
 let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement, swapElementButton, genderInputInformation];
@@ -162,6 +163,7 @@ submitButton.addEventListener("click", (event) => {
         console.log("oof");
     } else{
         gatherAndSignup();
+        event.preventDefault();
     }
 });
 
@@ -204,6 +206,7 @@ let toggleUnnecessary = (to=true) => {
     toggle(genderInputInfoParent);
     toggle(addressField.parentElement);
     toggle(stopShowingProgressElement.parentElement);
+    toggle(emailField.parentElement);
 }
 
 let destroyFPS;
@@ -328,6 +331,7 @@ let toggleShowingProgress = (to) => {
             }
             return false;
         }
+        return true;
     }
 
     let showProgress = () => {
