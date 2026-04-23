@@ -6,6 +6,7 @@ let passwordField = document.body.querySelector("[data-js-tag='password-field']"
 let usernameField = document.querySelector("[data-js-tag='username-field']");
 let emailField = document.querySelector("[data-js-tag='email-field']");
 let addressField = document.querySelector("[data-js-tag='address-field']");
+let userSeeErrors = document.querySelector("[data-js-tag='user-see-errors']");
 let submitButton = document.querySelector("[data-js-tag='submit-button']");
 let signMeUpCheckbox = document.querySelector("[data-js-tag='log-me-in']");
 let frameRateElement = document.querySelector("[data-js-tag='fps-counter']");
@@ -207,6 +208,7 @@ let toggleUnnecessary = (to=true) => {
     toggle(addressField.parentElement);
     toggle(stopShowingProgressElement.parentElement);
     toggle(emailField.parentElement);
+    toggle(userSeeErrors);
 }
 
 let destroyFPS;
@@ -248,6 +250,19 @@ let setupFPS = () => {
 frameRateElement.classList.add("hide");
 //setupFPS();
 
+let destroyUserSeeErrors;
+let setupUserSeeErrors = () => {
+    let errorMade = (error) => {
+        console.log(`error messege: `, error);
+        userSeeErrors.innerHTML = error.message;
+    }
+    window.addEventListener("error", error => {errorMade(error)});
+
+    destroyUserSeeErrors = () => {
+        window.removeEventListener("error", error => {errorMade(error)});
+    }
+}
+
 let unnecessaryInformationToggled = false;
 showUnneccessaryInformation.addEventListener("click", () => {
     console.log("hello?")
@@ -256,9 +271,11 @@ showUnneccessaryInformation.addEventListener("click", () => {
     if(unnecessaryInformationToggled){
         horriblePassword = true;
         setupFPS();
+        setupUserSeeErrors();
         toggleUnnecessary(true);
     } else{
         horriblePassword = false;
+        destroyUserSeeErrors?.();
         destroyFPS();
         toggleUnnecessary(false);
     }
@@ -364,5 +381,5 @@ let gatherAndSignup = () => {
     let password = passwordField.value;
     let email = emailField.value;
 
-    signUp({email: email, password: password, username: username, setWindowUser: false});
+    console.log(signUp({email: email, password: password, username: username, setWindowUser: true}));
 }

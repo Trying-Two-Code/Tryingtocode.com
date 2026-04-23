@@ -151,7 +151,7 @@ let signIn = async (email, password) => {
     }
 }
 
-export let signUp = async ({email, password, username="guest", setWindowUser=true}={}) => {
+export let signUp = async ({email, password, username="guest", setWindowUser=true, setData=true}={}) => {
     console.assert(typeof email === "string");
     console.assert(typeof password === "string");
     console.assert(typeof username === "string");
@@ -171,9 +171,12 @@ export let signUp = async ({email, password, username="guest", setWindowUser=tru
 
     if(!oldUserDataEmpty){
         console.log(oldUserData);
-        setUserDatapointWithObject({
-            oldUserData
-        });
+        if(setData){
+            console.log("setting to oldUserData...");
+            setUserDatapointWithObject({
+                oldUserData
+            });
+        }
     }
     
     return new_user;
@@ -261,7 +264,7 @@ export let setUserDatapointWithObject = async ( payload = {email: null, displayN
     let detectChangeData = (key) => {
         const payloadDatapoint = payload[key];
 
-        if(!payload.prioritizePayload && key in currentData){
+        if(currentData != null && !payload.prioritizePayload && key in currentData){
             const currentDatapoint = currentData[key];
             changeData(key, currentDatapoint);
         } else {
@@ -281,6 +284,7 @@ export let setUserDatapointWithObject = async ( payload = {email: null, displayN
     updateDoc(userRef, newData);
 
     const updatedSnap = await getDoc(userRef);
+    console.log(updatedSnap);
     return updatedSnap;
 }
 

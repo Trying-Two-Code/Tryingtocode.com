@@ -261,8 +261,14 @@ img{
     border-color: #111111;
 }
 
-/*tool classes*/
+/*------------------------------------*\ 
+    #TOOLS
+/*------------------------------------*/ 
 .enlarge{
     width: 100%;
     height: 90px;
+}
+
+.red-text{
+    color: #ee2211;
 }
