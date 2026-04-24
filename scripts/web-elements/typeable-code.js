@@ -279,8 +279,14 @@ customElements.define("ttc-typeable-code", TTCTypeableCode);
 
 
 export class TTCComplexTypeableCode extends TTCTypeableCode {
+    static textareas = [];
+
     constructor(){
         super();
+    }
+
+    connectedCallback(){
+        TTCComplexTypeableCode.textareas.push(this);
     }
 
     complexRender(){
@@ -428,6 +434,21 @@ export class TTCComplexTypeableCode extends TTCTypeableCode {
             this.createPrettyCode();
         });
     }
+
+    deleteSelf(){
+        this.parentElement.parentElement.remove();
+    }
+
+    static deleteAllTextareas(){
+        const allTextareas = TTCComplexTypeableCode.textareas;
+        allTextareas.forEach(complexTextarea => {
+            complexTextarea.deleteSelf();
+        });
+    }
+}
+
+export let deleteAllTextareasExport = () => {
+    TTCComplexTypeableCode.deleteAllTextareas();
 }
 
 customElements.define("ttc-complex-typeable-code", TTCComplexTypeableCode);

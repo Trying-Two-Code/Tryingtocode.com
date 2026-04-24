@@ -1,4 +1,6 @@
+import { getCodeLanguage, onlineSections, sendAppropriateInformationForSectionAndOwner } from "../load-projects-into-learn.js";
 import { applySettings, editSetting } from "../settings-functions.js";
+import { deleteAllTextareasExport } from "./typeable-code.js";
 
 class TTCSectionButton extends HTMLElement{
     static selectionInstances = new Set();
@@ -120,7 +122,7 @@ export const hideAllSectionsExport = (sectionParent=null) => {
 
 customElements.define("ttc-section-button", TTCSectionButton);
 
-class TTCBringbackSectionSelection extends HTMLElement{
+class TTCBringBackSectionSelection extends HTMLElement{
     constructor(){
         super();
     }
@@ -129,10 +131,38 @@ class TTCBringbackSectionSelection extends HTMLElement{
     }
     init(){
         this.makeElement();
+        this.findElement();
+        this.initFunctionality();
     }
     makeElement(){
         this.innerHTML = `
-            <button>bring it home<button>
+            <button data-js-tag='go-home' class="nice-button">go back to selections</button>
         `;
     }
+    findElement(){
+        this.mainButton = this.querySelector("[data-js-tag='go-home']");
+    }
+    initFunctionality(){
+        this.mainButton.addEventListener("click", () => {
+            this.bringBackEvent();
+        });
+    }
+
+    bringBackEvent(){
+        deleteAllTextareasExport();
+        editSetting({learnSection: ""});
+        this.remove();
+        //sendAppropriateInformationForSectionAndOwner();
+        bringBackSections();
+        //showSectionSelectionsAgain() <- find out the function
+    }
 }
+
+let bringBackSections = () => {
+    let language = getCodeLanguage();
+    let sections = onlineSections;
+    let showSectionSelectionEvent = new CustomEvent("showSectionSelection", {detail: {language: language, sections: sections[language]}});
+    window.TTC.events.dispatchEvent(showSectionSelectionEvent);
+}
+
+customElements.define("ttc-bring-section-back", TTCBringBackSectionSelection);

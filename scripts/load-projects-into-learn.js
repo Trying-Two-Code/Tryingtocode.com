@@ -50,6 +50,10 @@ window.TTC.loadProjectsFromDatabase = async ({section="default", owner="OFFICIAL
         projectIndex++;
     }
     
+    let createdWholeSectionEvent = new CustomEvent("createdWholeSection", {detail: 
+        {sectionName: section, sectionOwner: owner, sectionParent: "not set, look in learn.js for PROJECT_PARENT"}
+    });
+    window.TTC.events.dispatchEvent(createdWholeSectionEvent);
 
     Prism.highlightAll();
     applySettings();
@@ -59,7 +63,7 @@ window.TTC.loadProjectsFromDatabase = async ({section="default", owner="OFFICIAL
 let language = window.TTC.language;
 let codeLanguage = window.TTC.codeLanguage;
 
-let getCodeLanguage = () => {
+export let getCodeLanguage = () => {
     const LANGUAGE_STRING = "code-language";
 
     let URLString = window.location.search;
@@ -91,7 +95,7 @@ const settingsObject = getSettingsObject();
 let userDecidedSection = settingsObject.learnSection;
 console.log(settingsObject.learnSection, "OFFICIAL");
 
-let onlineSections = await loadJSON("online-sections");
+export let onlineSections = await loadJSON("online-sections");
 
 let projectList = onlineSections[language][userDecidedSection];
 let findSection = () => {
@@ -154,8 +158,8 @@ let checkForSection = () => {
 }
 
 export let sendAppropriateInformationForSectionAndOwner = () => {
-    let timeSinceLastCalled = timeSince("sendAppropriateInformationForSectionAndOwner", 10000);
-    if(timeSinceLastCalled < 10000) {return;}
+    let timeSinceLastCalled = timeSince("sendAppropriateInformationForSectionAndOwner", 1000);
+    if(timeSinceLastCalled < 1000) {return;}
     const owner = "OFFICIAL"; // change this later when supporting user projects
     let foundSection = findSection();
     console.log(foundSection);
