@@ -159,7 +159,7 @@ class TTCBringBackSectionSelection extends HTMLElement{
     }
     makeElement(){
         this.innerHTML = `
-            <button data-js-tag='go-home' class="nice-button">go back to selections</button>
+            <button data-js-tag='go-home' class="nice-button bring-back-button main-font">go back to selections</button>
         `;
     }
     findElement(){

@@ -243,5 +243,19 @@ ttc-section-button{
     margin-right: var(--section-select-margin);
     align-self: last baseline;
 }
+
+ttc-bring-section-back{
+    align-self: center;
+    justify-self: center;
+}
+
+.bring-back-button{
+    background-color: #222;
+    color: #fff;
+    border-color: #2e3033;
+    border-style: solid;
+    border-width: 4px;
+    padding: 5px;
+}
 /*
 */
