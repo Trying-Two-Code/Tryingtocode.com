@@ -268,3 +268,63 @@ export let sampleArray = (array) => {
     */
     return array[choice];
 };
+
+export let changeURL = ({
+    keepOtherVariables=true, 
+    newVariables={ /*sectionName: undefined, sectionOwner: undefined, codeLanguage: undefined*/ },
+    deleteVariables={},
+    newLocation = null,
+    replaceHistory = false
+}) => {
+    let resetURL = () => {
+        let url = new URL(window.location);
+        window.history.replaceState({}, "", url);
+    }
+
+    keepOtherVariables ? null : resetURL();
+
+    let getURL = () => {
+        let urlLocation = newLocation ? newLocation : window.location;
+        let url = new URL(urlLocation);
+        return url;
+    };
+
+    const url = getURL();
+    const params = new URLSearchParams(keepOtherVariables ? url.search : "");
+
+    let setParam = (name, to, del=false) => {
+        del ? params.delete(name) : params.set(name, to);
+    };
+
+    let loopObj = (obj, callback, extraVar) => {
+        let objNames = Object.keys(obj);
+
+        for (let index = 0; index < objNames.length; index++) {
+            const key = objNames[index];
+            const value = obj[key];
+            callback(key, value, extraVar);
+        }
+    };
+
+    let setParams = (paramObject) => {
+        loopObj(paramObject, setParam);
+    };
+
+    let deleteParams = (paramObject) => {
+        loopObj(paramObject, setParam, true);
+    };
+
+    newVariables ? setParams(newVariables) : null;
+    deleteVariables ? deleteParams(deleteVariables) : null;
+
+    url.search = params.toString();
+    let newURLString = url.toString();
+
+    console.log(url);
+
+    if(replaceHistory){
+        window.history.replaceState({}, "", newURLString);
+    } else{
+        window.history.pushState({}, "", newURLString);
+    }
+};

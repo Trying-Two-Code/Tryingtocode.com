@@ -1,5 +1,6 @@
 import { getCodeLanguage, onlineSections, sendAppropriateInformationForSectionAndOwner } from "../load-projects-into-learn.js";
 import { applySettings, editSetting } from "../settings-functions.js";
+import { changeURL } from "../tools.js";
 import { deleteAllTextareasExport } from "./typeable-code.js";
 
 class TTCSectionButton extends HTMLElement{
@@ -88,12 +89,11 @@ class TTCSectionButton extends HTMLElement{
         console.log(this.sectionOwner, this.sectionName);
         window.TTC.loadProjectsFromDatabase({ section: this.sectionName, owner: this.sectionOwner });
         
-        const SECTION_STRING = "code-section";
-        const OWNER_STRING = "code-owner";
-        const url = new URL(window.location);
+        /*const url = new URL(window.location);
         url.searchParams.set(SECTION_STRING,    this.sectionName);
         url.searchParams.set(OWNER_STRING,      this.sectionOwner);
-        window.history.replaceState({}, "", url);
+        window.history.replaceState({}, "", url);*/
+        TTCSectionButton.toggleURL(this.sectionName, this.sectionOwner);
 
         TTCSectionButton.hideAllSections();
         editSetting({learnSection: this.sectionName});
@@ -108,6 +108,29 @@ class TTCSectionButton extends HTMLElement{
         for (const inst of TTCSectionButton.selectionInstances) {
             inst.hideMe();
         }
+    }
+
+    static toggleURL(sectionName, sectionOwner, remove=false){
+        const SECTION_STRING = "code-section";
+        const OWNER_STRING = "code-owner";
+
+        let changeURLObj = {};
+        changeURLObj.keepOtherVariables = true;
+        changeURLObj.replaceHistory = false;
+
+        if(remove){
+            changeURLObj.deleteVariables = {
+                [SECTION_STRING]: sectionName,
+                [OWNER_STRING]: sectionOwner
+            }
+        } else{
+            changeURLObj.newVariables = {
+                [SECTION_STRING]: sectionName,
+                [OWNER_STRING]: sectionOwner
+            }
+        }
+
+        changeURL(changeURLObj);
     }
 }
 
@@ -159,6 +182,7 @@ class TTCBringBackSectionSelection extends HTMLElement{
 }
 
 let bringBackSections = () => {
+    TTCSectionButton.toggleURL(null, null, true);
     let language = getCodeLanguage();
     let sections = onlineSections;
     let showSectionSelectionEvent = new CustomEvent("showSectionSelection", {detail: {language: language, sections: sections[language]}});
