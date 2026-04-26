@@ -25,8 +25,8 @@ class TTCSidebar extends HTMLElement {
             <a href="index" title="Home" class="logo side" id="home-icon" draggable="false">
                 <img src="components/visuals/logos/coin/${this.theme}${this.imageExtension}" alt="Coin logo" class="nice-button">
             </a>
-            <button data-js-tag='dropdown-button' class="toggle-dropdown" draggable="false">
-                <img class="toggle-dropdown--img nice-button" src="${this.iconPath}/toggle-arrow/${this.theme}/frame-2${this.imageExtension}" alt="" id="toggle-button">
+            <button data-js-tag='dropdown-button' class="toggle-dropdown nice-button" draggable="false">
+                <img class="toggle-dropdown--img rotate-for-mobile" src="${this.iconPath}/toggle-arrow/${this.theme}/frame-2${this.imageExtension}" alt="" id="toggle-button">
             </button>
             <div class="dropdown">
                 <ul class="dropdown--list">
@@ -50,7 +50,7 @@ class TTCSidebar extends HTMLElement {
             <h2 class="main-font" data-js-tag='sidebar-coin-counter'>404</h2>
             <div class="toggle-sidebar bottom-sidebar" data-js-tag="toggle-sidebar">
                 <button class="nice-button no-bg-button" data-js-tag="togle-sidebar-button">
-                    <img class="dropdown--image" src="${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-1${this.imageExtension}" draggable="false"></img>
+                    <img class="dropdown--image rotate-for-mobile" src="${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-1${this.imageExtension}" draggable="false"></img>
                 </button>
             </div>
         </div>
@@ -206,7 +206,7 @@ class TTCHiddenSidebar extends HTMLElement {
         this.innerHTML = `
         <div data-js-tag="show-button" class="hidden-sidebar sidebar"></div>
         <button data-js-tag="show-sidebar" class="show-sidebar nice-button main-font hide-bg-button">
-            <img class="dropdown--image" src="${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-2${this.imageExtension}" draggable="false"></img>
+            <img class="dropdown--image rotate-for-mobile" src="${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-2${this.imageExtension}" draggable="false"></img>
         </button>
         `;
     }

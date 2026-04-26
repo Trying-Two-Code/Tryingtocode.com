@@ -179,22 +179,22 @@ body {
 }
 
 .main-content {
+    position: relative;
     margin-bottom: 0px;
     width: 100%;
     margin-left: 10px;
+    z-index: var(--z-base);
 }
 
 @media (orientation: landscape) {
     .main-content {
         padding: 0px;
-        z-index: var(--z-base);
     }
 }
 @media(orientation: portrait) {
     .main-content {
         margin-left: var(--sidebar-width);
         padding: 20px;
-        z-index: var(--z-base);
     }
 }
 
@@ -497,11 +497,22 @@ ttc-sidebar{
     bottom: 0;
     display: flex;
     position: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    min-height: 100vh;
 
     overflow: hidden;
+}
+
+@media (orientation: landscape) {
+    ttc-sidebar{
+        min-height: 100vh;
+        flex-grow: 1;
+        flex-direction: column;
+    }
+}
+
+@media (orientation: portrait) {
+    ttc-sidebar{
+        height: 100%;
+    }
 }
 
 .big-image{
