@@ -257,5 +257,27 @@ ttc-bring-section-back{
     border-width: 4px;
     padding: 5px;
 }
+
+.section-label{
+    background-color: #3f3d3d;
+    z-index: var(--z-overlay);
+    padding-inline: 10%;
+}
+
+.section-label-arrow-color-overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #2e3033;
+    z-index: var(--z-element);
+}
+
+.section-label-arrow{
+    position: absolute;
+    transform: translateY(0%) rotate(10deg);
+    z-index: var(--z-base);
+    filter: brightness(0) saturate(100%) invert(23%) sepia(3%) saturate(346%) hue-rotate(318deg) brightness(90%) contrast(89%);
+}
 /*
 */

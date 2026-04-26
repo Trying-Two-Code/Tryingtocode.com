@@ -35,8 +35,9 @@ class TTCSectionButton extends HTMLElement{
         console.log(name, " is name");
         this.classOrientation = (this.id % 2 == 1) ? "left" : "right";
         this.innerHTML = `
-            <label data-js-tag="section-label-title" class="hide simple-title main-font smaller-text" for="ttc-section-button--button-${this.id}">
+            <label data-js-tag="section-label-title" class="hide simple-title main-font smaller-text section-label" for="ttc-section-button--button-${this.id}">
                 ${name}
+                <img class="section-label-arrow" src="./components/visuals/icons/section-select/title-arrow/${window.TTC.theme}${window.TTC.imageExtension}" alt="\\/"></img>
             </label>
             <button data-js-tag="section-button" class="main-font section-button nice-button" id="ttc-section-button--button-${this.id}">
                 <img
@@ -55,6 +56,8 @@ class TTCSectionButton extends HTMLElement{
     }
 
     initToggleLabel(){
+        //look into https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener --once--
+
         let initHide = () => {
             let initHideOnClick = () => {
                 let hide = () => {
