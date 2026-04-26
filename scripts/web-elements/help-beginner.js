@@ -76,6 +76,8 @@ class TTCHelpBeginnerPopup extends HTMLElement{
         this.render();
         this.initValues();
         this.initBehaviour();
+
+        this.hideSelf();
     }
 
     makeGlobal(){ //everybody wants to discuss me, that must mean I'm disgusting well that's just me I'm just obsene
