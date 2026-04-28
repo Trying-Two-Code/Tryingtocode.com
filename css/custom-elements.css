@@ -275,6 +275,7 @@ ttc-bring-section-back{
     background-color: #3f3d3d;
     z-index: var(--z-overlay);
     padding-inline: 10%;
+    padding-block: 1%;
 }
 
 .section-label-arrow-color-overlay{

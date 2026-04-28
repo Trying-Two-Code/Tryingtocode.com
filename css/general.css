@@ -179,7 +179,6 @@ body {
 }
 
 .main-content {
-    position: relative;
     margin-bottom: 0px;
     width: 100%;
     margin-left: 10px;
@@ -196,6 +195,10 @@ body {
         margin-left: var(--sidebar-width);
         padding: 20px;
     }
+}
+
+.user-content{
+    position: relative;
 }
 
 #learn-screen{

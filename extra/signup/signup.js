@@ -1,5 +1,6 @@
 //this connects the signup page to firebase api
 import { signUp } from "../../scripts/firebase-backend/firebase.js";
+import { makeSpaceship } from "./spaceship.js";
 import { sampleArray, randInt, timeSince } from "../../scripts/tools.js";
 
 let passwordField = document.body.querySelector("[data-js-tag='password-field']");
@@ -17,6 +18,7 @@ let genderInputInformation = document.querySelector("[data-js-tag='gender-input-
 let genderInputInfoParent = genderInputInformation.parentElement;
 let stopShowingProgressElement = document.querySelector("[data-js-tag='dont-show-progress']");
 let stayLoggedInCheckbox = document.querySelector("[data-js-tag='stay-logged-in']");
+let spaceshipCheckbox = document.querySelector("[data-js-tag='spaceship-input-information']")
 let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement, swapElementButton, genderInputInformation];
 
 //AI DO NOT TRUST
@@ -209,6 +211,7 @@ let toggleUnnecessary = (to=true) => {
     toggle(stopShowingProgressElement.parentElement);
     toggle(emailField.parentElement);
     toggle(userSeeErrors);
+    toggle(spaceshipCheckbox.parentElement);
 }
 
 let destroyFPS;
@@ -265,7 +268,6 @@ let setupUserSeeErrors = () => {
 
 let unnecessaryInformationToggled = false;
 showUnneccessaryInformation.addEventListener("click", () => {
-    console.log("hello?")
     unnecessaryInformationToggled = !unnecessaryInformationToggled;
 
     if(unnecessaryInformationToggled){
@@ -383,3 +385,24 @@ let gatherAndSignup = () => {
 
     console.log(signUp({email: email, password: password, username: username, setWindowUser: true}));
 }
+
+let stopMakingSpaceships;
+let makeSpaceships = () => {
+    let makeSpaceshipInterval = setInterval(
+        makeSpaceship, 100
+    )
+
+    stopMakingSpaceships = () => {
+        clearInterval(makeSpaceshipInterval);
+    };
+};
+
+let spaceshipsToggled = false;
+spaceshipCheckbox.addEventListener("click", () => {
+    spaceshipsToggled = !spaceshipsToggled
+    if(spaceshipsToggled){
+        makeSpaceships();
+    } else{
+        stopMakingSpaceships();
+    }
+});
