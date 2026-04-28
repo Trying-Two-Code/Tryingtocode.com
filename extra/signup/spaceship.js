@@ -138,10 +138,6 @@ function getAbsolutePosition(el) {
     };
 }
 
-function distance(x1, y1, x2, y2) {
-    return Math.hypot(x2 - x1, y2 - y1);
-}
-
 function normalizeVector(x, y) {
     const length = Math.hypot(x, y); // same as sqrt(x^2 + y^2)
     if (length === 0) return [0, 0];

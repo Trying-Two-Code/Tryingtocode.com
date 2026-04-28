@@ -36,12 +36,12 @@ class TTCSectionButton extends HTMLElement{
         this.classOrientation = (this.id % 2 == 1) ? "left" : "right";
         this.innerHTML = `
             <label data-js-tag="section-label-title" class="hide simple-title main-font smaller-text section-label" for="ttc-section-button--button-${this.id}">
-                ${name}
+                <p class="section-label-text">${name}</p>
                 <img class="section-label-arrow" src="./components/visuals/icons/section-select/title-arrow/${window.TTC.theme}${window.TTC.imageExtension}" alt="\\/"></img>
             </label>
             <button data-js-tag="section-button" class="main-font section-button nice-button" id="ttc-section-button--button-${this.id}">
                 <img
-                class="pixel-img big-img"
+                class="pixel-img big-img section-button-img"
                 src="./components/visuals/icons/create/language/${this.sectionLanguage}/${window.TTC.theme}${window.TTC.imageExtension}"
                 ></img>
             </button>
