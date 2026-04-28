@@ -218,7 +218,6 @@ ttc-section-button{
 }
 
 .section-button{
-    display: flex;
     position: relative;
 
     --min-size: 100px;
@@ -243,9 +242,18 @@ ttc-section-button{
     overflow: hidden;
 }
 
+@media (orientation: landscape) {
+    .section-button{
+        --min-size: 150px !important;
+    }
+    .section-button-img{
+        width: 100%;
+        height: 100%;
+    }
+    
+}
+
 .section-button-img{
-    width: fit-content;
-    height: fit-content;
     align-self: center;
     justify-self: center;
 }
