@@ -42,7 +42,6 @@ export class CoinObj{
 
     getAbsoluteGTPosition(go_to){
         this.absolute_gt = domToCanvas(this.canvas, getAbsolutePosition(go_to));
-        console.log(this.absolute_gt);
     }
 
     gravitate(drag=1.7){

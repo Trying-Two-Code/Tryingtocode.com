@@ -165,7 +165,7 @@ img{
 
 .si-input-bad:valid{
     color: transparent !important;
-    border: 2px dashed rgb(212, 34, 34) !important;
+    border: 2px dashed rgb(0, 255, 64) !important;
 }
 
 
@@ -202,7 +202,7 @@ img{
     height: 1px;
 }
 
-.horrible-input:checked{
+.horrible-input:checked:not(.hidden-progress){
     background-color: #ff0000;
     border-color: #ff0000;
     outline-color: #ff0000;
@@ -226,17 +226,17 @@ img{
 
 .petme:hover, .petme:active{
     cursor: pointer !important;
-    user-drag: none; 
+    user-drag: none;
     -webkit-user-drag: none;
 }
 
-.petme-done{
+.petme-done:not(.hidden-progress){
     border-style: dashed;
     border-width: 10px;
     border-color: #77dd77;
 }
 
-.petme-not-done{
+.petme-not-done:not(.hidden-progress){
     border-style: dashed;
     border-width: 10px;
     border-color: #dd7777;
@@ -261,8 +261,14 @@ img{
     border-color: #111111;
 }
 
-/*tool classes*/
+/*------------------------------------*\ 
+    #TOOLS
+/*------------------------------------*/ 
 .enlarge{
     width: 100%;
     height: 90px;
+}
+
+.red-text{
+    color: #ee2211;
 }

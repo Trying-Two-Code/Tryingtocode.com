@@ -1,4 +1,7 @@
-import { applySettings } from "../settings-functions.js";
+import { getCodeLanguage, onlineSections, sendAppropriateInformationForSectionAndOwner } from "../load-projects-into-learn.js";
+import { applySettings, editSetting } from "../settings-functions.js";
+import { changeURL } from "../tools.js";
+import { deleteAllTextareasExport } from "./typeable-code.js";
 
 class TTCSectionButton extends HTMLElement{
     static selectionInstances = new Set();
@@ -8,72 +11,144 @@ class TTCSectionButton extends HTMLElement{
     constructor(){
         super();
     }
+
     connectedCallback(){
         this.init();
     }
+
     init(){
         this.identifySelf();
         this.makeElement();
         this.findElements();
         this.initFunctionality();
     }
+
     identifySelf(){
         TTCSectionButton.selectionInstances.add(this);
         TTCSectionButton.id += 1;
         TTCSectionButton.sectionSelectionParent = this.sectionSelectionParent;
         this.id = TTCSectionButton.id;
     }
+
     makeElement(){
         let name = this.innerHTML;
         console.log(name, " is name");
         this.classOrientation = (this.id % 2 == 1) ? "left" : "right";
         this.innerHTML = `
-        <button data-js-tag="section-button" class="main-font section-button nice-button ${this.classOrientation}">
-            ${name}
-            <img
-            src="./components/visuals/icons/create/language/${this.sectionLanguage}/${window.TTC.theme}${window.TTC.imageExtension}"
-            ></img>
-        </button>
+            <label data-js-tag="section-label-title" class="hide simple-title main-font smaller-text section-label" for="ttc-section-button--button-${this.id}">
+                <p class="section-label-text">${name}</p>
+                <img class="section-label-arrow" src="./components/visuals/icons/section-select/title-arrow/${window.TTC.theme}${window.TTC.imageExtension}" alt="\\/"></img>
+            </label>
+            <button data-js-tag="section-button" class="main-font section-button nice-button" id="ttc-section-button--button-${this.id}">
+                <img
+                class="pixel-img big-img section-button-img"
+                src="./components/visuals/icons/create/language/${this.sectionLanguage}/${window.TTC.theme}${window.TTC.imageExtension}"
+                ></img>
+            </button>
         `;
+        this.classList.add(`${this.classOrientation}`);
         applySettings();
     }
+
     findElements(){
         this.sectionButton = this.querySelector("[data-js-tag='section-button']");
+        this.labelTitle = this.querySelector("[data-js-tag='section-label-title']");
     }
+
+    initToggleLabel(){
+        //look into https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener --once--
+
+        let initHide = () => {
+            let initHideOnClick = () => {
+                let hide = () => {
+                    this.labelTitle.classList.add("hide");
+                    document.removeEventListener("click", hide);
+                };
+                document.addEventListener("click", hide);
+
+                this.sectionButton.removeEventListener("pointerleave", initHideOnClick); //{once: true}
+            }
+            this.sectionButton.addEventListener("pointerleave", initHideOnClick);
+        }
+
+        let initShow = () => {
+            this.sectionButton.addEventListener("pointerenter", () => {
+                this.labelTitle.classList.remove("hide");
+                initHide();
+            });
+        }
+
+        initShow();
+    }
+
     initFunctionality(){
         this.sectionButton.addEventListener('click', () => {
             this.showSection();
         });
+        this.initToggleLabel();
     }
     showSection(){
         //sectionOwner & sectionName & sectionLanguage are set in learn.js: createSectionButton
         console.log(this.sectionOwner, this.sectionName);
         window.TTC.loadProjectsFromDatabase({ section: this.sectionName, owner: this.sectionOwner });
         
-        const SECTION_STRING = "code-section";
-        const OWNER_STRING = "code-owner";
-        const url = new URL(window.location);
+        /*const url = new URL(window.location);
         url.searchParams.set(SECTION_STRING,    this.sectionName);
         url.searchParams.set(OWNER_STRING,      this.sectionOwner);
-        window.history.replaceState({}, "", url);
+        window.history.replaceState({}, "", url);*/
+        TTCSectionButton.toggleURL(this.sectionName, this.sectionOwner);
 
         TTCSectionButton.hideAllSections();
+        editSetting({learnSection: this.sectionName});
     }
     hideMe(){
         this.classList.add("hide");
     }
 
     static hideAllSections(){
+        console.assert(TTCSectionButton.sectionSelectionParent != null);
         TTCSectionButton.sectionSelectionParent.classList.add("closed");
         for (const inst of TTCSectionButton.selectionInstances) {
             inst.hideMe();
         }
     }
+
+    static toggleURL(sectionName, sectionOwner, remove=false){
+        const SECTION_STRING = "code-section";
+        const OWNER_STRING = "code-owner";
+
+        let changeURLObj = {};
+        changeURLObj.keepOtherVariables = true;
+        changeURLObj.replaceHistory = false;
+
+        if(remove){
+            changeURLObj.deleteVariables = {
+                [SECTION_STRING]: sectionName,
+                [OWNER_STRING]: sectionOwner
+            }
+        } else{
+            changeURLObj.newVariables = {
+                [SECTION_STRING]: sectionName,
+                [OWNER_STRING]: sectionOwner
+            }
+        }
+
+        changeURL(changeURLObj);
+    }
+}
+
+export const hideAllSectionsExport = (sectionParent=null) => {
+    if(TTCSectionButton.id > 0){ //a section button has been made
+        TTCSectionButton.hideAllSections();
+    } else{ //DIY
+        console.assert(sectionParent !== null);
+        sectionParent.classList.add("closed");
+    }
 }
 
 customElements.define("ttc-section-button", TTCSectionButton);
 
-class TTCBringbackSectionSelection extends HTMLElement{
+class TTCBringBackSectionSelection extends HTMLElement{
     constructor(){
         super();
     }
@@ -82,10 +157,39 @@ class TTCBringbackSectionSelection extends HTMLElement{
     }
     init(){
         this.makeElement();
+        this.findElement();
+        this.initFunctionality();
     }
     makeElement(){
         this.innerHTML = `
-        
+            <button data-js-tag='go-home' class="nice-button bring-back-button main-font">go back to selections</button>
         `;
     }
+    findElement(){
+        this.mainButton = this.querySelector("[data-js-tag='go-home']");
+    }
+    initFunctionality(){
+        this.mainButton.addEventListener("click", () => {
+            this.bringBackEvent();
+        });
+    }
+
+    bringBackEvent(){
+        deleteAllTextareasExport();
+        editSetting({learnSection: ""});
+        this.remove();
+        //sendAppropriateInformationForSectionAndOwner();
+        bringBackSections();
+        //showSectionSelectionsAgain() <- find out the function
+    }
 }
+
+let bringBackSections = () => {
+    TTCSectionButton.toggleURL(null, null, true);
+    let language = getCodeLanguage();
+    let sections = onlineSections;
+    let showSectionSelectionEvent = new CustomEvent("showSectionSelection", {detail: {language: language, sections: sections[language]}});
+    window.TTC.events.dispatchEvent(showSectionSelectionEvent);
+}
+
+customElements.define("ttc-bring-section-back", TTCBringBackSectionSelection);

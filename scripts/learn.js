@@ -162,6 +162,11 @@ let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON, 
 
 let projectIndex = 0;
 
+let createSectionSelectBackButton = (parent=PROJECT_PARENT) => {
+    const newButton = document.createElement("ttc-bring-section-back");
+    parent.appendChild(newButton);
+}
+
 let loadProjectsFunction = async (projectsList, section="projects") => {
     const JSON = await loadJSON(section);
     let userData = await getUserData();
@@ -191,12 +196,17 @@ let stopLoading = () => {
 
 window.TTC.events.addEventListener("learnProjectsNoWorky", (detail) => {
     loadProjectsFunction(LOAD_INDICES).then(projectsList => {
-        setTimeout(stopLoading, 100);
         projectDisplays = projectsList;
 
         Prism.highlightAll();
         applySettings();
+        
+        setTimeout(stopLoading, 100);
     });
+});
+
+window.TTC.events.addEventListener("createdWholeSection", (details) => {
+    createSectionSelectBackButton();
 });
 
 window.TTC.events.addEventListener("createLearnProject", (details) => {
@@ -212,14 +222,16 @@ window.TTC.events.addEventListener("createLearnProject", (details) => {
         index, 
         projectData
     );
-    setTimeout(stopLoading, 100);
+    setTimeout(stopLoading, 100); //just a small timeout to be sure nothing weird goes down that the user sees (:
 
     console.log(newProject);
 });
 
+const sectionButtonParent = document.querySelector("[data-js-tag='section-selection-container']"); 
 let createSectionButton = (name, language="python", owner="OFFICIAL", sibling = null) => {
     let sectionElement = document.createElement("ttc-section-button");
-    let parent = document.querySelector("[data-js-tag='section-selection-container']");
+    // CODE SMELL WARNING: I have a copy of this (parent) in load projects-into-learn due to hideAllSectionsExport needing to intake the parent, a better fix would be nice
+    let parent = sectionButtonParent;
     console.log(parent);
     sibling = sibling ?? parent.firstElementChild;
     sectionElement.innerHTML = name;
@@ -252,6 +264,8 @@ let showSectionSelections = async (language, sections) => {
         sectionElement = createSectionButton(section.section, language, section.owner, sectionElement);
         console.log(sectionElement);
     });
+
+    sectionButtonParent.classList.remove("closed");
 
     stopLoading();
 }

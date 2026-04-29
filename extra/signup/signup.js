@@ -1,8 +1,13 @@
 //this connects the signup page to firebase api
+import { signUp } from "../../scripts/firebase-backend/firebase.js";
+import { makeSpaceship } from "./spaceship.js";
 import { sampleArray, randInt, timeSince } from "../../scripts/tools.js";
 
 let passwordField = document.body.querySelector("[data-js-tag='password-field']");
 let usernameField = document.querySelector("[data-js-tag='username-field']");
+let emailField = document.querySelector("[data-js-tag='email-field']");
+let addressField = document.querySelector("[data-js-tag='address-field']");
+let userSeeErrors = document.querySelector("[data-js-tag='user-see-errors']");
 let submitButton = document.querySelector("[data-js-tag='submit-button']");
 let signMeUpCheckbox = document.querySelector("[data-js-tag='log-me-in']");
 let frameRateElement = document.querySelector("[data-js-tag='fps-counter']");
@@ -11,7 +16,9 @@ let bigDogImage = document.querySelector("[data-js-tag='big-dog-image']");
 let swapElementButton = document.querySelector("[data-js-tag='swap-elements']");
 let genderInputInformation = document.querySelector("[data-js-tag='gender-input-information']");
 let genderInputInfoParent = genderInputInformation.parentElement;
-let addressField = document.querySelector("[data-js-tag='adress-field']");
+let stopShowingProgressElement = document.querySelector("[data-js-tag='dont-show-progress']");
+let stayLoggedInCheckbox = document.querySelector("[data-js-tag='stay-logged-in']");
+let spaceshipCheckbox = document.querySelector("[data-js-tag='spaceship-input-information']")
 let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement, swapElementButton, genderInputInformation];
 
 //AI DO NOT TRUST
@@ -154,6 +161,13 @@ submitButton.addEventListener("click", (event) => {
     if(randInt(0, 3) === 0){
         properAwnser = sampleArray(possibleAwnsers);
     }
+
+    if(event.defaultPrevented){
+        console.log("oof");
+    } else{
+        gatherAndSignup();
+        event.preventDefault();
+    }
 });
 
 swapElementButton.addEventListener("click", (event) => {
@@ -194,6 +208,10 @@ let toggleUnnecessary = (to=true) => {
     toggle(swapElementButton);
     toggle(genderInputInfoParent);
     toggle(addressField.parentElement);
+    toggle(stopShowingProgressElement.parentElement);
+    toggle(emailField.parentElement);
+    toggle(userSeeErrors);
+    toggle(spaceshipCheckbox.parentElement);
 }
 
 let destroyFPS;
@@ -235,19 +253,48 @@ let setupFPS = () => {
 frameRateElement.classList.add("hide");
 //setupFPS();
 
+let destroyUserSeeErrors;
+let setupUserSeeErrors = () => {
+    let errorMade = (error) => {
+        console.log(`error messege: `, error);
+        userSeeErrors.innerHTML = error.message;
+    }
+    window.addEventListener("error", error => {errorMade(error)});
+
+    destroyUserSeeErrors = () => {
+        window.removeEventListener("error", error => {errorMade(error)});
+    }
+}
+
 let unnecessaryInformationToggled = false;
 showUnneccessaryInformation.addEventListener("click", () => {
-    console.log("hello?")
     unnecessaryInformationToggled = !unnecessaryInformationToggled;
 
     if(unnecessaryInformationToggled){
         horriblePassword = true;
         setupFPS();
+        setupUserSeeErrors();
         toggleUnnecessary(true);
     } else{
         horriblePassword = false;
+        destroyUserSeeErrors?.();
         destroyFPS();
         toggleUnnecessary(false);
+    }
+});
+
+let stopShowingProgressToggled = false;
+stopShowingProgressElement.addEventListener("click", () => {
+    stopShowingProgressToggled = !stopShowingProgressToggled;
+
+    if(stopShowingProgressToggled){
+        let hideAllElementsResult = toggleShowingProgress(false);
+        if(hideAllElementsResult === false){
+            //it was not actually toggled...
+            console.log("It didn't work!");
+        }
+    } else{
+        toggleShowingProgress(true);
     }
 });
 
@@ -285,6 +332,77 @@ bigDogImage.addEventListener("touchend", doggyDragStart);*/
 bigDogImage.addEventListener("pointerdown", doggyDragStart);
 bigDogImage.addEventListener("pointerup", doggyDragEnd);
 
-let stopShowingProgress = () => {
+let toggleShowingProgress = (to) => {
+    const siTextareaInputs = [passwordField, addressField, usernameField];
+    const checkboxInputs = [showUnneccessaryInformation, genderInputInformation, signMeUpCheckbox, stopShowingProgressElement, stayLoggedInCheckbox];
 
+    let annoyingConfirm = () => {
+        window.alert("are you completely sure you want to show progress?");
+        window.alert("surely sure?");
+        window.alert("we warned you...");
+        window.confirm("oh wait I mean to use this type");
+        let confirm = window.confirm("so you are not sure?");
+
+        if(confirm){
+            confirm = window.confirm("oh.... ok, should we keep your information?");
+            if(!confirm){
+                resetAllThings();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    let showProgress = () => {
+        if(!annoyingConfirm()) {return false;}
+
+        siTextareaInputs.forEach(textarea => {
+            textarea.classList.remove("si-input-bad");
+        });
+        bigDogImage.classList.remove("hidden-progress");
+        checkboxInputs.forEach(checkBox => {
+            checkBox.classList.remove("hidden-progress");
+        });
+    }
+    let hideProgress = () => {
+        siTextareaInputs.forEach(textarea => {
+            textarea.classList.add("si-input-bad");
+        });
+        bigDogImage.classList.add("hidden-progress");
+        checkboxInputs.forEach(checkBox => {
+            checkBox.classList.add("hidden-progress");
+        });
+    }
+    return to ? showProgress() : hideProgress();
 }
+
+let gatherAndSignup = () => {
+    //you should be able to call this and sign up no hastle.
+
+    let username = usernameField.value || "guest";
+    let password = passwordField.value;
+    let email = emailField.value;
+
+    console.log(signUp({email: email, password: password, username: username, setWindowUser: true}));
+}
+
+let stopMakingSpaceships;
+let makeSpaceships = () => {
+    let makeSpaceshipInterval = setInterval(
+        makeSpaceship, 100
+    )
+
+    stopMakingSpaceships = () => {
+        clearInterval(makeSpaceshipInterval);
+    };
+};
+
+let spaceshipsToggled = false;
+spaceshipCheckbox.addEventListener("click", () => {
+    spaceshipsToggled = !spaceshipsToggled
+    if(spaceshipsToggled){
+        makeSpaceships();
+    } else{
+        stopMakingSpaceships();
+    }
+});

@@ -16,7 +16,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 window.app = app;
 
-import { getAuth, signInAnonymously, createUserWithEmailAndPassword,  
+//https://firebase.google.com/docs/auth/web/manage-users?_gl=1*1etynth*_up*MQ..*_ga*MTUyOTIwNDExLjE3NzYwMTEwMzA.*_ga_CW55HF8NVT*czE3NzYwMTEwMzAkbzEkZzAkdDE3NzYwMTEwMzAkajYwJGwwJGgw
+import { getAuth, signInAnonymously, createUserWithEmailAndPassword, deleteUser,  
     signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 import { getPerformance } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-performance.js";
@@ -25,6 +26,7 @@ import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/12.8.
 
 const auth = getAuth(app);
 window.auth = auth;
+console.log(auth.currentUser);
 
 let setAnon = false;
 
@@ -83,8 +85,9 @@ let setWindowUser = (toThis) => {
 }
 
 let authStateChangedFunction = async (user) => {
-    if (user || auth.currentUser) {
-        if(!user) { user = auth.currentUser; } 
+    console.log(auth.currentUser);
+    if(!user) { user = auth.currentUser; } 
+    if (user) {
         try{
             await initUserData(user);
             userMade(user);
@@ -148,6 +151,37 @@ let signIn = async (email, password) => {
     }
 }
 
+export let signUp = async ({email, password, username="guest", setWindowUser=true, setData=true}={}) => {
+    console.assert(typeof email === "string");
+    console.assert(typeof password === "string");
+    console.assert(typeof username === "string");
+
+    let oldUserData;
+    let oldUserDataEmpty;
+    if(window?.user != null){
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+        oldUserData = userSnap.data();
+        oldUserDataEmpty = isEmptyObject(oldUserData);
+    }
+    const new_user = await createEmail(email, password);
+    if(setWindowUser){
+        window.user = new_user;
+    }
+
+    if(!oldUserDataEmpty){
+        console.log(oldUserData);
+        if(setData){
+            console.log("setting to oldUserData...");
+            setUserDatapointWithObject({
+                oldUserData
+            });
+        }
+    }
+    
+    return new_user;
+}
+
 export let signInUp = async (email, password) => {
     try{
         let user = await signIn(email, password);
@@ -155,8 +189,9 @@ export let signInUp = async (email, password) => {
     }
     catch (error){
         console.log(error.code);
-        if(error.code === "auth/user-not-found" || error.code == "auth/invalid-credential"){
-            const new_user = await createEmail(email, password);
+        let needToSignUp = error.code === "auth/user-not-found" || error.code == "auth/invalid-credential";
+        if(needToSignUp){
+            let new_user = await signUp({email: email, password: password});
             return new_user;
         }else {
             // Some other error (wrong password, network, etc.)
@@ -166,13 +201,14 @@ export let signInUp = async (email, password) => {
     }
 }
 
+let isEmptyObject = (obj) => {
+    return Object.keys(obj).length === 0;
+}
+
 export async function initUserData(user){
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
 
-    let isEmptyObject = (obj) => {
-        return Object.keys(obj).length === 0;
-    }
 
     let userEmpty = userSnap.exists() && !isEmptyObject(userSnap.data());
 
@@ -194,7 +230,18 @@ export async function initUserData(user){
 export let deleteUserData = async (user) => {
     const userRef = doc(db, "users", user.uid);
     await setDoc(userRef, {});
-}
+};
+
+export let deleteCurrentUser = async (user=auth.currentUser) => {
+    const userRef = doc(db, "users", user.uid);
+    //delete user
+    try{
+        await deleteUser(user);
+    }
+    catch (error){
+        console.log(error);
+    }
+};
 
 const defaultValues = {
     email: null,
@@ -217,7 +264,7 @@ export let setUserDatapointWithObject = async ( payload = {email: null, displayN
     let detectChangeData = (key) => {
         const payloadDatapoint = payload[key];
 
-        if(!payload.prioritizePayload && key in currentData){
+        if(currentData != null && !payload.prioritizePayload && key in currentData){
             const currentDatapoint = currentData[key];
             changeData(key, currentDatapoint);
         } else {
@@ -237,6 +284,7 @@ export let setUserDatapointWithObject = async ( payload = {email: null, displayN
     updateDoc(userRef, newData);
 
     const updatedSnap = await getDoc(userRef);
+    console.log(updatedSnap);
     return updatedSnap;
 }
 
@@ -300,10 +348,6 @@ export let setUserDatapoint = async (email=null, displayName=null, coins=null, p
     await updateDoc(userRef, updatePayload);
 
     if(projects == null) return;
-
-    /*console.log("the payload got: ", updatePayload);
-
-    console.log("the reason it is bad? ", projects, setProjects, isObjectEmpty(setProjects));*/
 
     let newData = await getUserData();
     return newData;

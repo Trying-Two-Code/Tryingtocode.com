@@ -39,10 +39,6 @@ Hey developer! Read these to know what you should fix:
 - 8
 - TTC
 
-- make coins not squish when hide is removed from their classlist
-- 8
-- TTC
-
 - make create better
 - 8
 - TTC
@@ -52,6 +48,10 @@ Hey developer! Read these to know what you should fix:
 - TTC
 
 - make input() work https://www.npmjs.com/package/sync-message
+- 10
+- TTC
+
+- fix bug where if you have 2 tabs open in section selection and reload 1 and go into the other then it opens over 3 section selections
 - 10
 - TTC
 
