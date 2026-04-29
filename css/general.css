@@ -86,6 +86,9 @@
 
     --nice-button-speed: .25s;
     --nice-button-active: .1s;
+
+    --anchor-color: #95aaee;
+    --anchor-color-hover: #486adb;
 }
 
 .grecaptcha-badge { 
@@ -251,9 +254,32 @@ li, ul {
     list-style-type: none;
 }
 
+a{
+    color: var(--anchor-color);
+}
+a:hover{
+    color: var(--anchor-color-hover);
+}
+
 /*------------------------------------*\
     #TOOLS
 \*------------------------------------*/
+.big-text{
+    font-size: 2rem;
+}
+
+.center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+}
+
+.column{
+    flex-direction: column;
+}
+
 .sticky {
     position: sticky;
     top: 10px;
