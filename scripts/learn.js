@@ -7,6 +7,7 @@ import { setUserDatapoint, getUserData, setupProject, deleteUserData } from "./f
 import './firebase-backend/firebaseProjects.js';
 import './load-projects-into-learn.js';
 import { applySettings, getSettingsObject } from "./settings-functions.js";
+import { getURLAttribute } from "./tools.js";
 
 const LOAD_INDICES = Array.from({length: 33}, (_, i) => [i + 1, "projects"]);
 const DEFAULT_REWARD = 5;
@@ -17,7 +18,7 @@ const PROJECT_PARENT = document.getElementById('project-parent');
 window.resetStats = async () => {
     console.log("reseting stats")
     localStorage.setItem("projects", "{}");
-    localStorage.setItem("coin", 0);n
+    localStorage.setItem("coin", 0);
     await deleteUserData(window.user);
 }
 
@@ -64,18 +65,6 @@ const doSomethingWithProject = (projects) => {
     console.log("projects = ", projects);
 }*/
 
-window.addEventListener("user_set", async () => {
-    const user = window.user;
-    setStat("projects", user.projects || "{}");
-
-    //console.log(window.user.uid);
-    /*findProject({section: "defualt", title: "default-1"}).then(() => 
-        {
-            doSomethingWithProject(resolve);
-        }
-    );*/
-});
-
 export let scrollToTop = () => {
     console.warn("FIX THIS, make it maintainable, and look at phone when it's sideways... bleck!");
 
@@ -113,14 +102,29 @@ try {
     console.log(error);
 }
 
+let changeProjectObj = (obj, owner, language, section, title, content) => {
+    obj[owner] = obj[owner] || {};
+    obj[owner][language] = obj[owner][language] || {};
+    obj[owner][language][section] = obj[owner][language][section] || {};
+    obj[owner][language][section][title] = content;
+    
+    return obj;
+};
+
 // Save or update a project
 let saveProject = (this_proj) => {
+    const owner = getURLAttribute("code-owner");
+    const language = getURLAttribute("code-language");
+    const section = getURLAttribute("code-section");
     const [title, content] = this_proj.split(":");
     let rawProjects = localStorage.getItem("projects");
     console.log("rawProjects", rawProjects);
     let JSONprojects = JSON.parse(rawProjects || "{}");
     console.log("projects", JSONprojects);
-    JSONprojects[title] = content;
+
+    JSONprojects = changeProjectObj(JSONprojects, owner, language, section, title, content);
+    console.log(JSONprojects);
+
     localStorage.setItem("projects", JSON.stringify(JSONprojects));
 
     console.log("SAVING USER PROJECT", JSONprojects);

@@ -269,6 +269,24 @@ export let sampleArray = (array) => {
     return array[choice];
 };
 
+export let getURLAttribute = attributeName => {
+    let getURL = () => {
+        let urlLocation = window.location;
+        let url = new URL(urlLocation);
+        return url;
+    };
+    
+    const url = getURL();
+    const params = new URLSearchParams(url.search);
+
+    console.trace(params, params.get, attributeName);
+    if(params?.get?.(attributeName)){
+        return params.get(attributeName);
+    } else{
+        throw null;
+    }
+}
+
 export let changeURL = ({
     keepOtherVariables=true, 
     newVariables={ /*sectionName: undefined, sectionOwner: undefined, codeLanguage: undefined*/ },
