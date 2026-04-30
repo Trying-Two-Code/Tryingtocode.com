@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../components/art/ttc coin icon.png">
+    <title>Trying to Learn</title>
+
+    <link rel="stylesheet" href="./css/learn.css">   <!--LEARN,   FOR THIS PAGE-->
+    <link rel="stylesheet" href="./css/general.css"> <!--GENERAL, FOR ALL PAGES-->
+    <link rel="stylesheet" href="./css/prism.css">
+    <link rel="stylesheet" href="./css/custom-elements.css">
+
+    <script src="./scripts/youtube.js"></script>
+    <script src="./scripts/init-settings.js"></script>
+    <script src="./scripts/general.js" type="module" defer></script>
+    <script>window.Prism = { manual: true };</script>
+    <script src="./scripts/firebase-backend/firebase.js" type="module" defer></script>
+    <script src="./scripts/prism.js" defer></script>
+    <script src="./scripts/web-elements/footer.js"></script>
+    
+    <script src="./scripts/web-elements/sidebar.js" type="module"></script>
+    <script src="./scripts/web-elements/typeable-code.js" type="module"></script>
+    <script src="./scripts/web-elements/select-section.js" type="module" defer></script>
+    <script src="./scripts/settings-functions.js" type="module" defer></script>
+    
+    <link as="font" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!--Font import-->
+</head>
+<body>
+    <div id="youtube-player" data-js-tag="youtube-player" class="nice-video"></div>
+    <!--         users should be here for 40 seconds before completing a project             -->
+    <ttc-help-beginner-popup showup-time="40" max-xp="50" tutorial-name="project-tutorial-0" video-id="scc4bHEHtZY"></ttc-help-beginner-popup>
+    <div class="row-container">
+        <ttc-sidebar></ttc-sidebar>
+        <div class="main-content main-font" id="main-content" data-js-tag="main-content">
+            <!--div style="position: relative;">
+                <div id="loader" class="loader">
+                    <div class="spinner"></div>
+                    <p style="white-space: nowrap" class="main-font">fetching resources...</p>
+                    <div class="loader-sprite"></div>
+                </div>
+            </div-->
+            <ttc-onboard-question id="initial-question" data-question="do you want to learn to code">
+                <ttc-onboard-awnser data-leads-to="why-learn">yes</ttc-onboard-awnser>
+                <ttc-onboard-awnser data-leads-to="">no</ttc-onboard-awnser>
+            </ttc-onboard-question>
+
+            <ttc-onboard-question id="why-learn" data-question="why do you want to learn code">
+                <ttc-onboard-awnser data-leads-to="" awnser="to make games"></ttc-onboard-awnser>
+                <ttc-onboard-awnser data-leads-to="" awnser="to make websites"></ttc-onboard-awnser>
+                <ttc-onboard-awnser data-leads-to="" awnser="backend stuff"></ttc-onboard-awnser>
+                <ttc-onboard-awnser data-leads-to="" awnser="to make a robot"></ttc-onboard-awnser>
+                <ttc-onboard-awnser data-leads-to="" awnser="to make money"></ttc-onboard-awnser>
+                <ttc-onboard-awnser data-leads-to="" awnser="to look cool"></ttc-onboard-awnser>
+            </ttc-onboard-question>
+
+
+            
+        </div>
+    </div>
+    <canvas class="js-screen" id="learn-screen">
+        <!--shows coins-->
+    </canvas>
+    
+</body>
+</html>
