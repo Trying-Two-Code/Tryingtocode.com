@@ -340,7 +340,6 @@ export class Display {
                     window.addXP(-.01);
             };
         }
-        
     }
 
     async evaluateUserCode(output){
@@ -389,7 +388,7 @@ function rewardPlayer(display){
                 value: (display.reward !== undefined) ? display.reward : defaultReward
             }
         });
-            
+        
         window.dispatchEvent(correctCode);
         display.reward = 0;
         display.completedIcon.classList.remove("hide");
@@ -397,7 +396,6 @@ function rewardPlayer(display){
 }
 
 /* //useful log function
-
 function logDiscrepancy(output, code, json){
     let CI = [json["code-includes"], code];
     let CD = [json["code-discludes"], code];

@@ -12,7 +12,25 @@ const loadJSON = async (section="projects") => {
     return json[section];
 };
 
-window.TTC.loadProjectsFromDatabase = async ({section="default", owner="OFFICIAL"} = {}) => {
+let findUserProgress = (forProject={
+    title: null,
+    section: null,
+    language: null,
+    owner: null
+}) => {
+    console.assert(forProject.title !== null && forProject.section !== null && forProject.language !== null && forProject.owner !== null);
+
+    let localProjects = localStorage.getItem("projects");
+    localProjects = JSON.parse(localProjects);
+    console.log(localProjects)
+    let projectsProgress = localProjects?.[forProject.owner]?.[forProject.language]?.[forProject.section];
+    let projectProgress = projectsProgress?.[forProject.title];
+    console.log(projectsProgress, projectProgress);
+
+    return projectProgress ?? null;
+}
+
+window.TTC.loadProjectsFromDatabase = async ({section="default", owner="OFFICIAL", language="python"} = {}) => {
     let projects = await findProjects({ section : section, owner : owner });
     console.assert(typeof projects === "object");
 
@@ -41,8 +59,14 @@ window.TTC.loadProjectsFromDatabase = async ({section="default", owner="OFFICIAL
             title: project.title,
             reward: reward,
             index: projectIndex,
-            projectData: projectJSON
+            projectData: projectJSON,
+            section: section,
+            owner: owner,
+            language: language
         };
+
+        let progress = findUserProgress(newProject);
+        newProject.progress = progress;
 
         let sendProjectToLearn = new CustomEvent("createLearnProject", {detail: newProject});
         window.TTC.events.dispatchEvent(sendProjectToLearn);

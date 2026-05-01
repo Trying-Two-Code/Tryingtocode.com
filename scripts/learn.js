@@ -159,8 +159,11 @@ let checkCompletion = (title, userData=null) => {
 
 let loadProject = (project, defualtReward=DEFAULT_REWARD, projectIndex=0, JSON, userData=null, lastDisplayNumber=0) => {
     let display = new Display(document, PROJECT_PARENT, JSON, projectIndex);
-    setupProject(display, display.title.innerHTML);
+    
+    setupProject(display, display.title.innerHTML, userData);
 
+    console.log("userData: ", userData);
+    
     return display;
 }
 
@@ -218,13 +221,17 @@ window.TTC.events.addEventListener("createLearnProject", (details) => {
     let title = data.title;
     let reward = data.reward;
     let index = data.index;
+    let progress = data.progress;
     let projectData = data.projectData;
+
+    console.log("details: ", details);
 
     let newProject = loadProject(
         title,
         reward, 
         index, 
-        projectData
+        projectData,
+        progress
     );
     setTimeout(stopLoading, 100); //just a small timeout to be sure nothing weird goes down that the user sees (:
 

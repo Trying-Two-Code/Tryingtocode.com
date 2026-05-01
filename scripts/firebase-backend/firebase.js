@@ -447,11 +447,13 @@ let userMade = (user) => {
 
 let firstBlankProject = true;
 
-export let setupProject = (projectDisplay, projectTitle) => {
+export let setupProject = (projectDisplay, projectTitle, projectUserdata) => {
     let setProjCode = (code, projectDisplay) => {
         if(code != null) {
             projectDisplay.reward = 0;
             projectDisplay.completedIcon.classList.remove("hide");
+            console.log(projectDisplay.codeArea, projectDisplay);
+            projectDisplay.codeArea.projectEl.createPrettyCode(undefined, code);
         }
         if(code == null && firstBlankProject == true){
             console.log("open me please ", projectTitle);
@@ -459,6 +461,8 @@ export let setupProject = (projectDisplay, projectTitle) => {
             projectDisplay.openProject(0);
         }
     }
+
+    setProjCode(projectUserdata, projectDisplay);
 
     let setProjCodeFilled = (code) => {
         setProjCode(code, projectDisplay);
