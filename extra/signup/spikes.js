@@ -21,7 +21,8 @@ export class SpikesObj{
         this.spriteImage = new SpriteImage(ctx, this.image, sprite);
 
         this.isRendering = true;
-        this.continuousRendering();
+
+        this.addToStatic();
     }
 
     tick(scaler=1){
@@ -34,10 +35,10 @@ export class SpikesObj{
     }
 
     move(){
-        let defualt_slowdown = 1500; //the lower this is, the thicker the air feels
-        let drag = 50;
+        let defualt_slowdown = 100; //the lower this is, the thicker the air feels
+        let drag = 50000;
 
-        let dir = SpaceshipObj.generalDirection;
+        let dir = {x: 1, y: 1};
         let normalized_vector = normalizeVector(dir.x, dir.y);
 
         let applyDrag = (velocity, normalized_vector, slowdown=defualt_slowdown) => {
@@ -53,10 +54,6 @@ export class SpikesObj{
         this.y_vel = applyDrag(this.y_vel, normalized_vector[1]);
     }
 
-    continuousRendering(){
-        
-    }
-
     RenderImage(sprite, frames=1, index=0){
         this.spriteImage.RenderImage(sprite, this.x_pos, this.y_pos, frames, index);
         this.detectDestruction();
@@ -66,16 +63,15 @@ export class SpikesObj{
         if(this.x_pos > canvas.width){
             this.isRendering = false;
             this.reference = null;
-            //SpaceshipObj.clearRect();
         }
     }
 
     static alreadyCleared = false;
     static clearRect(){
         if(SpikesObj.alreadyCleared){
-            throw "can't clear twice per frame...";
+            console.log('only clear once buddy.');
         }else{
-            SpaceshipObj.alreadyCleared = true;
+            SpikesObj.alreadyCleared = true;
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             window.requestAnimationFrame(() => {
                 SpikesObj.alreadyCleared = false;
@@ -83,29 +79,31 @@ export class SpikesObj{
         }
     }
 
+    addToStatic(){
+        SpikesObj.allSpikes.push(this);
+        SpikesObj.renderAllSpikes();
+    }
+
+    static allSpikes = [];
     static isRendering = true;
-    static renderAllSpaceships(){
-        if(SpikesObj.isRendering){
-            SpikesObj.clearRect();
+    static renderAllSpikes(){
+        SpikesObj.clearRect();
 
-            let allSpaceships = SpikesObj.spaceships;
-            let deltaTime = timeSince("spaceshiptick", 1);
-            allSpaceships.forEach(spaceship => {
-                spaceship.tick(.01 * deltaTime);
-            });
-            /*SpaceshipObj.spaceships.foreach(spaceship => {
-                spaceship.tick();
-            });*/
+        let allSpikes = SpikesObj.allSpikes;
+        let deltaTime = timeSince("spiketick", 1);
+        allSpikes.forEach(spike => {
+            spike.tick(.0001 * deltaTime);
+        });
 
-            SpikesObj.scaleCTX();
-            SpikesObj.isRendering = false;
-            window.requestAnimationFrame(() => {
-                SpikesObj.isRendering = true;
-                SpikesObj.renderAllSpaceships();
-            });
-        } else{
-            return "no rendering twice all loud";
-        }
+        SpikesObj.scaleCTX();
+
+        if(!SpikesObj.isRendering){ return; }
+
+        SpikesObj.isRendering = false;
+        window.requestAnimationFrame(() => {
+            SpikesObj.isRendering = true;
+            SpikesObj.renderAllSpikes();
+        });
     }
 
     static scaleCTX(){
@@ -145,18 +143,85 @@ function domToCanvas(canvas, dom) {
         y: (dom.y - rect.top) * scaleY
     };
 }
+
+let basicDetectMouseHoverSetupDone = false;
+let sprites = [];
+let detectMouseHover = (forSpike, canvas=null) => {
+    console.log(forSpike, canvas);
+    let sprite = forSpike.image;
+    console.log(forSpike.sprite, forSpike.spriteImage, forSpike.spriteImage.sprite);
+    sprites.push(sprite);
+
+    if(!basicDetectMouseHoverSetupDone){
+        if(!canvas){return "can't do basic setup bro"}
+
+        let detectIn = (mousePos, spike) => {
+            let isIn = (posIsIn, thisVector) => {
+                //ex is posIsIn = 1 in between thisVector = {x1: 3, x2: 7}; NOPE! return false
+                return posIsIn >= thisVector.x1 && posIsIn <= thisVector.x2;
+            }
+            const xVector = {x1: spike.x_pos, x2: spike.x_pos + spike.image.width};
+            const yVector = {x1: spike.y_pos, x2: spike.y_pos + spike.image.height};
+            if(
+                isIn(mousePos.x, xVector) &&
+                isIn(mousePos.y, yVector)
+            ) {
+                return true;
+            }
+            return false;
+        }
+
+        document.addEventListener("mouseover", (event) => {
+            const rect = canvas.getBoundingClientRect();
+
+            const mouseX = event.clientX - rect.left; //convert to window co ordinates
+            const mouseY = event.clientY - rect.top;
+
+            let isMouseInSprite = detectIn({x: mouseX, y: mouseY}, forSpike);
+            if(isMouseInSprite){
+                console.log(isMouseInSprite, mouseX, mouseY, forSpike);
+                location.reload();
+            }
+        });
+
+        //basicDetectMouseHoverSetupDone = true;
+    }
+
+}
+
 let ctx;
 let canvas;
-export let makeSpaceship = () => {
+export let makeSpike = () => {
     canvas = canvas ?? document.getElementById('learn-screen');
     ctx = ctx ?? canvas.getContext('2d');
 
-    let imagestart = "./image/spaceship/spaceship - "
-    let spaceshipImageChoices = ["blue.png", "green.png", "red.png"];
-    let img = imagestart + sampleArray(spaceshipImageChoices);
-    let spaceShip1 = new SpaceshipObj(randInt(-100, -10), randInt(0, 2000), randInt(1, 300), randInt(-5, 5), canvas, ctx, img);
-}
-//spaceShip1.reference = spaceShip1;
-/*
-spaceShip1.isRendering = true;
-spaceShip1.continuousRendering();*/
+    let imagestart = "./image/spikes/spikes-"
+    let spikeImageChoices = ["1.png", "3.png"];
+    let img = imagestart + sampleArray(spikeImageChoices);
+    let spike1 = new SpikesObj(randInt(-100, -10), randInt(0, 2000), randInt(1, 300), randInt(-5, 5), canvas, ctx, img);
+
+    detectMouseHover(spike1, canvas);
+};
+
+export let makeSpikes = (amm=1) => {
+    for (let index = 0; index < amm; index++) {
+        makeSpike();
+    }
+};
+
+/**AI CODE!!!
+ * canvas.addEventListener("click", (e) => {
+    const rect = canvas.getBoundingClientRect();
+
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    if (
+        mouseX >= sprite.x &&
+        mouseX <= sprite.x + sprite.width &&
+        mouseY >= sprite.y &&
+        mouseY <= sprite.y + sprite.height
+    ) {
+        console.log("sprite clicked");
+    }
+}); */

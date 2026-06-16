@@ -1,6 +1,7 @@
 //this connects the signup page to firebase api
 import { signUp } from "../../scripts/firebase-backend/firebase.js";
 import { makeSpaceship } from "./spaceship.js";
+import { makeSpikes } from "./spikes.js";
 import { sampleArray, randInt, timeSince } from "../../scripts/tools.js";
 
 let passwordField = document.body.querySelector("[data-js-tag='password-field']");
@@ -408,5 +409,27 @@ spaceshipCheckbox.addEventListener("click", () => {
         makeSpaceships();
     } else{
         stopMakingSpaceships();
+    }
+});
+
+let makeStopableInterval = (callback, interval=100) => {
+    let intervalCallback = setInterval(
+        callback, interval 
+    );
+
+    let stopInterval = () => {
+        clearInterval(intervalCallback)
+    }
+    return stopInterval;
+};
+
+let spikesToggled = false
+let stopMakingSpikes;
+spikesCheckbox.addEventListener("click", () => {
+    spikesToggled = !spikesToggled;
+    if(spikesToggled){
+        stopMakingSpikes = makeStopableInterval(makeSpikes, 2000);
+    } else{
+        stopMakingSpikes();
     }
 });
