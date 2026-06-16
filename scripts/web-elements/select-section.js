@@ -3,6 +3,12 @@ import { applySettings, editSetting } from "../settings-functions.js";
 import { changeURL } from "../tools.js";
 import { deleteAllTextareasExport } from "./typeable-code.js";
 
+const loadJSON = async (section="projects") => {
+    const response = await fetch('../python-projects.json');
+    const json = await response.json();
+    return json[section];
+};
+
 class TTCSectionButton extends HTMLElement{
     static selectionInstances = new Set();
     static id = 0;
@@ -48,6 +54,8 @@ class TTCSectionButton extends HTMLElement{
         `;
         this.classList.add(`${this.classOrientation}`);
         applySettings();
+
+        this.isUserFinished();
     }
 
     findElements(){
@@ -103,6 +111,21 @@ class TTCSectionButton extends HTMLElement{
     }
     hideMe(){
         this.classList.add("hide");
+    }
+
+    async isUserFinished(){
+        let dataAboutSection = await loadJSON();
+        console.log("...", dataAboutSection);
+        let completedSections = 1; 
+        let totalSections = 2; 
+
+        if(completedSections === totalSections){
+            return true;
+        } else if(completedSections > totalSections){
+            throw "more completed sections than there actually are......";
+        } else{
+            return false;
+        }
     }
 
     static hideAllSections(){

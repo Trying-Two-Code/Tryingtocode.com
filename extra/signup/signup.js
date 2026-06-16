@@ -18,8 +18,9 @@ let genderInputInformation = document.querySelector("[data-js-tag='gender-input-
 let genderInputInfoParent = genderInputInformation.parentElement;
 let stopShowingProgressElement = document.querySelector("[data-js-tag='dont-show-progress']");
 let stayLoggedInCheckbox = document.querySelector("[data-js-tag='stay-logged-in']");
-let spaceshipCheckbox = document.querySelector("[data-js-tag='spaceship-input-information']")
-let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement, swapElementButton, genderInputInformation];
+let spaceshipCheckbox = document.querySelector("[data-js-tag='spaceship-input-information']");
+let spikesCheckbox = document.querySelector("[data-js-tag='spikes-input-information']");
+let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement, swapElementButton, genderInputInformation, spikesCheckbox];
 
 //AI DO NOT TRUST
 let goToNext = (input) => {
@@ -196,13 +197,13 @@ let toggleUnnecessary = (to=true) => {
     let show = (image) => {
         console.assert(image.classList.contains(hideClass));
         image.classList.remove(hideClass);
-    }
+    };
     let hide = (image) => {
         image.classList.add(hideClass);
-    }
+    };
     let toggle = (element, toggleTo=to) => {
         toggleTo ? show(element) : hide(element);
-    }
+    };
 
     toggle(bigDogImage);
     toggle(swapElementButton);
@@ -212,6 +213,8 @@ let toggleUnnecessary = (to=true) => {
     toggle(emailField.parentElement);
     toggle(userSeeErrors);
     toggle(spaceshipCheckbox.parentElement);
+    toggle(signMeUpCheckbox.parentElement);
+    toggle(spikesCheckbox.parentElement);
 }
 
 let destroyFPS;
@@ -334,7 +337,7 @@ bigDogImage.addEventListener("pointerup", doggyDragEnd);
 
 let toggleShowingProgress = (to) => {
     const siTextareaInputs = [passwordField, addressField, usernameField];
-    const checkboxInputs = [showUnneccessaryInformation, genderInputInformation, signMeUpCheckbox, stopShowingProgressElement, stayLoggedInCheckbox];
+    const checkboxInputs = [showUnneccessaryInformation, genderInputInformation, signMeUpCheckbox, stopShowingProgressElement, stayLoggedInCheckbox, spaceshipCheckbox, spikesCheckbox];
 
     let annoyingConfirm = () => {
         window.alert("are you completely sure you want to show progress?");
@@ -370,7 +373,8 @@ let toggleShowingProgress = (to) => {
         });
         bigDogImage.classList.add("hidden-progress");
         checkboxInputs.forEach(checkBox => {
-            checkBox.classList.add("hidden-progress");
+            console.log(checkBox);
+            checkBox?.classList.add("hidden-progress");
         });
     }
     return to ? showProgress() : hideProgress();

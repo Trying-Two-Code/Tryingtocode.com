@@ -14,6 +14,7 @@
 :root{
     --anoying-px-amm-1: 200px;
 
+    --border-color: rgba(22, 22, 22, 1);
 }
 
 img{
@@ -24,18 +25,79 @@ img{
 /*------------------------------------*\ 
     #MAIN
 /*------------------------------------*/ 
+@media (orientation: landscape) {
+    .signup-container{
+        height: calc(100vh - 200px);
+        
+    }
+        
+}
+@media (orientation: portrait) {
+    .signup-container{
+        height: calc(100vh);
+        padding-block: 0px !important;
+    }
+    .actual-factual-sign-in-box{
+        height: 100vh;
+    }
+        
+}
 .signup-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100%;
-    height: 100%;
-    text-align: center;
-    flex-direction: column;
-
     padding-block: 100px;
-    align-self: center;
+}
+
+@media (orientation: landscape) {
+    .signup-title-container{
+        height: 34%;
+    }
+}
+
+@media (orientation: portrait) {
+    .signup-title-container{
+        height: 34%;
+    }
+}
+
+.signup-title-container{
+    width: 100%;
     justify-self: center;
+    top: 0;
+    padding-block: 0;
+}
+
+@media (orientation: landscape) {
+    .signup-title{
+        padding-bottom: 50px;
+    }
+}
+
+.signup-title{
+    font-size: 2rem !important;
+    text-align: left;
+    --bottom-rad: 10px;
+    
+    border-bottom: #747474 solid 0px;
+
+    overflow: hidden;
+}
+
+.signup-logo{
+    padding-block: 0%;
+
+    image-rendering: pixelated;
+    --size: 100px;
+    align-self: center;
+    width: var(--size);
+    height: var(--size);
+    transform: rotate(10deg);
+}
+
+.big-button{
+    margin-block: 5px;
+    padding: 10px !important;
+    text-align: center;
+    box-sizing: content-box;
 }
 
 .center-all{
@@ -50,14 +112,17 @@ img{
 
 .actual-factual-sign-in-box{
     /*background-image: url("./image/jaclou-dl-eurasier-aloha-puppy-9442845 (1).webp");*/
-    position: relative;
     display: flex;
-    align-items: left;
+    position: relative;
     flex-direction: column;
+    align-items: first baseline;
+    justify-content: space-evenly;
     /*background-color: #161616c2;*/
-    background: radial-gradient(circle,rgba(22, 22, 22, 1) 0%, rgba(29, 29, 29, 0.92) 100%);
+    background: var(--border-color);
     
-    padding: 5%;
+    margin: 5%;
+    padding-inline: 5%;
+    padding-block: 10%;
     --corner-offset: 50px;
     --opposite-corner: calc(100% - var(--corner-offset));
     clip-path: polygon(
@@ -70,6 +135,14 @@ img{
 
     -webkit-box-shadow: 13px 21px 49px -3px #534040; 
     box-shadow: 13px 21px 49px -3px #502727;
+}
+
+.main-inputs{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: left;
+    padding-inline: 5%;
 }
 
 .actual-factual-sign-in-box::before {
@@ -114,17 +187,17 @@ img{
 /*------------------------------------*/ 
 .si-input {
 	display: flex;
-	justify-content: center;
-	align-items: center;
-    vertical-align: middle;
+	justify-content: inherit;
+    align-items: inherit;
+	align-items: inherit;
+    vertical-align: inherit;
 
     --padding-and-border: 2px;
     padding: var(--padding-and-border);
     border-width: var(--padding-and-border);
 
-	width: calc(100% - var(--padding-and-border) * 4);
 	height: 1.5em;
-	text-align: center;
+	text-align: left;
 	margin: 0.5rem 0.5rem; /* uniform spacing */
 	font-size: 0.8em;
 	line-height: 0.9em;
@@ -132,6 +205,18 @@ img{
     margin-inline: 0 !important;
 
     background-color: #3b3b3b;
+}
+
+@media (orientation: landscape) {
+    .si-input{
+	    width: calc(90% - var(--padding-and-border) * 4);
+    }
+}
+
+@media (orientation: portrait) {
+    .si-input{
+        width: 90%;
+    }
 }
 
 .gender{
@@ -172,6 +257,11 @@ img{
 /*------------------------------------*\ 
     #ANNOYING
 /*------------------------------------*/ 
+.show-unnecessary-container{
+    padding-block: 5px;
+    text-align: left;
+}
+
 .log-me-in{
     margin: 10px;
 }

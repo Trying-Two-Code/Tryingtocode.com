@@ -33,16 +33,13 @@
 
 
     <div class="signup-container">
-        <img data-js-tag="big-dog-image" class="annoying-element annoying-image hide petme" src="./image/jaclou-dl-eurasier-aloha-puppy-9442845 (1).webp" alt=""></img>
 
         <div class="main-font center-all">
             <form class="actual-factual-sign-in-box">
+                <!--img class="signup-logo" src="/components/visuals/logos/coin/pixel-1.png" alt="ttc"-->
                 <!--ttc-sign-in></ttc-sign-in-->
-                <div data-js-tag="">
-                    <h1 class="main-font">sign up!</h1>
-                </div>
                 
-                <div class="log-me-in" name="sign-up-toggle">
+                <div class="log-me-in hide" name="sign-up-toggle">
                     <label for="log-me-in" class="horrible-label">sign me up</label>
                     <input data-js-tag="log-me-in" type="checkbox" value="stay-in" id="log-me-in" class="annoying-element horrible-input" required></input>
                 </div>
@@ -50,12 +47,13 @@
                     <label for="dont-show-progress" class="horrible-label">don't show progress</label>
                     <input data-js-tag="dont-show-progress" type="checkbox" value="stay-in" id="dont-show-progress" class="annoying-element horrible-input" required></input>
                 </div>
-                <div class="" name="show-unnecessary">
-                    <label for="show-unnecessary" class="horrible-label">show unnecessary information</label>
-                    <input data-js-tag="show-unnecessary-information" type="checkbox" value="stay-in" id="show-unnecessary" class="horrible-input" required></input>
-                </div>
 
-                <div>
+                <div class="main-inputs">
+
+                    <div data-js-tag="" class="signup-title-container">
+                        <h1 class="main-font signup-title">sign up!</h1>
+                    </div>
+
                     <div class="gender hide" name="gender-field">
                         <label for="gender-input" class="horrible-label">are you they/slay?</label>
                         <input data-js-tag="gender-input-information" type="checkbox" value="stay-in" id="gender-input" class="horrible-input" required></input>
@@ -63,6 +61,10 @@
                     <div class="hide" name="spaceship-field">
                         <label for="spaceship-input" class="horrible-label">spaceships</label>
                         <input data-js-tag="spaceship-input-information" type="checkbox" value="stay-in" id="spaceship-input" class="horrible-input" required></input>
+                    </div>
+                    <div class="hide" name="spikes-field">
+                        <label for="spikes-input" class="horrible-label">add spikes</label>
+                        <input data-js-tag="spikes-input-information" type="checkbox" value="stay-in" id="spikes-input" class="horrible-input" required></input>
                     </div>
                     <div class="hide" name="address-field">
                         <input data-js-tag="address-field" pattern="^[a-zA-Z0-9\s,.'-]{10,}$" class="input-box si-input main-font" placeholder="address" name="adress" id="" required minlength="10" maxlength="100" rows="3"></input>
@@ -75,23 +77,30 @@
                     <p data-js-tag="fps-counter" class="main-font fps">fps:1</p>
                     <button data-js-tag="swap-elements" class="main-font hide swap-elements-button">swap random elements</button>
                     <input data-js-tag="password-field" autocomplete="new-password" type="password" class="input-box si-input main-font" placeholder="password" name="password" id="" pattern=".{5,}" minlength="5" maxlength="100" rows="1" required></input>
-                </div>
+                    
+                    <div class="show-unnecessary-container" name="show-unnecessary">
+                        <label for="show-unnecessary" class="horrible-label">unnecessary info</label>
+                        <input data-js-tag="show-unnecessary-information" type="checkbox" value="stay-in" id="show-unnecessary" class="horrible-input" required></input>
+                    </div>
 
-                <div class="row-container left-side">
-                    <button data-js-tag="submit-button" class="nice-bg-button nice-button left-side main-font">
-                        create account
-                        <!--img src="../../components/visuals/icons/project/run-code/pixel-1.png" alt="submit"-->
-                    </button>
-                    <div>
-                        <label for="stay-logged-in" class="horrible-label">keep me logged in</label>
-                        <input data-js-tag="stay-logged-in" class="annoying-element horrible-input" type="checkbox" value="stay-in" id="stay-logged-in" checked></input>
+                    <div class="row-container left-side">
+                        <button data-js-tag="submit-button" class="nice-bg-button nice-button left-side main-font big-button">
+                            sign up
+                            <!--img src="../../components/visuals/icons/project/run-code/pixel-1.png" alt="submit"-->
+                        </button>
+                        <!--div>
+                            <label for="stay-logged-in" class="horrible-label">keep me logged in</label>
+                            <input data-js-tag="stay-logged-in" class="annoying-element horrible-input" type="checkbox" value="stay-in" id="stay-logged-in" checked></input>
+                        </div-->
                     </div>
                 </div>
             </form>
             
         </div>
+    </div>        
+    
+    <img data-js-tag="big-dog-image" class="dog-image annoying-element annoying-image hide petme" src="./image/jaclou-dl-eurasier-aloha-puppy-9442845 (1).webp" alt=""></img>
 
-    </div>
 
 </body>
 </html>

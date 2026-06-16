@@ -23,6 +23,10 @@ Hey developer! Read these to know what you should fix:
 - 3
 - TTC
 
+- fix firebase script at some point
+- 6
+- TTC
+
 - js files need to be optimised and cleaned | make sure to work on tools.js
 - 7
 - TTC

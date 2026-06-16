@@ -111,6 +111,10 @@ let changeProjectObj = (obj, owner, language, section, title, content) => {
     return obj;
 };
 
+let getSectionLength = () => {
+
+}
+
 // Save or update a project
 let saveProject = (this_proj) => {
     const owner = getURLAttribute("code-owner");
@@ -124,6 +128,8 @@ let saveProject = (this_proj) => {
 
     JSONprojects = changeProjectObj(JSONprojects, owner, language, section, title, content);
     console.log(JSONprojects);
+    JSONprojects[owner][language][section].dataSectionLength = window.TTC.projectLength;
+    console.log("setting the length too: ", JSONprojects[owner][language][section]);
 
     localStorage.setItem("projects", JSON.stringify(JSONprojects));
 
@@ -180,6 +186,7 @@ let loadProjectsFunction = async (projectsList, section="projects") => {
 
     let projectList = [];
 
+    window.TTC.projectLength = projectsList.length;
     for (let item of projectsList){
         let new_project = loadProject(item[0], DEFAULT_REWARD, projectIndex, JSON[projectIndex + 1], userData, projectList.length);
         let proj_display = new_project;

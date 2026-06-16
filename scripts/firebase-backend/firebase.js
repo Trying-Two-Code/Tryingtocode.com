@@ -1,3 +1,4 @@
+//goals: fix this script!
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js';
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app-check.js";
 import "./firebaseUserdata.js";
@@ -14,7 +15,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-window.app = app;
+window.TTC.app = app;
 
 //https://firebase.google.com/docs/auth/web/manage-users?_gl=1*1etynth*_up*MQ..*_ga*MTUyOTIwNDExLjE3NzYwMTEwMzA.*_ga_CW55HF8NVT*czE3NzYwMTEwMzAkbzEkZzAkdDE3NzYwMTEwMzAkajYwJGwwJGgw
 import { getAuth, signInAnonymously, createUserWithEmailAndPassword, deleteUser,  
@@ -32,7 +33,9 @@ let setAnon = false;
 
 setPersistence(auth, browserLocalPersistence).then(() => {
     if(setAnon){
-        anonSign();
+        anonSign().then(() => {
+            console.log("old user was destroyed!");
+        });
     }
 }).catch((error) => {
     console.error(error);
@@ -86,7 +89,12 @@ let setWindowUser = (toThis) => {
 
 let authStateChangedFunction = async (user) => {
     console.log(auth.currentUser);
-    if(!user) { user = auth.currentUser; } 
+    if(!user) { 
+        user = auth.currentUser;
+        setAnon = true;
+        console.log("User signed out? Or error with user.");
+        //anonSign();
+    } 
     if (user) {
         try{
             await initUserData(user);
@@ -94,10 +102,6 @@ let authStateChangedFunction = async (user) => {
         } catch (error) {
             console.error(error);
         }
-    } else {
-        setAnon = true;
-        console.log("User signed out? Or error with user.");
-        //anonSign();
     }
 }
 
@@ -108,12 +112,12 @@ export let signUserOut = async () => {
     }).catch((error) => {
         console.error(error);
     });
-}
+};
 
 let startAuth = async (user) => {
     await auth.authStateReady();
     await authStateChangedFunction(user);
-}
+};
 
 startAuth();
 
@@ -195,7 +199,7 @@ export let signInUp = async (email, password) => {
             return new_user;
         }else {
             // Some other error (wrong password, network, etc.)
-            console.error(error);
+            console.error("user was not signed in or up because: ", error);
             throw error;
         }
     }
@@ -208,7 +212,6 @@ let isEmptyObject = (obj) => {
 export async function initUserData(user){
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
-
 
     let userEmpty = userSnap.exists() && !isEmptyObject(userSnap.data());
 
@@ -232,6 +235,7 @@ export let deleteUserData = async (user) => {
     await setDoc(userRef, {});
 };
 
+//why is this here? isn't deleteUser good enough? Ig this is easier to call tho
 export let deleteCurrentUser = async (user=auth.currentUser) => {
     const userRef = doc(db, "users", user.uid);
     //delete user
@@ -365,17 +369,6 @@ export let increaseCoins = async (byAmmount=5) => {
     let updatePayload = { coins: increment(byAmmount) };
     console.log('PAYLOAD: ', updatePayload);
 
-    /*let incrementLocalCoins = (amm) => {
-        let currentCoins = localStorage.getItem("coin");
-        currentCoins = Math.round(currentCoins);
-        localStorage.setItem('coin', currentCoins + amm);
-    }
-    try{
-        incrementLocalCoins(byAmmount);
-    } catch (error){
-        console.log(error);
-    }*/
-
     await updateDoc(userRef, updatePayload);
 }
 
@@ -445,8 +438,9 @@ let userMade = (user) => {
     printProjects();
 }   
 
-let firstBlankProject = true;
+window.TTC.firstBlankProject = true;
 
+//this should definitely not be in this script.
 export let setupProject = (projectDisplay, projectTitle, projectUserdata) => {
     let setProjCode = (code, projectDisplay) => {
         if(code != null) {
@@ -455,9 +449,9 @@ export let setupProject = (projectDisplay, projectTitle, projectUserdata) => {
             console.log(projectDisplay.codeArea, projectDisplay);
             projectDisplay.codeArea.projectEl.createPrettyCode(undefined, code);
         }
-        if(code == null && firstBlankProject == true){
+        if(code == null && window.TTC.firstBlankProject == true){
             console.log("open me please ", projectTitle);
-            firstBlankProject = false;
+            window.TTC.firstBlankProject = false;
             projectDisplay.openProject(0);
         }
     }
@@ -471,7 +465,10 @@ export let setupProject = (projectDisplay, projectTitle, projectUserdata) => {
     updateProjects.push([setProjCodeFilled, projectTitle]);
 }
 
+//why is this all the way down here?
 let anonSign = async () => {
+    console.log("old user is being destroyed!");
+    
     if(typeof window.user !== "undefined") { console.error("user already exists, why you doing this?"); throw "uh oh, don't do that"; }
 
     await signInAnonymously(auth).then((userCredential) => {

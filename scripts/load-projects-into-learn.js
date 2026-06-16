@@ -30,11 +30,15 @@ let findUserProgress = (forProject={
     return projectProgress ?? null;
 }
 
+
+
 window.TTC.loadProjectsFromDatabase = async ({section="default", owner="OFFICIAL", language="python"} = {}) => {
     let projects = await findProjects({ section : section, owner : owner });
     console.assert(typeof projects === "object");
 
     const projectKeys = Object.keys(projects);
+    window.TTC.firstBlankProject = true;
+    window.TTC.projectLength = projectKeys.length;
     console.log("you need to order these by priority");
     for (let keyIndex = 0; keyIndex < projectKeys.length; keyIndex++) {
         const key = projectKeys[keyIndex];
