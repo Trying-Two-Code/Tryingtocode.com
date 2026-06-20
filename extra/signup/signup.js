@@ -21,7 +21,13 @@ let stopShowingProgressElement = document.querySelector("[data-js-tag='dont-show
 let stayLoggedInCheckbox = document.querySelector("[data-js-tag='stay-logged-in']");
 let spaceshipCheckbox = document.querySelector("[data-js-tag='spaceship-input-information']");
 let spikesCheckbox = document.querySelector("[data-js-tag='spikes-input-information']");
-let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement, swapElementButton, genderInputInformation, spikesCheckbox];
+let usertypeDropdown = document.querySelector("[data-js-tag='signup-input-acc-type']");
+let weirdNamesElement = document.querySelector("[data-js-tag='weird-names']");
+let weirdShapeContainer = document.querySelector("[data-js-tag='weird-shapes-container']");
+let weirdShapeSelect = weirdShapeContainer.querySelector("[data-js-tag='weird-shapes-side-selection']");
+let weirdShapeImage = weirdShapeContainer.querySelector("[data-js-tag='weird-shapes-image']");
+let allFormElements = [passwordField, usernameField, submitButton, signMeUpCheckbox, frameRateElement, 
+    swapElementButton, genderInputInformation, spikesCheckbox, usertypeDropdown, weirdNamesElement];
 
 //AI DO NOT TRUST
 let goToNext = (input) => {
@@ -132,14 +138,27 @@ let properAwnser = "sure";
 let possibleAwnsers = ["yea yea", "mhm", "okay dokay", "uhuh", "sounds good", "yeppp"];
 
 let checkSubmit = event => {
-    if(!isDoggyGood){
-        window.alert("please pet the puppy");
+
+    let submitNoGood = !isDoggyGood || !usertypeDropdownWasPressed || !spikesToggled || !spaceshipsToggled ||
+    !stopShowingProgressToggled || !genderToggled || weirdShapeSelectAwnser;
+
+    if(submitNoGood){
+        window.alert("please complete all steps");
+        if(randInt(0, 10) === 9){
+            window.alert("all data will be deleted for security reasons");
+            window.alert("just kidding.");
+        }
         resetAllThings();
         return false;
     }
 
     return true
 }
+
+let genderToggled = false;
+genderInputInformation.addEventListener("click", () => {
+    genderToggled = !genderToggled;
+})
 
 submitButton.addEventListener("click", (event) => {
     if (!checkSubmit(event)){
@@ -216,6 +235,7 @@ let toggleUnnecessary = (to=true) => {
     toggle(spaceshipCheckbox.parentElement);
     toggle(signMeUpCheckbox.parentElement);
     toggle(spikesCheckbox.parentElement);
+    toggle(usertypeDropdown);
 }
 
 let destroyFPS;
@@ -335,6 +355,38 @@ bigDogImage.addEventListener("touchstart", doggyDragStart);
 bigDogImage.addEventListener("touchend", doggyDragStart);*/
 bigDogImage.addEventListener("pointerdown", doggyDragStart);
 bigDogImage.addEventListener("pointerup", doggyDragEnd);
+                                       
+let signUpTitle = document.querySelector("[data-js-tag='sign-up-title']")
+let makeWeirdNames = () => {
+    let switchName = (element, newName, field="innerHTML") => {
+        let oldName = element[field];
+        element[field] = newName;
+        return () => {element[field] = oldName};
+    }
+    let switchBackTitle = switchName(signUpTitle, "initiate account creation!");
+    let switchBackEmail = switchName(emailField, "electric mail service user field", "placeholder");
+    let switchBackPassword = switchName(passwordField, "unique identifier certification string", "placeholder");
+
+    let switchBackAll = () => {
+        switchBackTitle();
+        switchBackEmail();
+        switchBackPassword();
+    }
+    return switchBackAll;
+}
+
+let weirdNamesActive = false;
+let switchBackWeirdNames;
+weirdNamesElement.addEventListener("click", () => {
+    weirdNamesActive = !weirdNamesActive;
+    if(weirdNamesActive){
+        switchBackWeirdNames = makeWeirdNames();
+    }else{
+        switchBackWeirdNames();
+    }
+}); 
+console.log("YO LOOK HERE NOW JUNE 19: ", weirdNamesElement);
+//makeWeirdNames();
 
 let toggleShowingProgress = (to) => {
     const siTextareaInputs = [passwordField, addressField, usernameField];
@@ -361,16 +413,16 @@ let toggleShowingProgress = (to) => {
         if(!annoyingConfirm()) {return false;}
 
         siTextareaInputs.forEach(textarea => {
-            textarea.classList.remove("si-input-bad");
+            textarea?.classList.remove("si-input-bad");
         });
         bigDogImage.classList.remove("hidden-progress");
         checkboxInputs.forEach(checkBox => {
-            checkBox.classList.remove("hidden-progress");
+            checkBox?.classList.remove("hidden-progress");
         });
     }
     let hideProgress = () => {
         siTextareaInputs.forEach(textarea => {
-            textarea.classList.add("si-input-bad");
+            textarea?.classList.add("si-input-bad");
         });
         bigDogImage.classList.add("hidden-progress");
         checkboxInputs.forEach(checkBox => {
@@ -423,7 +475,7 @@ let makeStopableInterval = (callback, interval=100) => {
     return stopInterval;
 };
 
-let spikesToggled = false
+let spikesToggled = false;
 let stopMakingSpikes;
 spikesCheckbox.addEventListener("click", () => {
     spikesToggled = !spikesToggled;
@@ -431,5 +483,65 @@ spikesCheckbox.addEventListener("click", () => {
         stopMakingSpikes = makeStopableInterval(makeSpikes, 2000);
     } else{
         stopMakingSpikes();
+    }
+});
+
+document.addEventListener("click", () => {
+    document.body.classList.add("mild-hide");
+    setTimeout(() => {
+        document.body.classList.remove("mild-hide");
+    }, 1);
+});
+
+let showACoupleMoreElements = () => {
+    if (!window.confirm("are you sure about that choice?")){
+        return false;
+    }
+    weirdNamesElement.parentElement.classList.remove("hide");
+    weirdShapeContainer.classList.remove("hide");
+}
+
+let usertypeDropdownWasPressed = false;
+usertypeDropdown.addEventListener("change", (event) => {
+    console.log("user type changed!");
+    usertypeDropdownWasPressed = true;
+    if(!showACoupleMoreElements()){
+        event.preventDefault();
+    }
+});
+
+let selectWeirdImage = () => {
+    const startExtension = "./image/weird-shape/";
+    const awnsers = {
+        "shape-1.png": "11",
+        "shape-2.png": "13",
+        "shape-3.png": "14",
+        "shape-4.png": "10",
+        "shape-5.png": "5"
+    }
+    const weirdImages = [
+        "shape-1.png",
+        "shape-2.png",
+        "shape-3.png",
+        "shape-4.png",
+        "shape-5.png"
+    ];
+
+    let choice = sampleArray(weirdImages);
+    let fullPath = startExtension + choice;
+    let awnser = awnsers[choice];
+
+    weirdShapeImage.src = fullPath;
+
+    return awnser;
+}
+
+const weirdShapeCountAwnser = selectWeirdImage();
+let weirdShapeSelectAwnser = false;
+weirdShapeSelect.addEventListener("change", (event) => {
+    if(weirdShapeSelect.value === weirdShapeCountAwnser) {
+        weirdShapeSelectAwnser = true;
+    } else{
+        weirdShapeSelectAwnser = false;
     }
 });

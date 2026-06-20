@@ -3,6 +3,7 @@
  */
 
 import { randInt, sampleArray, SpriteImage, timeSince } from "./../../scripts/tools.js";
+import { SpaceshipObj } from "./spaceship.js";
 
 export class SpikesObj{
 
@@ -68,8 +69,8 @@ export class SpikesObj{
 
     static alreadyCleared = false;
     static clearRect(){
-        if(SpikesObj.alreadyCleared){
-            console.log('only clear once buddy.');
+        if(SpikesObj.alreadyCleared || SpaceshipObj.alreadyCleared){
+            //console.log('only clear once buddy.');
         }else{
             SpikesObj.alreadyCleared = true;
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -145,12 +146,11 @@ function domToCanvas(canvas, dom) {
 }
 
 let basicDetectMouseHoverSetupDone = false;
-let sprites = [];
+let spikes = [];
 let detectMouseHover = (forSpike, canvas=null) => {
-    console.log(forSpike, canvas);
-    let sprite = forSpike.image;
-    console.log(forSpike.sprite, forSpike.spriteImage, forSpike.spriteImage.sprite);
-    sprites.push(sprite);
+    let spike = forSpike;
+    spikes.push(spike);
+
 
     if(!basicDetectMouseHoverSetupDone){
         if(!canvas){return "can't do basic setup bro"}
@@ -177,14 +177,17 @@ let detectMouseHover = (forSpike, canvas=null) => {
             const mouseX = event.clientX - rect.left; //convert to window co ordinates
             const mouseY = event.clientY - rect.top;
 
-            let isMouseInSprite = detectIn({x: mouseX, y: mouseY}, forSpike);
-            if(isMouseInSprite){
-                console.log(isMouseInSprite, mouseX, mouseY, forSpike);
-                location.reload();
+            for (let index = 0; index < spikes.length; index++) {
+                const spk = spikes[index];
+                let isMouseInSprite = detectIn({x: mouseX, y: mouseY}, spk);
+                if(isMouseInSprite){
+                    console.log(isMouseInSprite, mouseX, mouseY, spk);
+                    location.reload();
+                }
             }
         });
 
-        //basicDetectMouseHoverSetupDone = true;
+        basicDetectMouseHoverSetupDone = true;
     }
 
 }
@@ -208,20 +211,3 @@ export let makeSpikes = (amm=1) => {
         makeSpike();
     }
 };
-
-/**AI CODE!!!
- * canvas.addEventListener("click", (e) => {
-    const rect = canvas.getBoundingClientRect();
-
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    if (
-        mouseX >= sprite.x &&
-        mouseX <= sprite.x + sprite.width &&
-        mouseY >= sprite.y &&
-        mouseY <= sprite.y + sprite.height
-    ) {
-        console.log("sprite clicked");
-    }
-}); */

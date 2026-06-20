@@ -257,6 +257,10 @@ img{
 /*------------------------------------*\ 
     #ANNOYING
 /*------------------------------------*/ 
+.mild-hide{
+    opacity: 0.1;
+}
+
 .show-unnecessary-container{
     padding-block: 5px;
     text-align: left;
