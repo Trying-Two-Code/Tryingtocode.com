@@ -49,6 +49,24 @@
 	display: none;
 }
 
+
+/*------------------------------------*\
+    #GENERAL
+\*------------------------------------*/
+body {
+    /*background: var(--palette-serika-3); gradient for success?
+    background: radial-gradient(circle,var(--palette-serika-3) 0%, var(--palette-serika-5) 100%);*/
+    overflow-x: hidden; /*this gets rid of horizontal bar*/
+    padding: 0px;
+    margin: 0px;
+    -webkit-tap-highlight-color: #0e0d0b11;
+	/*
+    background-image: linear-gradient(94deg,rgba(11, 93, 30, 1) 0%, rgb(73, 139, 71) 100%) 4px;
+	*/
+    background-color: var(--palette-index-1);
+	
+}
+
 /*------------------------------------*\
     #SIGN IN
 \*------------------------------------*/

@@ -78,6 +78,10 @@
         transform: rotate(90deg);
         image-rendering: pixelated;
     }
+    .hide-for-mobile{
+        opacity: 0;
+        display: none;
+    }
 }
 
 /*------------------------------------*\ 

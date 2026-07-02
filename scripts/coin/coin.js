@@ -95,7 +95,7 @@ if(canvas){
 }
 
 let center = (clientRect, isVerticle) => {
-    return  clientRect.top;
+    //return  clientRect.top;
     if(isVerticle) return (- clientRect.top + clientRect.bottom) / 2;
     return (- clientRect.left + clientRect.right) / 2;
 }
@@ -161,10 +161,12 @@ let subtractString = (a, b) => {
 }
 
 let incrimentDisplayNumber = (amm=1, startString='') => {
-    let currentCoins = parseInt(subtractString(sidebarElement.coinCounter.innerHTML, startString));
-    let newCoins = currentCoins + amm;
+    if(sidebarElement != null) {
+        let currentCoins = parseInt(subtractString(sidebarElement.coinCounter.innerHTML, startString));
+        let newCoins = currentCoins + amm;
 
-    updateDisplayNumber(newCoins, startString);
+        updateDisplayNumber(newCoins, startString);
+    }
 }
 
 export let changeNumber = (amm, startString='') => {

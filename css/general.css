@@ -68,6 +68,11 @@
     --palette-serika-4: #718F94;
     --palette-serika-5: #282828;
 
+    --palette-index-1: #07090F;
+    --palette-index-2: #8B8B8B;
+    --palette-index-3: #74E924;
+    --palette-index-4: #FFC437;
+
     --z-base: 0;
     --z-sidebar: 5;
     --z-dropdown: 10;
@@ -182,6 +187,7 @@ body {
 }
 
 .main-content {
+    position: relative;
     margin-bottom: 0px;
     width: 100%;
     margin-left: 10px;
@@ -196,7 +202,7 @@ body {
 @media(orientation: portrait) {
     .main-content {
         margin-left: var(--sidebar-width);
-        padding: 20px;
+        padding-top: 128px;
     }
 }
 
@@ -264,6 +270,23 @@ a:hover{
 /*------------------------------------*\
     #TOOLS
 \*------------------------------------*/
+@media (orientation: portrait) {
+    .top-left{
+        position: sticky;
+        top: 10px;
+        left: 10px;
+        padding: 0;
+    }
+}
+@media (orientation: landscape) {
+    .top-left{
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+    
+}
+
 .big-text{
     font-size: 2rem;
 }
@@ -525,7 +548,6 @@ p.pixel-1  {font-size: 1.5rem;}
 ttc-sidebar{
     bottom: 0;
     display: flex;
-    position: flex;
 
     overflow: hidden;
 }
@@ -540,7 +562,9 @@ ttc-sidebar{
 
 @media (orientation: portrait) {
     ttc-sidebar{
+        position: sticky;
         height: 100%;
+        z-index: 10;
     }
 }
 

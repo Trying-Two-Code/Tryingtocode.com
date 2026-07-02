@@ -50,7 +50,7 @@ class TTCSidebar extends HTMLElement {
             <h2 class="main-font" data-js-tag='sidebar-coin-counter'>404</h2>
             <div class="toggle-sidebar bottom-sidebar" data-js-tag="toggle-sidebar">
                 <button class="nice-button no-bg-button" data-js-tag="togle-sidebar-button">
-                    <img class="dropdown--image rotate-for-mobile" src="${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-1${this.imageExtension}" draggable="false"></img>
+                    <img class="dropdown--image hide-for-mobile" src="${this.iconPath}/toggle-sidebar-arrow/${this.theme}/frame-1${this.imageExtension}" draggable="false"></img>
                 </button>
             </div>
         </div>
