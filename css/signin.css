@@ -20,6 +20,12 @@
 
 **/
 
+:root{
+    --anoying-px-amm-1: 200px;
+
+    --border-color: rgba(17, 21, 22, 0.479);
+	--body-color-box: #36343465;
+}
 /*------------------------------------*\
     #TOOLS
 \*------------------------------------*/
@@ -47,6 +53,123 @@
 
 .slow-hide image {
 	display: none;
+}
+
+
+/*------------------------------------*\
+    #GENERAL
+\*------------------------------------*/
+body {
+    /*background: var(--palette-serika-3); gradient for success?
+    background: radial-gradient(circle,var(--palette-serika-3) 0%, var(--palette-serika-5) 100%);*/
+    overflow-x: hidden; /*this gets rid of horizontal bar*/
+    padding: 0px;
+    margin: 0px;
+    -webkit-tap-highlight-color: #0e0d0b11;
+	/*
+    background-image: linear-gradient(94deg,rgba(11, 93, 30, 1) 0%, rgb(73, 139, 71) 100%) 4px;
+	*/
+    background-color: var(--palette-index-1);
+}
+
+
+/*------------------------------------*\
+    #MAIN
+\*------------------------------------*/
+.sign-in-hero{
+	image-rendering: pixelated;
+	position: relative;
+	justify-self: center !important;
+	align-self: center !important;
+	width: min(100vw, 400px);
+}
+
+@media (orientation: landscape) {
+    .signup-container{
+		display: flex;
+		flex-direction: column;
+        height: 100%;
+		width: min(50%, 500px);
+		justify-self: center;
+    }
+}
+@media (orientation: portrait) {
+    .signup-container{
+		display: flex;
+		flex-direction: column;
+        height: 100%;
+        padding-block: 0px !important;
+    }
+    .actual-factual-sign-in-box{
+        height: 70vh;
+		align-self: center;
+    }
+	:root{
+		--border-color: #36343465;
+		--body-color-box: #0000;
+	}
+}
+.signup-title{
+    font-size: 2rem !important;
+    text-align: left;
+    --bottom-rad: 10px;
+
+    overflow: hidden;
+}
+
+.actual-factual-sign-in-box{
+    /*background-image: url("./image/jaclou-dl-eurasier-aloha-puppy-9442845 (1).webp");*/
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: first baseline;
+    /*background-color: #161616c2;*/
+    background: var(--border-color);
+	height: 100%;
+    
+    padding-inline: 10%;
+	padding-top: 8%;
+    padding-bottom: 10%;
+    --corner-offset: 50px;
+    --opposite-corner: calc(100% - var(--corner-offset));
+    clip-path: polygon(
+        var(--corner-offset) 0%, var(--opposite-corner) 0%, 
+        100% var(--corner-offset), 100% var(--opposite-corner), 
+        var(--opposite-corner) 100%, var(--corner-offset) 100%, 
+        0% var(--opposite-corner), 0% var(--corner-offset)
+    );
+    z-index: 1;
+
+    -webkit-box-shadow: 13px 21px 49px -3px #534040; 
+    box-shadow: 13px 21px 49px -3px #502727;
+}
+
+@media (orientation: portrait) {
+	.actual-factual-sign-in-box{
+    	justify-content: center;
+	}
+}
+
+.actual-factual-sign-in-box::before {
+    content: "";
+    position: absolute;
+    inset: 30px;
+    --border-thickness: 100px;
+    --corner-offset: 40px;
+    --opposite-corner: calc(100% - var(--corner-offset));
+    background-color: var(--body-color-box);
+    clip-path: polygon(
+        var(--corner-offset) 0%, var(--opposite-corner) 0%, 
+        100% var(--corner-offset), 100% var(--opposite-corner), 
+        var(--opposite-corner) 100%, var(--corner-offset) 100%, 
+        0% var(--opposite-corner), 0% var(--corner-offset)
+    );
+    z-index: -1;
+}
+
+.signin-blankspace{
+	height: 30vh;
+	position: relative;
 }
 
 /*------------------------------------*\
@@ -129,4 +252,31 @@ ttc-sign-in, ttc-settings, .welcome--sign-in{
 .footer-parent{
 	display: flex;
 }
+
+
+/*------------------------------------*\ 
+    #TEXTAREAS
+/*------------------------------------*/ 
+.si-input {
+	display: flex;
+	justify-content: inherit;
+    align-items: inherit;
+	align-items: inherit;
+    vertical-align: inherit;
+
+    --padding-and-border: 2px;
+    padding: var(--padding-and-border);
+    border-width: var(--padding-and-border);
+
+	height: 1.5em;
+	text-align: left;
+	margin: 0.5rem 0.5rem; /* uniform spacing */
+	font-size: 0.8em;
+	line-height: 0.9em;
+    resize: none;
+    margin-inline: 0 !important;
+
+    background-color: #3b3b3b;
+}
+
 

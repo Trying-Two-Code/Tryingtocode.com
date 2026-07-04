@@ -292,7 +292,9 @@ export let changeURL = ({
     newVariables={ /*sectionName: undefined, sectionOwner: undefined, codeLanguage: undefined*/ },
     deleteVariables={},
     newLocation = null,
-    replaceHistory = false
+    newDirectory = null,
+    replaceHistory = false,
+    navigate = false
 }) => {
     let resetURL = () => {
         let url = new URL(window.location);
@@ -332,14 +334,22 @@ export let changeURL = ({
         loopObj(paramObject, setParam, true);
     };
 
+    let setDirectory = (newDirectory) => {
+        url.pathname = newDirectory;
+    }
+
     newVariables ? setParams(newVariables) : null;
     deleteVariables ? deleteParams(deleteVariables) : null;
+    newDirectory ? setDirectory(newDirectory) : null;
 
     url.search = params.toString();
     let newURLString = url.toString();
 
     console.log(url);
 
+    if(navigate){
+        window.location = newURLString;
+    }
     if(replaceHistory){
         window.history.replaceState({}, "", newURLString);
     } else{

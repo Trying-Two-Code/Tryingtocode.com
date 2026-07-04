@@ -487,10 +487,17 @@ spikesCheckbox.addEventListener("click", () => {
 });
 
 document.addEventListener("click", () => {
-    document.body.classList.add("mild-hide");
+    let randtime = randInt(0, 20);
+    let chance = randInt(0, 100);
+    if(chance < 80){ //80% chance of not happening
+        randtime = 0;
+    }
+    else{
+        document.body.classList.add("mild-hide");
+    }
     setTimeout(() => {
         document.body.classList.remove("mild-hide");
-    }, 1);
+    }, randtime * 100);
 });
 
 let showACoupleMoreElements = () => {

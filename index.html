@@ -59,12 +59,50 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
+    <a class="light-anchor" href="/signin.html">Sign in</a>
+
     <div id="youtube-player" data-js-tag="youtube-player" class="nice-video"></div>
     <!--         users should be here for 10 seconds before leaving to a different page              -->
     <ttc-help-beginner-popup showup-time="10" max-xp="50" tutorial-name="tutorial-0"  video-id="MDOtgp9vq70"></ttc-help-beginner-popup>
 
-    <div class="row-container">
-        <canvas class="js-screen" id="learn-screen"></canvas>
+    <!--button name="topbar-toggle" class="topbar-toggle nice-button no-bg-button top-left">
+        <img class="big-image" src="./components/art/menu-threedashes--1.png" alt="+">
+    </button-->
+    <div class="main-content">
+        <!--h1 class="main-font">ttc</h1-->
+        <div name="hero-cta" class="hero-cta">
+            <button class="no-bg-button" name="hero">
+                <img class="hero-img" src="./components/visuals/icons/index/hero/pixel-1/sign-up--hero2-1.png" alt="[hero image]" id="hero-anim" draggable="false">
+            </button>
+            <div class="text-holder hero-cta-titletext">
+                <p class="main-font small-text">An introduction to Python. Complete projects to earn coins.</p>
+            </div>
+            <div name="cta" class="cta-container">
+                <button id="cta-learncode-button" class="main-font no-bg-button cta-button">
+                    <img class="cta-image spin" src="./components/visuals/icons/project/run-code/pixel-1.png" alt="<-learn code->" draggable="false">
+                </button>
+                <!--label for="cta-learncode-button" class="main-font">
+                    The Simple Way
+                </label-->
+            </div>
+        </div>
+    </div>
+    <div class="under-main">
+        <div class="text-holder">
+            <p class="main-font medium-text">In this website you learn to code in python by coding in bite sized pieces.</p>
+        </div>
+        <div class="text-holder">
+            <p class="main-font medium-text">Make your own courses to help others.</p>
+        </div>
+        <!--a href="">
+            <div class="text-holder">
+                <p class="main-font medium-text">Is this the right way to learn code for you?</p>
+            </div>
+        </a-->
+    </div>
+
+    <canvas class="js-screen" id="learn-screen"></canvas>
+    <!--div class="row-container">
         
         <ttc-sidebar start-closed="true"></ttc-sidebar>
 
@@ -94,7 +132,7 @@
                                 <button class="welcome--demo--learn-button pad-top-30" draggable="false"><img class="nice-button welcome-img welcome--demo--learn-button-img" src="./components/visuals/icons/sidebar/learn/pixel-1.png" alt="learn" draggable="false"></button>
                                 <script>let learnCodeEl = document.querySelector(".welcome--demo--learn-button-img"); learnCodeEl.src = `./components/visuals/icons/sidebar/learn/${window.TTC.theme}${window.TTC.imageExtension}`;</script>
                             </a>
-                        </div-->
+                        </div>
                     </div>
                     <button data-js-tag='next-part-button' class="hide nice-button no-bg-button">
                         <img src="./components/visuals/icons/arrow/pixel-1.png" alt="next" class="welcome--demo--next-img">
@@ -110,7 +148,7 @@
                                 <img class="nice-button" src="./components/visuals/icons/sidebar/learn/pixel-1.png" alt="start learning now">
                             </a>
                             <a href="/learn">is this the place for me?</a>
-                        </div-->
+                        </div>
                     </div>
                 </div>
 
@@ -128,13 +166,13 @@
                     <button class="welcome--demo--learn" id="toggle-signinup"><img class="nice-button" src="./components/art/profile - 4.png" alt=""></button>
                 </a>
                 <div id="sign-in-holder"></div>
-            </div-->
-
-            <div class="footer-parent">
-                <ttc-footer copywrite="tryingtocode" mail-to="contact@tryingtocode.com" legal-src="./legal.html" privacy-src="/privacy-policy.html"></ttc-footer>
             </div>
         </div> 
     
-    </div> 
+    </div--> 
+
+    <div class="footer-parent">
+        <ttc-footer copywrite="tryingtocode" mail-to="contact@tryingtocode.com" legal-src="./legal.html" privacy-src="/privacy-policy.html"></ttc-footer>
+    </div>
 </body>
 </html>

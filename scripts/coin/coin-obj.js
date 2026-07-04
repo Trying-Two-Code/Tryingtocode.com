@@ -89,6 +89,7 @@ export class CoinObj{
 }
 
 function getAbsolutePosition(el) {
+    console.log(el);
     const rect = el.getBoundingClientRect();
     return {
         x: rect.left + window.scrollX,
