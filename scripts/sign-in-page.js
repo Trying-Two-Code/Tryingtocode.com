@@ -56,3 +56,6 @@ signIn.submit.addEventListener("click", (e) => {
 });
 
 */
+
+const signupContainer = document.getElementById("signup-container");
+const usernameField = document.querySelector()

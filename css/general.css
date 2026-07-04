@@ -103,6 +103,11 @@
 /*------------------------------------*\
     #GENERIC
 \*------------------------------------*/
+ul{
+    padding: 0;
+    list-style-type: none;
+}
+
 body {
     background-color: var(--palette-serika-5);
     /*background: var(--palette-serika-3); gradient for success?
@@ -270,6 +275,25 @@ a:hover{
 /*------------------------------------*\
     #TOOLS
 \*------------------------------------*/
+.subtle-anchor{
+    color: #0000000f !important;
+    font-size: 10px !important;
+    padding: 20px;
+    --text-outline-color: #0000000f !important;
+}
+.subtle-anchor:hover{
+    color: #58d8ff7a !important;
+}
+.light-anchor{
+    color: #ffffff50 !important;
+    font-size: 20px !important;
+    padding: 30px;
+    --text-outline-color: #0000000f !important;
+}
+.light-anchor:hover{
+    color: #58d8ff7a !important;
+}
+
 @media (orientation: portrait) {
     .top-left{
         position: sticky;
@@ -916,6 +940,10 @@ img {
     margin: 0px;
 
     box-sizing: border-box;
+}
+
+ttc-footer{
+    width: 100%;
 }
 
 .footer--list-element {
