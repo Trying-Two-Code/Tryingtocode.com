@@ -152,6 +152,43 @@ body {
 /*------------------------------------*\
     #MAIN CONTENT
 \*------------------------------------*/
+@media (orientation: landscape) {
+	.home-topbar{
+		position: relative;
+		top: 0;
+		display: flex;
+		flex-direction: row;
+		align-content: center;
+		justify-content: center;
+		width: 100%;
+		background-color: rgba(147, 169, 243, 0.137);
+	}
+
+	.main-logo{
+		display: flex;
+		flex-direction: row;
+		gap: 30px;
+		image-rendering: pixelated;
+		justify-content: center;
+		justify-self: center;
+		align-items: center;
+		padding: 10px;
+	}
+}
+
+.right-topbar{
+	position: absolute;
+	right: 0;
+	justify-self: flex-end !important;
+	align-self: flex-end !important;
+}
+
+@media (orientation: portrait) {
+	.home-topbar, .main-logo{
+		display: none;
+	}
+}
+
 .main-content{
 	position: relative;
 	height: 100vh;
