@@ -38,7 +38,6 @@ class TTCSectionButton extends HTMLElement{
 
     makeElement(){
         let name = this.innerHTML;
-        console.log(name, " is name");
         this.classOrientation = (this.id % 2 == 1) ? "left" : "right";
         this.innerHTML = `
             <label data-js-tag="section-label-title" class="hide simple-title main-font smaller-text section-label" for="ttc-section-button--button-${this.id}">
@@ -56,6 +55,8 @@ class TTCSectionButton extends HTMLElement{
         applySettings();
 
         this.isUserFinished();
+
+        TTCSectionButton.sectionsAlreadyInPlace = false;
     }
 
     findElements(){
@@ -96,9 +97,16 @@ class TTCSectionButton extends HTMLElement{
         this.initToggleLabel();
     }
     showSection(){
+        if(TTCSectionButton.sectionsAlreadyInPlace){
+            console.log("already made sections!");
+            return;
+        }
+
         //sectionOwner & sectionName & sectionLanguage are set in learn.js: createSectionButton
         console.log(this.sectionOwner, this.sectionName);
         window.TTC.loadProjectsFromDatabase({ section: this.sectionName, owner: this.sectionOwner });
+
+        TTCSectionButton.sectionsAlreadyInPlace = true;
         
         /*const url = new URL(window.location);
         url.searchParams.set(SECTION_STRING,    this.sectionName);
@@ -127,6 +135,8 @@ class TTCSectionButton extends HTMLElement{
             return false;
         }
     }
+    
+    static sectionsAlreadyInPlace = false;
 
     static hideAllSections(){
         console.assert(TTCSectionButton.sectionSelectionParent != null);

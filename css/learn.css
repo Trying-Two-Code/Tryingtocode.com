@@ -556,3 +556,11 @@
     outline: none;
     border: none;
 }
+
+
+/*------------------------------------*\
+    #SECTION-SELECT
+\*------------------------------------*/
+.finished-element{
+    opacity: .2;
+}

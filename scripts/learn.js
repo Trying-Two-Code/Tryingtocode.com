@@ -250,7 +250,6 @@ let createSectionButton = (name, language="python", owner="OFFICIAL", sibling = 
     let sectionElement = document.createElement("ttc-section-button");
     // CODE SMELL WARNING: I have a copy of this (parent) in load projects-into-learn due to hideAllSectionsExport needing to intake the parent, a better fix would be nice
     let parent = sectionButtonParent;
-    console.log(parent);
     sibling = sibling ?? parent.firstElementChild;
     sectionElement.innerHTML = name;
 
@@ -261,12 +260,13 @@ let createSectionButton = (name, language="python", owner="OFFICIAL", sibling = 
 
     //parent.insertBefore(sectionElement, sibling);
     sibling.after(sectionElement);
-    console.log(sectionElement);
 
     return sectionElement;
 }
 
+
 let showSectionSelections = async (language, sections) => {
+
     const biggestLength = 50;
     console.log("showing sectioons", sections);
     if(sections.length > biggestLength){
@@ -274,16 +274,45 @@ let showSectionSelections = async (language, sections) => {
         return null;
     }
 
+    let projects = JSON.parse(localStorage.getItem("projects"))?.["OFFICIAL"]?.[language];
+    console.log(projects);
+
     let sectionKeys = Object.keys(sections);
     let sectionElement = null;
-    console.log("starting up...");
+    let firstIncompleteSection = true;
     sectionKeys.forEach((key) => {
         let section = sections[key];
         sectionElement = createSectionButton(section.section, language, section.owner, sectionElement);
-        console.log(sectionElement);
+        //console.log(sectionElement);
+
+        let projectsInSection = projects?.[section.section];
+        let isIncomplete = false;
+        if(projectsInSection == null){
+            console.log("projects in sections ===", projectsInSection, projects, section, key);
+            isIncomplete = true;
+        } else{
+            console.log(projectsInSection);
+            let percentDone = (Object.keys(projectsInSection).length - 1) / projectsInSection.dataSectionLength;
+            console.log(Math.round(percentDone * 100), "% done");
+
+            if(percentDone === 1){
+                //it is totally finished
+                sectionElement.classList.add("finished-element");
+            } else{
+                isIncomplete = true;
+            }
+        }
+        if(isIncomplete){
+            if(firstIncompleteSection){
+                console.log(sectionElement);
+                sectionElement.classList.add("glow");
+            }
+            firstIncompleteSection = false;
+        }
     });
 
     sectionButtonParent.classList.remove("closed");
+
 
     stopLoading();
 }
