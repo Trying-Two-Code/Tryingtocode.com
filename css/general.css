@@ -72,6 +72,8 @@
     --palette-index-2: #8B8B8B;
     --palette-index-3: #74E924;
     --palette-index-4: #FFC437;
+	--palette-index-5: #191919;
+    --palette-index-6: #aa9353;
 
     --z-base: 0;
     --z-sidebar: 5;
@@ -202,6 +204,7 @@ body {
 @media (orientation: landscape) {
     .main-content {
         padding: 0px;
+        width: calc(100% - (var(--sidebar-active)));
     }
 }
 @media(orientation: portrait) {
@@ -570,6 +573,8 @@ p.pixel-1  {font-size: 1.5rem;}
 }
 
 ttc-sidebar{
+    position: relative;
+
     bottom: 0;
     display: flex;
 
@@ -581,13 +586,15 @@ ttc-sidebar{
         min-height: 100vh;
         flex-grow: 1;
         flex-direction: column;
+        width: var(--sidebar-width);
     }
 }
 
 @media (orientation: portrait) {
     ttc-sidebar{
-        position: sticky;
-        height: 100%;
+        display: none;
+        position: absolute;
+        height: 0%;
         z-index: 10;
     }
 }

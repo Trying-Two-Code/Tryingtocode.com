@@ -42,7 +42,7 @@ class TTCSectionButton extends HTMLElement{
         this.innerHTML = `
             <label data-js-tag="section-label-title" class="hide simple-title main-font smaller-text section-label" for="ttc-section-button--button-${this.id}">
                 <p class="section-label-text">${name}</p>
-                <img class="section-label-arrow" src="./components/visuals/icons/section-select/title-arrow/${window.TTC.theme}${window.TTC.imageExtension}" alt="\\/"></img>
+                <!--img class="section-label-arrow" src="./components/visuals/icons/section-select/title-arrow/${window.TTC.theme}${window.TTC.imageExtension}" alt="\\/"></img-->
             </label>
             <button data-js-tag="section-button" class="main-font section-button nice-button" id="ttc-section-button--button-${this.id}">
                 <img
@@ -106,7 +106,7 @@ class TTCSectionButton extends HTMLElement{
         console.log(this.sectionOwner, this.sectionName);
         window.TTC.loadProjectsFromDatabase({ section: this.sectionName, owner: this.sectionOwner });
 
-        TTCSectionButton.sectionsAlreadyInPlace = true;
+        //TTCSectionButton.sectionsAlreadyInPlace = true;
         
         /*const url = new URL(window.location);
         url.searchParams.set(SECTION_STRING,    this.sectionName);
@@ -192,6 +192,8 @@ class TTCBringBackSectionSelection extends HTMLElement{
         this.makeElement();
         this.findElement();
         this.initFunctionality();
+
+        TTCBringBackSectionSelection.instances.push(this);
     }
     makeElement(){
         this.innerHTML = `
@@ -213,7 +215,15 @@ class TTCBringBackSectionSelection extends HTMLElement{
         this.remove();
         //sendAppropriateInformationForSectionAndOwner();
         bringBackSections();
+        TTCBringBackSectionSelection.destroyThis();
         //showSectionSelectionsAgain() <- find out the function
+    }
+
+    static instances = []; //should only ever be 1...
+    static destroyThis(){
+        TTCBringBackSectionSelection.instances.forEach(instance => {
+            instance.remove();
+        });
     }
 }
 

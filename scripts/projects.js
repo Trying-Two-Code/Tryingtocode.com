@@ -383,9 +383,15 @@ export class Display {
 function rewardPlayer(display){
     if(display.reward !== 0 && display.reward !== null){
         const defaultReward = 5;
+        let rewardMult = 1;
+        let isRewardMultiplied = window?.TTC?.doubleCoin;
+        console.log("I'm gonna check if it should be mult: ", window.TTC, isRewardMultiplied);
+        if(isRewardMultiplied){
+            rewardMult = 2;
+        }
         correctCode = new CustomEvent("correctCode", {
             detail: {
-                value: (display.reward !== undefined) ? display.reward : defaultReward
+                value: (display.reward !== undefined) ? display.reward * rewardMult : defaultReward
             }
         });
         

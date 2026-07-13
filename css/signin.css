@@ -55,6 +55,11 @@
 	display: none;
 }
 
+.error{
+	color: red;
+	font-size: 10px !important;
+}
+
 
 /*------------------------------------*\
     #GENERAL

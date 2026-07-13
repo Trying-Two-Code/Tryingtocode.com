@@ -3,6 +3,9 @@
 //import { Toggle } from "./tools.js";
 //import "./init-settings.js"
 
+import { getUserData } from "./firebase-backend/firebase.js";
+import { getBought } from "./get-bought.js";
+
 /*let dropdown = new Collapsable( document.getElementById("dropdown-button"), 
                                 Array.from(document.getElementsByClassName("dropdown")), 
                                 ['components/art/yellow - toggle arrow down.png', 
@@ -14,6 +17,15 @@ let loading = document.querySelector(".loader-sprite");
 if(typeof loading !== "undefined" && loading != null){
     loading.style.setProperty("--theme", `url("../components/visuals/icons/load-animation/${window.TTC.theme}.png")`);
 }
+
+window.addEventListener("user_set", async () => {
+    let brightModeAllowed = await getBought("allowBrightMode");
+    let allowFancyFont = await getBought("allowFancyFont", false);
+    let doubleCoin = await getBought("doubleCoin", false);
+    console.log("setting window ttc", doubleCoin, getUserData());
+    window.TTC.doubleCoin = doubleCoin;
+});
+
 
 /*let dropdownButton = document.getElementById("dropdown-button");
 let dropdownElements = Array.from(document.getElementsByClassName("dropdown"));

@@ -50,26 +50,31 @@
         </div>
 
     </div-->
+    <div class="screen-overlay" name="stop-signins">
+        
+    </div>
+
     <a class="light-anchor" href="/">home</a>
     
     <div id="signup-container" class="signup-container main-font center-all">
         <img class="sign-in-hero" src="./components/visuals/icons/sign-in/hero/sign-in--hero6-export.png" alt="" draggable="false">
         <form class="actual-factual-sign-in-box">
-                <div data-js-tag="" class="signup-title-container">
-                    <h1 class="main-font signup-title" data-js-tag="sign-up-title">sign in!</h1>
-                </div>
-                <!--input type="email" data-js-tag="email-field" class="input-box si-input main-font" placeholder="email" name="email" id="" required minlength="5" maxlength="100" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" rows="3"></input-->
-                <input data-js-tag="username-field" class="input-box si-input main-font" placeholder="username" name="username" id="" required minlength="5" maxlength="100" rows="3"></input>
-                <input data-js-tag="password-field" autocomplete="new-password" type="password" class="input-box si-input main-font" placeholder="password" name="password" id="" pattern=".{5,}" minlength="5" maxlength="100" rows="1" required></input>
-                
+            <div data-js-tag="" class="signup-title-container">
+                <h1 class="main-font signup-title" data-js-tag="sign-up-title">sign in!</h1>
+            </div>
+            <!--input type="email" data-js-tag="email-field" class="input-box si-input main-font" placeholder="email" name="email" id="" required minlength="5" maxlength="100" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" rows="3"></input-->
+            <input type="email" data-js-tag="email-field" class="input-box si-input main-font" placeholder="email" name="email" id="" required minlength="5" maxlength="100" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" rows="3"></input>
+            <input data-js-tag="password-field" autocomplete="new-password" type="password" class="input-box si-input main-font" placeholder="password" name="password" id="" pattern=".{5,}" minlength="5" maxlength="100" rows="1" required></input>
+            
+            <p id="user-error" class="error"></p>
 
-                <div class="row-container left-side">
-                    <button data-js-tag="submit-button" class="nice-bg-button nice-button left-side main-font big-button">
-                        sign in
-                    </button>
-                </div>
+            <div class="row-container left-side">
+                <button data-js-tag="submit-button" class="nice-bg-button nice-button left-side main-font big-button">
+                    sign in
+                </button>
+            </div>
 
-                <a class="subtle-anchor" href="/signup.html">Don't have an account? Sign up.</a>
+            <a class="subtle-anchor" href="/signup.html">Don't have an account? Sign up.</a>
         </form>
     </div>     
     <div class="signin-blankspace"></div>

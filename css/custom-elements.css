@@ -169,6 +169,11 @@
     background-color: #115f6d00;
     border: none !important;
     box-shadow: none;
+    z-index: 100;
+}
+
+.sidebar, .sidebar-element{
+    z-index: 1000 !important;
 }
 
 .hidden-sidebar:hover, .hidden-sidebar_hover{

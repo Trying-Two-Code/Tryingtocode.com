@@ -264,6 +264,7 @@ let createSectionButton = (name, language="python", owner="OFFICIAL", sibling = 
     return sectionElement;
 }
 
+export let shownAlready = false;
 
 let showSectionSelections = async (language, sections) => {
 

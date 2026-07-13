@@ -7,46 +7,67 @@
     <title>Trying to Code</title>
     <link rel="stylesheet" href="./css/shop.css">
     <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/custom-elements.css">
 
     <script src="./scripts/collapse.js" type="module"></script>
+    <script src="./scripts/web-elements/shop-elements.js" type="module"></script>
     <script src="./scripts/index.js" type="module"></script>
     <script src="./scripts/general.js" type="module"></script>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="./scripts/web-elements/footer.js"></script>
+    <script src="./scripts/firebase-backend/firebase.js" type="module" defer></script>
+    <script src="./scripts/web-elements/help-beginner.js"></script>
+    <script src="./scripts/web-elements/sidebar.js" type="module" defer></script>
+    <script src="./scripts/store.js" type="module" defer></script>
+    <script src="./scripts/web-elements/index/choice-path.js" defer></script>
+    <script src="./scripts/prism.js" defer></script>
+    <script src="./scripts/settings-functions.js" type="module" defer></script>
 </head>
 <body>
-    <div class="sidebar">
-        <a href="index.html" title="learn">
-            <img src="components/art/ttc coin icon.png" alt="Coin logo" style="width: max(6rem, 5vw); height: max(6rem, 5vw);">
-        </a>
-        <button id="dropdown-button">
-            <img src="components/art/yellow - toggle arrow up.png" alt="" id="toggle-button" >
-        </button>
-        <div class="dropdown">
-            <ul>
-                <li><a href="index.html" title="Home">
-                    <img src="components/art/ttc.com icon - house 1.png" alt="House Icon">
-                </a></li>
-                <li><a href="learn.html" title="Learn">
-                    <img src="components/art/learn icon.png" alt="blue book with L on it">
-                </a></li>
-                <li><a href="test.html" title="Test">
-                    <img src="components/art/bottle.png" alt="bottle with blue liquid">
-                </a></li>
+    <div style="display: flex; flex-direction: row;">
+    <ttc-sidebar></ttc-sidebar>
+        <div class="main-content">
+            <p class="main-font coin-display" id="coin-display">you have: 10 <img class="tiny-img" src="./components/visuals/logos/coin/pixel-1.png"></img></p>
+            
+            <!--h1 class="main-font">ttc</h1-->
+            <ul id="buy">
+                <li class="main-font">
+                    <ttc-shop-element
+                    id="buy--double-coin-gain-10"
+                    data-label="double coin gain for 10 minutes" 
+                    data-price="30" 
+                    data-function="doubleCoin" 
+                    data-function-input="600000"
+                    data-buy-amm="Infinity">
+                    </ttc-shop-element>
+                </li>
+                    
+                <li class="main-font">
+                    <ttc-shop-element
+                    id="buy--bright-mode"
+                    data-label="bright mode"
+                    data-price="300" 
+                    data-function="allowBrightMode" 
+                    data-function-input=""
+                    data-buy-amm="1">
+                    </ttc-shop-element>
+                </li>
+
+                <li class="cursive-1">
+                    <ttc-shop-element
+                    id="buy--cursive"
+                    data-label="fancy font"
+                    data-price="300" 
+                    data-function="allowFancyFont" 
+                    data-function-input=""
+                    data-buy-amm="1">
+                    </ttc-shop-element>
+                </li>
             </ul>
         </div>
-        <p id="coin-counter">100</p>
     </div>
-
-    <div class="main-content">
-        <div id="welcome">
-            <h1>Welcome to The Store!</h1>
-            <p>Buy things here!</p>
-            <p></p>
-            <p>(Nothing here yet)</p>
-            <p>Coming soon...</p>
-        </div>
-</div> 
+    
     <div class="footer-parent">
         <ttc-footer copywrite="tryingtocode" mail-to="contact@tryingtocode.com" legal-src="./legal.html" privacy-src="/privacy-policy.html"></ttc-footer>
     </div>

@@ -440,7 +440,15 @@
 }
 
 .simple-title{
-    width: max(200px, 100%) !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+
+    padding-inline: 1% !important;
+    width: 300px !important;
+    height: 50px;
+    border: #000 4px solid;
 }
 
 /*------------------------------------*\

@@ -14,6 +14,8 @@ const firebaseConfig = {
   measurementId: "G-7TREL4ZC4F"
 };
 
+window.TTC = window.TTC || {};
+
 const app = initializeApp(firebaseConfig);
 window.TTC.app = app;
 
@@ -186,7 +188,7 @@ export let signUp = async ({email, password, username="guest", setWindowUser=tru
     return new_user;
 }
 
-export let signInUp = async (email, password) => {
+export let signInUp = async (email, password, username=null) => {
     try{
         let user = await signIn(email, password);
         return user;
@@ -254,7 +256,7 @@ const defaultValues = {
     projects: {}
 };
 
-export let setUserDatapointWithObject = async ( payload = {email: null, displayName: null, coins: null, projects: null, prioritizePayload: false} ) => {
+export let setUserDatapointWithObject = async ( payload = {email: null, displayName: null, coins: null, projects: null, bought: null, prioritizePayload: false} ) => {
     if(window?.user == null) { return false; }
     let newData = {};
 

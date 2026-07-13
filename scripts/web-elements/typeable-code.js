@@ -35,7 +35,7 @@ class TTCTypeableCode extends HTMLElement {
                         <div class="actual-input-code" style="display: flex; flex-direction: row !important;">
                             <div data-js-tag="side-numbers" class="line-numbers lines code-lines proj-child"></div>
                             <div class="single-block-grid proj-child">
-                                <textarea data-js-tag="user-code-section" class="main-font codearea proj-child" name="user-code" placeholder="${placeholder_text}" spellcheck="false">${codeText}</textarea>
+                                <textarea data-js-tag="user-code-section" class="main-font codearea proj-child" name="user-code" placeholder="${placeholder_text}" spellcheck="false" autocapitilize="none" autocorrect="off">${codeText}</textarea>
                                 <pre data-js-tag="pretty-code--pre" class="language-${language} code-highlight code-lines proj-child main-font" name="pretty-pre"><code data-js-tag="pretty-code" class="language-${language}" name="code-editor--pretty-code" aria-hidden="true">${codeText}</code>
                                 </pre>
                             </div>

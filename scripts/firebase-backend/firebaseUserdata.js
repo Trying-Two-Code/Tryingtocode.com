@@ -50,6 +50,11 @@ export let testUserData = async (noConfirm) => {
             expectedType: "string",
             defaultValue: null,
             canBeNull: true
+        },
+        {
+            datapoint: "bought",
+            expectedType: "object",
+            defaultValue: {}
         }
     ];
 

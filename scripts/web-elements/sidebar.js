@@ -36,6 +36,9 @@ class TTCSidebar extends HTMLElement {
                     <li class="dropdown--element"><a href="learn" title="Learn">
                         <img class="dropdown--image nice-button dark-glow" src="${this.iconPath}/learn/${this.theme}${this.imageExtension}" alt="Learn" draggable="false">
                     </a></li>
+                    <!--li class="dropdown--element"><a href="store" title="Store">
+                        <img class="dropdown--image nice-button dark-glow" src="${this.iconPath}/learn/${this.theme}${this.imageExtension}" alt="Learn" draggable="false">
+                    </a></li-->
                     <!--li class="dropdown--element"><a href="create.html" title="Create">
                         <img class="dropdown--image nice-button dark-glow rotate-45" src="${this.iconPath}/create/${this.theme}${this.imageExtension}" alt="Create" draggable="false">
                     </a></li>
@@ -108,14 +111,14 @@ class TTCSidebar extends HTMLElement {
         console.log("lookie here ", getSetting("sidebar-hidden"), this.startClosed);
         console.log("detecting...", startClosed);
         let hideSidebar = () => {
-            document.documentElement.style.setProperty('--sidebar-active', '0px');
+            document.documentElement.style.setProperty('--sidebar-active', '20px');
             this.initHiddenSidebar();
         }
         return startClosed ? hideSidebar() : false;
     }
 
     initCoinNumber(){
-        //could be incorrect, however it is the fast to recieve localy stored coin number
+        //could be incorrect, however it is the fast starfire way to recieve localy stored coin number
         let localCoin = localStorage.getItem("coin");
         let stringIsNumber = (string) => {
             let numberFromString = Math.round(string);
@@ -135,7 +138,7 @@ class TTCSidebar extends HTMLElement {
     toggleSidebarEvent(){
         console.log(`hidden sidebar is toggled? ${this.toggleSidebar.toggled}`);
         this.initHiddenSidebar();
-        document.documentElement.style.setProperty('--sidebar-active', '0px');
+        document.documentElement.style.setProperty('--sidebar-active', '20px');
     }
 
     initHiddenSidebar(){
@@ -164,7 +167,7 @@ class TTCSidebar extends HTMLElement {
 
     showSidebar(){ //called by hidden sidebar when it is showing up again
         this.toggleSidebar.toggleEvent();
-        document.documentElement.style.setProperty('--sidebar-active', '1px');
+        document.documentElement.style.setProperty('--sidebar-active', '50px');
         editSetting({"sidebar-hidden": false});
     }
 

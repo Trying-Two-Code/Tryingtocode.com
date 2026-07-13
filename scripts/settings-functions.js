@@ -3,7 +3,7 @@ const localStorageSettingsString = "user_settings";
 const DEFAULT_SETTINGS = {
     "font": "pixel1",
     "xp": "0",
-    "theme": "pixel-1",
+    "color": "dark-1",
     "codeLanguage": "python",
     "lan": "english"
 };

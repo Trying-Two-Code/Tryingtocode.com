@@ -11,3 +11,21 @@
 /*------------------------------------*\
     #1
 \*------------------------------------*/
+.tiny-img{
+    --size: 16px;
+    width: var(--size);
+    height: var(--size);
+}
+
+.buy-button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+}
+
+.error{
+    color: red !important;
+}
