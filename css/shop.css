@@ -29,3 +29,9 @@
 .error{
     color: red !important;
 }
+
+.no-buy, .no-buy *{
+    cursor: not-allowed !important;
+    opacity: .5;
+    pointer-events:all;
+}

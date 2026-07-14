@@ -60,6 +60,9 @@
 	font-size: 10px !important;
 }
 
+.pixel-1{
+    -webkit-text-fill-color: var(--text-color);
+}
 
 /*------------------------------------*\
     #GENERAL

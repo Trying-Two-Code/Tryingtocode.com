@@ -5,6 +5,7 @@
 
 import { getUserData } from "./firebase-backend/firebase.js";
 import { getBought } from "./get-bought.js";
+import { getSetting, setLightMode } from "./settings-functions.js";
 
 /*let dropdown = new Collapsable( document.getElementById("dropdown-button"), 
                                 Array.from(document.getElementsByClassName("dropdown")), 
@@ -19,7 +20,13 @@ if(typeof loading !== "undefined" && loading != null){
 }
 
 window.addEventListener("user_set", async () => {
-    let brightModeAllowed = await getBought("allowBrightMode");
+
+    let brightModeAllowed = await getBought("allowBrightMode", false);
+    if(brightModeAllowed && window.TTC.colorTheme == "light" || getSetting("colorTheme")){
+        setLightMode();
+    }
+
+    brightModeAllowed = await getBought("allowBrightMode");
     let allowFancyFont = await getBought("allowFancyFont", false);
     let doubleCoin = await getBought("doubleCoin", false);
     console.log("setting window ttc", doubleCoin, getUserData());

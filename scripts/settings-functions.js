@@ -1,3 +1,5 @@
+import { getBought } from "./get-bought.js";
+
 const localStorageSettingsString = "user_settings";
 
 const DEFAULT_SETTINGS = {
@@ -5,7 +7,8 @@ const DEFAULT_SETTINGS = {
     "xp": "0",
     "color": "dark-1",
     "codeLanguage": "python",
-    "lan": "english"
+    "lan": "english",
+    "colorTheme": "default"
 };
 
 try{
@@ -218,3 +221,35 @@ if(hatePixelartButton != null) {
     likePixelartButton.classList.toggle("hide");
 }
 
+export let setLightMode = () => {
+    editSetting({"colorTheme": "light"})
+    window.TTC.colorTheme = "light";
+
+    let paletteIndexLight1 = "#77797F";
+    let paletteIndexLight5 = "#c2bebe";
+
+    const root = document.querySelector(":root");
+    //for new style
+    root.style.setProperty('--palette-index-1', paletteIndexLight1);
+    root.style.setProperty('--palette-index-5', paletteIndexLight5);
+
+    //for old style
+    root.style.setProperty('--palette-serika-1', paletteIndexLight1);
+    root.style.setProperty('--palette-serika-5', paletteIndexLight5);
+    root.style.setProperty('--load-bg-color', paletteIndexLight5);
+    root.style.setProperty('--flex-bg-color', paletteIndexLight5);
+};
+
+export let setColorTheme = async (toTheme) => {
+    if(toTheme === "light"){
+        let brightModeAllowed = await getBought("allowBrightMode", false);
+        if(brightModeAllowed){
+            setLightMode();
+        } 
+    }
+
+    if(toTheme === "default"){
+        editSetting({"colorTheme": "default"})
+        window.TTC.colorTheme = "default";
+    }
+}

@@ -60,6 +60,8 @@
 
     --general-transition: var(--to-transition) var(--transition-speed) var(--cubic-bez-3);
     --fast-transition: var(--to-transition) calc(var(--transition-speed) / 5) var(--cubic-bez-overflow);
+
+    --output-bg: #1b1b1b;
 }
 
 @property --transition-speed {
@@ -396,7 +398,7 @@
     resize: none;
     border: none;
 
-    --bg-color-main: #1b1b1b !important;
+    --bg-color-main: var(--output-bg) !important;
 }
 
 .output-container{
@@ -406,7 +408,7 @@
 
 .output-correct {
     color: rgb(16, 255, 56) !important;
-    --bg-color-main: #1d201e !important;
+    --bg-color-main: var(--output-bg) !important;
 }
 
 .output-mid {
@@ -415,7 +417,7 @@
 
 .output-incorrect {
     color: rgb(255, 35, 35) !important;
-    --bg-color-main: #201d1d !important;
+    --bg-color-main: var(--output-bg) !important;
 }
 
 @media (orientation: portrait) { /*when the screen is small, put output under instead of to the right*/

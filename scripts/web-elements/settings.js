@@ -1,7 +1,6 @@
 import { SimpleToggle, Toggle } from '../tools.js';
-import { fontChange } from '../settings-functions.js';
+import { fontChange, applySettings, setColorTheme } from '../settings-functions.js';
 import { makeFocusKey } from '../productivity/focus.js';
-import { applySettings } from '../settings-functions.js';
 
 class TTCSettings extends HTMLElement {
     constructor(){
@@ -45,8 +44,8 @@ class TTCSettings extends HTMLElement {
 
                     <button data-js-tag='toggle-theme-button' class="nice-button no-bg-button main-font">dropdown theme</button>
                     <div data-js-tag="theme-choice">
-                        <button class="nice-button no-bg-button main-font">default coin theme</button>
-                        <button class="nice-button no-bg-button main-font">comming soon...</button>
+                        <button data-js-tag='defaultThemeButton' class="nice-button no-bg-button main-font">default coin theme</button>
+                        <button data-js-tag='lightThemeButton' class="nice-button no-bg-button main-font">light theme</button>
                     </div>
 
                     <br></br>
@@ -68,8 +67,11 @@ class TTCSettings extends HTMLElement {
 
         this.fontToggleButton = this.holderElement.querySelector("[data-js-tag='toggle-font-button'");
         this.fontChoices = this.holderElement.querySelector("[data-js-tag='font-choice']");
+
         this.themeToggleButton = this.holderElement.querySelector("[data-js-tag='toggle-theme-button'");
         this.themeChoices = this.holderElement.querySelector("[data-js-tag='theme-choice']");
+        this.defaultThemeButton = this.themeChoices.querySelector("[data-js-tag='defaultThemeButton']");
+        this.lightThemeButton = this.themeChoices.querySelector("[data-js-tag='lightThemeButton']");
 
         this.exitButton = this.querySelector("[data-js-tag='exit-button']");
 
@@ -93,6 +95,7 @@ class TTCSettings extends HTMLElement {
         });
 
         this.setupFontSetting();
+        this.setupColorThemeSetting();
 
         applySettings();
     }
@@ -122,6 +125,21 @@ class TTCSettings extends HTMLElement {
         this.toggleButtons = this.fontChoices.childNodes;
         this.toggleButtons.forEach(toggleButton => {
             toggleButton.addEventListener("click", () => {fontChange(toggleButton.getAttribute("data-font"));});
+        });
+    }
+
+    setupColorThemeSetting(){
+        let setTheme = (toTheme) => {
+            setColorTheme(toTheme);
+        }
+
+        this.lightThemeButton.addEventListener("click", () => {
+            console.log("set light...");
+            setTheme("light");
+        });
+
+        this.defaultThemeButton.addEventListener("click", () => {
+            setTheme("default");
         });
     }
 }

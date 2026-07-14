@@ -203,7 +203,7 @@ class TTCShopElement extends HTMLElement{
 
     hide(){
         console.log("so this is me hidding myself.");
-        this.parentElement.classList.add("hide");
+        this.parentElement.classList.add("no-buy");
     }
 }
 

@@ -13,7 +13,8 @@ let initSettingsObject = () => {
         xp: 0,
         language: "english",
         codeLanguage: "python",
-        learnSection: null
+        learnSection: null,
+        colorTheme: "default"
     };
     let startSettings = JSON.stringify(startObject);
     localStorage.setItem("user_settings", startSettings);
@@ -122,5 +123,13 @@ updateVariableFromLocal({
     defualtValue: null,
     shouldTypesBeSame: true,
     canBeNullish: true,
+    setLocalStorage: true
+});
+
+updateVariableFromLocal({
+    variableName: "colorTheme",
+    defualtValue: "default",
+    shouldTypesBeSame: true,
+    canBeNullish: false,
     setLocalStorage: true
 });
