@@ -36,7 +36,7 @@ class TTCCreateProjectOutput extends HTMLElement {
         this.typeableCodeElement.complexRender();
         this.code = this.typeableCodeElement.textarea;
         this.projectTitle = this.typeableCodeElement.projectTitle;
-        this.mission = this.typeableCodeElement.mission ;
+        this.mission = this.typeableCodeElement.mission;
         this.prettyCode = this.typeableCodeElement.prettyCode;
         this.linkUnlink = this.querySelector("[name='link-unlink-toggle']");
 

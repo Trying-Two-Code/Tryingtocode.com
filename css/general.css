@@ -124,6 +124,12 @@ body {
     background-size: 1em .5em;
 }
 
+hr{
+    border-color: var(--palette-index-1);
+    background-color: var(--palette-index-5);
+    border-width: 5px;
+}
+
 .sidebar {
     display: flex;
     flex-direction: column;

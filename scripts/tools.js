@@ -283,7 +283,8 @@ export let getURLAttribute = attributeName => {
     if(params?.get?.(attributeName)){
         return params.get(attributeName);
     } else{
-        throw null;
+        console.error("that url param does not exist");
+        return null;
     }
 }
 

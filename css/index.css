@@ -328,6 +328,10 @@ body {
 	font-size: small !important;
 	line-height: 160%;
 }
+.smaller-text{
+	font-size: xx-small !important;
+	line-height: 160%;
+}
 
 .medium-text{
 	font-size: medium !important;

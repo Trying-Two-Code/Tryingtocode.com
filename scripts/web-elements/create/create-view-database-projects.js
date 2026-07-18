@@ -126,7 +126,8 @@ class TTCViewDataProjects extends HTMLElement {
                     title: project.title, 
                     mission: project.mission, 
                     data: project.data, 
-                    includeDisclude: project.includeDisclude
+                    includeDisclude: project.includeDisclude,
+                    hint: project.hint
                 });
             });
 

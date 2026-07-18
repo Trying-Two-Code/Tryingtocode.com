@@ -1,6 +1,8 @@
 //this script is a very simple script to be run before anything else
 //it grabs local settings, and puts them in window for use by other scripts
 
+console.log("initing");
+
 window.TTC = window.TTC || {};
 let navigator = window.navigator;
 let defualtLanguage = navigator.language;

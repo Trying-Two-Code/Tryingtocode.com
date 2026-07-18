@@ -12,6 +12,18 @@
             "3": {
                 "owner": "OFFICIAL",
                 "section": "Python Lists 2"
+            },
+            "4": {
+                "owner": "OFFICIAL",
+                "section": "Dictionaries"
+            },
+            "5": {
+                "owner": "OFFICIAL",
+                "section": "Data"
+            },
+            "6": {
+                "owner": "OFFICIAL",
+                "section": "Logic"
             }
         }
     },

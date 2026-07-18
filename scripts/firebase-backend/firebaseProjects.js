@@ -12,7 +12,8 @@ export let setProject = async ({ owner = window.user,
                                  language="py", 
                                  includeDisclude={}, 
                                  mission="",
-                                 priority=0 } = {}) => 
+                                 priority=0,
+                                 hint="" } = {}) => 
 {
     if(typeof owner === "undefined") { console.error("tried proj w/out owner"); return null; }
 
@@ -29,7 +30,8 @@ export let setProject = async ({ owner = window.user,
         lastUpdated: serverTimestamp(),
         language: language,
         includeDisclude: includeDisclude,
-        priority: priority
+        priority: priority,
+        hint: hint
     };
 
     try {

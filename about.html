@@ -42,13 +42,18 @@
                 align-content: center;
                 justify-content: space-between;
                 flex-direction: column;
+                height: 100% !important;
             }
-
+            @media (orientation: landscape) {
+                section, h1{
+                    width: 50%;
+                }
+            }
             section, h1 {
-                width: 50%;
                 align-self: center;
                 justify-self: center;
                 margin-bottom: 70px;
+                line-height: 150%;
             }
         </style>
 
@@ -107,10 +112,12 @@
             
             <p>This about me page is under development... (as is the rest of the website, but whateverrrrr)</p>
         </div> 
-        
-        
 
     </div>
+        
+        <div class="footer-parent">
+            <ttc-footer copywrite="tryingtocode" mail-to="contact@tryingtocode.com" legal-src="./legal.html" privacy-src="/privacy-policy.html"></ttc-footer>
+        </div>
     
     
 </body>

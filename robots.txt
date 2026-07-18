@@ -5,4 +5,4 @@ User-agent: bingbot
 Allow: /index
 Allow: /learn
 Allow: /create
-
+Allow: /BLOG/*

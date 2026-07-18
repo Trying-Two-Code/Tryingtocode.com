@@ -191,6 +191,7 @@ export let signUp = async ({email, password, username="guest", setWindowUser=tru
 export let signInUp = async (email, password, username=null) => {
     try{
         let user = await signIn(email, password);
+        sendSignInLinkToEmail();
         return user;
     }
     catch (error){
@@ -413,8 +414,9 @@ export let getUserData = async (user=window.user) => {
 
     const userRef = doc(db, "users", user.uid);
     const updatedSnap = await getDoc(userRef);
+    const data = updatedSnap.data();
     
-    return updatedSnap.exists() ? updatedSnap.data() : null;
+    return updatedSnap.exists() ? data : null;
 }
 
 var updateProjects = []

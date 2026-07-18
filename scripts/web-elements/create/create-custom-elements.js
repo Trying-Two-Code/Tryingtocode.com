@@ -75,6 +75,8 @@ class TTCCreateProject extends HTMLElement {
         this.ownerElement =     queryME("owner-section");
         this.submitButton =     queryME("submit-button");
         this.errorElement =     queryME("error-text");
+
+        this.hint =             queryME("hint-section");
         
         this.measureParent =    queryME("user-measure");
         this.outputIncludes =   this.measureParent.querySelector("[data-js-tag='measure-output-includes']");
@@ -162,13 +164,14 @@ class TTCCreateProject extends HTMLElement {
         this.codeDiscludes.value = codeDiscludes;
     }
 
-    loadDatabaseProject({title = "", mission = "", data = "", includeDisclude = {}} = {}){
+    loadDatabaseProject({title = "", mission = "", data = "", includeDisclude = {}, hint = ""} = {}){
         console.log(this.titleElement);
         console.log(title, mission, data, this.titleElement, this.mission, this.codeArea);
 
         this.titleElement.value = title;
         this.mission.value = mission;
         this.codeArea.textarea.value = data;
+        this.hint.value = hint;
         this.setIncludeDisclude(includeDisclude);
     }
 

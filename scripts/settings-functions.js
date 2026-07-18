@@ -249,7 +249,8 @@ export let setColorTheme = async (toTheme) => {
     }
 
     if(toTheme === "default"){
-        editSetting({"colorTheme": "default"})
+        console.log("setting default...");
+        editSetting({"colorTheme": "default"});
         window.TTC.colorTheme = "default";
     }
 }

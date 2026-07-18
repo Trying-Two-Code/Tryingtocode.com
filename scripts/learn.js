@@ -6,7 +6,7 @@ import "./coin/coin.js";
 import { setUserDatapoint, getUserData, setupProject, deleteUserData } from "./firebase-backend/firebase.js";
 import './firebase-backend/firebaseProjects.js';
 import './load-projects-into-learn.js';
-import { applySettings, getSettingsObject } from "./settings-functions.js";
+import { applySettings, getSetting, getSettingsObject } from "./settings-functions.js";
 import { getURLAttribute } from "./tools.js";
 
 const LOAD_INDICES = Array.from({length: 33}, (_, i) => [i + 1, "projects"]);
@@ -21,6 +21,15 @@ window.resetStats = async () => {
     localStorage.setItem("coin", 0);
     await deleteUserData(window.user);
 }
+
+
+let setUserTitle = () => {
+    let userTitle = document.getElementById("user-title");
+    let titleText = getSetting("learnSection") || "Choose Section:";
+    userTitle.innerHTML = titleText;
+}
+
+setUserTitle();
 
 let isBlank = (value, extraBlank=undefined) => {
     let blankValues = ["", null, extraBlank, "{}"];
@@ -117,10 +126,11 @@ let getSectionLength = () => {
 
 // Save or update a project
 let saveProject = (this_proj) => {
-    const owner = getURLAttribute("code-owner");
-    const language = getURLAttribute("code-language");
-    const section = getURLAttribute("code-section");
-    const [title, content] = this_proj.split(":");
+    console.log("in func");
+    const owner = getURLAttribute("code-owner") || "OFFICIAL";
+    const language = getURLAttribute("code-language") || window.TTC.codeLanguage;
+    const section = getURLAttribute("code-section") || window.TTC.currentSection || getSetting("learnSection");
+    const [title, content] = this_proj.split(";|;");
     let rawProjects = localStorage.getItem("projects");
     console.log("rawProjects", rawProjects);
     let JSONprojects = JSON.parse(rawProjects || "{}");
@@ -144,7 +154,8 @@ window.addEventListener('correctCode', (details) => {
     let title = window.currentDisplay.title.innerHTML;
     let code = window.currentDisplay.textarea.value;
 
-    saveProject(title + ":" + code);
+    console.log("saving the code as: ", title + ";|;" + code);
+    saveProject(title + ";|;" + code);
 
     console.log(details.detail.value);
 });
@@ -220,6 +231,7 @@ window.TTC.events.addEventListener("learnProjectsNoWorky", (detail) => {
 });
 
 window.TTC.events.addEventListener("createdWholeSection", (details) => {
+    setUserTitle();
     createSectionSelectBackButton();
 });
 
@@ -267,6 +279,7 @@ let createSectionButton = (name, language="python", owner="OFFICIAL", sibling = 
 export let shownAlready = false;
 
 let showSectionSelections = async (language, sections) => {
+    setUserTitle();
 
     const biggestLength = 50;
     console.log("showing sectioons", sections);
@@ -321,7 +334,6 @@ let showSectionSelections = async (language, sections) => {
 window.TTC.events.addEventListener("showSectionSelection", (detail) => {
     showSectionSelections(detail.detail.language, detail.detail.sections);
 });
-
 
 
 console.error("for all yall devs out there looking through the log and thinking to yourself: what is this? why is this? this hurts my head! why do you have so many logs in production?");

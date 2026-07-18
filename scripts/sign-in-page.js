@@ -65,7 +65,7 @@ const usernameField = signupContainer.querySelector("[data-js-tag='username-fiel
 const emailField = signupContainer.querySelector("[data-js-tag='email-field']");
 const passwordField = signupContainer.querySelector("[data-js-tag='password-field']");
 const submitButton = signupContainer.querySelector("[data-js-tag='submit-button']");
-const errorMessage = signupContainer.getElementById("user-error");
+const errorMessage = signupContainer?.querySelector("[id='user-error']");
 
 let submitInfo = (event, userExists = false) => {
     event.preventDefault();

@@ -150,7 +150,7 @@ class TTCShopElement extends HTMLElement{
         console.log(userData);
         let data = userData || await getUserData();
         console.log(data?.bought?.[this.functionName], this.functionName, data);
-        if(data?.bought?.[this.functionName] !== null){
+        if(data?.bought?.[this.functionName] !== null && data?.bought?.[this.functionName] !== undefined){
             //I've been bought before!
             console.log(this.functionName, this.buyAmm, "has been bought, and should be hidden if that was one");
             if(this.buyAmm == 1){

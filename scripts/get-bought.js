@@ -1,6 +1,6 @@
 import { getUserData } from "./firebase-backend/firebase.js";
 
-let getAndSetData = async ({data=null, getDataFromFirebase=true}={}) =>{
+export let getAndSetData = async ({data=null, getDataFromFirebase=true}={}) =>{
     //set it to localstorage to be easier to access
     data = localStorage.getItem("userdatainfirebase");
 
@@ -10,7 +10,10 @@ let getAndSetData = async ({data=null, getDataFromFirebase=true}={}) =>{
 
     if(getDataFromFirebase){
         data = await getUserData();
-        localStorage.setItem("userdatainfirebase", JSON.stringify(data));
+        if(data?.bundle == undefined){
+            console.log("here...", data, data?.bundle, data?.bundle == undefined);
+            localStorage.setItem("userdatainfirebase", JSON.stringify(data));
+        }
     }
 
     console.log(data);

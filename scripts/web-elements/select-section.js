@@ -105,6 +105,7 @@ class TTCSectionButton extends HTMLElement{
         //sectionOwner & sectionName & sectionLanguage are set in learn.js: createSectionButton
         console.log(this.sectionOwner, this.sectionName);
         window.TTC.loadProjectsFromDatabase({ section: this.sectionName, owner: this.sectionOwner });
+        window.TTC.currentSection = this.sectionName;
 
         //TTCSectionButton.sectionsAlreadyInPlace = true;
         
@@ -197,7 +198,10 @@ class TTCBringBackSectionSelection extends HTMLElement{
     }
     makeElement(){
         this.innerHTML = `
-            <button data-js-tag='go-home' class="nice-button bring-back-button main-font">go back to selections</button>
+            <button data-js-tag='go-home' class="nice-button bring-back-button main-font">
+            <img class="nice-image" src="./components/visuals/icons/section-select/back-arrow/${window.TTC.theme}${window.TTC.imageExtension}"></img>
+            back to sections
+            </button>
         `;
     }
     findElement(){

@@ -7,6 +7,7 @@ class TTCSettings extends HTMLElement {
         super();
     }
     connectedCallback(){
+        
         this.render();
 
         this.findElements();
@@ -17,9 +18,10 @@ class TTCSettings extends HTMLElement {
     render(){
         this.hideIconWhenOpen = this.getAttribute("hide-icon-when-open") ?? false;
         this.theme = window.TTC.theme;
-        this.iconPath = "../../components/visuals/icons";
+        this.iconPath = "./components/visuals/icons";
         this.imageExtension = window.TTC.imageExtension;
 
+        console.log(`${this.iconPath}/settings/cog/${this.theme}${this.imageExtension}`);
         this.innerHTML = `
             <div data-js-tag="settings-toggle">
                 <button class="nice-button no-bg-button" data-js-tag="settings-toggle-button">
@@ -38,7 +40,7 @@ class TTCSettings extends HTMLElement {
 
                     <br></br>
 
-                    <button class="nice-button no-bg-button main-font" data-js-tag="focus-button">focus for 30 minutes</button>
+                    <!--button class="nice-button no-bg-button main-font" data-js-tag="focus-button">focus for 30 minutes</button-->
 
                     <br></br>
 
@@ -139,6 +141,7 @@ class TTCSettings extends HTMLElement {
         });
 
         this.defaultThemeButton.addEventListener("click", () => {
+            console.log("set default");
             setTheme("default");
         });
     }

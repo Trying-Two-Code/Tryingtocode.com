@@ -116,6 +116,7 @@ window.addEventListener('create_project_set', () => {
     let section =           CREATE_PROJECT.sectionElement;
     let title =             CREATE_PROJECT.titleElement;
     let mission =           CREATE_PROJECT.mission;
+    let hint =              CREATE_PROJECT.hint;
     let priority =          CREATE_PROJECT.priorityElement;
     let codeArea =          CREATE_PROJECT.codeArea;
     let outputIncludes =    CREATE_PROJECT.outputIncludes;
@@ -132,7 +133,7 @@ window.addEventListener('create_project_set', () => {
     let  languageSelectImageElements =  CREATE_PROJECT.languageSelectImageElements;
 /*reset*/languageSelectImageElements =  Array.from(languageSelectImageElements);
 
-    
+    console.log(hint, hint.innerHTML, hint.value);
     errorElement.innerHTML = "";
 
     let getErrorMessageParts = ({ middle = " and" } = {}) => {
@@ -216,7 +217,8 @@ window.addEventListener('create_project_set', () => {
                                                  mission: mission.value, 
                                                  includeDisclude: includeDisclude, 
                                                  owner: selectedOwner,
-                                                 priority: priority.value });
+                                                 priority: priority.value,
+                                                 hint: hint.value });
                 
                 projectOutput.then((result) => {
                     console.log(result);
