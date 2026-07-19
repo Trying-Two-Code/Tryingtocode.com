@@ -84,6 +84,17 @@
     }
 }
 
+.slow-hide{
+    transition: 3s all ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.slow-show{
+    transition: 3s all ease-in-out;
+    opacity: 1;
+}
+
 /*------------------------------------*\ 
     #POPUPS
 /*------------------------------------*/ 
@@ -106,6 +117,25 @@
     .nice-popup{
         --popup-top: var(--sidebar-height)
     }
+}
+
+.nice-coin-popup{
+    background-color: #0c0d0e77;
+    z-index: var(--z-overlay);
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+
+    top: var(--popup-top);
+    left: 0;
+    width: min(100%, 300px);
+
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+
+    text-align: center;
 }
 
 .popup-dialog{

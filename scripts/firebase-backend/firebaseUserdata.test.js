@@ -7,6 +7,7 @@ let testTestUserData = async() => {
     console.assert(typeof userData.displayName === "string");
     console.assert(typeof userData.email === "string" || userData.email === null);
     console.assert(typeof userData.projects === "object");
+    console.assert(typeof userData.bought === "object");
 }
 
 export let testAll = async (noConfirm=false) => {

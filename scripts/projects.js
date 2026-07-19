@@ -231,7 +231,7 @@ export class Display {
 
     setAttributes(){
         let title = this.projectJSON.title;
-        if(this.projectJSON.hint != undefined) {
+        if(this.projectJSON.hint != undefined && this.projectJSON.hint != "") {
             this.hintPopup.innerHTML = this.projectJSON.hint;
         } else {
             this.hintButton.classList.add("hide"); 

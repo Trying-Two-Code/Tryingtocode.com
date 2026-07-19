@@ -203,12 +203,14 @@ body {
 		width: 100vw;
 	}
 	.hero-cta{
+		min-height: 100%;
 		height: 100%;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 		text-align: center;
 		align-items: center;
+
 	}
 	.cta-container{
 		padding-bottom: 25px;
@@ -216,11 +218,17 @@ body {
 }
 
 @media (orientation: landscape) {
+	body{
+		display: flex;
+		flex-direction: column;
+	}
 	.main-content{
 		flex-direction: row;
 		align-items: center;
 		align-self: center;
 		justify-self: center;
+		justify-content: center;
+		min-width: min(100vw, 800px);
 		width: min(100vw, 800px);
 	}
 	.hero-cta{

@@ -8,6 +8,7 @@
  */
 
 import { SpriteImage } from "../tools.js";
+import { getAndSetData } from "../get-bought.js";
 
 export class CoinObj{
     constructor(go_to=null, x_pos=0, y_pos=0, x_vel=0, y_vel=0, canvas=null, ctx=null, sprite=null){
@@ -21,6 +22,7 @@ export class CoinObj{
         this.collectedCoin = false;
 
         this.canvas = canvas;
+        this.ctx = ctx;
         if (canvas) {
             this.originalCanvasWidth = canvas.width;
             this.originalCanvasHeight = canvas.height;
@@ -75,16 +77,40 @@ export class CoinObj{
         if(notAlreadyCollected && shouldBeCollected){
             this.collectedCoin = true;
             this.DestroyGive(1);
+            this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
         }
     }
 
-    DestroyGive(amm){
+    async DestroyGive(amm){
         //only have this just in case for the future
         this.collectedCoin = true;
+
+        await changeCoin(amm);
+        this.ev = new CustomEvent("showSmallCoinCounter", {
+            detail: {
+                seconds: 5
+            }
+        });
+        window.TTC.events.dispatchEvent(this.ev);
     }
 
     RenderImage(sprite, frames=1, index=0){
         this.spriteImage.RenderImage(sprite, this.x_pos, this.y_pos, frames, index);
+    }
+}
+
+let changeCoin = async (byAmm) => {
+    try{
+        await getAndSetData();
+        let localData = localStorage.getItem("userdatainfirebase");
+
+        localData = JSON.parse(localData);
+        localData.coins += byAmm;
+        localData  = JSON.stringify(localData);
+
+        localStorage.setItem("userdatainfirebase", localData);
+    } catch{
+        console.log("change coin error.");
     }
 }
 

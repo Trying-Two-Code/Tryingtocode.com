@@ -54,7 +54,8 @@ export let testUserData = async (noConfirm) => {
         {
             datapoint: "bought",
             expectedType: "object",
-            defaultValue: {}
+            defaultValue: {},
+            canBeNull: true
         }
     ];
 
