@@ -5,6 +5,7 @@ import { CodeArea } from "./user-code/code-area.js";
 import { isCorrectCode } from  "./user-code/check-code.js";
 //import { Toggle } from "./tools.js";
 import { scrollToTop } from "./learn.js";
+import { bringBackEvent } from "./web-elements/select-section.js";
 
 //general use
 let theme = window.TTC.theme;
@@ -28,11 +29,13 @@ export class Display {
         this.toggled = startToggled; 
         this.projectJSON = projectJSON;
         this.textareaSize = textareaSize;
-        this.projectIndex = projectIndex;
+        this.projectIndex = Display.finalProjectIndex;
         this.projectSection = "python 1";
         
         this.createElements(document, parent, htmlString); 
         this.initializeDisplay();
+
+        Display.finalProjectIndex += 1;
     }
 
     makeMeCurrentDisplay(){
@@ -135,7 +138,7 @@ export class Display {
             return;
         }
 
-        const TIME_LIMIT = 40;
+        const TIME_LIMIT = 200;
 
         let inexperienced = (threshold=10) => {
             if(window.xp < threshold) {
@@ -214,7 +217,14 @@ export class Display {
         if(relativeIndex == 0) {
             this.makeMeCurrentDisplay();
         }
+
+        console.log("LOOK HERE 3000: ", this.projectIndex, relativeIndex, Display.finalProjectIndex, this.projectIndex + relativeIndex > Display.finalProjectIndex);
+        if(this.projectIndex + relativeIndex >= Display.finalProjectIndex){
+            bringBackEvent();
+        }
     }
+
+    static finalProjectIndex = 0;
 
     createElements(document, parent, htmlString){
         let template = document.createElement('template');
@@ -378,6 +388,10 @@ export class Display {
         }
     }
     
+}
+
+export let resetFinalProject = () => {
+    Display.finalProjectIndex = 0;
 }
 
 function rewardPlayer(display){

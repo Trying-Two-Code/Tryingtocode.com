@@ -231,6 +231,13 @@ class TTCBringBackSectionSelection extends HTMLElement{
     }
 }
 
+export let bringBackEvent = () => {
+    deleteAllTextareasExport();
+    editSetting({learnSection: ""});
+    bringBackSections();
+    TTCBringBackSectionSelection.destroyThis();
+}
+
 let bringBackSections = () => {
     TTCSectionButton.toggleURL(null, null, true);
     let language = getCodeLanguage();

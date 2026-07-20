@@ -36,10 +36,12 @@ window.TTC.loadProjectsFromDatabase = async ({section="default", owner="OFFICIAL
     let projects = await findProjects({ section : section, owner : owner });
     console.assert(typeof projects === "object");
 
-    const projectKeys = Object.keys(projects);
+    let projectKeys = Object.keys(projects);
     window.TTC.firstBlankProject = true;
     window.TTC.projectLength = projectKeys.length;
-    console.log("you need to order these by priority");
+
+    projectKeys = Object.keys(sortSection(projects));
+
     for (let keyIndex = 0; keyIndex < projectKeys.length; keyIndex++) {
         const key = projectKeys[keyIndex];
         const project = projects[key];
@@ -127,7 +129,7 @@ export let onlineSections = await loadJSON("online-sections");
 
 let projectList = onlineSections[language][userDecidedSection];
 let findSection = () => {
-    if(!projectList){
+    /*if(!projectList){
         let checkSectionNames = (language, forName) => {
             let languageSpecificSections = onlineSections[language];
             let sectionKeys = Object.keys(languageSpecificSections);
@@ -153,7 +155,18 @@ let findSection = () => {
             return URLHasSection != null;
         }
     }
-    return true;
+    return true;*/
+    let URLHasSection = checkIfURLHasSection({setUserDecided: true});
+    return URLHasSection != null;
+};
+
+let sortSection = (projects) => {
+    let newList = projects.sort((a, b) => 
+        a.priority !== b.priority ?
+            a.priority - b.priority :
+            a.title.localeCompare(b.title)
+        );
+    return newList
 };
 
 let sendSection = (owner, section) => {

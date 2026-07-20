@@ -1,7 +1,7 @@
 //for use in learn.html
 //connects resources needed in learn.html but shouldn't actually be doing very much!
 
-import { Display } from "./projects.js";
+import { Display, resetFinalProject } from "./projects.js";
 import "./coin/coin.js";
 import { setUserDatapoint, getUserData, setupProject, deleteUserData } from "./firebase-backend/firebase.js";
 import './firebase-backend/firebaseProjects.js';
@@ -196,6 +196,7 @@ let loadProjectsFunction = async (projectsList, section="projects") => {
     let userData = await getUserData();
 
     let projectList = [];
+    let projectIndex = 0;
 
     window.TTC.projectLength = projectsList.length;
     for (let item of projectsList){
@@ -332,6 +333,7 @@ let showSectionSelections = async (language, sections) => {
 }
 
 window.TTC.events.addEventListener("showSectionSelection", (detail) => {
+    resetFinalProject();
     showSectionSelections(detail.detail.language, detail.detail.sections);
 });
 

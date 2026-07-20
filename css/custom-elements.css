@@ -95,6 +95,12 @@
     opacity: 1;
 }
 
+@media (orientation: portrait) {
+    .slow-show{
+        pointer-events: none;
+    }
+}
+
 /*------------------------------------*\ 
     #POPUPS
 /*------------------------------------*/ 
