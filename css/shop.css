@@ -13,8 +13,10 @@
 \*------------------------------------*/
 .tiny-img{
     --size: 16px;
-    width: var(--size);
-    height: var(--size);
+    width: var(--size) !important;
+    height: var(--size) !important;
+    max-width: var(--size) !important;
+    max-height: var(--size);
 }
 
 .buy-button{

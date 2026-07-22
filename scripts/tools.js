@@ -357,3 +357,57 @@ export let changeURL = ({
         window.history.pushState({}, "", newURLString);
     }
 };
+
+export let updateCreateUserinputSection = (currentSection, localStorageName="create_userinput_section") => {
+    //this function sets the current section to 0 (index 0 of the list)
+    //it then increments all others to either stay still or go up by 1
+    const maxIndex = 100;
+
+    let currentSectionObject = localStorage.getItem(localStorageName);
+    let returnPlease = false;
+
+    let setLocalTo = (value) => {
+        localStorage.setItem(localStorageName, JSON.stringify(value));
+    }
+
+    try{
+        currentSectionObject = JSON.parse(currentSectionObject);
+        console.log(currentSectionObject);
+        let currentSectionObjectKeys = Object.keys(currentSectionObject);
+
+        if(currentSectionObject?.[currentSection] != undefined){
+            if(currentSectionObject[currentSection] == 0){
+                //already 0, do nothing
+                setLocalTo(currentSectionObject);
+                return currentSectionObject;
+            }
+
+            let currentKeyIndex = currentSectionObject[currentSection];
+            currentSectionObjectKeys.forEach(key => {
+                if(currentKeyIndex > currentSectionObject[key]){
+                    currentSectionObject[key] += 1;
+                }
+            });
+            console.log("doing what I should");
+            currentSectionObject[currentSection] = 0;
+            setLocalTo(currentSectionObject);
+            return currentSectionObject;
+
+        } else{
+            currentSectionObjectKeys.forEach(key => {
+                currentSectionObject[key] += 1;
+                if(currentSectionObject[key] > maxIndex){
+                    delete currentSectionObject[key];
+                }
+            });
+            currentSectionObject[currentSection] = 0;
+            setLocalTo(currentSectionObject);
+            return currentSectionObject;
+        }
+    } catch{
+        setLocalTo({[currentSection] : 0});
+        return {[currentSection] : 0};
+    }
+    setLocalTo({[currentSection] : 0});
+    return {[currentSection] : 0};
+};

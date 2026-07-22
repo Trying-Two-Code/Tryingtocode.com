@@ -6,7 +6,7 @@ export let testUserData = async (noConfirm) => {
     let newUserData = structuredClone(userData);
     let testConfirm = true;
     
-    let testAndGiveDefault = ({ datapoint = "coins", expectedType = "string", defaultValue = 0, canBeNull = false }={}) => {
+    let testAndGiveDefault = ({ datapoint = "coins", expectedType = "string", defaultValue = 0, canBeNull = false, bypassConfirm=false }={}) => {
         let dataNotUndefined = datapoint in userData;
         let returnCurrentValue = false;
         let currentValue = null;
@@ -15,13 +15,13 @@ export let testUserData = async (noConfirm) => {
             currentValue = userData[datapoint];
             let dataFitsExpectedType = typeof currentValue === expectedType;
             dataFitsExpectedType = dataFitsExpectedType || currentValue === null;
-            returnCurrentValue = dataFitsExpectedType; // I realise that dataFitsExpectedType is useless, but it is readable I think.
+            returnCurrentValue = dataFitsExpectedType; // I realise that dataFitsExpectedType is currently useless, but it is more readable.
         }
 
         let bypassNull = canBeNull && dataNotUndefined && userData[datapoint] == null;
 
         if(!returnCurrentValue && !bypassNull) {
-            testConfirm = confirm(`your data for -${datapoint}- may be corrupted, we can try to fix it, but you may lose some information. Proceed?`);
+            testConfirm = bypassConfirm || confirm(`your data for -${datapoint}- may be corrupted, we can try to fix it, but you may lose some information. Proceed?`);
             if(!testConfirm){ return currentValue; }
         }
 
@@ -55,7 +55,8 @@ export let testUserData = async (noConfirm) => {
             datapoint: "bought",
             expectedType: "object",
             defaultValue: {},
-            canBeNull: true
+            canBeNull: true,
+            bypassConfirm: true
         }
     ];
 

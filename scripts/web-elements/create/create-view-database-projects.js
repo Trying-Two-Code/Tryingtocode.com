@@ -11,15 +11,17 @@ class TTCViewDataProjects extends HTMLElement {
 
         this.innerHTML = `
             <div class="main-font">
-                <button class="nice-button main-font database-button" data-js-tag="load-database-options">load projects in section</button>
+                <ol name="database-section-dropdown" data-js-tag="database-section-dropdown">
+
+                </ol>
+
                 <div name="database-project-dropdown" data-js-tag="database-project-dropdown">
-                    <p></p>
+
                 </div>
             </div>
         `;
-
         this.initValues();
-        this.initButton();
+        this.initButtons();
     }
 
     initValues(){
@@ -27,22 +29,90 @@ class TTCViewDataProjects extends HTMLElement {
         this.timeSinceLastDone = 0;
         this.owner;
         this.section = "default";
+        this.sectionDropdown = this.querySelector("[data-js-tag='database-section-dropdown'");
+        console.log("setting it to: ", this.sectionDropdown, this);
         this.databaseProjectButtonDropdown = this.querySelector("[data-js-tag='database-project-dropdown']"); 
         //rough fix \/
         this.createProject = this.parentElement;
         
         applySettings();
+
+        try{
+            this.sections = JSON.parse(localStorage.getItem("create_userinput_section"));
+        } catch{
+            console.error("error");
+        }
     }
 
-    initButton(){
+    initButtons(){
+        const maxButtons = 1;
+
+        let sortSections = () => {
+            let sectionEntries = Object.entries(this.sections);
+            
+            sectionEntries.sort((a, b) => a[1] - b[1]);
+
+            return sectionEntries
+        }
+
+        let entries = sortSections();
+        let sectionKeys = entries.map(entry => entry[0]);
+
+        let index = 0;
+
+        sectionKeys.forEach((key) => {
+            if(index < maxButtons){
+                this.makeButton(key);
+                index += 1;
+            }
+        });
+
+        if(index >= maxButtons){
+            this.makeLoadButton();
+        }
+    }
+
+    makeButton(sectionName="404 error"){
+        const newButton = document.createElement("button");
+
+        newButton.innerHTML = `
+            load projects in ${sectionName}
+        `;
+
+        console.log(newButton, this.databaseProjectButtonDropdown, this);
+        this.sectionDropdown.appendChild(newButton);
+
+        newButton.classList.add("nice-button", "main-font", "database-button");
+        newButton.id = `${sectionName}-bring-button`;
+
+        newButton.addEventListener("click", () => {
+            const sectionOwner = window?.user?.uid || "OFFICIAL";
+            this.loadCreateSection(sectionName, sectionOwner);
+        });
+
+        this.buttons != null ? this.buttons.push(newButton) : this.buttons = [];
+    }
+
+    makeLoadButton(){
+        const newButton = document.createElement("button");
+    }
+
+    loadCreateSection(sectionName, sectionOwner){
+        /*
         this.loadOptionsButton = this.querySelector("[data-js-tag='load-database-options']");
         this.loadOptionsButton.addEventListener("click", () => {
             this.timeSinceLastDone += timeSince("loaded-database", 60001);
             this.loadOptions();
-        });
+        });*/
+        this.section = sectionName;
+        this.owner = sectionOwner;
+
+        this.timeSinceLastDone += timeSince("loaded-database", 60001);
+        this.loadOptions();
     }
 
     orderOptionsFromPriority(options){
+        console.assert(options.length > 0);
         console.error("fix this soon");
         let orderedOptionsList = [];
 
@@ -93,15 +163,17 @@ class TTCViewDataProjects extends HTMLElement {
 
         console.log("this section is: _", this.section ,"_")
         this.projects = await findProjects({ owner: this.owner, section: this.section });
+        console.log(this.projects, this.owner, this.section);
         this.projects = this.orderOptionsFromPriority(this.projects);
         this.timeSinceLastDone = 0;
         this.showButtons();
+        this.changeSectionTextarea();
     }
 
 
 
     showButtons(){
-        let databaseProjectButtonDropdown = this.databaseProjectButtonDropdown
+        let databaseProjectButtonDropdown = this.databaseProjectButtonDropdown;
         let projectButtons = [];
 
         if(typeof this.projectButtons !== "undefined"){
@@ -136,6 +208,10 @@ class TTCViewDataProjects extends HTMLElement {
 
         this.projectButtons = projectButtons;
         applySettings();
+    }
+
+    changeSectionTextarea(){
+        this.createParent.sectionElement.value = this.section;
     }
 }
 

@@ -35,9 +35,10 @@ class TTCCreateProject extends HTMLElement {
 
             <ttc-create-advanced-settings data-js-tag="advanced-settings"></ttc-create-advanced-settings>
         </div>
-        
     </div>
 
+    <textarea readonly="true" class="main-font share-url hide" data-js-tag="share-url" placeholder="share-url"></textarea>
+    <button class="share-button nice-button no-bg-button" data-js-tag="share-button"><img draggable="false" class="share-button--image" src="../components/visuals/icons/create/share/${window.TTC.theme}${window.TTC.imageExtension}" alt="share"></button>
     <button class="submit-button nice-button" data-js-tag="submit-button"><img draggable="false" class="submit-button--image" src="../components/visuals/icons/create/submit/${window.TTC.theme}${window.TTC.imageExtension}" alt="submit"></button>
     <p data-js-tag="error-text" class="error-message">must contain -title- and -mission-</p>
     
@@ -51,6 +52,7 @@ class TTCCreateProject extends HTMLElement {
         this.initValues();
         this.setupLinkButton();
         this.setupViewButton();
+        this.setupShareButton();
 
         let create_project_set = new Event("create_project_set");
         window.dispatchEvent(create_project_set);
@@ -64,6 +66,7 @@ class TTCCreateProject extends HTMLElement {
         this.PROJECT_OUTPUT = queryME('project-output');
         this.ADVANCED_SETTINGS = queryME("advanced-settings");
         this.VIEW_DATA = this.querySelector("ttc-view-data-projects");
+        this.VIEW_DATA.createParent = this;
         this.PROJECT_OUTPUT.render();
         this.ADVANCED_SETTINGS.render();
 
@@ -73,7 +76,9 @@ class TTCCreateProject extends HTMLElement {
         this.codeArea =         queryME("create-code");
         console.log("usuing code area: ", this.codeArea);
         this.ownerElement =     queryME("owner-section");
+        this.shareButton  =     queryME("share-button");
         this.submitButton =     queryME("submit-button");
+        this.shareURLTextarea = queryME("share-url");
         this.errorElement =     queryME("error-text");
 
         this.hint =             queryME("hint-section");
@@ -110,8 +115,9 @@ class TTCCreateProject extends HTMLElement {
                 return "";
             }
         }
-        this.ownerElement.value   = checkLocalStorage("create_userinput_owner");
-        this.sectionElement.value = checkLocalStorage("create_userinput_section");
+        this.ownerElement.value   = this.getCurrentLocalData("create_userinput_owner");
+        this.sectionElement.value = this.getCurrentLocalData();
+
         this.updateViewButton({
             newName: this.ownerElement.value, 
             dataElement: "owner", 
@@ -124,10 +130,38 @@ class TTCCreateProject extends HTMLElement {
         });
     }
 
+    getCurrentLocalData(item="create_userinput_section"){
+        console.log("getting current section...");
+        let localData = localStorage.getItem(item);
+        let returnThis = ""
+        try{
+            let obj = JSON.parse(localData);
+            console.log(obj)
+            console.log("hello?");
+            let okeys = Object.keys(obj);
+            for (let index = 0; index < okeys.length; index++) {
+                const key = okeys[index];
+                const elem = obj[key];
+                console.log(key, elem);
+                if(elem === 0){
+                    returnThis = key;
+                    console.log(returnThis, "is return this.");
+                }
+            }
+        } catch{
+            returnThis = "";
+        }
+        return returnThis;
+    }
+
     updateViewButton({newName = "", dataElement = null, localStorageName = ""} = {}){
         this.VIEW_DATA[dataElement] = newName;
-        localStorage.setItem(localStorageName, newName);
-        console.log("change", newName);
+
+        //let newObject = updateCreateUserinputSection(newName, localStorageName);
+        //console.log(newObject);
+        //newObject = JSON.stringify(newObject);
+
+        //localStorage.setItem(localStorageName, newObject);
     }
 
     setupViewButton(){
@@ -146,7 +180,22 @@ class TTCCreateProject extends HTMLElement {
                 dataElement: this.VIEW_DATA.section,
                 localStorageName: "create_userinput_section"
             });
+            this.shareURLTextarea.value = `https://tryingtocode.com/learn?code-language=python&code-section=${this.sectionElement.value}&code-owner=${this.ownerElement.value || window.user.uid}`;
         });
+    }
+
+    setupShareButton(){
+        let share = async () => {
+            try {
+                await navigator.clipboard.writeText(this.shareURLTextarea.value ||  `https://tryingtocode.com/learn?code-language=python&code-section=${this.sectionElement.value}&code-owner=${this.ownerElement.value || window.user.uid}`);
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+        this.shareButton.addEventListener("click", () => {
+            share();
+        });
+
     }
 
     setupLinkButton(){
@@ -178,6 +227,9 @@ class TTCCreateProject extends HTMLElement {
 }
 
 customElements.define("ttc-create-project", TTCCreateProject);
+
+
+
 
 class TTCViewProject extends TTCCreateProject {
     constructor() {

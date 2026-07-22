@@ -1,5 +1,5 @@
 import { setProject, findProjects } from './firebase-backend/firebaseProjects.js';
-import { SimpleToggle, timeSince } from './tools.js';
+import { SimpleToggle, timeSince, updateCreateUserinputSection } from './tools.js';
 
 
 class LanguageToggle extends SimpleToggle {
@@ -228,6 +228,8 @@ window.addEventListener('create_project_set', () => {
                         errorElement.innerHTML = `problem setting project: ${result}`;
                     }
                 });
+
+                updateCreateUserinputSection(section.value);
             } catch {
                 errorElement.innerHTML = "problem setting project";
             }

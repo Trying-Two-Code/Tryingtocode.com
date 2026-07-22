@@ -156,7 +156,7 @@ let findSection = () => {
         }
     }
     return true;*/
-    let URLHasSection = checkIfURLHasSection({setUserDecided: true});
+    let URLHasSection = checkIfURLHas({setUserDecided: true});
     return URLHasSection != null;
 };
 
@@ -174,13 +174,13 @@ let sendSection = (owner, section) => {
     window.TTC.loadProjectsFromDatabase({ section: section, owner: owner });
 };
 
-let checkIfURLHasSection = ({sectionString="code-section", setUserDecided=false}={}) => {
+let checkIfURLHas = ({string="code-section", setUserDecided=false}={}) => {
     let URLString = window.location.search;
     const searchURLString = new URLSearchParams(URLString);
 
-    let isSectionInURL = searchURLString.has(sectionString);
+    let isSectionInURL = searchURLString.has(string);
     if(isSectionInURL){
-        let urlDecision = searchURLString.get(sectionString);
+        let urlDecision = searchURLString.get(string);
         setUserDecided ? userDecidedSection = urlDecision : null;
         return urlDecision;
     } else{
@@ -193,17 +193,25 @@ let checkIfLocalUserdataHasSection = () => {
 }
 
 let checkForSection = () => {
-    let currentSection = checkIfURLHasSection() || checkIfLocalUserdataHasSection();
+    let currentSection = checkIfURLHas() || checkIfLocalUserdataHasSection();
 
     return currentSection == null ? false : currentSection;
 }
 
+let findOwner = () => {
+    let owner = checkIfURLHas({string: "code-owner", setUserDecided: true});
+    owner = owner != undefined ? owner : "OFFICIAL";
+    console.log("owner is: ", owner);
+    return owner;
+};
+
 export let sendAppropriateInformationForSectionAndOwner = () => {
     let timeSinceLastCalled = timeSince("sendAppropriateInformationForSectionAndOwner", 1000);
     if(timeSinceLastCalled < 1000) {return;}
-    const owner = "OFFICIAL"; // change this later when supporting user projects
+    let owner = "OFFICIAL";
+    owner = findOwner();
     let foundSection = findSection();
-    console.log(foundSection);
+    console.log(userDecidedSection, owner);
     if(foundSection){
         console.assert(projectList != null);
         const section = userDecidedSection;
