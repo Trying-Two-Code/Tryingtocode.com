@@ -21,7 +21,7 @@ class TTCCreateProject extends HTMLElement {
 
             <div class="row">
                 <div class="create-main">
-                    <textarea class="main-font code-lines create-section" name="section" data-js-tag="create-section" placeholder="section">default</textarea>
+                    <textarea class="main-font code-lines create-section" name="section" data-js-tag="create-section" placeholder="course name">default</textarea>
                     <textarea class="main-font code-lines create-title" name="title" data-js-tag="title-section" placeholder="title"></textarea>
                     <textarea class="code-lines create-mission main-font" name="mission" placeholder="mission" data-js-tag="mission-section"></textarea>
                     <div class="create-code-container">
@@ -32,14 +32,18 @@ class TTCCreateProject extends HTMLElement {
                     <ttc-create-project-output data-js-tag="project-output"></ttc-create-project-output>
                 </div>
             </div>
-
-            <ttc-create-advanced-settings data-js-tag="advanced-settings"></ttc-create-advanced-settings>
         </div>
     </div>
+    <hr>
+    <ttc-create-advanced-settings title="advanced settings" data-js-tag="advanced-settings"></ttc-create-advanced-settings>
+
+    <hr>
+
+    <h2>share & save<h2>
 
     <textarea readonly="true" class="main-font share-url hide" data-js-tag="share-url" placeholder="share-url"></textarea>
-    <button class="share-button nice-button no-bg-button" data-js-tag="share-button"><img draggable="false" class="share-button--image" src="../components/visuals/icons/create/share/${window.TTC.theme}${window.TTC.imageExtension}" alt="share"></button>
-    <button class="submit-button nice-button" data-js-tag="submit-button"><img draggable="false" class="submit-button--image" src="../components/visuals/icons/create/submit/${window.TTC.theme}${window.TTC.imageExtension}" alt="submit"></button>
+    <button title="copy link" class="share-button nice-button no-bg-button" data-js-tag="share-button"><img draggable="false" class="share-button--image" src="../components/visuals/icons/create/share/${window.TTC.theme}${window.TTC.imageExtension}" alt="share"></button>
+    <button title="save to database" class="submit-button nice-button" data-js-tag="submit-button"><img draggable="false" class="submit-button--image" src="../components/visuals/icons/create/submit/${window.TTC.theme}${window.TTC.imageExtension}" alt="submit"></button>
     <p data-js-tag="error-text" class="error-message">must contain -title- and -mission-</p>
     
     

@@ -20,6 +20,7 @@ class TTCCreateProjectOutput extends HTMLElement {
 <div id="learn-project" class="project main-font">
         <div class="column-elements">
             <div>
+                <h1 data-js-tag="title-overlay" class="main-font overlay-big-text">--preview--</h1>
                 <ttc-complex-typeable-code closeable="true" output-height="35px" runnable="true" linkable="true"></ttc-complex-typeable-code>
             </div>
         </div>
@@ -33,6 +34,8 @@ class TTCCreateProjectOutput extends HTMLElement {
     initValues(){
         this.languageElement = this.querySelector("[name='code-editor--pretty-code']");
         this.typeableCodeElement = this.querySelector("ttc-complex-typeable-code");
+        this.titleOverlay = this.querySelector("[data-js-tag='title-overlay']");
+        this.initTitleOverlay();
         this.typeableCodeElement.complexRender();
         this.code = this.typeableCodeElement.textarea;
         this.projectTitle = this.typeableCodeElement.projectTitle;
@@ -44,6 +47,15 @@ class TTCCreateProjectOutput extends HTMLElement {
         this.canRun = true;
 
         this.textarea = this.typeableCodeElement.textarea;
+    }
+
+    initTitleOverlay(){
+        this.addEventListener("mouseenter", () => {
+            this.titleOverlay.classList.add("hide");
+        });
+        this.addEventListener("mouseleave", () => {
+            this.titleOverlay.classList.remove("hide");
+        });
     }
 
     updateCode() {

@@ -57,6 +57,17 @@
     opacity: .4;
 }
 
+.create-light{
+    opacity: .4;
+}
+
+.overlay-big-text{
+    top: 30%;
+    z-index: 100;
+    opacity: 1 !important;
+    position: absolute;
+}
+
 /*------------------------------------*\ 
     #DIVS
 /*------------------------------------*/ 
@@ -146,6 +157,13 @@ ttc-create-advanced-settings{
     left: 30px;
 }
 
+ttc-create-project-output:not(:active):not(:hover), .create-main:not(:active):not(:hover){
+    opacity: .3;
+}
+
+.create--advsettings{
+    background-color: rgba(88, 84, 84, 0.562);
+}
 
 .codearea, .code-highlight, .single-block-grid, .code-editor, .actual-input-code {
     width: 100% !important;

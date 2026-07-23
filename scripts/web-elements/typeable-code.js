@@ -421,7 +421,7 @@ export class TTCComplexTypeableCode extends TTCTypeableCode {
 
     editToLinkable(){
         this.addedLinkableHTML = `
-            <button class="nice-button link-button" name="link-unlink-toggle"><img class="link-button--image" src="../components/visuals/icons/project/link/${window.TTC.theme}/frame-1${window.TTC.imageExtension}"></img></button>
+            <button title="link" class="nice-button link-button" name="link-unlink-toggle"><img class="link-button--image" src="../components/visuals/icons/project/link/${window.TTC.theme}/frame-1${window.TTC.imageExtension}"></img></button>
         `;
 
         this.linkableContainer.insertAdjacentHTML("afterbegin", this.addedLinkableHTML);

@@ -156,6 +156,7 @@ window.addEventListener('create_project_set', () => {
             }
         }
 
+        addError(section, " -course name-");
         addError(title, " -title-");
         addError(mission, " -mission-");
 
