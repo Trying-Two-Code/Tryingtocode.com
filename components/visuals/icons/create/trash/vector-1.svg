@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="5in"
+   height="5in"
+   viewBox="0 0 5 5"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="trash.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.85625"
+     inkscape:cx="98.10219"
+     inkscape:cy="102.77372"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="2552"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="powermask"
+       id="path-effect3"
+       is_visible="true"
+       lpeversion="1"
+       uri="#mask-powermask-path-effect3"
+       invert="false"
+       hide_mask="false"
+       background="true"
+       background_color="#ffffffff" />
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask-powermask-path-effect3">
+      <path
+         id="mask-powermask-path-effect3_box"
+         style="fill:#ffffff;fill-opacity:1"
+         d="M 0.09669148,-0.09698823 H 3.5970997 V 3.9689865 H 0.09669148 Z" />
+      <path
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.167431;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:696.375;stroke-opacity:1;paint-order:stroke fill markers"
+         d="m 1.653173,1.6138128 c 0.1814254,-0.0041 0.513509,-0.049156 0.513509,0.024579 0,0.073733 0.090437,0.6310367 -0.048527,0.8891045 C 1.9791913,2.785564 1.6689452,2.6397352 1.6573651,2.6110611 1.6457851,2.5823871 1.4917472,1.8380169 1.5757521,1.7213426 Z"
+         id="path3"
+         sodipodi:nodetypes="cssssc" />
+    </mask>
+    <filter
+       id="mask-powermask-path-effect3_inverse"
+       inkscape:label="filtermask-powermask-path-effect3"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect3_primitive1"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect3_primitive2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:0.360103;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:696.375;stroke-opacity:1;paint-order:stroke fill markers"
+       d="M 1.791873,3.1860079 C 1.9069065,3.0702847 3.0837831,3.0041575 3.1722703,3.0785503 3.2607564,3.1529433 3.5892159,3.2681115 3.0140952,3.2261634 2.6142379,3.1969987 1.69037,3.4198638 1.791873,3.1860079 Z"
+       id="path6"
+       sodipodi:nodetypes="cssc" />
+    <path
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:0.360103;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:696.375;stroke-opacity:1;paint-order:stroke fill markers"
+       d="M 1.768513,2.41306 C 1.8488245,2.2993788 3.0979069,2.2412389 3.1235733,2.2655888 3.1922499,2.3200469 3.2787686,2.4600307 3.0724055,2.406884 2.8037591,2.337697 1.6840565,2.6454546 1.768513,2.41306 Z"
+       id="path5"
+       sodipodi:nodetypes="ccsc" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.321359;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:696.375;stroke-opacity:1;paint-order:stroke fill markers"
+       d="M 2.2374614,1.6283827 C 1.9359889,1.6703648 1.7909769,1.8764299 1.7337355,2.0481545 1.6914341,2.1869726 1.7212078,2.5723847 1.7528749,2.9105877 1.7863839,3.2685052 1.9187784,3.6219369 1.9894145,3.7043446 2.1267935,3.8646213 2.4855082,4.0630585 2.8060612,3.8646213 3.126614,3.6661835 3.2042206,3.1605135 3.2067524,3.0212616 3.2105685,2.8113757 3.2716262,1.9069585 3.1342463,1.7848432 2.9888124,1.6555686 2.6267043,1.6016701 2.2374614,1.6283827 Z"
+       id="path4"
+       sodipodi:nodetypes="ccscsssc" />
+    <path
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:0.181102;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:696.375;stroke-opacity:1;paint-order:stroke fill markers"
+       d="m 1.2000174,1.2903412 c -0.03871,-0.2365625 0.021506,-0.29677843 0.1290341,-0.29677843 0.1075284,0 0.1419375,0.32688643 0.1978523,0.36559673 0.055915,0.03871 0.6365684,0.060216 0.6967843,0.0043 0.060216,-0.055915 0.025807,-0.3268865 0.1935512,-0.3225853 0.1677443,0.0043 0.064517,1.0623809 -0.030108,1.4279777 C 2.2925063,2.8344497 2.0516426,2.907569 1.6516368,2.8688587 1.251631,2.8301485 1.2946424,1.9011028 1.2000174,1.2903412 Z"
+       id="path1"
+       mask="url(#mask-powermask-path-effect3)"
+       inkscape:path-effect="#path-effect3"
+       inkscape:original-d="m 1.2000174,1.2903412 c -0.03871,-0.2365625 0.021506,-0.29677843 0.1290341,-0.29677843 0.1075284,0 0.1419375,0.32688643 0.1978523,0.36559673 0.055915,0.03871 0.6365684,0.060216 0.6967843,0.0043 0.060216,-0.055915 0.025807,-0.3268865 0.1935512,-0.3225853 0.1677443,0.0043 0.064517,1.0623809 -0.030108,1.4279777 C 2.2925063,2.8344497 2.0516426,2.907569 1.6516368,2.8688587 1.251631,2.8301485 1.2946424,1.9011028 1.2000174,1.2903412 Z"
+       sodipodi:nodetypes="cssccssc"
+       transform="matrix(1.7744638,0,0,1.7744638,-0.81923989,-1.0047306)" />
+  </g>
+  <metadata
+     id="metadata3">
+    <rdf:RDF>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+      <cc:Work
+         rdf:about="">
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/4.0/" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

@@ -1,5 +1,5 @@
-import { timeSince } from "../../tools.js";
-import { findProjects } from "../../firebase-backend/firebaseProjects.js";
+import { timeSince, deleteCreateUserinputSection } from "../../tools.js";
+import { deleteSection, findProjects } from "../../firebase-backend/firebaseProjects.js";
 import { applySettings } from "../../settings-functions.js";
 
 class TTCViewDataProjects extends HTMLElement {
@@ -25,7 +25,7 @@ class TTCViewDataProjects extends HTMLElement {
     }
 
     initValues(){
-        this.maxAmmountPerMinute = 20;
+        this.maxAmmountPerMinute = 60;
         this.timeSinceLastDone = 0;
         this.owner;
         this.section = "default";
@@ -45,7 +45,8 @@ class TTCViewDataProjects extends HTMLElement {
     }
 
     initButtons(){
-        const maxButtons = 1;
+        this.changeButtonsBy = 3;
+        this.maxButtons = 3;
 
         let sortSections = () => {
             let sectionEntries = Object.entries(this.sections);
@@ -56,9 +57,9 @@ class TTCViewDataProjects extends HTMLElement {
         }
 
         let entries = sortSections();
-        let sectionKeys = entries.map(entry => entry[0]);
+        this.sectionKeys = entries.map(entry => entry[0]);
 
-        let index = 0;
+        /*let index = 0;
 
         sectionKeys.forEach((key) => {
             if(index < maxButtons){
@@ -69,35 +70,92 @@ class TTCViewDataProjects extends HTMLElement {
 
         if(index >= maxButtons){
             this.makeLoadButton();
+        }*/
+        this.greatestIndex = 0;
+
+        this.makeAll(0, this.maxButtons, () => {this.makeLoadButton();});
+    }
+
+    makeAll(before, after, callback){
+        console.log(before, after, this.sectionKeys);
+        let index = 0;
+
+        this.sectionKeys.forEach((key) => {
+            console.log(index < after, index >= before, index);
+            if(index < after && index >= before){
+                this.makeButton(key);
+                this.greatestIndex += 1;
+            }
+            index += 1;
+        });
+
+        console.log(this.greatestIndex, this.sectionKeys.length);
+        if(this.greatestIndex < this.sectionKeys.length){
+            callback();
         }
+
+        applySettings();
     }
 
     makeButton(sectionName="404 error"){
         const newButton = document.createElement("button");
 
         newButton.innerHTML = `
-            load projects in ${sectionName}
+            <button class="nice-button no-bg-button"><img src="./components/visuals/icons/create/load/${window.TTC.theme}${window.TTC.imageExtension}"></img></button>
+            load: ${sectionName}
+            <button class="nice-button no-bg-button" data-js-tag="delete-section"><img src="./components/visuals/icons/create/trash/${window.TTC.theme}${window.TTC.imageExtension}"></img></button>
         `;
 
-        console.log(newButton, this.databaseProjectButtonDropdown, this);
+        let deleteSection = newButton.querySelector("[data-js-tag='delete-section']");
+
+        deleteSection.addEventListener("click", async (event) => {
+            const sectionOwner = window?.user?.uid || "OFFICIAL";
+            event.stopPropagation();
+            console.log("yep");
+            let resultOfDeletion = await this.deleteSection(sectionName, sectionOwner);
+            console.log("result: ", resultOfDeletion);
+            if(resultOfDeletion){
+                newButton.remove();
+                deleteCreateUserinputSection(sectionName);
+            }
+        });
+
         this.sectionDropdown.appendChild(newButton);
 
         newButton.classList.add("nice-button", "main-font", "database-button");
         newButton.id = `${sectionName}-bring-button`;
+        
 
-        newButton.addEventListener("click", () => {
+        newButton.addEventListener("click", (event) => {
             const sectionOwner = window?.user?.uid || "OFFICIAL";
-            this.loadCreateSection(sectionName, sectionOwner);
+            newButton.classList.add("blink");
+            setTimeout(()=>{newButton.classList.remove("blink");}, 1000);
+            this.loadCreateSection(sectionName, sectionOwner, newButton);
         });
 
         this.buttons != null ? this.buttons.push(newButton) : this.buttons = [];
     }
 
     makeLoadButton(){
+        console.log("make it...");
         const newButton = document.createElement("button");
+        newButton.innerHTML = `
+            ...
+        `;
+
+        console.log(this, this?.sectionDropdown);
+
+        this.sectionDropdown.appendChild(newButton);
+        newButton.classList.add("nice-button", "main-font", "database-button");
+
+        newButton.addEventListener("click", () => {
+            this.makeAll(this.maxButtons, this.maxButtons + this.changeButtonsBy, () => {this.makeLoadButton();});
+            this.maxButtons += this.changeButtonsBy;
+            newButton.remove();
+        });
     }
 
-    loadCreateSection(sectionName, sectionOwner){
+    async loadCreateSection(sectionName, sectionOwner, blinkButton){
         /*
         this.loadOptionsButton = this.querySelector("[data-js-tag='load-database-options']");
         this.loadOptionsButton.addEventListener("click", () => {
@@ -108,7 +166,24 @@ class TTCViewDataProjects extends HTMLElement {
         this.owner = sectionOwner;
 
         this.timeSinceLastDone += timeSince("loaded-database", 60001);
-        this.loadOptions();
+        let result = await this.loadOptions();
+        
+        if(result){
+            blinkButton.classList.add("blink-green");
+            setTimeout(()=>{blinkButton.classList.remove("blink-green");}, 1000);
+        }
+    }
+
+    async deleteSection(sectionName, ownerName, overrideUser=false){
+        let shouldDelete = overrideUser || confirm(`are you sure you want to delete ${sectionName}?`);
+        if(!shouldDelete){
+            return false;
+        }
+
+        return await deleteSection({
+            sectionName: sectionName,
+            ownerName: ownerName,
+        });
     }
 
     orderOptionsFromPriority(options){
@@ -168,6 +243,8 @@ class TTCViewDataProjects extends HTMLElement {
         this.timeSinceLastDone = 0;
         this.showButtons();
         this.changeSectionTextarea();
+
+        return true;
     }
 
 

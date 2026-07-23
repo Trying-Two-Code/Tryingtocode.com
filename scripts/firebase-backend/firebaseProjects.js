@@ -1,6 +1,6 @@
 import { collection, limit, query,
     getDoc, getDocs, setDoc, doc, 
-    serverTimestamp } 
+    serverTimestamp, deleteDoc } 
 from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js"
 
 const database_name = "projects";
@@ -43,6 +43,27 @@ export let setProject = async ({ owner = window.user,
         return error;
     }
 }
+
+export let deleteSection = async ({ sectionName = "default",
+                                    ownerName = null,
+                                    
+}) =>
+{   //dangerous function beware - no checks
+
+    //await deleteDoc(projectRef);
+    const projectQuery = query(
+        collection(window.db, database_name, ownerName, sectionName),
+        limit(100)
+    );
+
+    const documentsSnapshot = await getDocs(projectQuery);
+
+    await Promise.all(
+        documentsSnapshot.docs.map(docSnap => deleteDoc(docSnap.ref))
+    );
+
+    return true;
+};
 
 
 export let findProjects = async ({ section = "default", owner = window.user.uid } = {}) => {

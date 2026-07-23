@@ -20,7 +20,7 @@ class TTCCreateProjectOutput extends HTMLElement {
 <div id="learn-project" class="project main-font">
         <div class="column-elements">
             <div>
-                <ttc-complex-typeable-code closeable="true" output-height="35px" runnable="true" readonly="false" linkable="true"></ttc-complex-typeable-code>
+                <ttc-complex-typeable-code closeable="true" output-height="35px" runnable="true" linkable="true"></ttc-complex-typeable-code>
             </div>
         </div>
     </div>

@@ -411,3 +411,24 @@ export let updateCreateUserinputSection = (currentSection, localStorageName="cre
     setLocalTo({[currentSection] : 0});
     return {[currentSection] : 0};
 };
+
+export let deleteCreateUserinputSection = (sectionName, localStorageName="create_userinput_section") => {
+    let currentSectionObject = localStorage.getItem(localStorageName);
+    console.assert(JSON?.parse(currentSectionObject) != null);
+
+    currentSectionObject = JSON.parse(currentSectionObject);
+
+    console.assert(currentSectionObject?.[sectionName] != null);
+
+    const sectionValue = currentSectionObject[sectionName];
+    delete currentSectionObject?.[sectionName];
+
+    let keys = Object.keys(currentSectionObject);
+    keys.forEach((key) => {
+        if(currentSectionObject[key] > sectionValue)
+        currentSectionObject[key] -= 1;
+    });
+
+    currentSectionObject = JSON.stringify(currentSectionObject);
+    localStorage.setItem(localStorageName, currentSectionObject);
+};
