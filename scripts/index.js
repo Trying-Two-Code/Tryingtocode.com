@@ -147,3 +147,12 @@ callToActionButton.addEventListener("click", async () => {
         setTimeout(goToLearnPage, 3000);
     }
 });
+
+let signinAncor = document.querySelector("[data-js-tag='sign-in-ancor']");
+
+window.addEventListener("user_set", async () => {
+    if(window.user.email != null){
+        signinAncor.href = "/";
+        signinAncor.innerHTML = `<img src="./components/visuals/icons/popup/help-beginner/affirm/${window.TTC.theme}${window.TTC.imageExtension}"></img>`;
+    }
+});

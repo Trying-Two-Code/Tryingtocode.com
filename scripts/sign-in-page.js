@@ -59,13 +59,17 @@ signIn.submit.addEventListener("click", (e) => {
 
 //for use in signin and signup .html
 import { signInUp } from './firebase-backend/firebase.js';
+import { changeURL } from './tools.js';
 
 const signupContainer = document.getElementById("signup-container");
+const signupHeader = signupContainer.querySelector("[data-js-tag='sign-up-title']");
 const usernameField = signupContainer.querySelector("[data-js-tag='username-field']");
 const emailField = signupContainer.querySelector("[data-js-tag='email-field']");
 const passwordField = signupContainer.querySelector("[data-js-tag='password-field']");
 const submitButton = signupContainer.querySelector("[data-js-tag='submit-button']");
 const errorMessage = signupContainer?.querySelector("[id='user-error']");
+
+
 
 let submitInfo = (event, userExists = false) => {
     event.preventDefault();
@@ -125,9 +129,9 @@ let submitInfo = (event, userExists = false) => {
         errorMessage.value = `please input: ${errors}`;
     }
 
-    let sendData = () => {
-        let errorMessage = signInUp(data.email, data.password, data.username);
-        console.log(`error messege is: ${errorMessage}`);
+    let sendData = async () => {
+        let result = await signInUp(data.email, data.password, data.username);
+        console.log(`error messege is: ${errorMessage}`, errorMessage);
         if(errorMessage != null && errorMessage !== true){
             
         }
@@ -137,6 +141,9 @@ let submitInfo = (event, userExists = false) => {
     try{
         validateData();
         sendData();
+        if(detectSignedIn()){
+            showFeedback();
+        }
     } catch (error){
         console.error(error);
     }
@@ -145,12 +152,23 @@ let submitInfo = (event, userExists = false) => {
 submitButton.addEventListener("click", (event) => {submitInfo(event);});
 
 let detectSignedIn = () => {
-    if(window.user.uid != null){
-        
+    if(window.user.uid != null && window.user.email != null){
+        return true;
+    } else{
+        return false;
     }
 }
 
 window.addEventListener("user_set", () => {
-    console.log("I'm already set?: ", window.user.uid);
-    detectSignedIn();
+    console.log("I'm already set?: ", window.user.uid, window.user.email);
+    if(detectSignedIn()){
+        window.location.assign(document.referrer);
+    }
 });
+
+let showFeedback = () => {
+    passwordField.value = "loading...";
+    emailField.value = "loading...";
+    signupHeader.innerHTML = "loading...";
+    usernameField?.value != null ? usernameField.value = "loading...": null;
+}

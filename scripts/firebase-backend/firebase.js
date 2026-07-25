@@ -21,7 +21,8 @@ window.TTC.app = app;
 
 //https://firebase.google.com/docs/auth/web/manage-users?_gl=1*1etynth*_up*MQ..*_ga*MTUyOTIwNDExLjE3NzYwMTEwMzA.*_ga_CW55HF8NVT*czE3NzYwMTEwMzAkbzEkZzAkdDE3NzYwMTEwMzAkajYwJGwwJGgw
 import { getAuth, signInAnonymously, createUserWithEmailAndPassword, deleteUser,  
-    signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+    signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence, 
+    signOut, sendSignInLinkToEmail } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 import { getPerformance } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-performance.js";
 import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
@@ -116,13 +117,6 @@ export let signUserOut = async () => {
     });
 };
 
-let startAuth = async (user) => {
-    await auth.authStateReady();
-    await authStateChangedFunction(user);
-};
-
-startAuth();
-
 onAuthStateChanged(auth, (user) => {
     if(user) {
         authStateChangedFunction(user);
@@ -188,10 +182,47 @@ export let signUp = async ({email, password, username="guest", setWindowUser=tru
     return new_user;
 }
 
+/**
+ * FOR SEND SIGN IN
+ */
+const actionCodeSettings = {
+  // URL you want to redirect back to. The domain (www.example.com) for this
+  // URL must be in the authorized domains list in the Firebase Console.
+  url: 'https://tryingtocode.com',
+  // This must be true.
+  handleCodeInApp: true,
+  // The domain must be configured in Firebase Hosting and owned by the project.
+  linkDomain: 'tryingtocode.com'
+};
+
+let sendSignInLinkToEmailFilled = async (email=null) => {
+    email = email || window.user.email;
+
+    console.log("awaiting email check...");
+    await sendSignInLinkToEmail(auth, email, actionCodeSettings)
+  .then(() => {
+    // The link was successfully sent. Inform the user.
+    // Save the email locally so you don't need to ask the user for it again
+    // if they open the link on the same device.
+    console.log("email sent.");
+    window.localStorage.setItem('emailForSignIn', email);
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+    // ...
+  });
+};
+/**
+ * 
+ */
+
 export let signInUp = async (email, password, username=null) => {
     try{
         let user = await signIn(email, password);
-        sendSignInLinkToEmail();
+        sendSignInLinkToEmailFilled(email);
         return user;
     }
     catch (error){

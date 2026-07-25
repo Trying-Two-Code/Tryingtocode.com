@@ -20,15 +20,23 @@ class advancedSettings extends HTMLElement{
                 <li name="language-select--image-element-c" class="language-select--image-element unsupported" id="c-element"><img title="not supported yet" alt="not supported yet" draggable="false" src="${this.path}/language/c/${window.TTC.theme}${window.TTC.imageExtension}" class="language-select--image-element--image"></li>
             </div>
             
-            <div data-js-tag="user-measure" class="usercode-measure main-font">
-                <p>output of code must include:</p>
-                <textarea class="main-font code-lines usercode-measure--textarea" data-js-tag="measure-output-includes" name="measures--output-includes" placeholder="hello world!">*</textarea>
-                <p>code must include:</p>
-                <textarea class="main-font code-lines usercode-measure--textarea" data-js-tag="measure-code-includes" name="measures--code-includes" placeholder="print('hello world')">*</textarea>
-                <p>output of code must NOT include:</p>
-                <textarea class="main-font code-lines usercode-measure--textarea" data-js-tag="measure-output-discludes" name="measures--output-discludes" placeholder="goodbye world!">*</textarea>
-                <p>code must NOT include:</p>
-                <textarea class="main-font code-lines usercode-measure--textarea" data-js-tag="measure-code-discludes" name="measures--code-discludes" placeholder="print('goodbye world!')">*</textarea>
+            <div data-js-tag="user-measure" class="usercode-measure usercode-measure--container main-font">
+                <div class="row">
+                    <p>output of code must include:</p>
+                    <textarea class="main-font code-lines usercode-measure--textarea" data-js-tag="measure-output-includes" name="measures--output-includes" placeholder="hello world!">*</textarea>
+                </div>
+                <div class="row">
+                    <p>code must include:</p>
+                    <textarea class="main-font code-lines usercode-measure--textarea" data-js-tag="measure-code-includes" name="measures--code-includes" placeholder="print('hello world')">*</textarea>
+                </div>
+                <div class="row">
+                    <p>output of code must NOT include:</p>
+                    <textarea class="main-font code-lines usercode-measure--textarea" data-js-tag="measure-output-discludes" name="measures--output-discludes" placeholder="goodbye world!">*</textarea>
+                </div>
+                <div class="row">
+                    <p>code must NOT include:</p>
+                    <textarea class="main-font code-lines usercode-measure--textarea" data-js-tag="measure-code-discludes" name="measures--code-discludes" placeholder="print('goodbye world!')">*</textarea>
+                </div>
             </div>
 
             <div class="row">

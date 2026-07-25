@@ -124,6 +124,11 @@
     flex-wrap: wrap;
 }
 
+.usercode-measure--container{
+    display: flex;
+    flex-direction: column;
+}
+
 .usercode-measure--textarea {
     flex-basis: 50%;
     box-sizing: border-box;
@@ -242,7 +247,7 @@ ttc-create-project-output:not(:active):not(:hover), .create-main:not(:active):no
     padding-bottom: 20px;
 }
 
-.advanced--toggle--image, .submit-button--image {
+.advanced--toggle--image, .submit-button--image, .share-button--image {
     --size: 64px;
 
     image-rendering: pixelated;

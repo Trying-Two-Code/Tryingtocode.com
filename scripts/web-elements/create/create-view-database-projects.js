@@ -2,6 +2,10 @@ import { timeSince, deleteCreateUserinputSection } from "../../tools.js";
 import { deleteSection, findProjects } from "../../firebase-backend/firebaseProjects.js";
 import { applySettings } from "../../settings-functions.js";
 
+function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
+}
+
 class TTCViewDataProjects extends HTMLElement {
     constructor(){
         super();
@@ -24,10 +28,21 @@ class TTCViewDataProjects extends HTMLElement {
         this.initButtons();
     }
 
+    getOwner(){
+        let owner = null;
+        try{
+            owner = getKeyByValue(JSON.parse(localStorage.getItem("create_userinput_owner")), 0) || window.user.uid || "OFFICIAL";
+        } catch{
+            owner = window?.user?.uid || "OFFICIAL";
+        }
+        return owner;
+    }
+
     initValues(){
         this.maxAmmountPerMinute = 60;
         this.timeSinceLastDone = 0;
-        this.owner;
+        this.owner = this.getOwner();
+        console.log("owner = ", this.owner);
         this.section = "default";
         this.sectionDropdown = this.querySelector("[data-js-tag='database-section-dropdown'");
         console.log("setting it to: ", this.sectionDropdown, this);
@@ -127,7 +142,7 @@ class TTCViewDataProjects extends HTMLElement {
         
 
         newButton.addEventListener("click", (event) => {
-            const sectionOwner = window?.user?.uid || "OFFICIAL";
+            const sectionOwner = this.getOwner();
             newButton.classList.add("blink");
             setTimeout(()=>{newButton.classList.remove("blink");}, 1000);
             this.loadCreateSection(sectionName, sectionOwner, newButton);
