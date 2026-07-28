@@ -33,7 +33,7 @@ class TTCFooter extends HTMLElement {
                             <li class="footer--list-element"><a href="/" class="footer--link">home</a></li>
                             <li class="footer--list-element"><a href="signin.html" class="footer--link">sign in</a></li>
                             <li class="footer--list-element"><a href="store.html" class="footer--link">store</a></li>
-                            <!--a href="create" class="footer--link">create</a-->
+                            <li class="footer--list-element"><a href="create" class="footer--link">create</a></li>
                         </ul>
                     </div>
                     <div class="column">

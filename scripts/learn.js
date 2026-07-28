@@ -124,6 +124,8 @@ let getSectionLength = () => {
 
 }
 
+
+
 // Save or update a project
 let saveProject = (this_proj) => {
     console.log("in func");
@@ -337,8 +339,14 @@ window.TTC.events.addEventListener("showSectionSelection", (detail) => {
     showSectionSelections(detail.detail.language, detail.detail.sections);
 });
 
+let signinAncor = document.querySelector("[data-js-tag='sign-in-ancor']");
 
-console.error("for all yall devs out there looking through the log and thinking to yourself: what is this? why is this? this hurts my head! why do you have so many logs in production?");
-console.error("it's allllll good I'll fix it later 👍");
-console.error("and if you're just a user in here, bro, get off. Someone prolly trying to scam you or smth");
-console.error("thanks for coming over and trying my website out btw");
+window.addEventListener("user_set", async () => {
+    if(window.user.email != null){
+        signinAncor.href = "/profile.html";
+        signinAncor.title = `${window.user.email}`;
+        signinAncor.innerHTML = `<img src="./components/visuals/icons/popup/help-beginner/affirm/${window.TTC.theme}${window.TTC.imageExtension}"></img>`;
+    } else{
+        signinAncor.classList.add("glow");
+    }
+});

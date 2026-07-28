@@ -283,6 +283,33 @@ a:hover{
     color: var(--anchor-color-hover);
 }
 
+
+
+@media (orientation: landscape) {
+	.home-topbar{
+		position: relative;
+		top: 0;
+		display: flex;
+		flex-direction: row;
+		align-content: center;
+		justify-content: center;
+		width: 100%;
+		background-color: rgba(147, 169, 243, 0.137);
+    }
+    .main-logo{
+        display: flex;
+        flex-direction: row;
+        gap: 100px;
+        padding-top: 1.5%;
+    }
+}
+
+@media (orientation: portrait) {
+	.home-topbar, .main-logo{
+		display: none;
+	}
+}
+
 /*------------------------------------*\
     #TOOLS
 \*------------------------------------*/
@@ -376,7 +403,6 @@ a:hover{
                     calc(-1 * var(--text-outline-size)) var(--text-outline-size)            0 var(--text-outline-color),
                     var(--text-outline-size)            var(--text-outline-size)            0 var(--text-outline-color);
 }
-
 
 h1.pixel-1 {font-size: 3rem;}
 p.pixel-1  {font-size: 1.5rem;}

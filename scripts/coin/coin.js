@@ -9,7 +9,7 @@ import { getUserData, setUserDatapoint, increaseCoins } from "../firebase-backen
 
 //let counter = document.getElementById("coin-counter");
 const sidebarElement = document.querySelector("ttc-sidebar");
-const counter = document.querySelector("[data-js-tag='sidebar-coin-counter']");
+let counter = document.querySelector("[data-js-tag='counter-content']");
 
 let canvas = document.getElementById('learn-screen');
 
@@ -87,7 +87,9 @@ if(canvas){
 
     window.addEventListener('correctCode', (details) => {
         let startElement = window.currentDisplay.output;
-        getCoin(details.detail.value, sidebarElement.coinCounter/*, startElement*/);
+        counter = counter || document.querySelector("[data-js-tag='counter-content']");
+        console.log(counter);
+        getCoin(details.detail.value, counter.firstElementChild/*, startElement*/);
         changeNumber(details.detail.value);
     });
 

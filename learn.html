@@ -29,12 +29,20 @@
     <link as="font" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!--Font import-->
 </head>
 <body>
+    <div class="home-topbar">
+        <div class="main-logo">
+            <a href="/"><img class="nice-button" src="./components/visuals/logos/coin/pixel-1.png" alt="TTC"></a>
+            <p class="big-text main-font">Trying to Code...</p>
+            <a data-js-tag="sign-in-ancor" class="light-anchor right-topbar" href="/signin.html">Sign in</a>
+        </div>
+    </div>
     <div id="youtube-player" data-js-tag="youtube-player" class="nice-video"></div>
     <!--         users should be here for 900 seconds before completing a project             -->
     <ttc-help-beginner-popup showup-time="900" max-xp="50" tutorial-name="project-tutorial-0" video-id="scc4bHEHtZY"></ttc-help-beginner-popup>
-    <div class="row-container">
+        <div class="row-container">
+            
         <ttc-small-counter></ttc-small-counter>
-        <ttc-sidebar></ttc-sidebar>
+        <!--ttc-sidebar></ttc-sidebar-->
         <div class="main-content main-font" id="main-content" data-js-tag="main-content">
             <div style="position: relative;">
                 <div id="loader" class="loader">
@@ -57,6 +65,9 @@
                 <div id="project-parent" autocapitalize="off">
                     <!-- projects insert here -->
                 </div>
+
+                <a href="/create.html">make your own projects</a>
+
                 <hr>
                 <button class="nice-button no-bg-button arial-1" id="hate-pixel-art-button">I hate pixel art</button>
                 <button class="nice-button no-bg-button hide pixel-1" id="like-pixel-art-button">I like pixel art</button>

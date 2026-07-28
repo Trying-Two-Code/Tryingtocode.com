@@ -152,7 +152,10 @@ let signinAncor = document.querySelector("[data-js-tag='sign-in-ancor']");
 
 window.addEventListener("user_set", async () => {
     if(window.user.email != null){
-        signinAncor.href = "/";
+        signinAncor.href = "/profile.html";
+        signinAncor.title = `${window.user.email}`;
         signinAncor.innerHTML = `<img src="./components/visuals/icons/popup/help-beginner/affirm/${window.TTC.theme}${window.TTC.imageExtension}"></img>`;
+    } else{
+        signinAncor.classList.add("glow");
     }
 });

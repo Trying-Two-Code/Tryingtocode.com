@@ -24,6 +24,10 @@
             "6": {
                 "owner": "OFFICIAL",
                 "section": "Logic"
+            },
+            "7": {
+                "owner": "OFFICIAL",
+                "section": "Strings"
             }
         }
     },

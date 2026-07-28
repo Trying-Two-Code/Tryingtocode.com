@@ -35,11 +35,6 @@ console.log(auth.currentUser);
 let setAnon = false;
 
 setPersistence(auth, browserLocalPersistence).then(() => {
-    if(setAnon){
-        anonSign().then(() => {
-            console.log("old user was destroyed!");
-        });
-    }
 }).catch((error) => {
     console.error(error);
     //if there is no user, and there has been a problem setting persistance, this may solve that.
@@ -117,12 +112,15 @@ export let signUserOut = async () => {
     });
 };
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
     if(user) {
         authStateChangedFunction(user);
     }
     else{
-        console.error("no user!");
+        anonSign().then(() => {
+            console.log("old user was destroyed! New User is Anon.");
+            
+        });
     }
 });
 
