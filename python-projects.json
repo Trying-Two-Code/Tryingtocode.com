@@ -28,6 +28,22 @@
             "7": {
                 "owner": "OFFICIAL",
                 "section": "Strings"
+            },
+            "8": {
+                "owner": "OFFICIAL",
+                "section": "Functions"
+            },
+            "9": {
+                "owner": "OFFICIAL",
+                "section": "Objects"
+            },
+            "10": {
+                "owner": "OFFICIAL",
+                "section": "Lambda"
+            },
+            "11": {
+                "owner": "OFFICIAL",
+                "section": "Logic 2"
             }
         }
     },

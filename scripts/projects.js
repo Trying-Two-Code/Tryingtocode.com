@@ -199,9 +199,14 @@ export class Display {
                 window.logEvent("time open", 
                     {   value: result, 
                         project_index: this.projectIndex, 
-                        project_title: this.title.value, 
+                        project_title: this.title.innerHTML, 
                         project_section: this.projectSection 
                     });
+                window.logEvent(`time ${this.title.innerHTML} open`,
+                    {
+                        value: result
+                    }
+                )
             }catch{
                 console.log("could not log");
             }
