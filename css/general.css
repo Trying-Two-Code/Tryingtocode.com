@@ -305,9 +305,32 @@ a:hover{
 }
 
 @media (orientation: portrait) {
-	.home-topbar, .main-logo{
-		display: none;
+	.home-topbar{
+		position: relative;
+		top: 0;
+		display: flex;
+		flex-direction: row;
+		align-content: center;
+		justify-content: center;
+		width: 100%;
+		background-color: rgba(147, 169, 243, 0.137);
 	}
+    .main-logo{
+		position: relative;
+		top: 0;
+		display: flex;
+		flex-direction: row;
+    }
+    .ttc-logo-topbar{
+        padding-right: 20px;
+        justify-self: center;
+        justify-content: center;
+        align-items: center;
+        align-self: center;
+    }
+    .ttc-sign-in-thing{
+        text-wrap-style: stable;
+    }
 }
 
 /*------------------------------------*\
