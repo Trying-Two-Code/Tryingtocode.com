@@ -278,11 +278,27 @@ body {
 	image-rendering: pixelated;
 }
 
-.cta-image:hover{
+.create-cta-image{
+	text-align: center;
+	--size: 200px;
+	align-self: center;
+	justify-self: center;
+	/*width: calc(var(--size) * 2);*/
+	width: var(--size);
+	height: var(--size);
+
+	padding-bottom: 30px;
+
+	transition: filter .1s cubic-bezier(0.215, 0.610, 0.355, 1);
+	filter: drop-shadow(-0px -0px 40px var(--palette-index-4));
+	image-rendering: pixelated;
+}
+
+.cta-image:hover, .create-cta-image:hover{
 	filter: drop-shadow(-0px -0px 100px var(--palette-index-3));
 }
 
-.cta-image:active{
+.cta-image:active, .create-cta-image:active{
 	filter: drop-shadow(-0px -0px 10px #00000000);
 }
 

@@ -323,8 +323,12 @@ let showSectionSelections = async (language, sections) => {
             if(firstIncompleteSection){
                 console.log(sectionElement);
                 sectionElement.classList.add("glow");
+            } else{
+                sectionElement.classList.add("dim");
             }
             firstIncompleteSection = false;
+        } else{
+            sectionElement.classList.add("dim");
         }
     });
 

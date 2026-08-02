@@ -60,6 +60,7 @@ signIn.submit.addEventListener("click", (e) => {
 //for use in signin and signup .html
 import { signInUp } from './firebase-backend/firebase.js';
 import { changeURL } from './tools.js';
+import { makeGoogleAuth } from './firebase-backend/firebase.js';
 
 const signupContainer = document.getElementById("signup-container");
 const signupHeader = signupContainer.querySelector("[data-js-tag='sign-up-title']");
@@ -68,7 +69,7 @@ const emailField = signupContainer.querySelector("[data-js-tag='email-field']");
 const passwordField = signupContainer.querySelector("[data-js-tag='password-field']");
 const submitButton = signupContainer.querySelector("[data-js-tag='submit-button']");
 const errorMessage = signupContainer?.querySelector("[id='user-error']");
-
+const googleSignup = signupContainer?.querySelector("[id='google-signup']");
 
 
 let submitInfo = (event, userExists = false) => {
@@ -172,3 +173,7 @@ let showFeedback = () => {
     signupHeader.innerHTML = "loading...";
     usernameField?.value != null ? usernameField.value = "loading...": null;
 }
+
+googleSignup.addEventListener("click", () => {
+    makeGoogleAuth();
+});

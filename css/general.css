@@ -336,6 +336,11 @@ a:hover{
 /*------------------------------------*\
     #TOOLS
 \*------------------------------------*/
+.flip-hor{
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
 .mild-text{
     opacity: .5;
     text-align: center;
@@ -561,6 +566,16 @@ p.pixel-1  {font-size: 1.5rem;}
   10% { filter: drop-shadow(0px calc(var(--size) - var(--down)) var(--blur) #000); }
   50% { filter: drop-shadow(0px calc(var(--size) - var(--down) + 2px) calc(var(--blur) + 2px) #000); } 
   100% { filter: drop-shadow(0px calc(var(--size) - var(--down)) var(--blur) #000); }
+}
+
+.dim{
+    filter: grayscale(1);
+    opacity: .3;
+}
+
+.dim:hover{
+    filter: grayscale(.8);
+    opacity: .9;
 }
 
 .glow {
