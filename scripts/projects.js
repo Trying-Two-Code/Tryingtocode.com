@@ -83,6 +83,7 @@ export class Display {
         this.instructions = query(".instructions");
         this.completedIcon= query(".completed-icon");
         this.nextButton =   query(".next-project");
+        this.backButton =   query(".back-project");
         this.hintPopup =    query(".hint-popup");
         this.hintButton =   query(".project-hint-button");
     }
@@ -125,10 +126,12 @@ export class Display {
             this.stopMeCurrentDisplay();
             console.log("scroll to top not working anymore!");
         }
-        let nextButtonEvent = (e) => {e.stopPropagation(); this.openProject(1);}
+        let nextButtonEvent = (e) => {e.stopPropagation(); this.openProject(1);};
+        let backButtonEvent = (e) => {e.stopPropagation(); this.openProject(-1);};
 
         this.closeButton.addEventListener('click', closeButtonEvent);
         this.nextButton.addEventListener('click', nextButtonEvent);
+        this.backButton.addEventListener('click', backButtonEvent);
         this.codeArea.projectEl.initResetButton(this.rewindButton, this.projectJSON.code);
     }
 
@@ -215,9 +218,9 @@ export class Display {
     }
 
     openProject(relativeIndex=0){ //open the next project: relativeIndex=1
-        this.openOtherProject({openIndex: this.projectIndex + relativeIndex});
-        var changeOpenProject = new CustomEvent("closeMe", {detail: {index: this.projectIndex, toIndex: -1, gone: true, mini: true}});
+        let changeOpenProject = new CustomEvent("closeMe", {detail: {index: this.projectIndex, toIndex: -1, gone: true, mini: true}});
         window.dispatchEvent(changeOpenProject);
+        this.openOtherProject({openIndex: this.projectIndex + relativeIndex});
 
         if(relativeIndex == 0) {
             this.makeMeCurrentDisplay();
@@ -390,6 +393,7 @@ export class Display {
         if(passed){
             rewardPlayer(this);
             this.nextButton.classList.add("glow");
+            setTimeout(() => {this.openProject(1);}, 1000);
         }
     }
     

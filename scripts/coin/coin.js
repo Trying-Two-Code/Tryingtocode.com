@@ -10,6 +10,7 @@ import { getUserData, setUserDatapoint, increaseCoins } from "../firebase-backen
 //let counter = document.getElementById("coin-counter");
 const sidebarElement = document.querySelector("ttc-sidebar");
 let counter = document.querySelector("[data-js-tag='counter-content']");
+let topbarCounter = document.querySelector("[data-js-tag='coin-counter']");
 
 let canvas = document.getElementById('learn-screen');
 
@@ -144,6 +145,7 @@ export let getCoin = (amm, go_to, startElementPos=null, startString = '') => {
 
 let updateDisplayNumber = (updatedNumber, startString) => {
     try{
+        topbarCounter.innerHTML = startString + updatedNumber;
         sidebarElement.updateDisplayNumber(updatedNumber, startString);
     } catch (error) {
         console.error("no sidebar element yet. ", error);
@@ -163,7 +165,7 @@ let subtractString = (a, b) => {
 }
 
 let incrimentDisplayNumber = (amm=1, startString='') => {
-    if(sidebarElement != null) {
+    if(topbarCounter != null) {
         let currentCoins = parseInt(subtractString(sidebarElement.coinCounter.innerHTML, startString));
         let newCoins = currentCoins + amm;
 

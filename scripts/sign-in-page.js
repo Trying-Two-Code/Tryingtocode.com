@@ -174,6 +174,7 @@ let showFeedback = () => {
     usernameField?.value != null ? usernameField.value = "loading...": null;
 }
 
-googleSignup.addEventListener("click", () => {
+googleSignup.addEventListener("click", (event) => {
+    event.preventDefault();
     makeGoogleAuth();
 });

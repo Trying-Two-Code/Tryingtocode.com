@@ -330,6 +330,7 @@ export class TTCComplexTypeableCode extends TTCTypeableCode {
         this.addedRunnableHTML = `
         <div class="project-button-buttons proj-child">
             <button js-data-tag="run-button" title="run code" name="run-button" class="run-code"><img class="run-code-button-img big-image" src="./components/visuals/icons/project/run-code/${window.TTC.theme}${window.TTC.imageExtension}"></img></button>
+            <button title="go to previous project" alt="previous project" name="back-button" class="no-bg-button back-project flip-hor ${nextProjectClass} pixel-img" name="next-button"><img class="back-project" src="./components/visuals/icons/project/next-project/${window.TTC.theme}${window.TTC.imageExtension}"></button>
             <button title="go to next project" alt="next project" name="next-button" class="next-project ${nextProjectClass} pixel-img" name="next-button"><img class="next-project" src="./components/visuals/icons/project/next-project/${window.TTC.theme}${window.TTC.imageExtension}"></button>
         </div>
         ` ;
